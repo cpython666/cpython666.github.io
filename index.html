@@ -4,17 +4,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<link rel="icon" type="image/x-icon" href="./imgs/favicon.png" />
 	<link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 
 <body>
+	<div class="text-desc">
+		<p id="text">编程启航</p>
+	</div>
 	<div id="slider">
 		<img src="./imgs/bilibili_s.jpg" alt="">
 		<img src="./imgs/csdnz_s.jpg" alt="">
 	</div>
 </body>
+
+<!-- 引入jquery -->
 <script src="./js/jquery.js"></script>
-<script src="./js/flux.min.js"></script>
+<!-- 引入设置轮播图选项 -->
+<script src="./js/lunbo/flux.min.js"></script>
 <script>
 	$(function () {
 		window.f = new flux.slider('#slider', {
@@ -25,5 +32,8 @@
 		});
 	})
 </script>
+<!-- 引入特效文字与设置 -->
+
+
 
 </html>

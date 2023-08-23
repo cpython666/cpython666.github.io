@@ -43,3 +43,6 @@ a{
     text-decoration: none;
     color: inherit;
 }
+#text{
+    padding: 5px 8px;
+}
