@@ -7,7 +7,7 @@ body {
     display: flex;
     width: 100vw;
     height: 100vh;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     overflow: hidden;
     flex-direction: column;
