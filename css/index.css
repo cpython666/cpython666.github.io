@@ -43,6 +43,7 @@ a{
     text-decoration: none;
     color: inherit;
 }
-#text{
+#title{
     padding: 5px 8px;
+    font-size: 30px;
 }
