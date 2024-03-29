@@ -1,1 +1,0 @@
-import{_ as e,c as p,o as t,a4 as i}from"./chunks/framework.B5RDkS33.js";const b=JSON.parse('{"title":"更多宝藏","description":"","frontmatter":{},"headers":[],"relativePath":"爬虫/index.md","filePath":"爬虫/index.md"}'),r={name:"爬虫/index.md"},a=i("",21),o=[a];function n(c,l,s,h,_,d){return t(),p("div",null,o)}const m=e(r,[["render",n]]);export{b as __pageData,m as default};

@@ -11,33 +11,34 @@ hero:
     alt: 星梦启航
   actions:
     - theme: brand
-      text: BiliBili
-      link: https://space.bilibili.com/1909782963
+      text: 爬虫
+      link: /爬虫/学习路线
     - theme: alt
-      text: Github
-      link: https://github.com/cpython666
-    - theme: alt
-      text: CSDN
-      link: https://codefly.blog.csdn.net/
-    - theme: alt
-      text: 语雀文档
-      link: https://www.yuque.com/python666
+      text: Python
+      link: /Python/学习路线
 features:
-  - icon: 🛠️
-    title: Simple and minimal, always
-    details: Lorem ipsum...
   - icon:
-      src: /logo.jpg
-    title: Another cool feature
-    details: Lorem ipsum...
+      src: /icons/bilibili.ico
+    title: Python斗罗
+    details: 视频教程
+    link: https://space.bilibili.com/1909782963
   - icon:
-      dark: /logo.jpg
-      light: /logo.jpg
-    title: Another cool feature
-    details: Lorem ipsum...
+      src: /icons/github.svg
+    title: cpython666
+    details: 代码项目仓库
+    link: https://github.com/cpython666
   - icon:
-      dark: /logo.jpg
-      light: /logo.jpg
-    title: Another cool feature
-    details: Lorem ipsum...
+      src: /icons/csdn.svg
+    title: Python斗罗
+    details: 博客代码笔记
+    link: https://codefly.blog.csdn.net/
+  - icon:
+      src: /spider.gif
+    title: ing
+    details: 学习爬虫ing~
+
 ---
+
+::: tip Why am I here?
+**难的从来不是学会，而是知道有这个东西，也就是突破你的信息茧房，然后才是去学习。**:spider:
+:::
