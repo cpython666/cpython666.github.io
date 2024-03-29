@@ -1,0 +1,1 @@
+import{_ as t,c as e,o as r,a4 as a}from"./chunks/framework.B5RDkS33.js";const f=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"站长介绍/index.md","filePath":"站长介绍/index.md"}'),o={name:"站长介绍/index.md"},n=a("",11),h=[n];function p(c,i,s,l,_,d){return r(),e("div",null,h)}const u=t(o,[["render",p]]);export{f as __pageData,u as default};
