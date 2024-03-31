@@ -61,6 +61,7 @@ export default defineConfig({
       'meta', 
       { name: 'referrer', content: 'no-referrer' }
     ],
+    // 谷歌统计
     // [
     //   'script',
     //   { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }
@@ -73,16 +74,24 @@ export default defineConfig({
     //   gtag('js', new Date());
     //   gtag('config', 'TAG_ID');`
     // ],
+    // 百度统计
+    // [
+    //   'script',
+    //   {},
+    //   `var _hmt = _hmt || [];
+    //   (function() {
+    //     var hm = document.createElement("script");
+    //     hm.src = "https://hm.baidu.com/hm.js?4febaf14d8d93b86f93e2dc8806a888c";
+    //     var s = document.getElementsByTagName("script")[0]; 
+    //     s.parentNode.insertBefore(hm, s);
+    //   })();`
+    // ],
     [
       'script',
       {},
-      `var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?4febaf14d8d93b86f93e2dc8806a888c";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();`
+      `
+    !function(p){"use strict";!function(t){var s=window,e=document,i=p,c="".concat("https:"===e.location.protocol?"https://":"http://","sdk.51.la/js-sdk-pro.min.js"),n=e.createElement("script"),r=e.getElementsByTagName("script")[0];n.type="text/javascript",n.setAttribute("charset","UTF-8"),n.async=!0,n.src=c,n.id="LA_COLLECT",i.d=n;var o=function(){s.LA.ids.push(i)};s.LA?s.LA.ids&&o():(s.LA=p,s.LA.ids=[],o()),r.parentNode.insertBefore(n,r)}()}({id:"3HxyEJbVZ8Mv2rgP",ck:"3HxyEJbVZ8Mv2rgP",hashMode:true});
+      `
     ],
     [
       'script',
@@ -90,7 +99,7 @@ export default defineConfig({
       `
       function runtime(){
         // 初始时间，日/月/年 时:分:秒
-        X = new Date("3/10/2022 24:00:00");
+        X = new Date("3/10/2022 15:32:00");
         Y = new Date();
         T = (Y.getTime()-X.getTime());
         M = 24*60*60*1000;
@@ -102,12 +111,12 @@ export default defineConfig({
         C = Math.floor((b-B)*60);
         D = Math.floor((c-C)*60);
         //信息写入到DIV中
-        document.getElementById("runtime").innerHTML = "星梦已启航: "+A+"天"+B+"小时"+C+"分"+D+"秒"
+        document.getElementById("runtime").innerHTML = "星梦已启航: "+"<font style='color:#FFA500;font-weight:bold'>"+A+"</font>"+"天"+"<font style='color:#8A2BE2;font-weight:bold'>"+B+"</font>"+"小时<font style='color:#1DBF97;font-weight:bold'>"+C+"</font>分<font style='color:#007EC6;font-weight:bold'>"+D+"</font>秒"
     }
     setInterval(runtime, 1000);
       `
     ],
-
+    // "<font style='color:#FFA500;font-weight:bold'>"+o+"</font> 天 <font style='color:#1DBF97;font-weight:bold'>"+i+"</font> 小时 <font style='color:#8A2BE2;font-weight:bold'>"+a+"</font> 分 <font style='color:#007EC6;font-weight:bold'>"+r+"</font> 
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
