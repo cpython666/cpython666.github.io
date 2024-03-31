@@ -33,7 +33,16 @@ let nav_tmp=[
       },
     ]
   },
-  { text: '前端', link: '/前端/' },
+  { text: '前端', 
+    items: [
+      { text: 'HTML', link: '/前端/html' },
+      { text: 'CSS', link: '/前端/css' },
+      { text: 'JS', link: '/前端/js' },
+      { text: 'JQuery', link: '/前端/jquery' },
+      { text: 'NodeJs', link: '/前端/nodejs' },
+
+    ]
+  },
   { 
     text: '站长介绍',
     items:[
@@ -153,8 +162,8 @@ export default defineConfig({
       text: "在 github 上编辑此页",
     },
     footer: {
-      message: `本站收录内容源自互联网，不对其网站内容或交易负责。|如有内容侵犯权益，请联系站长删除相关内容！`,
-      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>|<span id="runtime"></span>',
+      message: `本站收录内容源自互联网，不对其网站内容或交易负责。&ensp;|&ensp;如有内容侵犯权益，请联系站长删除相关内容！`,
+      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>&ensp;|&ensp;<span id="runtime"></span>',
     },
     docFooter: {
       prev: '上一篇',
