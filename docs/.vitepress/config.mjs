@@ -61,6 +61,53 @@ export default defineConfig({
       'meta', 
       { name: 'referrer', content: 'no-referrer' }
     ],
+    // [
+    //   'script',
+    //   { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }
+    // ],
+    // [
+    //   'script',
+    //   {},
+    //   `window.dataLayer = window.dataLayer || [];
+    //   function gtag(){dataLayer.push(arguments);}
+    //   gtag('js', new Date());
+    //   gtag('config', 'TAG_ID');`
+    // ],
+    [
+      'script',
+      {},
+      `var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4febaf14d8d93b86f93e2dc8806a888c";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();`
+    ],
+    [
+      'script',
+      {},
+      `
+      function runtime(){
+        // 初始时间，日/月/年 时:分:秒
+        X = new Date("3/10/2022 24:00:00");
+        Y = new Date();
+        T = (Y.getTime()-X.getTime());
+        M = 24*60*60*1000;
+        a = T/M;
+        A = Math.floor(a);
+        b = (a-A)*24;
+        B = Math.floor(b);
+        c = (b-B)*60;
+        C = Math.floor((b-B)*60);
+        D = Math.floor((c-C)*60);
+        //信息写入到DIV中
+        document.getElementById("runtime").innerHTML = "星梦已启航: "+A+"天"+B+"小时"+C+"分"+D+"秒"
+    }
+    setInterval(runtime, 1000);
+      `
+    ],
+
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -96,8 +143,8 @@ export default defineConfig({
       text: "在 github 上编辑此页",
     },
     footer: {
-      message: `本站收录内容源自互联网，不对其网站内容或交易负责。如有内容侵犯权益，请联系站长删除相关内容！`,
-      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>',
+      message: `本站收录内容源自互联网，不对其网站内容或交易负责。|如有内容侵犯权益，请联系站长删除相关内容！`,
+      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>|<span id="runtime"></span>',
     },
     docFooter: {
       prev: '上一篇',
