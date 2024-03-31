@@ -75,17 +75,18 @@ export default defineConfig({
     //   gtag('config', 'TAG_ID');`
     // ],
     // 百度统计
-    // [
-    //   'script',
-    //   {},
-    //   `var _hmt = _hmt || [];
-    //   (function() {
-    //     var hm = document.createElement("script");
-    //     hm.src = "https://hm.baidu.com/hm.js?4febaf14d8d93b86f93e2dc8806a888c";
-    //     var s = document.getElementsByTagName("script")[0]; 
-    //     s.parentNode.insertBefore(hm, s);
-    //   })();`
-    // ],
+    [
+      'script',
+      {},
+      `var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4febaf14d8d93b86f93e2dc8806a888c";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();`
+    ],
+    // 51.la统计
     [
       'script',
       {},
