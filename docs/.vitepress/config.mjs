@@ -5,6 +5,9 @@ let nav_tmp=[
     text: '主页',link: '/'
   },
   {
+    text: '资源导航',link: '/nav/'
+  },
+  {
     text: '爬虫',
     items: [
       { text: '学习路线', link: '/爬虫/学习路线' },
@@ -22,6 +25,12 @@ let nav_tmp=[
       { text: '学习指南', link: '/Python/学习指南' },
       { text: '买课指南', link: '/Python/买课指南' },
       { text: '视频源码', link: '/Python/视频源码' },
+      { text: '系列文章',
+        items:[
+          { text: 'Python设计模式', link: '/Python/系列文章/Python设计模式' },
+
+        ]
+      },
     ]
   },
   { text: '前端', link: '/前端/' },
@@ -30,6 +39,7 @@ let nav_tmp=[
     items:[
       { text: '站长介绍', link: '/站长介绍/' },
       { text: '团队介绍', link: '/站长介绍/团队介绍' },
+      { text: '开发日记', link: '/站长介绍/开发日记' },
     ]},
   { text: '浏览器书签', link: '/浏览器书签/' },
   { text: '支持', link: '/支持/' },
@@ -89,6 +99,10 @@ export default defineConfig({
       message: `本站收录内容源自互联网，不对其网站内容或交易负责。如有内容侵犯权益，请联系站长删除相关内容！`,
       copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>',
     },
+    docFooter: {
+      prev: '上一篇',
+      next: '下一篇',
+    },
     outlineTitle: "本页目录",
     lastUpdated: true,
     markdown: {
@@ -101,10 +115,10 @@ export default defineConfig({
     search: {
       provider: 'local'
     },
-    carbonAds: {
-      code: '广告',
-      placement: '广告'
-    }
+    // carbonAds: {
+    //   code: '广告',
+    //   placement: '广告'
+    // }
     
   }
 })
