@@ -13,6 +13,7 @@ const scrollToCategory = (index) => {
 		<div class="h2" v-for="(sites,index) in navigationData" :key="index" @click="scrollToCategory(index)">{{ sites.title }}</div>
 	</div>
 	<div>
+		<div><a href="https://spiderbox.cn/#" target=“_blank”>资源链接来源于《虫盒》</a></div>
 		<WebLink :datalist="navigationData"/>
 	</div>
 </div>

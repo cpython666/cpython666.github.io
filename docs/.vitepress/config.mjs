@@ -15,6 +15,7 @@ let nav_tmp=[
       { text: '学习指南', link: '/爬虫/学习指南' },
       { text: '买课指南', link: '/爬虫/买课指南' },
       { text: '视频源码', link: '/爬虫/视频源码' },
+      { text: '练手网站', link: '/爬虫/练手网站' },
     ]
   },
   { 
@@ -68,6 +69,7 @@ export default defineConfig({
     ],
     // <meta name="google-site-verification" content="0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU" />
     // 谷歌搜索站点验证头标签
+    // 未成功。。。
     [
       'meta', 
       { name: 'google-site-verification', content: '0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU' }
