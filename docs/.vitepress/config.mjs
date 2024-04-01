@@ -66,6 +66,12 @@ export default defineConfig({
       'link', 
       { rel: 'icon', href: '/logo.jpg' }
     ],
+    // <meta name="google-site-verification" content="0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU" />
+    // 谷歌搜索站点验证头标签
+    [
+      'meta', 
+      { name: 'google-site-verification', content: '0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU' }
+    ],
     [
       'meta', 
       { name: 'referrer', content: 'no-referrer' }
