@@ -11,9 +11,12 @@ hero:
     alt: 星梦启航
   actions:
     - theme: brand
+      text: 资源导航
+      link: /nav/
+    - theme: alt
       text: 爬虫
       link: /爬虫/学习路线
-    - theme: alt
+    - theme: brand
       text: Python
       link: /Python/学习路线
 features:

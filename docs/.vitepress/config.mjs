@@ -16,6 +16,12 @@ let nav_tmp=[
       { text: '买课指南', link: '/爬虫/买课指南' },
       { text: '视频源码', link: '/爬虫/视频源码' },
       { text: '练手网站', link: '/爬虫/练手网站' },
+      { text: '系列文章',
+      items:[
+        { text: '常用hook代码片段', link: '/爬虫/系列文章/常用hook代码片段' },
+
+      ]
+    },
     ]
   },
   { 
@@ -29,6 +35,7 @@ let nav_tmp=[
       { text: '系列文章',
         items:[
           { text: 'Python设计模式', link: '/Python/系列文章/Python设计模式' },
+          { text: 'PyQt6实战开发之旅', link: '/Python/系列文章/PyQt6实战开发之旅' },
 
         ]
       },
