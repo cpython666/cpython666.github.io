@@ -5,6 +5,9 @@ let nav_tmp=[
     text: '主页',link: '/'
   },
   {
+    text: '爬虫工具',link: '/tools/'
+  },
+  {
     text: '资源导航',link: '/nav/'
   },
   {

@@ -6,6 +6,10 @@
 
 # ![PyQt6实战开发之旅.png](https://cdn.nlark.com/yuque/0/2023/png/38536969/1700992326629-1751928f-a81b-4a11-b416-b3cfab22c329.png#averageHue=%23141f2f&clientId=u445f37d0-f369-4&from=drop&id=u2b8770dd&originHeight=1440&originWidth=1920&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=2352480&status=done&style=none&taskId=u95f201a3-045b-4313-9be8-a3eb3f3bf84&title=)
 
+# 视频教程
+
+该专栏教程附带免费视频教程：[PyQt6实战开发之旅专栏](https://space.bilibili.com/1909782963/channel/collectiondetail?sid=1874891)
+
 <a name="tu089"></a>
 
 # 学习感悟
