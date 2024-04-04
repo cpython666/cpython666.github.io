@@ -5,7 +5,7 @@ let nav_tmp=[
     text: '主页',link: '/'
   },
   {
-    text: '爬虫工具',link: '/tools/'
+    text: '工具',link: '/爬虫工具箱/'
   },
   {
     text: '资源导航',link: '/nav/'

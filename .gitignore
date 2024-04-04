@@ -1,5 +1,5 @@
 node_modules
 cache
 .idea
-docs/nav/
-docs/tools/
+# docs/nav/
+# docs/tools/
