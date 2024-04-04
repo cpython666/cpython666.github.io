@@ -17,6 +17,9 @@ hero:
       text: 爬虫
       link: /爬虫/学习路线
     - theme: brand
+      text: 爬虫工具箱
+      link: /爬虫工具箱/
+    - theme: alt
       text: Python
       link: /Python/学习路线
 features:
