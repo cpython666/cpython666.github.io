@@ -1,56 +1,86 @@
 <template>
-	<h3>{{ PanelTitle }}</h3>
-	<div class="main">
+	<div>
+	  <h3>{{ panelTitle }}</h3>
+	  <div class="input-container">
+		<el-input
+		  v-model="inputText"
+		  class="input"
+		  type="textarea"
+		  placeholder="请输入要编码/解码的文字"
+		/>
+	  </div>
+	  <div class="output-container">
 		<div>
-			<textarea class="custom-textarea" v-model="inputText" placeholder="输入要编码的文本"></textarea>
+			<div class="hint">编码后的文字</div>
+
+			<el-input
+		  v-model="encodedText"
+		  class="output"
+		  :autosize="{ minRows: 6, maxRows: 10 }"
+		  type="textarea"
+		  placeholder="编码后的文字"
+		/>
 		</div>
-		<div class="btnlist">
-			<button class="custom-button" @click="encodeURL">编码</button>
-			<button class="custom-button" @click="decodeURL">解码</button>
-		</div>
-		<div>
-			<textarea class="custom-textarea ">{{ encodedText }}</textarea>
-		</div>
+<div>
+	<div class="hint">解码后的文字</div>
+	<el-input
+		  v-model="decodedText"
+		  class="output"
+		  :autosize="{ minRows: 6, maxRows: 10 }"
+		  type="textarea"
+		  placeholder="解码后的文字"
+		/>
+</div>
+
+	  </div>
 	</div>
-
-</template>
-
-<script setup>
-import { ref } from 'vue'
-const PanelTitle = ref('Url编码解码');
-const inputText = ref('');
-const encodedText = ref('');
-function encodeURL() {
+  </template>
+  
+  <script setup>
+  import { ref, watch } from 'vue';
+  
+  const panelTitle = ref('URL 编码解码');
+  const inputText = ref('');
+  const encodedText = ref('');
+  const decodedText = ref('');
+  
+  // 监听 inputText 的变化，实时更新编码和解码的结果
+  watch(inputText, () => {
+	encodeURL();
+	decodeURL();
+  });
+  
+  function encodeURL() {
 	encodedText.value = encodeURIComponent(inputText.value);
-}
-function decodeURL() {
-	encodedText.value = decodeURIComponent(inputText.value);
-}
-</script>
-
-<style scoped>
-.btnlist{
-	display: flex;
-	flex-direction: column;
-}
-.main{
-	display: flex;
+  }
+  
+  function decodeURL() {
+	decodedText.value = decodeURIComponent(inputText.value);
+  }
+  </script>
+  
+  <style scoped>
+  .input-container {
+	margin-bottom: 20px;
+  }
+  
+  .input {
 	width: 100%;
-}
-.custom-textarea {
-  min-width: 500px; /* 设置宽度 */
-  min-height: 50vh; /* 设置高度 */
-  padding: 10px; /* 设置内边距 */
-  background-color: rgb(211, 247, 225);
-}
-.custom-button{
-	width: 80px;
-	padding: 5px 8px;
-	background-color: antiquewhite;
-	transition: all 0.3s ease;
-}
-.custom-button:hover{
-	background-color: rgb(230, 141, 25);
-	transform: scale(1.05);
-}
-</style>
+  }
+  
+  .output-container {
+	display: flex;
+  }
+  
+  .output {
+	flex: 1;
+	margin-left: 10px;
+  }
+  
+  .hint {
+	color: #666;
+	font-size: 14px;
+	margin-top: 5px;
+  }
+  </style>
+  

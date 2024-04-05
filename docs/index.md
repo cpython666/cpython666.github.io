@@ -12,7 +12,7 @@ hero:
   actions:
     - theme: brand
       text: 资源导航
-      link: /nav/
+      link: /资源导航/
     - theme: alt
       text: 爬虫
       link: /爬虫/学习路线

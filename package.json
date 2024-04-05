@@ -6,5 +6,8 @@
     "docs:dev": "vitepress dev docs --port 8080",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs --port 80"
+  },
+  "dependencies": {
+    "element-plus": "^2.6.3"
   }
 }

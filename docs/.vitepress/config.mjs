@@ -8,7 +8,7 @@ let nav_tmp=[
     text: '工具',link: '/爬虫工具箱/'
   },
   {
-    text: '资源导航',link: '/nav/'
+    text: '资源导航',link: '/资源导航/'
   },
   {
     text: '爬虫',
@@ -51,19 +51,20 @@ let nav_tmp=[
       { text: 'JS', link: '/前端/js' },
       { text: 'JQuery', link: '/前端/jquery' },
       { text: 'NodeJs', link: '/前端/nodejs' },
-
     ]
   },
   { 
-    text: '站长介绍',
+    text: '网站相关',
     items:[
       { text: '站长介绍', link: '/站长介绍/' },
       { text: '团队介绍', link: '/站长介绍/团队介绍' },
+      { text: '开发日记', link: '/站长介绍/开发缘由' },
       { text: '开发日记', link: '/站长介绍/开发日记' },
+      { text: '交流群', link: '/站长介绍/交流群' },
+      { text: '支持', link: '/站长介绍/支持' },
     ]},
   { text: '浏览器书签', link: '/浏览器书签/' },
   { text: '支持', link: '/支持/' },
-  { text: '开发历程', link: '/开发历程/' },
 
 ]
 

@@ -2,19 +2,17 @@
 	<div class="navigation">
 		<div v-for="(category, index) in categories" :key="index" class="category">
 			<div class="title-box">
-				<div class="h2">{{ category.title }}</div>
-				<button @click="scrollToTop">回到顶部</button>
+				<div class="h2" :id="category.title">{{ category.title }}</div>
 			</div>
-
 			<div class="sites">
 				<div v-for="(site, sIndex) in category.items" :key="sIndex" class="site"
 					@mouseover="site.showTooltip = true" @mouseleave="site.showTooltip = false">
-					<div class="card" :title="site.desc" 
-						@mouseover="showQRCode(site, data)" @mouseleave="hideQRCode(site)">
-						<a :href="site.type === undefined?site.link:''" class="site-link">
+					<div class="card" :title="site.desc" @mouseover="showQRCode(site, data)"
+						@mouseleave="hideQRCode(site)">
+						<a :href="site.type === undefined ? site.link : ''" class="site-link">
 							<div class="card-head">
 								<img :src="site.icon" class="site-icon" :alt="site.title">
-							<div class="h4">{{ site.title }}</div>
+								<div class="h4">{{ site.title }}</div>
 							</div>
 							<div class="site-info">
 								<div class="desc">{{ site.desc }}</div>
@@ -28,7 +26,6 @@
 						<div class="triangle"></div> <!-- 用于显示三角形指示器 -->
 						<div class="content">
 							{{ site.desc }}
-
 						</div>
 					</div>
 				</div>
@@ -48,16 +45,13 @@ export default {
 		}
 	},
 	setup(props) {
-		const scrollToTop = () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
 		const categories = reactive(props.datalist.map(item => ({
 			...item,
 			showQR: false,
 			showTooltip: false,
 		})));
 		const showQRCode = (site) => {
-			if(site.type === 'qrcode'){
+			if (site.type === 'qrcode') {
 				site.showQR = true;
 			}
 		}
@@ -68,37 +62,39 @@ export default {
 			categories,
 			showQRCode,
 			hideQRCode,
-			scrollToTop
 		};
 	}
 };
 </script>
 <style scoped>
 button {
-  padding: 5px 8px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
+	padding: 5px 8px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
 }
 
 button:hover {
-  background-color: #0056b3;
+	background-color: #0056b3;
 }
-.title-box{
+
+.title-box {
 	display: flex;
 }
+
 .desc {
 	text-indent: 2em;
 	width: 100%;
 	font-size: 12px;
 	text-overflow: ellipsis;
-    overflow: hidden;
+	overflow: hidden;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2; /* 设置显示的行数 */
+	-webkit-line-clamp: 2;
+	/* 设置显示的行数 */
 }
 
 .tooltip {
@@ -190,7 +186,7 @@ p {
 
 .site {
 	width: 175px;
-    margin: 6px 6px 6px 12px;
+	margin: 6px 6px 6px 12px;
 	padding: 8px;
 	transition: transform 0.3s ease-in-out;
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
@@ -211,15 +207,18 @@ p {
 	text-decoration: none;
 	color: inherit;
 }
-.card-head{
+
+.card-head {
 	width: 100%;
 	display: flex;
 	font-size: 14px;
 }
+
 .site-icon {
 	width: 20px;
 	height: 20px;
 	margin-right: 10px;
+	border-radius: 2px;
 }
 
 .site-info {

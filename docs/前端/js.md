@@ -119,3 +119,31 @@ list.sort((a, b) => {
   return a - b // 升序
 })
 ```
+
+### 回到顶部
+```javascript
+const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+};
+```
+
+### 锚点
+```javascript
+const scrollToAnchor = (anchor) => {
+	const target = document.querySelector(anchor);
+	if (target) {
+		target.scrollIntoView({ behavior: 'smooth' });
+	}
+}
+```
+### 锚点被导航栏覆盖
+```javascript
+const scrollToAnchor = (anchor) => {
+    const target = document.querySelector(anchor);
+    if (target) {
+        const navHeight = document.querySelector('header').offsetHeight; // 获取导航栏的高度
+        const offset = target.getBoundingClientRect().top - navHeight; // 计算滚动偏移量
+        window.scrollTo({ top: offset, behavior: 'smooth' }); // 滚动到目标位置
+    }
+}
+```
