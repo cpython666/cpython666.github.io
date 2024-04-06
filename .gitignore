@@ -3,3 +3,4 @@ cache
 .idea
 # docs/nav/
 # docs/tools/
+tmp/
