@@ -38,7 +38,8 @@ let nav_tmp=[
         items:[
           { text: 'Python设计模式', link: '/Python/系列文章/Python设计模式' },
           { text: 'PyQt6实战开发之旅', link: '/Python/系列文章/PyQt6实战开发之旅' },
-
+          { text: '探索SimpleUI：让Django Admin焕发现代光彩', link: '/Python/系列文章/探索SimpleUI：让Django Admin焕发现代光彩' },
+          
         ]
       },
     ]
