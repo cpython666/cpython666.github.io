@@ -9,7 +9,7 @@
 					@mouseover="site.showTooltip = true" @mouseleave="site.showTooltip = false">
 					<div class="card" :title="site.desc" @mouseover="showQRCode(site, data)"
 						@mouseleave="hideQRCode(site)">
-						<a :href="site.type === undefined ? site.link : ''" class="site-link">
+						<a :href="site.type === undefined ? site.link : ''" class="site-link" target="_blank">
 							<div class="card-head">
 								<img :src="site.icon" class="site-icon" :alt="site.title">
 								<div class="h4">{{ site.title }}</div>
