@@ -29,9 +29,9 @@ const scrollToAnchor = (anchor) => {
 	<div class="page">
 		<div class="nav">
 			<el-affix :offset="5">
-				<el-scrollbar height="100vh" width="100%">
+				<el-scrollbar height="100vh">
 					<el-link type="primary" v-for="(sites, index) in navigationData" :key="index"
-						@click="scrollToAnchor('#' + sites.title)" style="width: 100%;">{{ sites.title }}</el-link>
+						@click="scrollToAnchor('#' + sites.title)">{{ sites.title }}</el-link>
 				</el-scrollbar>
 			</el-affix>
 		</div>
@@ -43,14 +43,24 @@ const scrollToAnchor = (anchor) => {
 </template>
 
 <style scoped>
+.nav{
+	padding: 0px 5px;
+}
 .el-scrollbar {
 	overflow: visible !important;
 }
-
-
 .el-link {
-	margin-right: 8px;
+	margin:0px 8px;
+	padding: 2px 5px;
 	text-decoration: none;
+	transition: all 0.3s ease;
+	color: black;
+	border: 1px  rgb(20, 143, 243) solid;
+}
+.el-link:hover {
+background-color: rgb(20, 143, 243);
+color: white;
+transform: scale(1.05);
 }
 
 .el-link .el-icon--right.el-icon {

@@ -1,177 +1,189 @@
 export const navigationData = [
 	{
-	  title: '主站推荐',
-	  items: [
-		{
-		  icon: '/logo.jpg',
-		  title: '星梦起航',
-		  type:'qrcode',
-		  qrcode:'/qrcode/zsxq.jpg',
-		  desc: 'Python斗罗的知识星球',
-		  link: '',
-		},
-		{
-		  icon: '/icons/python.png',
-		  title: 'Python斗罗',
-		  desc: 'Python斗罗运营的公众号',
-		  type:'qrcode',
-		  qrcode:'/qrcode/wxgzh.jpg',
-		  link: '',
-		},
-		{
-			icon: '/icons/github.svg',
-			title: 'cpython666',
-			desc: 'Python斗罗的代码仓库',
-			link: 'https://github.com/cpython666',
-		  },
-		  {
-			icon: '/icons/csdn.svg',
-			title: 'Python斗罗',
-			desc: 'Python斗罗的博客',
-			link: 'https://codefly.blog.csdn.net/',
-		  },
-	  ]
+		title: '主站推荐',
+		items: [
+			{
+				icon: '/logo.jpg',
+				title: '星梦起航',
+				type: 'qrcode',
+				qrcode: '/qrcode/zsxq.jpg',
+				desc: 'Python斗罗的知识星球',
+				link: '',
+			},
+			{
+				icon: '/icons/python.png',
+				title: 'Python斗罗',
+				desc: 'Python斗罗运营的公众号',
+				type: 'qrcode',
+				qrcode: '/qrcode/wxgzh.jpg',
+				link: '',
+			},
+			{
+				icon: '/icons/github.svg',
+				title: 'cpython666',
+				desc: 'Python斗罗的代码仓库',
+				link: 'https://github.com/cpython666',
+			},
+			{
+				icon: '/icons/csdn.svg',
+				title: 'Python斗罗',
+				desc: 'Python斗罗的博客',
+				link: 'https://codefly.blog.csdn.net/',
+			},
+		]
 	},
 	{
-	  title: '文档资料',
-	  items: [
-		{
-			"link": "https://docs.python.org/",
-			"icon": "/logos/python.png",
-			"title": "Python 官方文档",
-			"desc": "Python 官方文档"
-		},
-		{
-			"link": "https://go.dev/doc/",
-			"icon": "/logos/go.png",
-			"title": "Golang 官方文档",
-			"desc": "Golang 官方文档。"
-		},
-		{
-			"link": "https://docs.oracle.com/en/java/",
-			"icon": "/logos/java.png",
-			"title": "Java 官方文档",
-			"desc": "Java 官方文档。"
-		},
-		{
-			"link": "https://magic.iswbm.com/",
-			"icon": "/logos/iswbm.jpg",
-			"title": "Python 黑魔法手册",
-			"desc": "Python 黑魔法手册。"
-		},
-		{
-			"link": "https://fastapi.tiangolo.com/",
-			"icon": "/logos/fastapi.png",
-			"title": "FastApi 官方文档",
-			"desc": "FastApi 官方文档。"
-		},
-		{
-			"link": "https://pm2.keymetrics.io/docs/usage/quick-start/",
-			"icon": "/logos/pm2.png",
-			"title": "PM2 官方文档",
-			"desc": "PM2 守护进程管理器官方文档。"
-		},
-		{
-			"link": "https://developer.mozilla.org/docs/Web/API",
-			"icon": "/logos/mozilla.png",
-			"title": "MDN Web API",
-			"desc": "Web API 接口参考。"
-		},
-		{
-			"link": "https://developer.android.com/reference",
-			"icon": "/logos/android.png",
-			"title": "Android API",
-			"desc": "Android API 参考。"
-		},
-		{
-			"link": "https://nodejs.org/api/",
-			"icon": "/logos/nodejs.png",
-			"title": "NodeJS 官方文档",
-			"desc": "NodeJS 官方文档。"
-		},
-		{
-			"link": "https://frida.re/docs/",
-			"icon": "/logos/frida.png",
-			"title": "Frida 官方文档",
-			"desc": "Frida 官方文档。"
-		},
-		{
-			"link": "https://adbshell.com/",
-			"icon": "/logos/adbshell.png",
-			"title": "ADB Shell",
-			"desc": "Android ADB 命令手册。"
-		},
-		{
-			"link": "https://www.linuxcool.com/",
-			"icon": "/logos/linuxcool.png",
-			"title": "Linux Cool",
-			"desc": "Linux 命令手册。"
-		},
-		{
-			"link": "https://babel.dev/docs/",
-			"icon": "/logos/babel.png",
-			"title": "Babel 官方文档",
-			"desc": "Babel 官方文档。"
-		},
-		{
-			"link": "https://easings.net/",
-			"icon": "/logos/easings.png",
-			"title": "Easing functions",
-			"desc": "缓动函数表，可基于此类函数生成滑动轨迹。"
-		},
-		{
-			"link": "https://pandas.pydata.org/docs/",
-			"icon": "/logos/pandas.png",
-			"title": "Pandas 官方文档",
-			"desc": "Pandas 官方文档。"
-		},
-		{
-			"link": "https://numpy.org/",
-			"icon": "/logos/numpy.png",
-			"title": "NumPy 官方文档",
-			"desc": "NumPy 官方文档。"
-		},
-		{
-			"link": "https://matplotlib.org/",
-			"icon": "/logos/matplotlib.png",
-			"title": "Matplotlib 官方文档",
-			"desc": "Matplotlib 官方文档。"
-		},
-		{
-			"link": "https://quickref.me/",
-			"icon": "/logos/quickref.png",
-			"title": "QuickRef",
-			"desc": "QuickRef，快速查阅各种编程语言、工具、数据库、键盘快捷键等基础用法。"
-		},
-		{
-			"link": "https://prometheus.io/docs/",
-			"icon": "/logos/prometheus.png",
-			"title": "Prometheus 官方文档",
-			"desc": "Prometheus 开源监控系统官方文档。"
-		},
-		{
-			"link": "https://docs.docker.com/",
-			"icon": "/logos/docker.png",
-			"title": "Docker 官方文档",
-			"desc": "Docker 官方文档。"
-		},
-		{
-			"link": "https://pycharm.iswbm.com/",
-			"icon": "/logos/iswbm.jpg",
-			"title": "PyCharm 中文指南",
-			"desc": "PyCharm 中文指南。"
-		},
-		{
-			"link": "https://github.com/cdoco/common-regex",
-			"icon": "/logos/commonregex.png",
-			"title": "common-regex",
-			"desc": "常用正则表达式。"
-		},
-	  ]
+		title: '前端',
+		items: [
+			{
+				icon: '/logos/electron.svg',
+				title: 'Electron',
+				desc: '使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。',
+				link: 'https://www.electronjs.org/zh/',
+				category:['前端','桌面端']
+			},
+		]
 	},
 	{
-		title:'在线工具',
-		items:[
+		title: '文档资料',
+		items: [
+			{
+				"link": "https://docs.python.org/",
+				"icon": "/logos/python.png",
+				"title": "Python 官方文档",
+				"desc": "Python 官方文档"
+			},
+			{
+				"link": "https://go.dev/doc/",
+				"icon": "/logos/go.png",
+				"title": "Golang 官方文档",
+				"desc": "Golang 官方文档。"
+			},
+			{
+				"link": "https://docs.oracle.com/en/java/",
+				"icon": "/logos/java.png",
+				"title": "Java 官方文档",
+				"desc": "Java 官方文档。"
+			},
+			{
+				"link": "https://magic.iswbm.com/",
+				"icon": "/logos/iswbm.jpg",
+				"title": "Python 黑魔法手册",
+				"desc": "Python 黑魔法手册。"
+			},
+			{
+				"link": "https://fastapi.tiangolo.com/",
+				"icon": "/logos/fastapi.png",
+				"title": "FastApi 官方文档",
+				"desc": "FastApi 官方文档。"
+			},
+			{
+				"link": "https://pm2.keymetrics.io/docs/usage/quick-start/",
+				"icon": "/logos/pm2.png",
+				"title": "PM2 官方文档",
+				"desc": "PM2 守护进程管理器官方文档。"
+			},
+			{
+				"link": "https://developer.mozilla.org/docs/Web/API",
+				"icon": "/logos/mozilla.png",
+				"title": "MDN Web API",
+				"desc": "Web API 接口参考。"
+			},
+			{
+				"link": "https://developer.android.com/reference",
+				"icon": "/logos/android.png",
+				"title": "Android API",
+				"desc": "Android API 参考。"
+			},
+			{
+				"link": "https://nodejs.org/api/",
+				"icon": "/logos/nodejs.png",
+				"title": "NodeJS 官方文档",
+				"desc": "NodeJS 官方文档。"
+			},
+			{
+				"link": "https://frida.re/docs/",
+				"icon": "/logos/frida.png",
+				"title": "Frida 官方文档",
+				"desc": "Frida 官方文档。"
+			},
+			{
+				"link": "https://adbshell.com/",
+				"icon": "/logos/adbshell.png",
+				"title": "ADB Shell",
+				"desc": "Android ADB 命令手册。"
+			},
+			{
+				"link": "https://www.linuxcool.com/",
+				"icon": "/logos/linuxcool.png",
+				"title": "Linux Cool",
+				"desc": "Linux 命令手册。"
+			},
+			{
+				"link": "https://babel.dev/docs/",
+				"icon": "/logos/babel.png",
+				"title": "Babel 官方文档",
+				"desc": "Babel 官方文档。"
+			},
+			{
+				"link": "https://easings.net/",
+				"icon": "/logos/easings.png",
+				"title": "Easing functions",
+				"desc": "缓动函数表，可基于此类函数生成滑动轨迹。"
+			},
+			{
+				"link": "https://pandas.pydata.org/docs/",
+				"icon": "/logos/pandas.png",
+				"title": "Pandas 官方文档",
+				"desc": "Pandas 官方文档。"
+			},
+			{
+				"link": "https://numpy.org/",
+				"icon": "/logos/numpy.png",
+				"title": "NumPy 官方文档",
+				"desc": "NumPy 官方文档。"
+			},
+			{
+				"link": "https://matplotlib.org/",
+				"icon": "/logos/matplotlib.png",
+				"title": "Matplotlib 官方文档",
+				"desc": "Matplotlib 官方文档。"
+			},
+			{
+				"link": "https://quickref.me/",
+				"icon": "/logos/quickref.png",
+				"title": "QuickRef",
+				"desc": "QuickRef，快速查阅各种编程语言、工具、数据库、键盘快捷键等基础用法。"
+			},
+			{
+				"link": "https://prometheus.io/docs/",
+				"icon": "/logos/prometheus.png",
+				"title": "Prometheus 官方文档",
+				"desc": "Prometheus 开源监控系统官方文档。"
+			},
+			{
+				"link": "https://docs.docker.com/",
+				"icon": "/logos/docker.png",
+				"title": "Docker 官方文档",
+				"desc": "Docker 官方文档。"
+			},
+			{
+				"link": "https://pycharm.iswbm.com/",
+				"icon": "/logos/iswbm.jpg",
+				"title": "PyCharm 中文指南",
+				"desc": "PyCharm 中文指南。"
+			},
+			{
+				"link": "https://github.com/cdoco/common-regex",
+				"icon": "/logos/commonregex.png",
+				"title": "common-regex",
+				"desc": "常用正则表达式。"
+			},
+		]
+	},
+	{
+		title: '在线工具',
+		items: [
 			{
 				"link": "https://spidertools.cn/",
 				"icon": "/logos/spidertools.png",
@@ -253,8 +265,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'抓包工具',
-		items:[
+		title: '抓包工具',
+		items: [
 			{
 				"link": "https://www.telerik.com/fiddler",
 				"icon": "/logos/fiddler.png",
@@ -336,8 +348,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'接口调试',
-		items:[
+		title: '接口调试',
+		items: [
 			{
 				"link": "https://www.postman.com/",
 				"icon": "/logos/postman.png",
@@ -371,8 +383,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'监控管理',
-		items:[
+		title: '监控管理',
+		items: [
 			{
 				"link": "https://www.crawlab.cn/",
 				"icon": "/logos/crawlab.png",
@@ -425,8 +437,8 @@ export const navigationData = [
 	},
 
 	{
-		title:'其他工具',
-		items:[
+		title: '其他工具',
+		items: [
 			{
 				"link": "https://github.com/pppscn/SmsForwarder",
 				"icon": "/logos/smsforwarder.png",
@@ -472,8 +484,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'效率工具',
-		items:[
+		title: '效率工具',
+		items: [
 			{
 				"link": "https://www.tampermonkey.net/",
 				"icon": "/logos/tampermonkey.png",
@@ -615,8 +627,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'调试运行',
-		items:[
+		title: '调试运行',
+		items: [
 			{
 				"link": "https://github.com/doloopwhile/PyExecJS",
 				"icon": "/logos/github.png",
@@ -716,8 +728,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'代码混淆',
-		items:[
+		title: '代码混淆',
+		items: [
 			{
 				"link": "https://www.obfuscator.io/",
 				"icon": "/logos/obfuscator.png",
@@ -799,8 +811,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'指纹相关',
-		items:[
+		title: '指纹相关',
+		items: [
 			{
 				"link": "https://github.com/daisixuan/r0chrome",
 				"icon": "/logos/r0chrome.jpg",
@@ -924,8 +936,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'环境框架',
-		items:[
+		title: '环境框架',
+		items: [
 			{
 				"link": "https://github.com/ylw00/qxVm",
 				"icon": "/logos/github.png",
@@ -959,8 +971,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'自动化/RPC',
-		items:[
+		title: '自动化/RPC',
+		items: [
 			{
 				"link": "https://github.com/yint-tech/sekiro-open",
 				"icon": "/logos/sekiro.png",
@@ -1084,8 +1096,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'脱壳工具',
-		items:[
+		title: '脱壳工具',
+		items: [
 			{
 				"link": "https://github.com/hluwa/frida-dexdump",
 				"icon": "/logos/github.png",
@@ -1119,8 +1131,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'Hook工具',
-		items:[
+		title: 'Hook工具',
+		items: [
 			{
 				"link": "https://github.com/rovo89/Xposed",
 				"icon": "/logos/xposed.png",
@@ -1160,8 +1172,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'APP 反编译',
-		items:[
+		title: 'APP 反编译',
+		items: [
 			{
 				"link": "https://github.com/Jermic/Android-Crack-Tool",
 				"icon": "/logos/github.png",
@@ -1243,8 +1255,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'APP 其他',
-		items:[
+		title: 'APP 其他',
+		items: [
 			{
 				"link": "https://github.com/topjohnwu/Magisk",
 				"icon": "/logos/Magisk.png",
@@ -1278,8 +1290,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'小程序反编译',
-		items:[
+		title: '小程序反编译',
+		items: [
 			{
 				"link": "https://github.com/geilige/wxappUnpacker",
 				"icon": "/logos/github.png",
@@ -1307,8 +1319,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'打码平台',
-		items:[
+		title: '打码平台',
+		items: [
 			{
 				"link": "https://console.jfbym.com/register/TG17764",
 				"icon": "/logos/jfbym.png",
@@ -1414,8 +1426,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'开源识别',
-		items:[
+		title: '开源识别',
+		items: [
 			{
 				"link": "https://github.com/sml2h3/ddddocr",
 				"icon": "/logos/github.png",
@@ -1491,8 +1503,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'轨迹相关',
-		items:[
+		title: '轨迹相关',
+		items: [
 			{
 				"link": "https://github.com/Xetera/ghost-cursor",
 				"icon": "/logos/ghost-cursor.jpg",
@@ -1532,8 +1544,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'国内防护',
-		items:[
+		title: '国内防护',
+		items: [
 			{
 				"link": "https://www.geetest.com/",
 				"icon": "/logos/geetest.png",
@@ -1615,8 +1627,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'国际防护',
-		items:[
+		title: '国际防护',
+		items: [
 			{
 				"link": "https://www.kasada.io/",
 				"icon": "/logos/kasada.png",
@@ -1704,8 +1716,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'国内代理',
-		items:[
+		title: '国内代理',
+		items: [
 			{
 				"link": "https://www.qg.net/product/proxyip.html?source=spiderbox",
 				"icon": "/logos/qg.jpg",
@@ -1769,8 +1781,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'国际代理',
-		items:[
+		title: '国际代理',
+		items: [
 			{
 				"link": "https://get.brightdata.com/17arn8",
 				"icon": "/logos/brightdata.png",
@@ -1846,8 +1858,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'优质项目',
-		items:[
+		title: '优质项目',
+		items: [
 			{
 				"link": "https://github.com/darbra/sperm",
 				"icon": "/logos/github.png",
@@ -1929,8 +1941,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'优质博主',
-		items:[
+		title: '优质博主',
+		items: [
 			{
 				"link": "javascript:",
 				"icon": "/logos/gh_b056d127ad86.jpg",
@@ -2372,8 +2384,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'交流论坛',
-		items:[
+		title: '交流论坛',
+		items: [
 			{
 				"link": "https://bbs.kanxue.com/",
 				"icon": "/logos/kanxue.png",
@@ -2449,8 +2461,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'国外论坛',
-		items:[
+		title: '国外论坛',
+		items: [
 
 			{
 				"link": "https://substack.thewebscraping.club/",
@@ -2461,9 +2473,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'练习平台',
-		items:[
-
+		title: '练习平台',
+		items: [
 			// {
 			// 	"link": "https://match.yuanrenxue.cn/",
 			// 	"icon": "/logos/yuanrenxue.jpg",
@@ -2529,19 +2540,19 @@ export const navigationData = [
 	// {
 	// 	title:'知识付费',
 	// 	items:[
-			// {
-			// 	"link": "https://shop45147253.m.youzan.com/wscgoods/detail/2okabph85ypv1",
-			// 	"icon": "/logos/yuanrenxue.jpg",
-			// 	"title": "猿人学爬虫逆向进阶课",
-			// 	"desc": "联系站长可获取内部优惠价，一次付费，终身免费更新，附带工作内推、线下见面会、模拟面试等，内容涉及 JS 逆向、APP 逆向、机器学习验证码等。"
-			// },
+	// {
+	// 	"link": "https://shop45147253.m.youzan.com/wscgoods/detail/2okabph85ypv1",
+	// 	"icon": "/logos/yuanrenxue.jpg",
+	// 	"title": "猿人学爬虫逆向进阶课",
+	// 	"desc": "联系站长可获取内部优惠价，一次付费，终身免费更新，附带工作内推、线下见面会、模拟面试等，内容涉及 JS 逆向、APP 逆向、机器学习验证码等。"
+	// },
 
-			// {
-			// 	"link": "https://shop45147253.m.youzan.com/wscgoods/detail/361rmliyhfwr184",
-			// 	"icon": "/logos/yuanrenxue.jpg",
-			// 	"title": "猿人学零基础到爬虫进阶",
-			// 	"desc": "联系站长可获取内部优惠价，一次付费，终身免费更新，附带工作内推、线下见面会、模拟面试等，内容 Python 基础、爬虫基础、JS 基础、JS 逆向、APP 逆向、机器学习验证码等。"
-			// },
+	// {
+	// 	"link": "https://shop45147253.m.youzan.com/wscgoods/detail/361rmliyhfwr184",
+	// 	"icon": "/logos/yuanrenxue.jpg",
+	// 	"title": "猿人学零基础到爬虫进阶",
+	// 	"desc": "联系站长可获取内部优惠价，一次付费，终身免费更新，附带工作内推、线下见面会、模拟面试等，内容 Python 基础、爬虫基础、JS 基础、JS 逆向、APP 逆向、机器学习验证码等。"
+	// },
 	// 		{
 	// 			"link": "https://appli0n8byd8759.h5.xiaoeknow.com/p/decorate/homepage",
 	// 			"icon": "/logos/r1ysue.jpg",
@@ -2581,8 +2592,8 @@ export const navigationData = [
 	// 	]
 	// },
 	{
-		title:'AI 聊天对话',
-		items:[
+		title: 'AI 聊天对话',
+		items: [
 
 			{
 				"link": "https://chat.openai.com/",
@@ -2647,8 +2658,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'AI 代码编程',
-		items:[
+		title: 'AI 代码编程',
+		items: [
 			{
 				"link": "https://copilot.github.com/",
 				"icon": "/logos/copilot.png",
@@ -2688,8 +2699,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'AI 图像绘画',
-		items:[
+		title: 'AI 图像绘画',
+		items: [
 
 			{
 				"link": "https://www.midjourney.com/",
@@ -2760,8 +2771,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title:'AI 文档办公',
-		items:[
+		title: 'AI 文档办公',
+		items: [
 
 			{
 				"link": "https://chatdoc.com/",
@@ -2825,19 +2836,4 @@ export const navigationData = [
 			}
 		]
 	},
-	{
-		title:'友情链接',
-		items:[
-
-		]
-	},
-	{
-		title:'友情链接',
-		items:[
-
-		]
-	},
-
-
-  ];
-  
+];

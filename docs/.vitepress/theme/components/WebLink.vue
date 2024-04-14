@@ -22,7 +22,7 @@
 							<img :src="site.qrcode" alt="QR Code">
 						</div>
 					</div>
-					<div v-if="site.showTooltip" class="tooltip">
+					<div v-show="site.showTooltip" class="tooltip">
 						<div class="triangle"></div> <!-- 用于显示三角形指示器 -->
 						<div class="content">
 							{{ site.desc }}
@@ -97,23 +97,22 @@ button:hover {
 	/* 设置显示的行数 */
 }
 
-.tooltip {
+.tooltip{
 	position: absolute;
 	background-color: #333;
 	color: #fff;
-	padding: 5px;
-	border-radius: 5px;
-	z-index: 999;
+	padding: 2px 3px;
 	width: 100%;
+	border-radius: 1rem;
+	z-index: 999;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
-
 /* 三角形指示器样式 */
 .triangle {
 	position: absolute;
-	top: -8px;
+	top: -5px;
 	/* 调整三角形位置 */
 	left: 50%;
 	/* 水平居中 */
@@ -129,8 +128,8 @@ button:hover {
 }
 
 .content {
-	font-size: 15px;
-	padding-top: 10px;
+	font-size: 12px;
+	padding-top: 1px;
 	/* 调整内容位置，避免与三角形重叠 */
 	z-index: 999;
 }
@@ -189,15 +188,15 @@ p {
 	margin: 6px 6px 6px 12px;
 	padding: 8px;
 	transition: transform 0.3s ease-in-out;
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-	border-radius: 8px;
-	border: 1px solid rgb(235, 233, 230);
+	box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem  #FFFFFF;
+	border-radius: 1rem;
 
 }
 
 .site:hover {
 	transform: scale(1.05);
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+
+	box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem  #FFFFFF;;
 }
 
 .site-link {
