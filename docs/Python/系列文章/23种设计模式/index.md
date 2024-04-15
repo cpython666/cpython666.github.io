@@ -1,3 +1,6 @@
+---
+comment: true
+---
 
 今天我将与大家探讨软件开发中至关重要的一些概念——设计模式。无论你是初学者还是经验丰富的开发者，理解这些模式都将对你的编程技能有巨大的提升。<br />![行为型模式.png](https://img-blog.csdnimg.cn/img_convert/f3c6d26e3886868f3489c156ca4d65c4.png)
 

@@ -116,8 +116,26 @@ export default defineConfig({
   description: "Python斗罗的代码笔记",
   base:'/',
   head: [
-    // 引入自定义的 JavaScript 文件
+    // 引入自定义的 JavaScript 文件，前端反爬js文件
     ['script', { src: '/js/fuckspider.js' }],
+    // 添加 giscus 评论系统的 script 标签
+    // ['script', {
+    //   src: "https://giscus.app/client.js",
+    //   'data-repo': "cpython666/cpython666.github.io",
+    //   'data-repo-id': "R_kgDOKKcFRg",
+    //   'data-category': "Announcements",
+    //   'data-category-id': "DIC_kwDOKKcFRs4Cesp-",
+    //   'data-mapping': "pathname",
+    //   'data-strict': "0",
+    //   'data-reactions-enabled': "1",
+    //   'data-emit-metadata': "0",
+    //   'data-input-position': "bottom",
+    //   'data-theme': "preferred_color_scheme",
+    //   'data-lang': "zh-CN",
+    //   'data-loading': "lazy",
+    //   crossorigin: "anonymous",
+    //   async: true
+    // }],
     [
       'link', 
       { rel: 'icon', href: '/logo.jpg' }
