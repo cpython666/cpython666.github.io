@@ -65,9 +65,11 @@ function selectPanel(item) {
 </script>
 
 <style scoped>
+
 #app {
 	margin-top: 20px;
 	display: flex;
+	width: 90%;
 }
 a{
 	text-decoration: none;
