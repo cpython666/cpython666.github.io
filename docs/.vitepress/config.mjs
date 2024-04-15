@@ -116,6 +116,8 @@ export default defineConfig({
   description: "Python斗罗的代码笔记",
   base:'/',
   head: [
+    // 引入自定义的 JavaScript 文件
+    ['script', { src: '/js/fuckspider.js' }],
     [
       'link', 
       { rel: 'icon', href: '/logo.jpg' }
@@ -187,7 +189,6 @@ export default defineConfig({
     setInterval(runtime, 1000);
       `
     ],
-    // "<font style='color:#FFA500;font-weight:bold'>"+o+"</font> 天 <font style='color:#1DBF97;font-weight:bold'>"+i+"</font> 小时 <font style='color:#8A2BE2;font-weight:bold'>"+a+"</font> 分 <font style='color:#007EC6;font-weight:bold'>"+r+"</font> 
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
