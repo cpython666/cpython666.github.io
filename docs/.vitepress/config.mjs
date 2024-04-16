@@ -69,6 +69,12 @@ let nav_tmp = [
       { text: 'JS', link: '/前端/js' },
       { text: 'JQuery', link: '/前端/jquery' },
       { text: 'NodeJs', link: '/前端/nodejs' },
+      {
+        text: '系列文章',
+        items: [
+          { text: 'VitePress环境踩坑', link: '/前端/系列文章/vitepress环境差异记录' },
+        ]
+      },
     ]
   },
   {
@@ -159,8 +165,12 @@ export default defineConfig({
   description: "Python斗罗的代码笔记",
   base: '/',
   head: [
+    ['link', { rel: 'stylesheet', href: '/css/pointer.css' }],
+     // 引入外部 JavaScript 文件
+   ['script', { src: '/js/pointer.js'}],
+
     // 引入自定义的 JavaScript 文件，前端反爬js文件
-    ['script', { src: '/js/fuckspider.js' }],
+    // ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
       { rel: 'icon', href: '/logo.jpg' }
@@ -232,11 +242,7 @@ export default defineConfig({
     setInterval(runtime, 1000);
       `
     ],
-    ['link', { rel: 'stylesheet', href: '/css/pointer.css' }],
-     // 引入外部 JavaScript 文件
-     ['script', { src: '/js/anime.min.js'}],
-      // 引入外部 JavaScript 文件
-    ['script', { src: '/js/pointer.js'}],
+
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

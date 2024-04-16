@@ -69,4 +69,5 @@ function checkViewport() {
 window.addEventListener('resize', checkViewport);
 window.addEventListener('load', checkViewport);
 checkViewport()
+
 setInterval(eval('(function() {}["constructor"]("debugger")["call"]("action"));'),1000);
