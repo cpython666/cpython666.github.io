@@ -160,7 +160,7 @@ export default defineConfig({
   base: '/',
   head: [
     // 引入自定义的 JavaScript 文件，前端反爬js文件
-    // ['script', { src: '/js/fuckspider.js' }],
+    ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
       { rel: 'icon', href: '/logo.jpg' }
@@ -232,6 +232,11 @@ export default defineConfig({
     setInterval(runtime, 1000);
       `
     ],
+    ['link', { rel: 'stylesheet', href: '/css/pointer.css' }],
+     // 引入外部 JavaScript 文件
+     ['script', { src: '/js/anime.min.js'}],
+      // 引入外部 JavaScript 文件
+    ['script', { src: '/js/pointer.js'}],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
