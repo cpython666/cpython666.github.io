@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', function() {
     // 创建一个 div 元素
     var div = document.createElement('div');
     div.className = 'curzr-arrow-pointer';
@@ -130,3 +131,4 @@ class ArrowPointer {
 	  cursor.click()
 	}
   }
+});
