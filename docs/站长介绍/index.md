@@ -2,6 +2,7 @@
 
 知识星球：星梦启航
 
+
 哔哩哔哩：https://space.bilibili.com/1909782963
 
 博客：https://codefly.blog.csdn.net/
@@ -34,3 +35,6 @@ https://stardreamfly.github.io
 ## 联系作者
 
 QQ:2942581284
+
+## 知识星球
+![](/qrcode/zsxq.jpg)

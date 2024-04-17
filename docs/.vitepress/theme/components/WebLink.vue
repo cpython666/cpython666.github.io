@@ -7,20 +7,16 @@
 			<div class="sites">
 				<div v-for="(site, sIndex) in category.items" :key="sIndex" class="site"
 					@mouseover="site.showTooltip = true" @mouseleave="site.showTooltip = false">
-					<div class="card" :title="site.desc" @mouseover="showQRCode(site, data)"
-						@mouseleave="hideQRCode(site)">
-						<a :href="site.type === undefined ? site.link : ''" class="site-link" target="_blank">
+					<div class="card" :title="site.desc">
+						<a :href="site.link" class="site-link" target="_blank">
 							<div class="card-head">
 								<img :src="site.icon" class="site-icon" :alt="site.title">
-								<div class="h4">{{ site.title }}</div>
+								<div class="h4">{{ site.title +'🔗'}}</div>
 							</div>
 							<div class="site-info">
 								<div class="desc">{{ site.desc }}</div>
 							</div>
 						</a>
-						<div v-show="site.showQR" :class="['qrcode']">
-							<img :src="site.qrcode" alt="QR Code">
-						</div>
 					</div>
 					<div v-show="site.showTooltip" class="tooltip">
 						<div class="triangle"></div> <!-- 用于显示三角形指示器 -->
@@ -47,21 +43,11 @@ export default {
 	setup(props) {
 		const categories = reactive(props.datalist.map(item => ({
 			...item,
-			showQR: false,
 			showTooltip: false,
 		})));
-		const showQRCode = (site) => {
-			if (site.type === 'qrcode') {
-				site.showQR = true;
-			}
-		}
-		const hideQRCode = (site) => {
-			site.showQR = false;
-		};
+
 		return {
 			categories,
-			showQRCode,
-			hideQRCode,
 		};
 	}
 };
@@ -134,19 +120,8 @@ button:hover {
 	z-index: 999;
 }
 
-.qrcode {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 img {
 	transition: height 0.3s ease-in-out;
-}
-
-.qrcode img {
-	width: 200px;
 }
 
 .card {

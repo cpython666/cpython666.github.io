@@ -165,7 +165,7 @@ export default defineConfig({
   description: "Python斗罗的代码笔记",
   base: '/',
   head: [
-    ['link', { rel: 'stylesheet', href: '/css/pointer.css' }],
+    ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
      // 引入外部 JavaScript 文件
    ['script', { src: '/js/pointer.js'}],
     // 引入自定义的 JavaScript 文件，前端反爬js文件

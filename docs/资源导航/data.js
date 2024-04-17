@@ -8,7 +8,7 @@ export const navigationData = [
 				type: 'qrcode',
 				qrcode: '/qrcode/zsxq.jpg',
 				desc: 'Python斗罗的知识星球',
-				link: '',
+				link: '/站长介绍/',
 			},
 			{
 				icon: '/icons/python.png',
@@ -16,7 +16,8 @@ export const navigationData = [
 				desc: 'Python斗罗运营的公众号',
 				type: 'qrcode',
 				qrcode: '/qrcode/wxgzh.jpg',
-				link: '',
+				link: '/站长介绍/',
+
 			},
 			{
 				icon: '/icons/github.svg',
