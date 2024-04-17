@@ -169,7 +169,7 @@ export default defineConfig({
      // 引入外部 JavaScript 文件
    ['script', { src: '/js/pointer.js'}],
     // 引入自定义的 JavaScript 文件，前端反爬js文件
-    // ['script', { src: '/js/fuckspider.js' }],
+    ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
       { rel: 'icon', href: '/logo.jpg' }
