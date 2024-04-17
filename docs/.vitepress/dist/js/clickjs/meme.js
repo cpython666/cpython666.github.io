@@ -1,5 +1,4 @@
-$(document).ready(function() {
-    // 你的代码
+
 	
 // 定义最后光标对象
 var lastEditRange;
@@ -104,5 +103,4 @@ function comments_submit(){
   	$('.comment-respond input[name="comment"]').val($('#comments_edit').html());
  	$('#commentform').submit();
 }
-});
 
