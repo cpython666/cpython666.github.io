@@ -8,14 +8,17 @@
 			</ul>
 		</div>
 		<div class="panel">
-			<div v-show="curPageId === 'url'" class="url-panel">
-				<!-- URL 编码面板 -->
+			<div v-show="curPageId === 'url'">
 				<PanelUrl />
 			</div>
-			<div v-show="curPageId === 'base64'" class="base64-panel">
-				<!-- Base64 面板 -->
+			<div v-show="curPageId === 'base64'">
 				<PanelBase64 />
-				<!-- 在这里添加 Base64 相关的功能 -->
+			</div>
+			<div v-show="curPageId === 'aaencode'">
+				<PanelAaencode />
+			</div>
+			<div v-show="curPageId === 'jjencode'">
+				<PanelJjencode />
 			</div>
 			<div v-show="curPageId === 'md5'" class="md5-panel">
 				<!-- MD5 面板 -->
@@ -31,9 +34,16 @@
 
 import PanelBase64 from './components/PanelBase64.vue'
 import PanelUrl from './components/PanelUrl.vue'
+import PanelAaencode from './components/PanelAaencode.vue'
+import PanelJjencode from './components/PanelJjencode.vue'
 import { ref } from 'vue'
 
-const curPageId = ref('url')
+const curPageId = ref('aaencode')
+// 获取 URL 的 hash 部分（即锚点）
+if(window.location.hash.replace('#', '')){
+	curPageId.value = window.location.hash.replace('#', '');
+}
+
 const toolList = ref([
 	{
 		name: 'URL编码解码',
@@ -42,6 +52,14 @@ const toolList = ref([
 	{
 		name: 'Base64编码解码',
 		pageId: 'base64'
+	},
+	{
+		name: 'AAencode编码解码',
+		pageId: 'aaencode'
+	},
+	{
+		name: 'JJencode编码解码',
+		pageId: 'jjencode'
 	},
 	{
 		name: 'MD5加密',
@@ -84,7 +102,7 @@ li{
 	transition: all 0.3s ease;
 }
 li:hover{
-	cursor: pointer;
+	/* cursor: pointer; */
 	transform: scale(1.05);
 	background-color: aquamarine;
 }
