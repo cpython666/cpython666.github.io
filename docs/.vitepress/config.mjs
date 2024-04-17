@@ -166,20 +166,34 @@ export default defineConfig({
   base: '/',
   head: [
     ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
-     // 引入外部 JavaScript 文件
-   ['script', { src: '/js/pointer.js'}],
+    // 引入外部 JavaScript 文件
+    ['script', { src: '/js/pointer.js' }],
     // 引入自定义的 JavaScript 文件，前端反爬js文件
     ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
       { rel: 'icon', href: '/logo.jpg' }
     ],
+    // 点击彩虹
+    // <!--鼠标点击特效-->
+    ['script', { type: "text/javascript", src: '/js/clickjs/meme.js' }],
+    ['script', { type: "text/javascript", src: '/js/clickjs/anime.min.js' }],
+    ['script', { type: "text/javascript", src: '/js/clickjs/fireworks.js' }],
+
+    // <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+
+    //<script type="text/javascript" src="https://www.liuzehe.top/upload/bkjs/meme.js"></script>
+    //<canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    //<script type="text/javascript" src="https://www.liuzehe.top/upload/bkjs/anime.min.js"></script>
+    //<script type="text/javascript" src="https://www.liuzehe.top/upload/bkjs/fireworks.js"></script> 
+    // 点击彩虹
+
     // <meta name="google-site-verification" content="0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU" />
     // 谷歌搜索站点验证头标签
     // 未成功。。。
     [
-      'meta',
-      { name: 'google-site-verification', content: '0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU' }
+    'meta',
+    { name: 'google-site-verification', content: '0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU' }
     ],
     [
       'meta',
@@ -279,7 +293,7 @@ export default defineConfig({
     },
     footer: {
       message: `本站收录内容源自互联网，不对其网站内容或交易负责。&ensp;|&ensp;如有内容侵犯权益，请联系站长删除相关内容！`,
-      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>&ensp;|&ensp;<span id="runtime"></span>',
+      copyright: '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>&ensp;|&ensp;<span id="runtime"></span><canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>',
     },
     docFooter: {
       prev: '上一篇',
