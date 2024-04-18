@@ -2593,7 +2593,7 @@ export const navigationData = [
 	// 	]
 	// },
 	{
-		title: 'AI 聊天对话',
+		title: 'AI聊天对话',
 		items: [
 
 			{
@@ -2659,7 +2659,7 @@ export const navigationData = [
 		]
 	},
 	{
-		title: 'AI 代码编程',
+		title: 'AI代码编程',
 		items: [
 			{
 				"link": "https://copilot.github.com/",
@@ -2700,7 +2700,7 @@ export const navigationData = [
 		]
 	},
 	{
-		title: 'AI 图像绘画',
+		title: 'AI图像绘画',
 		items: [
 
 			{
@@ -2772,9 +2772,8 @@ export const navigationData = [
 		]
 	},
 	{
-		title: 'AI 文档办公',
+		title: 'AI文档办公',
 		items: [
-
 			{
 				"link": "https://chatdoc.com/",
 				"icon": "/logos/chatdoc.png",
