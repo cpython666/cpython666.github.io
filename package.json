@@ -10,6 +10,7 @@
     "docs:preview": "vitepress preview docs --port 80"
   },
   "dependencies": {
-    "element-plus": "^2.6.3"
+    "element-plus": "^2.6.3",
+    "oh-my-live2d": "^0.16.1"
   }
 }

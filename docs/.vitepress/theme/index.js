@@ -20,6 +20,18 @@ export default {
     // 注册自定义全局组件
     app.component('WebLink',WebLink).use(ElementPlus);
   },
+  async enhanceApp() {
+    if (!import.meta.env.SSR) {
+      const { loadOml2d } = await import('oh-my-live2d');
+      loadOml2d({
+        models: [
+          {
+            path: 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json'
+          }
+        ]
+      });
+    }
+  },
     // 添加 giscus 评论系统的 script 标签
   setup() {
     // Get frontmatter and route
