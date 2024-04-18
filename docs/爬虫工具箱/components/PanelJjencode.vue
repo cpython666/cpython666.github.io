@@ -22,6 +22,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import {ElInput,ElCheckbox,ElButton} from 'element-plus'
 
 const panelTitle = ref('JJencode 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');

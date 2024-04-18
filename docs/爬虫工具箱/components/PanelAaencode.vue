@@ -13,7 +13,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import {ElInput,ElButton} from 'element-plus'
 const panelTitle = ref('AAencode 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');
 const outputText = ref('');

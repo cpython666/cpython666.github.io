@@ -22,6 +22,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import {ElInput} from 'element-plus'
 
 const panelTitle = ref('URL 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');
