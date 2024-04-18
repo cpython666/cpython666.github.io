@@ -1,6 +1,26 @@
 function todo() {
 	window.location.href='https://space.bilibili.com/1909782963'
 }
+function checkViewport() {
+    // 获取浏览器窗口的内部宽高
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+
+    // 获取文档的视图区域宽高
+    var viewportWidth = document.documentElement.clientWidth;
+    var viewportHeight = document.documentElement.clientHeight;
+	// 定义常见的滚动条宽度范围
+    var scrollbarWidthThreshold = 30;
+	// console.log('窗口尺寸: ' + windowWidth + 'x' + windowHeight);
+	// console.log('视图尺寸: ' + viewportWidth + 'x' + viewportHeight);
+    // 比较窗口和视图的宽高
+    if (windowWidth - viewportWidth > scrollbarWidthThreshold || windowHeight !== viewportHeight) {
+        console.log('控制台已打开');
+		todo()
+    } else {
+        console.log('控制台未打开');
+    }
+}
 // 匿名函数：代码被封装在一个立即执行的匿名函数中，以避免污染全局命名空间。
 // debugger;语句：当开发者工具打开并在调试模式下运行时，这条语句会触发一个暂停，从而导致代码执行被延迟。如果开发者工具未打开，这条语句几乎不会影响代码执行时间。
 // 性能检测：使用performance.now()来获取代码执行的精确时间。
@@ -45,26 +65,7 @@ function todo() {
     });
 })();
 
-function checkViewport() {
-    // 获取浏览器窗口的内部宽高
-    var windowWidth = window.innerWidth;
-    var windowHeight = window.innerHeight;
 
-    // 获取文档的视图区域宽高
-    var viewportWidth = document.documentElement.clientWidth;
-    var viewportHeight = document.documentElement.clientHeight;
-	// 定义常见的滚动条宽度范围
-    var scrollbarWidthThreshold = 30;
-	// console.log('窗口尺寸: ' + windowWidth + 'x' + windowHeight);
-	// console.log('视图尺寸: ' + viewportWidth + 'x' + viewportHeight);
-    // 比较窗口和视图的宽高
-    if (windowWidth - viewportWidth > scrollbarWidthThreshold || windowHeight !== viewportHeight) {
-        console.log('控制台已打开');
-		todo()
-    } else {
-        console.log('控制台未打开');
-    }
-}
 // 检查视图大小的变化
 window.addEventListener('resize', checkViewport);
 window.addEventListener('load', checkViewport);
