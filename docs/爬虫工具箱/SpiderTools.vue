@@ -36,13 +36,19 @@ import PanelBase64 from './components/PanelBase64.vue'
 import PanelUrl from './components/PanelUrl.vue'
 import PanelAaencode from './components/PanelAaencode.vue'
 import PanelJjencode from './components/PanelJjencode.vue'
-import { ref } from 'vue'
+import { ref ,onMounted } from 'vue'
 
 const curPageId = ref('aaencode')
 // 获取 URL 的 hash 部分（即锚点）
-if(window.location.hash.replace('#', '')){
-	curPageId.value = window.location.hash.replace('#', '');
-}
+onMounted(() => {
+  // 客户端特定代码，使用 window 对象
+  if (typeof window !== 'undefined') {
+    const hash = window.location.hash.replace('#', '')
+    if (hash) {
+      curPageId.value = hash
+    }
+  }
+})
 
 const toolList = ref([
 	{

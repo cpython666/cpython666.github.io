@@ -6,9 +6,8 @@ import { useData, useRoute } from 'vitepress';
 // 图片缩放
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
-// import { useRoute } from 'vitepress';
 
-import WebLink from './components/WebLink.vue'
+// import WebLink from './components/WebLink.vue'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
