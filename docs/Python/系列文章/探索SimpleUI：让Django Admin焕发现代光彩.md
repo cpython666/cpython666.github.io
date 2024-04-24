@@ -262,7 +262,7 @@ SIMPLEUI_ICON = {
 
 <a name="evWZx"></a>
 
-### 自定义首页
+### 自定义首页-数据分析面板
 
 SimpleUI默认首页由快捷链接和最近动作组成，我们可以将其隐藏，并将其链接到其它url。<br />继续修改settings.py, 添加如下代码：
 

@@ -88,7 +88,7 @@ let nav_tmp = [
       { text: '支持', link: '/站长介绍/支持' },
     ]
   },
-  { text: '浏览器书签', link: '/浏览器书签/' },
+  { text: '好文推荐', link: '/好文推荐/' },
 
 ]
 let sidebar_tmp = {
@@ -165,9 +165,18 @@ export default defineConfig({
   description: "Python斗罗的代码笔记",
   base: '/',
   head: [
+    // 我的logo
+    ['script', { src: '/js/cpython666.js' }],
+    // <script src="https://gist.github.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079.js"></script>
+    // ['script', { 
+    //   // async:true,
+    //   src: 'https://gist.githubusercontent.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079/raw/8730dd7b808f5bcb8b0a01cce9d442f4bca0a228/cpython666.js',
+    // }],
     ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
     // 引入外部 JavaScript 文件
     ['script', { src: '/js/pointer.js' }],
+    // 鼠标拖尾
+    ['script', { src: '/js/mouse-trail.js' }],
     // 引入自定义的 JavaScript 文件，前端反爬js文件
     // ['script', { src: '/js/fuckspider.js' }],
     [
@@ -255,6 +264,7 @@ export default defineConfig({
     setInterval(runtime, 1000);
       `
     ],
+
 
   ],
   themeConfig: {

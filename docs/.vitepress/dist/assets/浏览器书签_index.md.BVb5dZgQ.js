@@ -1,1 +1,0 @@
-import{aw as e,q as t,p as a}from"./chunks/framework.C5MdosmZ.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"浏览器书签/index.md","filePath":"浏览器书签/index.md","lastUpdated":1711734964000}'),n={name:"浏览器书签/index.md"};function r(s,d,o,c,i,p){return a(),t("div")}const f=e(n,[["render",r]]);export{m as __pageData,f as default};

@@ -140,4 +140,3 @@ if (document.readyState === 'loading') {
 else {
 	init() // DOMContentLoaded 已经发生
 }
-
