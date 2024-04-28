@@ -23,6 +23,9 @@ let nav_tmp = [
         text: '系列文章',
         items: [
           { text: '常用hook代码片段', link: '/爬虫/系列文章/常用hook代码片段' },
+          { text: 'ast详解', link: '/爬虫/系列文章/ast详解' },
+          { text: '浏览器指纹详解', link: '/爬虫/系列文章/浏览器指纹详解' },
+          { text: 'DrissionPage学习笔记', link: '/爬虫/系列文章/DrissionPage学习笔记' },
         ]
       },
     ]
@@ -73,6 +76,7 @@ let nav_tmp = [
         text: '系列文章',
         items: [
           { text: 'VitePress环境踩坑', link: '/前端/系列文章/vitepress环境差异记录' },
+          { text: 'vitepress博客搭建', link: '/前端/系列文章/vitepress博客搭建' },
         ]
       },
     ]
