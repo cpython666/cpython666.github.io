@@ -26,6 +26,7 @@ let nav_tmp = [
           { text: 'ast详解', link: '/爬虫/系列文章/ast详解' },
           { text: '浏览器指纹详解', link: '/爬虫/系列文章/浏览器指纹详解' },
           { text: 'DrissionPage学习笔记', link: '/爬虫/系列文章/DrissionPage学习笔记' },
+          { text: 'Scrapy学习笔记', link: '/爬虫/系列文章/Scrapy学习笔记' },
         ]
       },
     ]
@@ -112,7 +113,30 @@ let sidebar_tmp = {
         { text: '交流群', link: '/站长介绍/交流群' },
         { text: '支持', link: '/站长介绍/支持' },
       ]
-
+    }
+  ],
+  '/爬虫/': [
+    {
+      text: '爬虫系列',
+      collapsed: false,
+      items: [
+        { text: '学习路线', link: '/爬虫/学习路线' },
+        { text: '学习资源', link: '/爬虫/学习资源' },
+        { text: '学习指南', link: '/爬虫/学习指南' },
+        { text: '买课指南', link: '/爬虫/买课指南' },
+        { text: '视频源码', link: '/爬虫/视频源码' },
+        { text: '练手网站', link: '/爬虫/练手网站' },
+        {
+          text: '系列文章',
+          items: [
+            { text: '常用hook代码片段', link: '/爬虫/系列文章/常用hook代码片段' },
+            { text: 'ast详解', link: '/爬虫/系列文章/ast详解' },
+            { text: '浏览器指纹详解', link: '/爬虫/系列文章/浏览器指纹详解' },
+            { text: 'DrissionPage学习笔记', link: '/爬虫/系列文章/DrissionPage学习笔记' },
+            { text: 'Scrapy学习笔记', link: '/爬虫/系列文章/Scrapy学习笔记' },
+          ]
+        },
+      ]
     }
   ],
   '/Python/系列文章/23种设计模式/': [
