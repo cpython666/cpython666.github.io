@@ -49,7 +49,9 @@ features:
     details: '<small class="bottom-small">学习爬虫ing~</small>'
 
 ---
-
+::: tip 心怀桂泰
+**我于这喧嚣世界寻得一方净土，可我却已成净土所厌的喧嚣。**
+:::
 ::: tip Why am I here?
 **难的从来不是学会，而是知道有这个东西，也就是突破你的信息茧房，然后才是去学习。**:spider:
 :::
