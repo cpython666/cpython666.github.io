@@ -2,14 +2,14 @@ export const navigationData = [
 	{
 		title: '主站推荐',
 		items: [
-			{
-				icon: '/logo.jpg',
-				title: '星梦起航',
-				type: 'qrcode',
-				qrcode: '/qrcode/zsxq.jpg',
-				desc: 'Python斗罗的知识星球',
-				link: '/站长介绍/',
-			},
+			// {
+			// 	icon: '/logo.jpg',
+			// 	title: '星梦起航',
+			// 	type: 'qrcode',
+			// 	qrcode: '/qrcode/zsxq.jpg',
+			// 	desc: 'Python斗罗的知识星球',
+			// 	link: '/站长介绍/',
+			// },
 			{
 				icon: '/icons/python.png',
 				title: 'Python斗罗',
@@ -17,6 +17,7 @@ export const navigationData = [
 				type: 'qrcode',
 				qrcode: '/qrcode/wxgzh.jpg',
 				link: '/站长介绍/',
+				categories:['公众号','Python斗罗']
 
 			},
 			{
@@ -24,12 +25,15 @@ export const navigationData = [
 				title: 'cpython666',
 				desc: 'Python斗罗的代码仓库',
 				link: 'https://github.com/cpython666',
+				categories:['Github','Python斗罗']
+
 			},
 			{
 				icon: '/icons/csdn.svg',
 				title: 'Python斗罗',
 				desc: 'Python斗罗的博客',
 				link: 'https://codefly.blog.csdn.net/',
+				categories:['博客','Python斗罗']
 			},
 		]
 	},
@@ -41,7 +45,99 @@ export const navigationData = [
 				title: 'Electron',
 				desc: '使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。',
 				link: 'https://www.electronjs.org/zh/',
-				category:['前端','桌面端']
+				categories:['前端','桌面端']
+			},
+			{
+				icon: '/logos/chartjs.svg',
+				title: 'Chart.js',
+				desc: 'Simple yet flexible JavaScript charting library for the modern web',
+				link: 'https://www.chartjs.org/',
+				categories:['前端','可视化']
+			},
+			{
+				icon: '/logos/echarts.png',
+				title: 'ECharts',
+				desc: '一个基于 JavaScript 的开源可视化图表库',
+				link: 'https://echarts.apache.org/zh/index.html',
+				categories:['前端','可视化']
+			},
+			{
+				icon: '/logos/vue.svg',
+				title: 'Vue',
+				desc: '渐进式JavaScript 框架，易学易用，性能出色，适用场景丰富的 Web 前端框架。',
+				link: 'https://cn.vuejs.org/',
+				categories:['前端','Vue','Web']
+			},
+			{
+				icon: '/logos/vue.svg',
+				title: 'Vue Router',
+				desc: 'Vue.js 的官方路由。为 Vue.js 提供富有表现力、可配置的、方便的路由',
+				link: 'https://router.vuejs.org/zh/',
+				doc_link:'https://router.vuejs.org/zh/guide/',
+				categories:['前端','Vue','Web']
+			},
+			{
+				icon: '/logos/pinia.svg',
+				title: 'Pinia',
+				desc: '符合直觉的Vue.js状态管理库。类型安全、可扩展性以及模块化设计。甚至让你忘记正在使用的是一个状态库。',
+				link: 'https://pinia.vuejs.org/zh/',
+				categories:['前端','Vue','Web']
+			},
+			{
+				icon: '/logos/react.svg',
+				title: 'React',
+				desc: 'The library for web and native user interfaces',
+				link: 'https://react.dev/',
+				doc_link:'https://react.dev/reference/react',
+				categories:['前端','React','Web']
+			},
+			{
+				icon: '/logos/elementplus.svg',
+				title: 'Element Plus',
+				desc: '基于 Vue 3，面向设计师和开发者的组件库',
+				link: 'https://element-plus.org/zh-CN/',
+				doc_link:'https://element-plus.org/zh-CN/guide/design.html',
+				categories:['前端','Vue','Web']
+			},
+			{
+				icon: '/logos/webpack.png',
+				title: 'webpack',
+				desc: '一个用于现代 JavaScript 应用程序的 静态模块打包工具',
+				link: 'https://www.webpackjs.com/',
+				doc_link:'https://www.webpackjs.com/concepts/',
+				categories:['前端']
+			},
+			{
+				icon: '/logos/ant.svg',
+				title: 'Ant',
+				desc: '基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。',
+				link: 'https://ant.design/index-cn',
+				doc_link:'https://ant.design/docs/react/getting-started-cn',
+				categories:['前端']
+			},
+			{
+				icon: '/logos/bun.svg',
+				title: 'Bun',
+				desc: '一个一体化的JavaScript运行时和工具包，专为提高速度而设计，包括编译器、测试运行器和与Node.js兼容的包管理器。使用Bun开发、测试、运行和捆绑JavaScript和TypeScript项目。Develop, test, run, and bundle JavaScript & TypeScript projects—all with Bun. Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a bundler, test runner, and Node.js-compatible package manager.',
+				link: 'https://bun.sh/',
+				doc_link:'https://bun.sh/docs',
+				categories:['前端']
+			},
+			{
+				icon: '/logos/nuxt.svg',
+				title: 'Nuxt',
+				desc: 'Nuxt是一个开源框架，使Web开发直观而强大。充满信心地创建高性能和生产级的全栈Web应用程序和网站。The Intuitive Vue Framework',
+				link: 'https://nuxt.com/',
+				doc_link:'https://nuxt.com/docs/getting-started/introduction',
+				categories:['前端']
+			},
+			{
+				icon: '/logos/supabase.png',
+				title: 'supabase',
+				desc: '在一个周末内建造，在一个周末内建造。Supplement是一个开源的Firebase替代品。Supplement是一个开源的Firebase替代品。',
+				link: 'https://supabase.com/',
+				doc_link:'https://supabase.com/docs',
+				categories:['前端']
 			},
 		]
 	},

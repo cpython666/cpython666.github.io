@@ -41,6 +41,7 @@ const scrollToAnchor = (anchor) => {
 		</div>
 		<div>
 			<el-link type="primary" href="https://spiderbox.cn/" target="_blank">资源链接来源于《虫盒》</el-link>
+			<el-link type="primary" href="#">持续更新中</el-link>
 			<WebLink :datalist="navigationData"></WebLink>
 		</div>
 	</div>

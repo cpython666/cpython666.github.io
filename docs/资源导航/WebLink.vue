@@ -11,8 +11,17 @@
 						<a :href="site.link" class="site-link" target="_blank">
 							<div class="card-head">
 								<img :src="site.icon" class="site-icon" :alt="site.title">
-								<div class="h4">{{ site.title +'🔗'}}</div>
+								<div class="h4">{{ site.title }}</div>
 							</div>
+							<div>
+								<div class="badge badge-info" v-if="site.doc_link" @click="openNewPage(site.doc_link)">
+									文档-> 
+								</div>
+								<div class="badge badge-info" v-for="(category, sIndex) in site.categories">
+									{{ category }}
+								</div>
+							</div>
+
 							<div class="site-info">
 								<div class="desc">{{ site.desc }}</div>
 							</div>
@@ -44,14 +53,37 @@ export default {
 			...item,
 			showTooltip: false,
 		})));
-
+		const openNewPage=(link)=>{
+							window.open(link, '_blank');
+						}
 		return {
 			categories,
+			openNewPage
 		};
 	}
 };
 </script>
 <style scoped>
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+	margin:0 0.25em ;
+    font-size: 50%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+.badge-primary {
+    color: #fff;
+    background-color: #007bff;
+}
+.badge-info {
+    color: #fff;
+    background-color: #17a2b8;
+}
 button {
 	padding: 5px 8px;
 	background-color: #007bff;
@@ -74,15 +106,16 @@ button:hover {
 	text-indent: 2em;
 	width: 100%;
 	font-size: 12px;
+	line-height: 14px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
 	/* 设置显示的行数 */
+	-webkit-line-clamp: 2;
 }
 
-.tooltip{
+.tooltip {
 	position: absolute;
 	background-color: #333;
 	color: #fff;
@@ -94,6 +127,7 @@ button:hover {
 	flex-direction: column;
 	align-items: center;
 }
+
 /* 三角形指示器样式 */
 .triangle {
 	position: absolute;
@@ -114,7 +148,8 @@ button:hover {
 
 .content {
 	font-size: 12px;
-	padding-top: 1px;
+	line-height: 14px;
+	padding: 3px 2px;
 	/* 调整内容位置，避免与三角形重叠 */
 	z-index: 999;
 }
@@ -162,7 +197,7 @@ p {
 	margin: 6px 6px 6px 12px;
 	padding: 8px;
 	transition: transform 0.3s ease-in-out;
-	box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem  #FFFFFF;
+	box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #FFFFFF;
 	border-radius: 1rem;
 
 }
@@ -170,7 +205,8 @@ p {
 .site:hover {
 	transform: scale(1.05);
 
-	box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem  #FFFFFF;;
+	box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #FFFFFF;
+	;
 }
 
 .site-link {
