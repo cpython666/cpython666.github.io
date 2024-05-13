@@ -41,25 +41,12 @@ export const navigationData = [
 		title: '前端',
 		items: [
 			{
-				icon: '/logos/electron.svg',
-				title: 'Electron',
-				desc: '使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。',
-				link: 'https://www.electronjs.org/zh/',
-				categories:['前端','桌面端']
-			},
-			{
-				icon: '/logos/chartjs.svg',
-				title: 'Chart.js',
-				desc: 'Simple yet flexible JavaScript charting library for the modern web',
-				link: 'https://www.chartjs.org/',
-				categories:['前端','可视化']
-			},
-			{
-				icon: '/logos/echarts.png',
-				title: 'ECharts',
-				desc: '一个基于 JavaScript 的开源可视化图表库',
-				link: 'https://echarts.apache.org/zh/index.html',
-				categories:['前端','可视化']
+				icon: '/logos/react.svg',
+				title: 'React',
+				desc: 'The library for web and native user interfaces',
+				link: 'https://react.dev/',
+				doc_link:'https://react.dev/reference/react',
+				categories:['前端','React','Web']
 			},
 			{
 				icon: '/logos/vue.svg',
@@ -83,14 +70,7 @@ export const navigationData = [
 				link: 'https://pinia.vuejs.org/zh/',
 				categories:['前端','Vue','Web']
 			},
-			{
-				icon: '/logos/react.svg',
-				title: 'React',
-				desc: 'The library for web and native user interfaces',
-				link: 'https://react.dev/',
-				doc_link:'https://react.dev/reference/react',
-				categories:['前端','React','Web']
-			},
+
 			{
 				icon: '/logos/elementplus.svg',
 				title: 'Element Plus',
@@ -100,19 +80,11 @@ export const navigationData = [
 				categories:['前端','Vue','Web']
 			},
 			{
-				icon: '/logos/webpack.png',
-				title: 'webpack',
-				desc: '一个用于现代 JavaScript 应用程序的 静态模块打包工具',
-				link: 'https://www.webpackjs.com/',
-				doc_link:'https://www.webpackjs.com/concepts/',
-				categories:['前端']
-			},
-			{
-				icon: '/logos/ant.svg',
-				title: 'Ant',
-				desc: '基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。',
-				link: 'https://ant.design/index-cn',
-				doc_link:'https://ant.design/docs/react/getting-started-cn',
+				icon: '/logos/nodejs.ico',
+				title: 'NodeJS',
+				desc: 'Node.js 是一个开源的、跨平台的 JavaScript 运行时环境。',
+				link: 'https://nodejs.cn/',
+				doc_link:'https://nodejs.cn/en/learn',
 				categories:['前端']
 			},
 			{
@@ -138,6 +110,85 @@ export const navigationData = [
 				link: 'https://supabase.com/',
 				doc_link:'https://supabase.com/docs',
 				categories:['前端']
+			},
+			{
+				icon: '/logos/electron.svg',
+				title: 'Electron',
+				desc: '使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。',
+				link: 'https://www.electronjs.org/zh/',
+				categories:['前端','桌面端']
+			},
+			{
+				icon: '/logos/webpack.png',
+				title: 'webpack',
+				desc: '一个用于现代 JavaScript 应用程序的 静态模块打包工具',
+				link: 'https://www.webpackjs.com/',
+				doc_link:'https://www.webpackjs.com/concepts/',
+				categories:['前端']
+			},
+			{
+				icon: '/logos/chartjs.svg',
+				title: 'Chart.js',
+				desc: 'Simple yet flexible JavaScript charting library for the modern web',
+				link: 'https://www.chartjs.org/',
+				categories:['前端','可视化']
+			},
+			{
+				icon: '/logos/echarts.png',
+				title: 'ECharts',
+				desc: '一个基于 JavaScript 的开源可视化图表库',
+				link: 'https://echarts.apache.org/zh/index.html',
+				categories:['前端','可视化']
+			},
+			{
+				icon: '/logos/ant.svg',
+				title: 'Ant',
+				desc: '基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。',
+				link: 'https://ant.design/index-cn',
+				doc_link:'https://ant.design/docs/react/getting-started-cn',
+				categories:['前端']
+			},
+		]
+	},
+	{
+		title: '后端',
+		items: [
+			{
+				icon: '/logos/docker.png',
+				title: 'Docker',
+				desc: '帮助开发人员在任何地方构建、共享、运行和验证应用程序—无需繁琐的环境配置或管理。Docker构建：现在快如闪电。Docker Build Cloud正式发布。',
+				link: 'https://hub.docker.com/',
+				categories:['后端','docker']
+			},
+			
+		]
+	},
+	{
+		title: 'Python三方库',
+		items: [
+			{
+				icon: '/logos/django.ico',
+				title: 'Django',
+				desc: 'Django让构建更好的Web应用程序变得更容易，更快，更少的代码。',
+				link: 'https://www.djangoproject.com/',
+				doc_link: 'https://docs.djangoproject.com/zh-hans/5.0/',
+				categories:['后端','Python','Web']
+			},
+			{
+				icon: '/logos/flask.png',
+				title: 'Flask',
+				desc: 'Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用 BSD 授权。',
+				link: 'https://flask.palletsprojects.com/en/3.0.x/',
+				doc_link: 'https://flask.palletsprojects.com/en/3.0.x/',
+				categories:['后端','Python','Web']
+			},
+			{
+				icon: '/logos/fastapi.png',
+				title: 'FastAPI',
+				desc: 'FastAPI 框架，高性能，易于学习，高效编码，生产可用',
+				link: 'https://fastapi.tiangolo.com/',
+				doc_link: 'https://fastapi.tiangolo.com/zh/',
+				categories:['后端','Python','Web']
 			},
 		]
 	},
