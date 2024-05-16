@@ -12,6 +12,10 @@
 							<div class="card-head">
 								<img :src="site.icon" class="site-icon" :alt="site.title">
 								<div class="h4">{{ site.title }}</div>
+								<label class="toggle">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
 							</div>
 							<div>
 								<div class="badge badge-info" v-if="site.doc_link" @click="openNewPage(site.doc_link)">
@@ -64,6 +68,52 @@ export default {
 };
 </script>
 <style scoped>
+
+.toggle span {
+    display: block;
+    width: 20px;
+    height: 12px;
+    border-radius: 99em;
+    background-color: #c1c5cd;
+    box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: 0.15s ease;
+}
+.toggle span:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 1.5px;
+    top: 1.5px;
+    height: 9px;
+    width: 9px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    transition: 0.15s ease;
+}
+.toggle input {
+    clip: rect(0 0 0 0);
+    -webkit-clip-path: inset(50%);
+    clip-path: inset(50%);
+    height: 0.5px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 0.5px;
+}
+.toggle input:checked + span {
+    background-color: #434ce8;
+}
+.toggle input:checked + span:before {
+    transform: translateX(calc(100% - 1px));
+}
+.toggle input:focus + span {
+    box-shadow: 0 0 0 2px #ecf3fe;
+}
+
+
+
 .badge {
     display: inline-block;
     padding: 0.25em 0.4em;
@@ -221,6 +271,8 @@ p {
 	width: 100%;
 	display: flex;
 	font-size: 14px;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .site-icon {

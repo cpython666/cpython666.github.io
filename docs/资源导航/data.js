@@ -1,6 +1,18 @@
 export const navigationData = [
 	{
-		title: '主站推荐',
+		title: '我的置顶',
+		items: [
+			{
+				icon: '/icons/bilibili.ico',
+				title: 'Python斗罗',
+				desc: '视频推送，合集视频。',
+				link: 'https://space.bilibili.com/1909782963',
+				categories: ['B站']
+			},
+		]
+	},
+	{
+		title: '认识我',
 		items: [
 			// {
 			// 	icon: '/logo.jpg',
@@ -11,13 +23,27 @@ export const navigationData = [
 			// 	link: '/站长介绍/',
 			// },
 			{
+				icon: '/icons/bilibili.ico',
+				title: 'Python斗罗',
+				desc: '视频推送，合集视频。',
+				link: 'https://space.bilibili.com/1909782963',
+				categories: ['B站']
+			},
+			{
+				icon: '/logos/douyin.svg',
+				title: 'Python爸爸',
+				desc: '视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
+				link: 'https://v.douyin.com/i2VkxqbT/',
+				categories: ['抖音']
+			},
+			{
 				icon: '/icons/python.png',
 				title: 'Python斗罗',
 				desc: 'Python斗罗运营的公众号',
 				type: 'qrcode',
 				qrcode: '/qrcode/wxgzh.jpg',
 				link: '/站长介绍/',
-				categories:['公众号','Python斗罗']
+				categories: ['公众号']
 
 			},
 			{
@@ -25,7 +51,7 @@ export const navigationData = [
 				title: 'cpython666',
 				desc: 'Python斗罗的代码仓库',
 				link: 'https://github.com/cpython666',
-				categories:['Github','Python斗罗']
+				categories: ['Github']
 
 			},
 			{
@@ -33,8 +59,252 @@ export const navigationData = [
 				title: 'Python斗罗',
 				desc: 'Python斗罗的博客',
 				link: 'https://codefly.blog.csdn.net/',
-				categories:['博客','Python斗罗']
+				categories: ['博客','CSDN']
 			},
+		]
+	},
+	{
+		title: '主站推荐',
+		items: [
+			{
+				icon: '/icons/python.png',
+				title: '广告位招租',
+				desc: '一杯奶茶钱',
+				type: 'qrcode',
+				link: '/站长介绍/',
+				categories: ['广告']
+
+			},
+		]
+	},
+	{
+		title: "网站导航",
+		items: [
+			{
+				icon: "/logos/bianchengdaohang.png",
+				title: "编程导航",
+				desc: "一站式编程资源搜索,定制你的程序员必备主页,提高编程学习效率.",
+				link: "https://www.code-nav.cn/",
+				categories: ["编程", "资源", "导航"]
+			},
+			{
+				icon: "/logos/coderutil.ico",
+				title: "程序员盒子",
+				desc: "助力程序员学习编程提效,丰富的在线工具网址,技术博文分享.",
+				link: "https://www.coderutil.com/",
+				categories: ["编程", "工具", "博客"]
+			},
+			{
+				icon: "/logos/shoucangjia.png",
+				title: "维格表",
+				desc: "团队数据协作与项目管理神器。无需下载，在线使用.",
+				link: "https://spcqwserdvymm.com.vika.cn/share/shryNwH3HRgvzMTaZVAGx/fodkuzz5eaw0w",
+				categories: ["协作", "项目管理", "在线"]
+			},
+			{
+				icon: "/logos/youshedaohang.ico",
+				title: "优设导航",
+				desc: "为设计师精选国内外优质网站.",
+				link: "https://hao.uisdc.com/",
+				categories: ["设计", "导航", "资源"]
+			},
+			{
+				icon: "/logos/qijixiu.ico",
+				title: "奇迹秀",
+				desc: "为设计师提供设计干货及资源,绿色且免费.",
+				link: "http://www.qijishow.com/",
+				categories: ["设计", "资源", "免费"]
+			},
+			{
+				icon: "/logos/hippter.ico",
+				title: "HiPPTer",
+				desc: "PPT设计相关网站,提供创意灵感等.",
+				link: "http://www.hippter.com/",
+				categories: ["PPT", "设计", "灵感"]
+			},
+			{
+				icon: "/logos/seeseed.png",
+				title: "seeseed",
+				desc: "无穷尽设计可能,提供设计灵感.",
+				link: "https://www.seeseed.com/",
+				categories: ["设计", "灵感", "资源"]
+			},
+			{
+				icon: "/logos/lks.ico",
+				title: "LKs",
+				desc: "B站博主 -LKs- 《良心到难以置信的网站推荐》.",
+				link: "https://xiangjianan.gitee.io/lks/",
+				categories: ["推荐", "博主", "B站"]
+			},
+			{
+				icon: "/logos/itab.ico",
+				title: "iTab",
+				desc: "个性化卡片式起始页插件.",
+				link: "https://www.itab.link/",
+				categories: ["插件", "个性化", "起始页"]
+			}
+		]
+	},
+	{
+		"title": "编程",
+		"items": [
+			{
+				"icon": "/logos/github.ico",
+				"title": "Github",
+				"desc": "一个面向开源及私有软件项目的托管平台.",
+				"link": "https://github.com/",
+				"categories": ["托管平台", "开源", "私有项目"]
+			},
+			{
+				"icon": "/logos/gitee.ico",
+				"title": "Gitee",
+				"desc": "基于Git的代码托管平台,提供免费的私有仓库托管.",
+				"link": "https://gitee.com/",
+				"categories": ["托管平台", "代码", "私有仓库"]
+			},
+			{
+				"icon": "/logos/cainiao.ico",
+				"title": "菜鸟教程",
+				"desc": "学的不仅是技术,更是梦想!各种编程语言基础教程.",
+				"link": "https://www.runoob.com/",
+				"categories": ["教程", "编程语言", "基础"]
+			},
+			{
+				"icon": "/logos/itheima.ico",
+				"title": "黑马程序员",
+				"desc": "传智教育旗下高端IT教育品牌，高品质教研.",
+				"link": "https://www.runoob.com/",
+				"categories": ["IT教育", "高端品牌", "高品质"]
+			},
+			{
+				"icon": "/logos/kuangstudy.ico",
+				"title": "KuangStudy",
+				"desc": "优质体系课程、文章博客、专栏书写、技术论坛、资源下载.",
+				"link": "https://www.kuangstudy.com/",
+				"categories": ["课程", "博客", "技术论坛"]
+			},
+			{
+				"icon": "/logos/csdn.ico",
+				"title": "CSDN",
+				"desc": "全球知名中文IT技术交流平台.",
+				"link": "https://www.csdn.net/",
+				"categories": ["技术交流", "平台", "IT"]
+			},
+			{
+				"icon": "/logos/juejin.svg",
+				"title": "掘金",
+				"desc": "一个帮助开发者成长的社区.",
+				"link": "https://juejin.cn/",
+				"categories": ["社区", "开发者", "成长"]
+			},
+			{
+				"icon": "/logos/bokeyuan.png",
+				"title": "博客园",
+				"desc": "面向开发者的知识分享社区.",
+				"link": "https://www.cnblogs.com/",
+				"categories": ["知识分享", "社区", "开发者"]
+			},
+			{
+				"icon": "/logos/gongzhonghao.ico",
+				"title": "公众号",
+				"desc": "一种主流的线上线下微信互动营销方式.",
+				"link": "https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token=2025719581",
+				"categories": ["互动营销", "微信", "线上线下"]
+			},
+			{
+				"icon": "/logos/tengxunyun.png",
+				"title": "腾讯云",
+				"desc": "腾讯的云计算品牌，以卓越科技能力助力各行业数字化转型.",
+				"link": "https://cloud.tencent.com/",
+				"categories": ["云计算", "科技", "数字化"]
+			},
+			{
+				"icon": "/logos/aliyunpan.png",
+				"title": "阿里云盘",
+				"desc": "一款速度快、不打扰、够安全、易于分享的网盘.",
+				"link": "https://www.aliyundrive.com/drive/",
+				"categories": ["网盘", "分享", "安全"]
+			},
+			{
+				"icon": "/logos/aliyun.ico",
+				"title": "阿里云",
+				"desc": "面向全球用户,提供多种高性能的云产品.",
+				"link": "https://www.aliyun.com/",
+				"categories": ["云产品", "高性能", "全球用户"]
+			},
+			{
+				"icon": "/logos/mybatis.ico",
+				"title": "MyBatis文档",
+				"desc": "一款优秀的持久层框架,免除几乎所有JDBC代码.",
+				"link": "https://mybatis.net.cn/getting-started.html",
+				"categories": ["持久层框架", "JDBC", "代码"]
+			},
+			{
+				"icon": "/logos/maven.png",
+				"title": "Maven包",
+				"desc": "服务于Java平台的项目构建和依赖管理，Maven的各种包.",
+				"link": "https://mvnrepository.com/",
+				"categories": ["Java", "项目构建", "依赖管理"]
+			}
+		]
+	},
+	{
+		"title": "比赛",
+		"items": [
+			{
+				"icon": "/logos/hulianwang+.png",
+				"title": "互联网+",
+				"desc": "推动互联网发展新业态、催生的经济社会发展新形态.",
+				"link": "https://cy.ncss.cn/",
+				"categories": ["互联网", "经济", "社会发展"]
+			},
+			{
+				"icon": "/logos/lanqiaobei.ico",
+				"title": "蓝桥杯",
+				"desc": "全国软件和信息技术专业人才大赛.",
+				"link": "http://lx.lanqiao.cn/",
+				"categories": ["比赛", "软件", "信息技术"]
+			},
+			{
+				"icon": "/logos/tipdm.png",
+				"title": "泰迪杯",
+				"desc": "群众性科技活动。以赛促学，以赛促教，以赛促研.",
+				"link": "https://www.tipdm.org/",
+				"categories": ["科技活动", "比赛", "教育"]
+			}
+		]
+	},
+	{
+		"title": "刷题",
+		"items": [
+			{
+				"icon": "/logos/likou.ico",
+				"title": "LeetCode",
+				"desc": "海量技术面试资源,高效提升编程技能.",
+				"link": "https://leetcode-cn.com/",
+				"categories": ["技术面试", "编程技能", "提升"]
+			},
+			{
+				"icon": "/logos/nowcoder.ico",
+				"title": "牛客网",
+				"desc": "集笔面试系统、题库、课程教育、社群交流、招聘内推于一体的招聘类网站.",
+				"link": "https://www.nowcoder.com/",
+				"categories": ["笔面试", "题库", "课程教育", "社群交流", "招聘"]
+			},
+			{
+				"icon": "/logos/pta.ico",
+				"title": "PTA",
+				"desc": "程序设计类实验辅助教学平台.",
+				"link": "https://pintia.cn/home",
+				"categories": ["程序设计", "实验", "教学平台"]
+			},
+			{
+				"icon": "/logos/acwing.ico",
+				"title": "AcWing",
+				"desc": "专属于程序员的平台,漫漫的刷题之旅中,提供最优质的解答.",
+				"link": "https://www.acwing.com/",
+				"categories": ["程序员", "刷题", "解答"]
+			}
 		]
 	},
 	{
@@ -45,30 +315,30 @@ export const navigationData = [
 				title: 'React',
 				desc: 'The library for web and native user interfaces',
 				link: 'https://react.dev/',
-				doc_link:'https://react.dev/reference/react',
-				categories:['前端','React','Web']
+				doc_link: 'https://react.dev/reference/react',
+				categories: ['前端', 'React', 'Web']
 			},
 			{
 				icon: '/logos/vue.svg',
 				title: 'Vue',
 				desc: '渐进式JavaScript 框架，易学易用，性能出色，适用场景丰富的 Web 前端框架。',
 				link: 'https://cn.vuejs.org/',
-				categories:['前端','Vue','Web']
+				categories: ['前端', 'Vue', 'Web']
 			},
 			{
 				icon: '/logos/vue.svg',
 				title: 'Vue Router',
 				desc: 'Vue.js 的官方路由。为 Vue.js 提供富有表现力、可配置的、方便的路由',
 				link: 'https://router.vuejs.org/zh/',
-				doc_link:'https://router.vuejs.org/zh/guide/',
-				categories:['前端','Vue','Web']
+				doc_link: 'https://router.vuejs.org/zh/guide/',
+				categories: ['前端', 'Vue', 'Web']
 			},
 			{
 				icon: '/logos/pinia.svg',
 				title: 'Pinia',
 				desc: '符合直觉的Vue.js状态管理库。类型安全、可扩展性以及模块化设计。甚至让你忘记正在使用的是一个状态库。',
 				link: 'https://pinia.vuejs.org/zh/',
-				categories:['前端','Vue','Web']
+				categories: ['前端', 'Vue', 'Web']
 			},
 
 			{
@@ -76,80 +346,193 @@ export const navigationData = [
 				title: 'Element Plus',
 				desc: '基于 Vue 3，面向设计师和开发者的组件库',
 				link: 'https://element-plus.org/zh-CN/',
-				doc_link:'https://element-plus.org/zh-CN/guide/design.html',
-				categories:['前端','Vue','Web']
+				doc_link: 'https://element-plus.org/zh-CN/guide/design.html',
+				categories: ['前端', 'Vue', 'Web']
 			},
 			{
 				icon: '/logos/nodejs.ico',
 				title: 'NodeJS',
 				desc: 'Node.js 是一个开源的、跨平台的 JavaScript 运行时环境。',
 				link: 'https://nodejs.cn/',
-				doc_link:'https://nodejs.cn/en/learn',
-				categories:['前端']
+				doc_link: 'https://nodejs.cn/en/learn',
+				categories: ['前端']
 			},
 			{
 				icon: '/logos/bun.svg',
 				title: 'Bun',
 				desc: '一个一体化的JavaScript运行时和工具包，专为提高速度而设计，包括编译器、测试运行器和与Node.js兼容的包管理器。使用Bun开发、测试、运行和捆绑JavaScript和TypeScript项目。Develop, test, run, and bundle JavaScript & TypeScript projects—all with Bun. Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a bundler, test runner, and Node.js-compatible package manager.',
 				link: 'https://bun.sh/',
-				doc_link:'https://bun.sh/docs',
-				categories:['前端']
+				doc_link: 'https://bun.sh/docs',
+				categories: ['前端']
 			},
 			{
 				icon: '/logos/nuxt.svg',
 				title: 'Nuxt',
 				desc: 'Nuxt是一个开源框架，使Web开发直观而强大。充满信心地创建高性能和生产级的全栈Web应用程序和网站。The Intuitive Vue Framework',
 				link: 'https://nuxt.com/',
-				doc_link:'https://nuxt.com/docs/getting-started/introduction',
-				categories:['前端']
+				doc_link: 'https://nuxt.com/docs/getting-started/introduction',
+				categories: ['前端']
 			},
 			{
 				icon: '/logos/supabase.png',
 				title: 'supabase',
 				desc: '在一个周末内建造，在一个周末内建造。Supplement是一个开源的Firebase替代品。Supplement是一个开源的Firebase替代品。',
 				link: 'https://supabase.com/',
-				doc_link:'https://supabase.com/docs',
-				categories:['前端']
+				doc_link: 'https://supabase.com/docs',
+				categories: ['前端']
 			},
 			{
 				icon: '/logos/electron.svg',
 				title: 'Electron',
 				desc: '使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。',
 				link: 'https://www.electronjs.org/zh/',
-				categories:['前端','桌面端']
+				categories: ['前端', '桌面端']
 			},
 			{
 				icon: '/logos/webpack.png',
 				title: 'webpack',
 				desc: '一个用于现代 JavaScript 应用程序的 静态模块打包工具',
 				link: 'https://www.webpackjs.com/',
-				doc_link:'https://www.webpackjs.com/concepts/',
-				categories:['前端']
+				doc_link: 'https://www.webpackjs.com/concepts/',
+				categories: ['前端']
 			},
 			{
 				icon: '/logos/chartjs.svg',
 				title: 'Chart.js',
 				desc: 'Simple yet flexible JavaScript charting library for the modern web',
 				link: 'https://www.chartjs.org/',
-				categories:['前端','可视化']
+				categories: ['前端', '可视化']
 			},
 			{
 				icon: '/logos/echarts.png',
 				title: 'ECharts',
 				desc: '一个基于 JavaScript 的开源可视化图表库',
 				link: 'https://echarts.apache.org/zh/index.html',
-				categories:['前端','可视化']
+				categories: ['前端', '可视化']
 			},
 			{
 				icon: '/logos/ant.svg',
 				title: 'Ant',
 				desc: '基于 Ant Design 设计体系的 React UI 组件库，主要用于研发企业级中后台产品。',
 				link: 'https://ant.design/index-cn',
-				doc_link:'https://ant.design/docs/react/getting-started-cn',
-				categories:['前端']
+				doc_link: 'https://ant.design/docs/react/getting-started-cn',
+				categories: ['前端']
 			},
 		]
 	},
+	{
+		"title": "前端待整理",
+		"items": [
+		  {
+			"icon": "/logos/codepen.ico",
+			"title": "CodePen",
+			"desc": "在线前端开发工具，前端设计学习和调试，寻找灵感.",
+			"link": "https://codepen.io",
+			"categories": ["前端开发", "设计", "灵感"]
+		  },
+		  {
+			"icon": "/logos/vue.png",
+			"title": "Vue",
+			"desc": "流行的JavaScript前端框架,可实现前后端分离.",
+			"link": "https://v3.cn.vuejs.org/",
+			"categories": ["前端框架", "JavaScript"]
+		  },
+		  {
+			"icon": "/logos/node.ico",
+			"title": "Node(中文)",
+			"desc": "JavaScript运行环境.",
+			"link": "http://nodejs.cn/",
+			"categories": ["JavaScript", "运行环境"]
+		  },
+		  {
+			"icon": "/logos/echarts.png",
+			"title": "Echarts",
+			"desc": "基于JavaScript的数据可视化图表库.",
+			"link": "https://echarts.apache.org/zh/index.html",
+			"categories": ["数据可视化", "图表库"]
+		  },
+		  {
+			"icon": "/logos/npm.png",
+			"title": "npm",
+			"desc": "一个NodeJS包管理和分发工具,已经成为了非官方的发布Node模块的标准.",
+			"link": "https://www.npmjs.com/",
+			"categories": ["NodeJS", "包管理", "分发工具"]
+		  },
+		  {
+			"icon": "/logos/jquery.ico",
+			"title": "JQuery",
+			"desc": "一个快速、简洁的JavaScript框架.",
+			"link": "https://www.jquery123.com/",
+			"categories": ["JavaScript", "框架"]
+		  },
+		  {
+			"icon": "/logos/jquerychajian.ico",
+			"title": "JQuery插件",
+			"desc": "收集jQuery插件和提供各种jQuery特效的详细使用方法及预览.",
+			"link": "https://www.jq22.com/",
+			"categories": ["JQuery", "插件", "特效"]
+		  },
+		  {
+			"icon": "/logos/bruceblog.png",
+			"title": "BruecBlog",
+			"desc": "一名前端er的学习笔记.",
+			"link": "https://brucecai55520.gitee.io/bruceblog/",
+			"categories": ["前端", "学习笔记"]
+		  }
+		]
+	  },
+	  {
+		"title": "Github项目",
+		"items": [
+		  {
+			"icon": "/logos/hellogithub.ico",
+			"title": "HELLOGITHUB",
+			"desc": "让对开源项目感兴趣的人不再畏惧、让开源项目的发起者不再孤单.",
+			"link": "https://hellogithub.com/",
+			"categories": ["开源项目", "社区"]
+		  },
+		  {
+			"icon": "/logos/github.ico",
+			"title": "爬虫集合",
+			"desc": "Github最全爬虫案例.",
+			"link": "https://github.com/facert/awesome-spider",
+			"categories": ["爬虫", "案例", "Github"]
+		  }
+		]
+	  },
+	  {
+		"title": "Python库",
+		"items": [
+		  {
+			"icon": "/logos/tensorflow.ico",
+			"title": "TensorFlow",
+			"desc": "一个端到端开源机器学习平台,拥有一个全面而灵活的生态系统.",
+			"link": "https://tensorflow.google.cn/tutorials/images/cnn?hl=zh_cn",
+			"categories": ["机器学习", "开源", "平台"]
+		  },
+		  {
+			"icon": "/logos/matplotlib.ico",
+			"title": "Matplotlib",
+			"desc": "绘图库,轻松地将数据图形化,提供多样化输出格式.",
+			"link": "https://matplotlib.org/stable/tutorials/index.html",
+			"categories": ["数据可视化", "绘图库", "Python"]
+		  },
+		  {
+			"icon": "/logos/matplotlibzhongwen.png",
+			"title": "Matplotlib(C)",
+			"desc": "Matplotlib的中文版本.",
+			"link": "https://www.matplotlib.org.cn/tutorials/",
+			"categories": ["数据可视化", "绘图库", "中文"]
+		  },
+		  {
+			"icon": "/logos/pysimple.png",
+			"title": "PySimpleGUI",
+			"desc": "一个非常简单好用的Python图形界面库.",
+			"link": "https://github.com/PySimpleGUI/PySimpleGUI",
+			"categories": ["图形界面", "Python", "库"]
+		  }
+		]
+	  },
 	{
 		title: '后端',
 		items: [
@@ -158,11 +541,133 @@ export const navigationData = [
 				title: 'Docker',
 				desc: '帮助开发人员在任何地方构建、共享、运行和验证应用程序—无需繁琐的环境配置或管理。Docker构建：现在快如闪电。Docker Build Cloud正式发布。',
 				link: 'https://hub.docker.com/',
-				categories:['后端','docker']
+				categories: ['后端', 'docker']
 			},
-			
+
 		]
 	},
+	{
+		"title": "工具",
+		"items": [
+		  {
+			"icon": "/logos/baidufanyi.ico",
+			"title": "百度翻译",
+			"desc": "多语种即时在线翻译.",
+			"link": "https://fanyi.baidu.com/",
+			"categories": ["翻译", "在线工具", "多语种"]
+		  },
+		  {
+			"icon": "/logos/processon.ico",
+			"title": "ProcessOn",
+			"desc": "在线流程图,迅捷画图,基于云计算,人实时协作编辑同一个思维导图.",
+			"link": "https://www.processon.com/diagrams",
+			"categories": ["流程图", "云计算", "协作"]
+		  },
+		  {
+			"icon": "/logos/pearocr.png",
+			"title": "PearOCR",
+			"desc": "免费简单,图片文字识别,自动校对错误等功能,支持下载到本地!",
+			"link": "https://pearocr.com/#/",
+			"categories": ["OCR", "文字识别", "免费"]
+		  },
+		  {
+			"icon": "/logos/general.png",
+			"title": "识文精灵",
+			"desc": "在线文字识别云服务,解决文字识别.",
+			"link": "http://ocrwiz.com/",
+			"categories": ["OCR", "文字识别", "云服务"]
+		  },
+		  {
+			"icon": "/logos/ilovepdf.png",
+			"title": "iLovePDF",
+			"desc": "丰富的PDF合并、拆分、压缩、转换、旋转和解锁，添加水印等.",
+			"link": "https://www.ilovepdf.com/zh-cn/word_to_pdf",
+			"categories": ["PDF", "在线工具", "转换"]
+		  },
+		  {
+			"icon": "/logos/jianbianse.png",
+			"title": "渐变色",
+			"desc": "精美渐变色彩，可以直接下载.",
+			"link": "https://uigradients.com/#BackToEarth",
+			"categories": ["颜色", "设计", "下载"]
+		  },
+		  {
+			"icon": "/logos/json.ico",
+			"title": "json解析",
+			"desc": "轻量级的数据交换格式,提供相关的Json解析,验证,格式化,压缩,编辑器等服务.",
+			"link": "https://www.json.cn/",
+			"categories": ["JSON", "解析", "在线工具"]
+		  },
+		  {
+			"icon": "/logos/qqmail.ico",
+			"title": "QQ邮箱",
+			"desc": "为亿万用户提供高效稳定便捷的电子邮件服务.",
+			"link": "https://mail.qq.com/cgi-bin/frame_html?sid=up6KZlz3BGBz40wu&r=ebc72a3dc579725eb92a51a5a7d86b2f",
+			"categories": ["邮箱", "腾讯", "服务"]
+		  },
+		  {
+			"icon": "/logos/wangyiemail.ico",
+			"title": "网易邮箱",
+			"desc": "网易163免费邮箱--中文邮箱第一品牌,支持各种客户端软件收发.",
+			"link": "https://mail.qq.com/cgi-bin/frame_html?sid=up6KZlz3BGBz40wu&r=ebc72a3dc579725eb92a51a5a7d86b2f",
+			"categories": ["邮箱", "网易", "服务"]
+		  },
+		  {
+			"icon": "/logos/codelf.png",
+			"title": "CODELF",
+			"desc": "变量命名神器.",
+			"link": "https://unbug.github.io/codelf/",
+			"categories": ["编程", "工具", "命名"]
+		  },
+		  {
+			"icon": "/logos/removebg.png",
+			"title": "removebg",
+			"desc": "智能的AI5秒钟内100%自动去除背景,简单实用的一键智能抠图工具.",
+			"link": "https://www.remove.bg/zh/upload",
+			"categories": ["AI", "工具", "去背景"]
+		  },
+		  {
+			"icon": "/logos/qrbtf.png",
+			"title": "QRBTF",
+			"desc": "参数化二维码生成器.",
+			"link": "https://qrbtf.com/",
+			"categories": ["二维码", "生成器", "工具"]
+		  }
+		]
+	  },
+	  {
+		"title": "学习文档",
+		"items": [
+		  {
+			"icon": "/logos/java.ico",
+			"title": "pdai",
+			"desc": "Java全栈知识体系.",
+			"link": "https://pdai.tech/",
+			"categories": ["Java", "全栈", "教程"]
+		  },
+		  {
+			"icon": "/logos/w3school.png",
+			"title": "W3school",
+			"desc": "全球最大的中文 Web 技术教程.",
+			"link": "https://www.w3school.com.cn/",
+			"categories": ["Web", "技术", "教程"]
+		  },
+		  {
+			"icon": "/logos/linux.png",
+			"title": "良许教程",
+			"desc": "Linux系统常用命令教学,shell脚本入门学习.",
+			"link": "https://www.lxlinux.net/",
+			"categories": ["Linux", "命令", "教程"]
+		  },
+		  {
+			"icon": "/logos/web.ico",
+			"title": "MDN",
+			"desc": "指导零基础Web开发初学者,提供他们开始编写网站代码所需的所有内容.",
+			"link": "https://developer.mozilla.org/zh-CN/docs/Learn/HTML",
+			"categories": ["Web", "开发", "教程"]
+		  }
+		]
+	  },	  
 	{
 		title: 'Python三方库',
 		items: [
@@ -172,7 +677,7 @@ export const navigationData = [
 				desc: 'Django让构建更好的Web应用程序变得更容易，更快，更少的代码。',
 				link: 'https://www.djangoproject.com/',
 				doc_link: 'https://docs.djangoproject.com/zh-hans/5.0/',
-				categories:['后端','Python','Web']
+				categories: ['后端', 'Python', 'Web']
 			},
 			{
 				icon: '/logos/flask.png',
@@ -180,7 +685,7 @@ export const navigationData = [
 				desc: 'Flask是一个使用 Python 编写的轻量级 Web 应用框架。其 WSGI 工具箱采用 Werkzeug ，模板引擎则使用 Jinja2 。Flask使用 BSD 授权。',
 				link: 'https://flask.palletsprojects.com/en/3.0.x/',
 				doc_link: 'https://flask.palletsprojects.com/en/3.0.x/',
-				categories:['后端','Python','Web']
+				categories: ['后端', 'Python', 'Web']
 			},
 			{
 				icon: '/logos/fastapi.png',
@@ -188,8 +693,41 @@ export const navigationData = [
 				desc: 'FastAPI 框架，高性能，易于学习，高效编码，生产可用',
 				link: 'https://fastapi.tiangolo.com/',
 				doc_link: 'https://fastapi.tiangolo.com/zh/',
-				categories:['后端','Python','Web']
+				categories: ['后端', 'Python', 'Web']
 			},
+		]
+	},
+	{
+		title: '资源',
+		items: [
+			{
+				icon: '/logos/52pojie.ico',
+				title: '吾爱破解',
+				desc: 'PC软件安全领域、移动安全领域技术交流的社区.',
+				link: 'https://www.52pojie.cn/',
+				categories: ['社区', '安全', '软件']
+			},
+			{
+				icon: '/logos/dayanzai.jpg',
+				title: '大眼仔旭',
+				desc: '个人非盈利性网站,分享日常工作生活办公技术资源.',
+				link: 'http://www.dayanzai.me/',
+				categories: ['个人网站', '技术', '资源']
+			},
+			{
+				icon: '/logos/wallhaven.ico',
+				title: 'Wallhaven',
+				desc: '火爆的壁纸网站,提供了大量高清正版,无水印,高质量壁纸资源.',
+				link: 'https://wallhaven.cc/',
+				categories: ['壁纸', '高清', '资源']
+			},
+			{
+				icon: '/logos/iconfont.png',
+				title: '阿里矢量图',
+				desc: '功能强大,图标内容丰富,支持矢量图标下载、在线存储、格式转换.',
+				link: 'https://www.iconfont.cn/',
+				categories: ['矢量图', '图标', '设计']
+			}
 		]
 	},
 	{
@@ -327,6 +865,47 @@ export const navigationData = [
 				"title": "common-regex",
 				"desc": "常用正则表达式。"
 			},
+		]
+	},
+
+	{
+		"title": "娱乐影音",
+		"items": [
+			{
+				"icon": "/logos/bilibili.ico",
+				"title": "哔哩哔哩",
+				"desc": "中国年轻世代高度聚集的文化社区和视频平台.",
+				"link": "https://www.bilibili.com/",
+				"categories": ["视频平台", "社区", "文化"]
+			},
+			{
+				"icon": "/logos/tengxunshipin.ico",
+				"title": "腾讯视频",
+				"desc": "致力于打造中国领先的在线视频媒体平台.",
+				"link": "https://v.qq.com/",
+				"categories": ["视频平台", "媒体"]
+			},
+			{
+				"icon": "/logos/iqiyi.ico",
+				"title": "爱奇艺",
+				"desc": "拥有海量、优质视频的网站.",
+				"link": "https://www.iqiyi.com/",
+				"categories": ["视频平台", "优质视频"]
+			},
+			{
+				"icon": "/logos/qqmusic.ico",
+				"title": "QQ音乐",
+				"desc": "腾讯公司推出的一款网络音乐服务产品.",
+				"link": "https://y.qq.com/",
+				"categories": ["音乐", "服务产品"]
+			},
+			{
+				"icon": "/logos/wangyiyun.ico",
+				"title": "网易云",
+				"desc": "一款专注于发现与分享的音乐产品.",
+				"link": "https://music.163.com/",
+				"categories": ["音乐", "发现与分享"]
+			}
 		]
 	},
 	{
