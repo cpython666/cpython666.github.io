@@ -27,6 +27,7 @@ let nav_tmp = [
           { text: '浏览器指纹详解', link: '/爬虫/系列文章/浏览器指纹详解' },
           { text: 'DrissionPage学习笔记', link: '/爬虫/系列文章/DrissionPage学习笔记' },
           { text: 'Scrapy学习笔记', link: '/爬虫/系列文章/Scrapy学习笔记' },
+          { text: 'Crawlab使用记录', link: '/爬虫/系列文章/Crawlab使用记录' },
         ]
       },
     ]
@@ -80,6 +81,13 @@ let nav_tmp = [
           { text: 'vitepress博客搭建', link: '/前端/系列文章/vitepress博客搭建' },
         ]
       },
+    ]
+  },
+  {
+    text: '后端',
+    items: [
+      { text: 'docker笔记', link: '/后端/docker笔记' },
+      { text: 'nginx笔记', link: '/后端/nginx笔记' },
     ]
   },
   {

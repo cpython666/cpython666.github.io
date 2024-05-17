@@ -111,6 +111,12 @@ export default {
 .toggle input:focus + span {
     box-shadow: 0 0 0 2px #ecf3fe;
 }
+.toggle{
+	transform: scale(1.5);
+}
+.toggle:hover{
+	transform: scale(2);
+}
 
 
 
