@@ -20,6 +20,10 @@
 			<div v-show="curPageId === 'jjencode'">
 				<PanelJjencode />
 			</div>
+			<div v-show="curPageId === 'imagesplit'">
+				<PanelImagesplit />
+			</div>
+			
 			<div v-show="curPageId === 'md5'" class="md5-panel">
 				<!-- MD5 面板 -->
 				<h3>MD5</h3>
@@ -36,6 +40,7 @@ import PanelBase64 from './components/PanelBase64.vue'
 import PanelUrl from './components/PanelUrl.vue'
 import PanelAaencode from './components/PanelAaencode.vue'
 import PanelJjencode from './components/PanelJjencode.vue'
+import PanelImagesplit from './components/PanelImagesplit.vue'
 import { ref ,onMounted } from 'vue'
 
 const curPageId = ref('aaencode')
@@ -66,6 +71,10 @@ const toolList = ref([
 	{
 		name: 'JJencode编码解码',
 		pageId: 'jjencode'
+	},
+	{
+		name: '图片分割',
+		pageId: 'imagesplit'
 	},
 	{
 		name: 'MD5加密',
