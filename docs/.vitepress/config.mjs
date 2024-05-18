@@ -208,9 +208,13 @@ export default defineConfig({
     //   // async:true,
     //   src: 'https://gist.githubusercontent.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079/raw/8730dd7b808f5bcb8b0a01cce9d442f4bca0a228/cpython666.js',
     // }],
-    ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
+
+    // 像小鱼一样的鼠标
+    // ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
     // 引入外部 JavaScript 文件
-    ['script', { src: '/js/pointer.js' }],
+    // ['script', { src: '/js/pointer.js' }],
+
+
     // 鼠标拖尾
     ['script', { src: '/js/mouse-trail.js' }],
     // 引入自定义的 JavaScript 文件，前端反爬js文件
