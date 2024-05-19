@@ -214,6 +214,9 @@ export default defineConfig({
     // 引入外部 JavaScript 文件
     // ['script', { src: '/js/pointer.js' }],
 
+    // 星露谷物语的飞鸟
+    ['script', { src: '/js/birdfly.js' }],
+
 
     // 鼠标拖尾
     ['script', { src: '/js/mouse-trail.js' }],
