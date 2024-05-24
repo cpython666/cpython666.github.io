@@ -86,6 +86,7 @@ let nav_tmp = [
   {
     text: '后端',
     items: [
+      { text: 'git笔记', link: '/后端/git笔记' },
       { text: 'docker笔记', link: '/后端/docker笔记' },
       { text: 'nginx笔记', link: '/后端/nginx笔记' },
     ]
@@ -315,7 +316,7 @@ export default defineConfig({
     logo: '/logo.jpg',
     nav: nav_tmp,
     sidebar: sidebar_tmp,
-    outline: [2, 3],
+    outline: [2, 3, 4],
     socialLinks: [
       // https://vitepress.dev/zh/reference/default-theme-config#sociallinks
       {
