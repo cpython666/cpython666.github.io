@@ -1,4 +1,29 @@
 # Scrapy简介-快速开始-项目实战-注意事项-踩坑之路
+## 常用命令
+```python
+
+#创建一个新的Scrapy项目。
+scrapy startproject projectname
+创建一个新的爬虫。
+scrapy genspider spidername domain.com
+运行一个爬虫。
+scrapy crawl spidername
+输出数据到json文件
+scrapy crawl spidername -o output.json
+指定debug信息输出到文件
+scrpay crawl spidername -s LOG_FILE=all.log
+无debug信息，输出到文件
+scrapy crawl spidername -o output.json -s LOG_FILE=all.log
+列出项目中所有的爬虫。
+scrapy list
+启动URL对应的Scrapy shell，可以实时测试抓取。
+scrapy shell 'http://example.com'
+获取一个网页的源代码。
+scrapy fetch --nolog http://example.com
+在浏览器中打开网页，方便查看网页如何响应爬虫。
+scrapy view http://example.com
+```
+
 # Scrapy简介
 ## **Scrapy是什么？**
 
