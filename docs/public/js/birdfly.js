@@ -9,6 +9,7 @@ function initBirdFly() {
         const bird = document.createElement('img');
         bird.src = src;
         bird.style.position = 'fixed';
+        bird.style.zIndex = 5;
         bird.style.width = '50px'; // 根据需要调整鸟的大小
         bird.style.height = 'auto';
         return bird;

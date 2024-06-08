@@ -12,6 +12,7 @@
   "dependencies": {
     "element-plus": "^2.6.3",
     "jszip": "^3.10.1",
-    "oh-my-live2d": "^0.16.1"
+    "oh-my-live2d": "^0.16.1",
+    "typed.js": "^2.1.0"
   }
 }

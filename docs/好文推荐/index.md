@@ -29,5 +29,32 @@ https://www.cnblogs.com/97z4moon/p/14554621.html
 
 https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
 
+### 图片压缩
+
+
+google开源的工具：
+
+
+
+图像工具：
+https://www.iloveimg.com/zh-cn
+
+pdf工具，office
+52pdf
+
+打字机效果：
+想实现前端酷炫打字机效果吗？
+https://juejin.cn/post/7020208396271878152
+
+typed.js：https://github.com/mattboldt/typed.js/
+
+vue-typed-js：https://github.com/Orlandster/vue-typed-js
+
+任务栏透明：https://apps.microsoft.com/zh-cn/detail/9pf4kz2vn4w9?launch=true&mode=full&ocid=bingwebsearch
+
+图片压缩L:https://docsmall.com/image-compress#google_vignette
+
 ## 爬虫
+
+
 

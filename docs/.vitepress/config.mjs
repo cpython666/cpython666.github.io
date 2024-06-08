@@ -100,6 +100,11 @@ let nav_tmp = [
       { text: '开发日记', link: '/站长介绍/开发日记' },
       { text: '交流群', link: '/站长介绍/交流群' },
       { text: '支持', link: '/站长介绍/支持' },
+      { 
+        text: '旧版首页', 
+        link: '/index/old/index-0.1' 
+
+      },
     ]
   },
   { text: '好文推荐', link: '/好文推荐/' },
