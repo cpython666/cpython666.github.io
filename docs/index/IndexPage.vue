@@ -6,7 +6,7 @@
 
 		<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 			<div>
-			<img id="index-logo" src="/logo.png">
+				<img id="index-logo" src="/logo.png">
 			</div>
 			<div id="box-cursor">
 				<span id="box"></span>
@@ -30,8 +30,10 @@ const changeBgHeight = () => {
 
 	const headerHeight = header.clientHeight;
 	console.log(headerHeight)
-	bg.style.height = `calc(100vh - ${headerHeight}px)`;
 	const bg1 = document.querySelector('#bg');
+	// bg.style.height = `calc(100vh)`;
+	// bg1.style.height = `calc(100vh)`;
+	bg.style.height = `calc(100vh - ${headerHeight}px)`;
 	bg1.style.height = `calc(100vh - ${headerHeight}px)`;
 
 
@@ -61,30 +63,42 @@ const images = [
 	'imgs/bg/small_3.png',
 	'imgs/bg/small_4.png',
 	'imgs/bg/small_5.png',
-	
+
 ];
 
 // 获取随机图片
-const getRandomImage=()=> {
+const getRandomImage = () => {
 	const randomIndex = Math.floor(Math.random() * images.length);
 	return images[randomIndex];
 }
 
 // 设置随机背景图片
-const setRandomBackgroundImage=()=> {
-const a=getRandomImage();
+const setRandomBackgroundImage = () => {
+	const a = getRandomImage();
 	randomImage.value = a;
 	console.log('改变了背景，', randomImage.value)
 }
 onMounted(
 	() => {
 		const options = {
-			strings: ['漫漫星程，你我同行~^1000', '星梦启航，代码笔记。^1000', '让学习少走弯路，让工作得心应手!^1000', '我于这喧嚣世界寻得`一方净土`，可我却已成净土所厌的喧嚣。^5000',],
+			strings: [
+				"Driven by dreams, not by profit.^2500",
+				'漫漫星程，你我同行~^1000',
+				'星梦启航，代码笔记。^1000',
+				'让学习少走弯路，让工作得心应手!^1000',
+				'我于这喧嚣世界寻得`一方净土`，可我却已成净土所厌的喧嚣。^3000',
+				'信息互联，资源无限。^1000',
+				"一站式导航，学习新体验。^1000",
+				"整合推荐，减少信息差。^1000",
+				"发现世界，连接资源。^1000",
+				"资源一站通，信息无阻挡。^1000",
+				"资源连接，个性化代办。^1000",
+			],
 			typeSpeed: 150,
 			showCursor: true,
 			cursorChar: '_🌟',
-			loop:true,
-			loopCount:200
+			loop: true,
+			loopCount: 200
 		};
 		new Typed('#box', options);
 
@@ -99,6 +113,21 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+/* div {
+	padding-top: 0 !important;
+
+}
+
+header {
+	position: fixed !important;
+	opacity: 0.1;
+	z-index: 5;
+}
+
+header:hover {
+	top: 0;
+} */
+
 /* .vp-doc{
 	width:100% !important;
 } */
@@ -182,19 +211,23 @@ body::-webkit-scrollbar {
 
 /* 定义闪烁和缩放动画 */
 @keyframes blinkScale {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
 
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-  }
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+		filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+
+	}
+
+	50% {
+		opacity: 0.5;
+		transform: scale(1.1);
+		filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+	}
 }
-#index-logo{
+
+#index-logo {
 	width: 100px;
 	margin-top: -100px;
 	margin-bottom: 20px;
@@ -202,13 +235,15 @@ body::-webkit-scrollbar {
 	animation: blinkScale 3s infinite;
 
 }
-#index-logo:hover{
+
+#index-logo:hover {
 	animation: blinkScale 1.5s infinite;
 }
-#box-cursor{
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
+
+#box-cursor {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 </style>
