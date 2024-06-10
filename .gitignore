@@ -4,7 +4,7 @@ cache
 
 imgs/bg/big/
 
-/docs/index
-/docs/public
-/docs/资源导航
+# /docs/index
+# /docs/public
+# /docs/资源导航
 
