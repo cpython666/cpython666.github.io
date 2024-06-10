@@ -6,7 +6,7 @@
 
 		<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 			<div>
-			<img id="index-logo" src="/logo__.png">
+			<img id="index-logo" src="/logo.png">
 			</div>
 			<div id="box-cursor">
 				<span id="box"></span>
