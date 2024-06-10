@@ -84,7 +84,7 @@ onMounted(
 			showCursor: true,
 			cursorChar: '_🌟',
 			loop:true,
-			loopCount:2
+			loopCount:200
 		};
 		new Typed('#box', options);
 
