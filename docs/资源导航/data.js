@@ -34,7 +34,10 @@ export const navigationData = [
 				title: 'Python爸爸',
 				desc: '视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
 				link: 'https://v.douyin.com/i2VkxqbT/',
-				categories: ['抖音']
+				categories: ['抖音'],
+				status:'a',
+				type:['网站','视频']
+
 			},
 			{
 				icon: '/icons/python.png',
@@ -326,6 +329,21 @@ export const navigationData = [
 				categories: ['前端', 'Vue', 'Web']
 			},
 			{
+				icon: '/logos/vercel.png',
+				title: 'Vercel',
+				desc: '构建和部署最好的Web体验。',
+				link: 'https://vercel.com/',
+				categories: ['前端', '免费', '博客']
+			},
+			{
+				icon: '/logos/netlify.png',
+				title: 'Netlify',
+				desc: '连接一切，建造任何东西。Netlify是提供卓越和动态Web体验的重要平台，没有限制。',
+				link: 'https://www.netlify.com/',
+				categories: ['前端', '免费', '博客']
+			},
+			
+			{
 				icon: '/logos/vue.svg',
 				title: 'Vue Router',
 				desc: 'Vue.js 的官方路由。为 Vue.js 提供富有表现力、可配置的、方便的路由',
@@ -430,6 +448,15 @@ export const navigationData = [
 			"link": "https://codepen.io",
 			"categories": ["前端开发", "设计", "灵感"]
 		  },
+		  {
+			"icon": "/logos/codepen.ico",
+			"title": "Qexo",
+			"desc": "一个美观、强大的在线 静态博客 管理器 不只是一个编辑器",
+			"link": "https://www.oplog.cn/qexo/",
+			"link_doc":"https://www.oplog.cn/qexo/start.html",
+			"categories": ["前端", "博客"]
+		  },
+
 		  {
 			"icon": "/logos/vue.png",
 			"title": "Vue",
@@ -543,7 +570,14 @@ export const navigationData = [
 				link: 'https://hub.docker.com/',
 				categories: ['后端', 'docker']
 			},
-
+			{
+				icon: '/logos/sqlhub.ico',
+				title: 'SQLPub',
+				desc: '提供最新版本、甚至是开发者版本的 MySQL 服务器测试服务。您将获得最大36000次/小时的请求、同时30个连接和500M存储空间；',
+				link: 'https://www.sqlpub.com/',
+				categories: ['数据库']
+			},
+			
 		]
 	},
 	{
@@ -555,6 +589,13 @@ export const navigationData = [
 			"desc": "多语种即时在线翻译.",
 			"link": "https://fanyi.baidu.com/",
 			"categories": ["翻译", "在线工具", "多语种"]
+		  },
+		  {
+			"icon": "/logos/default.png",
+			"title": "fomepay",
+			"desc": "虚拟卡.",
+			"link": "https://gpt.fomepay.com/",
+			"categories": ["虚拟卡"]
 		  },
 		  {
 			"icon": "/logos/processon.ico",
@@ -597,6 +638,13 @@ export const navigationData = [
 			"desc": "轻量级的数据交换格式,提供相关的Json解析,验证,格式化,压缩,编辑器等服务.",
 			"link": "https://www.json.cn/",
 			"categories": ["JSON", "解析", "在线工具"]
+		  },
+		  {
+			"icon": "/logos/gmail.ico",
+			"title": "GMail",
+			"desc": "一款直观、高效、实用的电子邮件应用。免费提供15GB存储空间,垃圾邮件更少,而且支持移动访问。 一个帐户,畅享 Google所有服务!",
+			"link": "https://mail.qq.com/cgi-bin/frame_html?sid=up6KZlz3BGBz40wu&r=ebc72a3dc579725eb92a51a5a7d86b2f",
+			"categories": ["邮箱", "Google", "服务"]
 		  },
 		  {
 			"icon": "/logos/qqmail.ico",

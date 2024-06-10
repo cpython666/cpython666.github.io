@@ -5,8 +5,14 @@
 		</div>
 
 		<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
+			<div>
+			<img id="index-logo" src="/logo__.png">
+			</div>
+			<div id="box-cursor">
+				<span id="box"></span>
 
-			<span id="box"></span>
+			</div>
+
 		</div>
 	</div>
 
@@ -68,20 +74,17 @@ const getRandomImage=()=> {
 const setRandomBackgroundImage=()=> {
 const a=getRandomImage();
 	randomImage.value = a;
-	//   const randomImage = getRandomImage();
-	//   const bgElement = document.getElementById('big-bg');
-	//   const bg1Element = document.getElementById('bg');
-	//   bgElement.style.backgroundImage = `url(${a})`;
-	//   bg1Element.style.backgroundImage = `url(${a})`;
 	console.log('改变了背景，', randomImage.value)
 }
 onMounted(
 	() => {
 		const options = {
-			strings: ['漫漫星程，你我同行~^1000', '星梦启航，代码笔记。^1000', '让学习少走弯路，让工作得心应手!^1000', '我于这喧嚣世界寻得`一方净土`，可我却已成净土所厌的喧嚣。^1000',],
+			strings: ['漫漫星程，你我同行~^1000', '星梦启航，代码笔记。^1000', '让学习少走弯路，让工作得心应手!^1000', '我于这喧嚣世界寻得`一方净土`，可我却已成净土所厌的喧嚣。^5000',],
 			typeSpeed: 150,
 			showCursor: true,
 			cursorChar: '_🌟',
+			loop:true,
+			loopCount:2
 		};
 		new Typed('#box', options);
 
@@ -141,6 +144,7 @@ body::-webkit-scrollbar {
 	height: 100vh;
 	width: 100vw;
 	display: flex;
+	flex-direction: column;
 	position: relative;
 	justify-content: center;
 	align-items: center;
@@ -174,5 +178,37 @@ body::-webkit-scrollbar {
 	justify-content: center;
 	align-items: center;
 	padding: 6px 10px;
+}
+
+/* 定义闪烁和缩放动画 */
+@keyframes blinkScale {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+  }
+}
+#index-logo{
+	width: 100px;
+	margin-top: -100px;
+	margin-bottom: 20px;
+	transition: all ease 0.5s;
+	animation: blinkScale 3s infinite;
+
+}
+#index-logo:hover{
+	animation: blinkScale 1.5s infinite;
+}
+#box-cursor{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
 }
 </style>

@@ -1,4 +1,14 @@
 # JS
+## 获取一个元素并且设置高度
+```js
+    const header = document.querySelector('header');
+	const bg = document.querySelector('#big-bg');
+	console.log(header.clientHeight)
+	const headerHeight = header.clientHeight;
+	console.log(headerHeight)
+	bg.style.height = `calc(100vh - ${headerHeight}px)`;
+```
+
 
 ## js显示当前时间
 

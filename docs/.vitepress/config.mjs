@@ -40,9 +40,11 @@ let nav_tmp = [
       { text: '学习指南', link: '/Python/学习指南' },
       { text: '买课指南', link: '/Python/买课指南' },
       { text: '视频源码', link: '/Python/视频源码' },
+      { text: '常用命令', link: '/Python/shorthand' },
       {
         text: '系列文章',
         items: [
+          { text: 'Django笔记', link: '/Python/系列文章/django' },
           { text: '23种设计模式-Python', link: '/Python/系列文章/23种设计模式/' },
           { text: 'PyQt6实战开发之旅', link: '/Python/系列文章/PyQt6实战开发之旅' },
           { text: '探索SimpleUI：让Django Admin焕发现代光彩', link: '/Python/系列文章/探索SimpleUI：让Django Admin焕发现代光彩' },
@@ -74,6 +76,7 @@ let nav_tmp = [
       { text: 'JS', link: '/前端/js' },
       { text: 'JQuery', link: '/前端/jquery' },
       { text: 'NodeJs', link: '/前端/nodejs' },
+      { text: 'Vue', link: '/前端/vue' },
       {
         text: '系列文章',
         items: [
@@ -230,7 +233,7 @@ export default defineConfig({
     // ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
-      { rel: 'icon', href: '/logo.jpg' }
+      { rel: 'icon', href: '/logo.png' }
     ],
     // 点击彩虹
     // <!--鼠标点击特效-->
@@ -318,7 +321,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/logo.jpg',
+    logo: '/logo.png',
     nav: nav_tmp,
     sidebar: sidebar_tmp,
     outline: [2, 3, 4],
