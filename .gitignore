@@ -5,7 +5,8 @@ cache
 # docs/tools/
 tmp/
 
-docs/
+/docs/
 docs/public/imgs/bg/big/
-# 但不忽略 docs/.vitepress 目录
-!docs/.vitepress/dist
+
+! /docs/.vitepress/dist
+# ! /docs/.vitepress/dist/**
