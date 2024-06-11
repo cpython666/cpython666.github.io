@@ -1,1 +1,0 @@
-import{aw as e,q as t,p as a}from"./chunks/framework.D2i5q5tO.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"前端/vue.md","filePath":"前端/vue.md","lastUpdated":1718006465000}'),r={name:"前端/vue.md"};function s(o,n,c,p,d,i){return a(),t("div")}const f=e(r,[["render",s]]);export{m as __pageData,f as default};

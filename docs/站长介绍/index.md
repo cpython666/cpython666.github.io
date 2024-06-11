@@ -1,3 +1,9 @@
+## 支持站长
+发现了一个很实惠的vpn站点，使用站长的邀请链接注册账号充值，可以让站长获得一些佣金，谢谢大家支持.
+注册链接：
+[https://c.ikunvpn.com/#/register?code=yeHoaHFJ](https://c.ikunvpn.com/#/register?code=yeHoaHFJ)
+![](/support/ikunvpn.png)
+
 闲下来会做这个网站的全部详细的搭建视频教程，只是现在很忙，在做毕设和找工作。。。
 
 ## 个人介绍
