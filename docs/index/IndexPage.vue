@@ -1,19 +1,26 @@
 <template>
-	<div>
-		<div id="bg" :style="{ backgroundImage: `url(${randomImage})` }">
+	<div class="section-container">
+		<section id="first-section">
 
-		</div>
-
-		<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
-			<div>
-				<img id="index-logo" src="/logo.png">
-			</div>
-			<div id="box-cursor">
-				<span id="box"></span>
+			<div id="bg" :style="{ backgroundImage: `url(${randomImage})` }">
 
 			</div>
 
-		</div>
+			<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
+				<div>
+					<img id="index-logo" src="/logo.png">
+				</div>
+				<div id="box-cursor">
+					<span id="box"></span>
+
+				</div>
+
+			</div>
+		</section>
+		<section>
+111111111
+		</section>
+
 	</div>
 
 </template>
@@ -92,7 +99,7 @@ onMounted(
 				"整合推荐，减少信息差。^1000",
 				"发现世界，连接资源。^1000",
 				"资源一站通，信息无阻挡。^1000",
-				"资源连接，个性化代办。^1000",
+				"资源连接，个性化待办。^1000",
 			],
 			typeSpeed: 150,
 			showCursor: true,
@@ -131,6 +138,12 @@ header:hover {
 /* .vp-doc{
 	width:100% !important;
 } */
+/* .section-container{
+	width: 100vw;
+	background-color: antiquewhite;
+	scroll-snap-type:y mandatory;
+} */
+
 .container {
 	padding: 0 !important;
 	/* max-width:3000 !important; */

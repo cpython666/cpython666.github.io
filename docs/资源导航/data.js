@@ -436,6 +436,39 @@ export const navigationData = [
 				doc_link: 'https://ant.design/docs/react/getting-started-cn',
 				categories: ['前端']
 			},
+			{
+				icon: '/logos/boxysvg.svg',
+				title: 'boxy-svg',
+				desc: 'svg在线编辑器',
+				link: 'https://boxy-svg.com',
+				categories: ['前端','svg']
+			},
+			{
+				icon: '/logos/svgrepo.ico',
+				title: 'svgrepo',
+				desc: '下载免费的 SVG 矢量和图标用于商业用途。',
+				link: 'https://www.svgrepo.com/',
+				categories: ['前端','svg','icons']
+			},
+			{
+				icon: '/logos/animejs.png',
+				title: 'animejs',
+				desc: '一个轻量级的 JavaScript 动画库，具有简单而强大的 API。它适用于 CSS 属性、SVG、DOM 属性和 JavaScript 对象。',
+				github_link:'https://github.com/juliangarnier/anime/',
+				link: 'https://animejs.com/',
+				categories: ['前端','动画']
+			},
+			{
+				icon: '/logos/animxyz.png',
+				title: 'animxyz',
+				desc: '第一个可组合项CSS动画工具包。The first composable CSS animation toolkit.',
+				github_link:'https://github.com/ingram-projects/animxyz',
+				doc_link:'https://animejs.com/documentation/',
+				link: 'https://animxyz.com/',
+				categories: ['前端','动画']
+			},
+			
+			
 		]
 	},
 	{
