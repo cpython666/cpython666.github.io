@@ -230,7 +230,7 @@ export default defineConfig({
     // 鼠标拖尾
     ['script', { src: '/js/mouse-trail.js' }],
     // 引入自定义的 JavaScript 文件，前端反爬js文件
-    // ['script', { src: '/js/fuckspider.js' }],
+    ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
       { rel: 'icon', href: '/logo.png' }

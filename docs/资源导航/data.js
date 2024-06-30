@@ -557,7 +557,31 @@ export const navigationData = [
 			"desc": "Github最全爬虫案例.",
 			"link": "https://github.com/facert/awesome-spider",
 			"categories": ["爬虫", "案例", "Github"]
-		  }
+		  },
+		  {
+			"icon": "/logos/mediacms.ico",
+			"github_repo": "https://github.com/mediacms-io/mediacms",
+			"title": "MediaCMS",
+			"desc": "MediaCMS 是一个现代的、功能齐全的开源视频和媒体 CMS，用 Python/Django 和 React 编写，具有 REST API。现代、功能齐全的开源视频和媒体 CMS。为满足现代网络平台查看和共享媒体的需求而开发的内容管理系统。非常适合那些想要围绕媒体文件共享建立在线社区以用于信息、教育或娱乐目的的人。",
+			"link": "https://mediacms.io/",
+			"categories": ["CMS", "Django", "Github",'Python','React']
+		  },
+		  {
+			"icon": "/logos/ainitak.ico",
+			"github_repo": "https://github.com/wangzmgit/alnitak",
+			"title": "Alnitak",
+			"desc": "前后端分离 \ 完全开源 \ 部署简单。Alnitak是一个基于nuxt和gin开发的前后端分离的弹幕视频网站。 项目实现了视频、专栏、弹幕、评论、点赞、收藏等功能。",
+			"link": "https://alnitak.interastral-peace.com/",
+			"categories": ["MIT", "Nuxt", "Go",'弹幕视频网站']
+		  },
+		  {
+			"icon": "/logos/github.png",
+			"github_repo": "https://github.com/xunlu129/teriteri-client",
+			"title": "仿B站项目",
+			"desc": "一个用Springboot + Vue开发的仿B站项目。一个基于 vue3 搭建的视频网站平台客户端。",
+			"link": "https://github.com/xunlu129/teriteri-client",
+			"categories": ["Vue3", "Springboot",'Github']
+		  },
 		]
 	  },
 	  {
