@@ -1,0 +1,18 @@
+{
+  "devDependencies": {
+    "medium-zoom": "^1.1.0",
+    "vitepress": "^1.0.1",
+    "vitepress-plugin-comment-with-giscus": "^1.1.12"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev docs --port 8080",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --port 80"
+  },
+  "dependencies": {
+    "element-plus": "^2.6.3",
+    "jszip": "^3.10.1",
+    "oh-my-live2d": "^0.16.1",
+    "typed.js": "^2.1.0"
+  }
+}

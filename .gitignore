@@ -1,0 +1,10 @@
+node_modules
+cache
+.idea
+
+imgs/bg/big/
+docs/.vitepress/dist
+# /docs/index
+# /docs/public
+# /docs/资源导航
+
