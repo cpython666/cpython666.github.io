@@ -1,5 +1,64 @@
 # JS
+
+
+
+## 获取cookie
+
+```
+document.cookie
+```
+
+格式化输出下
+
+```js
+function getCookie(name) {
+    var cookieArr = document.cookie.split(";");
+
+    for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        console.log(cookiePair[0],cookiePair[1]);
+    }
+
+    // 如果没有找到，返回 null
+    return null;
+}
+
+// 获取 'timestamp' Cookie 的值
+var timestampValue = getCookie();
+```
+
+寻找某个名称的cookie
+
+```js
+function getCookie(name) {
+    var cookieArr = document.cookie.split(";");
+
+    for (var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+
+        // 删除 cookie 名称前的空格并比较
+        if (name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+
+    // 如果没有找到，返回 null
+    return null;
+}
+
+// 获取 'timestamp' Cookie 的值
+var timestampValue = getCookie('timestamp');
+if (timestampValue) {
+    console.log('Timestamp Cookie value:', timestampValue);
+} else {
+    console.log('Timestamp Cookie not found or expired.');
+}
+```
+
+
+
 ## 获取一个元素并且设置高度
+
 ```js
     const header = document.querySelector('header');
 	const bg = document.querySelector('#big-bg');

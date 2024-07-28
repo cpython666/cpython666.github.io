@@ -92,6 +92,7 @@ let nav_tmp = [
       { text: 'git笔记', link: '/后端/git笔记' },
       { text: 'docker笔记', link: '/后端/docker笔记' },
       { text: 'nginx笔记', link: '/后端/nginx笔记' },
+      { text: '布隆过滤器', link: '/后端/布隆过滤器' },
     ]
   },
   {
