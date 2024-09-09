@@ -238,7 +238,7 @@ export default defineConfig({
     // ['script', { src: '/js/fuckspider.js' }],
     [
       'link',
-      { rel: 'icon', href: '/logo.png' }
+      { rel: 'icon', href: '/logo.svg' }
     ],
     // 点击彩虹
     // <!--鼠标点击特效-->
@@ -326,7 +326,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/logo.png',
+    logo: '/logo.svg',
     nav: nav_tmp,
     sidebar: sidebar_tmp,
     outline: [2, 3, 4],
