@@ -1,7 +1,7 @@
 node_modules
 cache
 .idea
-
+.DS_Store
 imgs/bg/big/
 docs/.vitepress/dist
 # /docs/index
