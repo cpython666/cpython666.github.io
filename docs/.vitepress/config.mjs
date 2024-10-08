@@ -1,6 +1,9 @@
 import { defineConfig } from 'vitepress'
 
 let nav_tmp = [
+      {
+    text: '主站', link: 'http://www.stardream.vip/'
+  },
   {
     text: '主页', link: '/'
   },
@@ -326,7 +329,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    logo: '/logo.svg',
+    logo: '/logo_super.svg',
     nav: nav_tmp,
     sidebar: sidebar_tmp,
     outline: [2, 3, 4],

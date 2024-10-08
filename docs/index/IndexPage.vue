@@ -7,8 +7,8 @@
 			</div>
 
 			<div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
-				<div>
-					<img id="index-logo" src="/logo.svg">
+				<div style="cursor: pointer" @click="openLink">
+					<img alt="星梦起航，点击跳转～" id="index-logo" src="/logo_super.svg">
 				</div>
 				<div id="box-cursor">
 					<span id="box"></span>
@@ -29,6 +29,9 @@ import { onMounted, ref, onBeforeUnmount } from 'vue';
 import Typed from 'typed.js';
 // 响应式数据
 const randomImage = ref('');
+const openLink = () => {
+  window.open('http://www.stardream.vip/', '_blank');
+};
 const changeBgHeight = () => {
 	const header = document.querySelector('header');
 	const bg = document.querySelector('#big-bg');
