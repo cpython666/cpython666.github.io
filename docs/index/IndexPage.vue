@@ -57,13 +57,6 @@ const images = [
 
 
   'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
   'imgs/bg/small_1.jpg',
   'imgs/bg/small_4.jpg',
   'imgs/bg/small_5.jpg',
