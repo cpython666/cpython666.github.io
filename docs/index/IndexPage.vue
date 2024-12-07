@@ -189,7 +189,7 @@ body::-webkit-scrollbar {
   /* background-image: url('imgs/bg/small_1.jpg'); */
   /* background-image: url('imgs/bg/1.jpg'); */
   /* background-size: cover; */
-  background-size: 100 auto;
+  /*background-size: 100 auto;*/
   /* background-size: cover; */
   background-position: center;
   background-repeat: no-repeat;
