@@ -13,7 +13,7 @@
         </div>
         <div class="content">
           <div style="cursor: pointer" @click="openLink">
-            <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+            <img id="index-logo" alt="～" src="/logo.jpg">
           </div>
           <div id="box-cursor">
             <span id="box"></span>
@@ -54,39 +54,10 @@ const changeBgHeight = () => {
 }
 // 图片列表
 const images = [
-
-
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_1.jpg',
-  'imgs/bg/small_4.jpg',
-  'imgs/bg/small_5.jpg',
-  'imgs/bg/small_6.jpg',
-  'imgs/bg/small_7.jpg',
-  'imgs/bg/small_8.jpg',
-  'imgs/bg/small_9.jpg',
-  'imgs/bg/small_10.jpg',
-  'imgs/bg/small_11.jpg',
-  'imgs/bg/small_12.jpg',
-  'imgs/bg/small_13.jpg',
-  'imgs/bg/small_14.jpg',
-  'imgs/bg/small_15.jpg',
-  'imgs/bg/small_16.jpg',
-  'imgs/bg/small_17.jpg',
-  'imgs/bg/small_18.jpg',
-
-  'imgs/bg/small_1.png',
-  'imgs/bg/small_2.png',
-  'imgs/bg/small_3.png',
-  'imgs/bg/small_4.png',
-  'imgs/bg/small_5.png',
-
+  'imgs/bg/1.jpeg',
+  'imgs/bg/2.jpeg',
+  'imgs/bg/3.jpeg',
+  'imgs/bg/4.jpeg',
 ];
 
 // 获取随机图片
