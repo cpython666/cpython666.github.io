@@ -65,7 +65,7 @@ export default defineConfig({
     ],
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
-        logo: '/logo_super.svg',
+        logo: '/logo.jpg',
         nav: nav_tmp,
         outline: [2, 3, 4],
         socialLinks: [
