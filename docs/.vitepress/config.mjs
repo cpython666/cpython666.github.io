@@ -14,8 +14,6 @@ export default defineConfig({
         ['script', {src: '/js/cpython666.js'}],
         // 星露谷物语的飞鸟
         ['script', {src: '/js/birdfly.js'}],
-
-
         // 鼠标拖尾
         ['script', {src: '/js/mouse-trail.js'}],
         // 引入自定义的 JavaScript 文件，前端反爬js文件
