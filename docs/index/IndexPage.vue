@@ -13,7 +13,7 @@
         </div>
         <div class="content">
           <div style="cursor: pointer" @click="openLink">
-            <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo.jpg">
+            <img id="index-logo" alt="～" src="/logo.jpg">
           </div>
           <div id="box-cursor">
             <span id="box"></span>

@@ -16,8 +16,6 @@ export default defineConfig({
         ['script', {src: '/js/birdfly.js'}],
         // 鼠标拖尾
         ['script', {src: '/js/mouse-trail.js'}],
-        // 引入自定义的 JavaScript 文件，前端反爬js文件
-        // ['script', { src: '/js/fuckspider.js' }],
         [
             'link',
             {rel: 'icon', href: '/logo.svg'}
@@ -27,10 +25,6 @@ export default defineConfig({
         // ['script', { type: "text/javascript", src: '/js/clickjs/meme.js' }],
         ['script', {type: "text/javascript", src: '/js/clickjs/anime.min.js'}],
         ['script', {type: "text/javascript", src: '/js/clickjs/fireworks.js'}],
-        [
-            'meta',
-            {name: 'google-site-verification', content: '0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU'}
-        ],
         [
             'meta',
             {name: 'referrer', content: 'no-referrer'}
@@ -112,10 +106,5 @@ export default defineConfig({
         search: {
             provider: 'local'
         },
-        // carbonAds: {
-        //   code: '广告',
-        //   placement: '广告'
-        // }
-
     }
 })
