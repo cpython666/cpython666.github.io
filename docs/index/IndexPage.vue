@@ -13,7 +13,7 @@
         </div>
         <div class="content">
           <div style="cursor: pointer" @click="openLink">
-            <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+            <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo.jpg">
           </div>
           <div id="box-cursor">
             <span id="box"></span>
@@ -56,36 +56,10 @@ const changeBgHeight = () => {
 const images = [
 
 
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_videos.png',
-  'imgs/bg/small_1.jpg',
-  'imgs/bg/small_4.jpg',
-  'imgs/bg/small_5.jpg',
-  'imgs/bg/small_6.jpg',
-  'imgs/bg/small_7.jpg',
-  'imgs/bg/small_8.jpg',
-  'imgs/bg/small_9.jpg',
-  'imgs/bg/small_10.jpg',
-  'imgs/bg/small_11.jpg',
-  'imgs/bg/small_12.jpg',
-  'imgs/bg/small_13.jpg',
-  'imgs/bg/small_14.jpg',
-  'imgs/bg/small_15.jpg',
-  'imgs/bg/small_16.jpg',
-  'imgs/bg/small_17.jpg',
-  'imgs/bg/small_18.jpg',
-
-  'imgs/bg/small_1.png',
-  'imgs/bg/small_2.png',
-  'imgs/bg/small_3.png',
-  'imgs/bg/small_4.png',
-  'imgs/bg/small_5.png',
+  'imgs/bg/1.jpeg',
+  'imgs/bg/2.jpeg',
+  'imgs/bg/3.jpeg',
+  'imgs/bg/4.jpeg',
 
 ];
 
@@ -99,26 +73,14 @@ const getRandomImage = () => {
 const setRandomBackgroundImage = () => {
   const a = getRandomImage();
   randomImage.value = a;
-  if (randomImage.value === 'imgs/bg/result_image.png') {
-
-  }
-  console.log('改变了背景，', randomImage.value)
 }
 onMounted(
     () => {
       const options = {
         strings: [
-          "Driven by dreams, not by profit.^2500",
-          '漫漫星程，你我同行~^1000',
-          '星梦启航，代码笔记。^1000',
-          '让学习少走弯路，让工作得心应手!^1000',
-          '我于这喧嚣世界寻得`一方净土`，可我却已成净土所厌的喧嚣。^3000',
-          '信息互联，资源无限。^1000',
-          "一站式导航，学习新体验。^1000",
-          "整合推荐，减少信息差。^1000",
-          "发现世界，连接资源。^1000",
-          "资源一站通，信息无阻挡。^1000",
-          "资源连接，个性化待办。^1000",
+          '小欣，今天开心嘛~^2000',
+          '小欣，早上好鸭～^2000',
+          '勇敢小欣，不怕困难，嘿嘿!^5000',
         ],
         typeSpeed: 150,
         showCursor: true,
@@ -139,30 +101,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-/* div {
-	padding-top: 0 !important;
-
-}
-
-header {
-	position: fixed !important;
-	opacity: 0.1;
-	z-index: 5;
-}
-
-header:hover {
-	top: 0;
-} */
-
-/* .vp-doc{
-	width:100% !important;
-} */
-/* .section-container{
-	width: 100vw;
-	background-color: antiquewhite;
-	scroll-snap-type:y mandatory;
-} */
-
 .container {
   padding: 0 !important;
   /* max-width:3000 !important; */
