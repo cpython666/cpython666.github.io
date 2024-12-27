@@ -1,9 +1,9 @@
 import {defineConfig} from 'vitepress'
 
 let nav_tmp = [
-    // {
-    //     text: '主站', link: 'http://www.stardream.vip/'
-    // },
+    {
+        text: '主页', link: '/'
+    },
 ]
 let sidebar_tmp = {
     '/': nav_tmp,
