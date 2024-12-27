@@ -15,10 +15,6 @@ import 'element-plus/dist/index.css'
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
-  enhanceApp({ app,router,siteData}) {
-    // 注册自定义全局组件
-    app.component('WebLink',WebLink).use(ElementPlus);
-  },
   async enhanceApp() {
     if (!import.meta.env.SSR) {
       const { loadOml2d } = await import('oh-my-live2d');
@@ -68,9 +64,5 @@ export default {
       () => route.path,
       () => nextTick(() => initZoom())
     );
-
-  
-
-
   }
 }
