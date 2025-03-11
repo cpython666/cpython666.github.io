@@ -131,6 +131,7 @@ let sidebar_tmp = {
       text: '程序员脱单指南',
       collapsed: false,
       items: [
+        { text: '土味情话', link: '/好文推荐/twqh' },
         { text: '36计（待更新）', link: '/好文推荐/程序员脱单指南' },
         { text: '七步流程法（待更新）', link: '/好文推荐/程序员脱单指南' },
         { text: '开场白（待更新）', link: '/好文推荐/程序员脱单指南' },
