@@ -50,9 +50,10 @@ let nav_tmp = [
           { text: 'Django笔记', link: '/Python/系列文章/django' },
           { text: '23种设计模式-Python', link: '/Python/系列文章/23种设计模式/' },
           { text: 'PyQt6实战开发之旅', link: '/Python/系列文章/PyQt6实战开发之旅' },
-          { text: '探索SimpleUI：让Django Admin焕发现代光彩', link: '/Python/系列文章/探索SimpleUI：让Django Admin焕发现代光彩' },
-          { text: 'Python标准库：typing', link: '/Python/系列文章/typing-intro' },
-          { text: 'Python数据验证和序列化:Pydantic', link: '/Python/系列文章/Pydantic' },
+          { text: '探索SimpleUI: 让Django Admin焕发现代光彩', link: '/Python/系列文章/探索SimpleUI：让Django Admin焕发现代光彩' },
+          { text: 'Python标准库: typing', link: '/Python/系列文章/typing-intro' },
+          { text: '数据验证和序列化: Pydantic', link: '/Python/系列文章/Pydantic' },
+          { text: '强大、灵活、轻量级ASGI框架: Starlette', link: '/Python/系列文章/Starlette' },
         ]
       },
     ]
