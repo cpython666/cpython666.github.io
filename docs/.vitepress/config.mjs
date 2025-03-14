@@ -76,12 +76,13 @@ let python_col_items = [
     {text: "分布式任务队列工具：Celery", link: "/python/collection/celery"},
 ];
 let backend_items = [
-    {text: "git笔记", link: "/backend/git笔记"},
+    {text: "git提交规范", link: "/backend/git"},
+    {text: "cron表达式: 设置定时任务", link: "/backend/cron"},
     {
         text: "docker笔记",
-        link: "/backend/docker笔记",
+        link: "/backend/docker",
     },
-    {text: "nginx笔记", link: "/backend/nginx笔记"},
+    {text: "nginx笔记", link: "/backend/nginx"},
     {text: "布隆过滤器", link: "/backend/布隆过滤器"},
 ];
 let web_intro_items = [
