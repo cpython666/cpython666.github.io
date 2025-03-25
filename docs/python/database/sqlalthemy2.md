@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 # SQLAlchemy 2.0 介绍
 
 SQLAlchemy 2.0 是 Python 编程语言中的一个强大的 SQL 工具包和对象关系映射（ORM）框架。它在 SQLAlchemy 1.x 的基础上进行了重大更新，旨在提升性能、简化 API、增强类型安全性，并更好地支持现代 Python 特性。以下是对 SQLAlchemy 2.0 的详细介绍：

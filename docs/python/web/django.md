@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 # Django笔记
 ```python
 pip freeze > requirements.txt

@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 Python 的 `typing` 模块是在 Python 3.5 中引入的，主要用于支持类型注解（Type Hints），帮助开发者在代码中声明变量、函数参数和返回值的类型。虽然 Python 是一门动态类型语言，类型注解并不会在运行时强制检查类型，但它可以显著提升代码的可读性、可维护性，并与静态类型检查工具（如 `mypy`）配合使用，发现潜在的类型错误。
 
 以下是对 `typing` 模块的详细介绍：

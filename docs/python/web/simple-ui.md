@@ -1,3 +1,6 @@
+
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
 # 探索SimpleUI：让Django Admin焕发现代光彩
 ## 介绍
 SimpleUI 是一个基于 Vue 和 Element-UI 为 Django Admin 界面提供的现代化主题。它旨在通过提供一个更加美观、现代的用户界面来改善 Django Admin 的用户体验。SimpleUI 内置了28种流行主题，支持快速安装，且完全兼容 Django Admin 原生功能，无需修改现有代码即可使用。它通过简化配置和增强视觉元素，极大提升了后端开发的效率和体验。此外，SimpleUI 支持 Django 3.0 和 Python 3.8、3.9，显示了其对最新技术栈的支持。

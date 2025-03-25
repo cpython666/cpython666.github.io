@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 Pydantic 是一个流行的 Python 库，主要用于数据验证和序列化。它基于 Python 的类型注解（`typing` 模块），提供了一种优雅的方式来定义数据模型、验证输入数据，并在必要时将其转换为指定类型。Pydantic 被广泛应用于 Web 开发（例如 FastAPI）、配置文件解析以及任何需要处理结构化数据的场景。
 
 以下是对 Pydantic 的详细介绍：

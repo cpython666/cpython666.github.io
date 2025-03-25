@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 # Starlette 简介
 Starlette 是一个轻量级的 **ASGI（Asynchronous Server Gateway Interface）** 框架，专为构建高性能的异步 Web 应用而设计。它是 Python 生态系统中广受欢迎的 Web 框架 **FastAPI** 的基础框架。Starlette 提供了一套简洁而强大的工具集，帮助开发者快速构建高效、可扩展的 Web 服务。
 

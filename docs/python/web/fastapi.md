@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 FastAPI 是一个现代、高性能的 Python Web 框架，用于快速构建 API（应用程序接口）。它基于 Python 3.6+ 的类型提示功能（type hints），结合了异步编程的支持，旨在提供简单易用、高效且符合现代开发需求的工具。FastAPI 由 Sebastián Ramírez 创建，首次发布于 2018 年，现已成为 Python 生态系统中流行的框架之一，尤其在需要高性能和快速开发的场景中。
 
 ### 主要特点

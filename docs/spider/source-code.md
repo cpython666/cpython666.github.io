@@ -1,3 +1,7 @@
+<a href="https://www.lcayun.com/aff/DECEDOZS">
+    <img src="/imgs/ads/lky.png" alt="广告" width="800" height="100">
+</a>
+
 # 一些视频的源码
 
 ## Selenium自动做问卷星

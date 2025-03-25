@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 <a name="Ahs9C"></a>
 
 # PyQt6实战开发之旅-代码均可运行

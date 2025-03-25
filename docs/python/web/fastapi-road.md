@@ -1,3 +1,6 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
 学习 FastAPI 可以帮助你快速掌握一个现代、高效的 Python Web 框架。以下是一个结构化的 FastAPI 学习路线，从基础到进阶，适合初学者和有一定 Python 经验的开发者。每个阶段包含目标、学习内容和建议资源。
 
 ---

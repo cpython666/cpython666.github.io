@@ -1,3 +1,8 @@
+[![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
+
+
+
+
 ## Cron 表达式介绍
 
 Cron 表达式是一种用于设置定时任务的字符串格式，广泛应用于 Unix 和类 Unix 系统（如 Linux），以及许多编程语言和框架（如 Java 的 Quartz 调度器、Python 的 APScheduler 等）。它提供了一种简洁的方式，让用户能够定义任务的执行时间，例如每天的某个时刻、每周的某一天或每月的某一天等。
