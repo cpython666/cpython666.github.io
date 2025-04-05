@@ -9,7 +9,13 @@
 ![https://www.lcayun.com/aff/DECEDOZS](/support/lky.png)
 
 
-**魔法推荐**：暂无，ikunVPN跑路了，呜呜🥹，对不起大家，以后遇见好的再推荐给大家
+**魔法推荐**：2025-04-05 之前的ikunVPN跑路了，呜呜🥹，对不起大家。这也告诉我们一个道理就是，不要购买太长期的，月付就可以，币面大额损失。  
+现在发现了一个很实惠的vpn站点，使用站长的邀请链接注册账号充值，可以让站长获得一些佣金，谢谢大家支持.
+注册链接：
+[https://fn1.476579.xyz/#/register?code=JwHkdnDm](https://fn1.476579.xyz/#/register?code=JwHkdnDm)
+![https://fn1.476579.xyz/#/register?code=JwHkdnDm](/support/fny.png)
+
+---
 
 闲下来会做这个网站的全部详细的搭建视频教程，只是现在很忙，在做毕设和找工作。。。
 
