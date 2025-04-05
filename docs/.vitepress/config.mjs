@@ -67,18 +67,19 @@ let python_items = [
         link: "/python/视频源码",
     },
     {text: "常用命令", link: "/python/shorthand"},
-    {text: "pre-commit【代码格式化】", link: "/python/libs/pre-commit"},
 ];
+
 let python_col_items = [
     {
         text: "23种设计模式-Python",
-        link: "/python/collection/23种设计模式/",
+        link: "/python/collection/23-design/",
     },
     {
         text: "PyQt6实战开发之旅",
         link: "/python/collection/pyqt6",
     },
     {text: "分布式任务队列工具：Celery", link: "/python/collection/celery"},
+    {text: "pre-commit 简明教程：让你的代码提交更规范", link: "/python/libs/pre-commit"},
 ];
 let backend_items = [
     {text: "git提交规范", link: "/backend/git"},
@@ -269,7 +270,7 @@ let sidebar_tmp = {
             items: [
                 {
                     text: "23种设计模式-Python",
-                    link: "/python/collection/23种设计模式/",
+                    link: "/python/collection/23-design/",
                 },
                 {
                     text: "PyQt6实战开发之旅",
@@ -323,10 +324,10 @@ let sidebar_tmp = {
             items: spider_set_items,
         },
     ],
-    "/python/collection/23种设计模式/": [
+    "/python/collection/23-design/": [
         {
             text: "0)23种设计模式-Python，优缺点场景与示例代码",
-            link: "/python/collection/23种设计模式/",
+            link: "/python/collection/23-design/",
         },
         {
             text: "创建型模式",
@@ -334,23 +335,23 @@ let sidebar_tmp = {
             items: [
                 {
                     text: "1)独一无二：探索单例模式在现代编程中的奥秘与实践",
-                    link: "/python/collection/23种设计模式/独一无二：探索单例模式在现代编程中的奥秘与实践",
+                    link: "/python/collection/23-design/独一无二：探索单例模式在现代编程中的奥秘与实践",
                 },
                 {
                     text: "2)工厂方法模式：解锁灵活的对象创建策略",
-                    link: "/python/collection/23种设计模式/工厂方法模式：解锁灵活的对象创建策略",
+                    link: "/python/collection/23-design/工厂方法模式：解锁灵活的对象创建策略",
                 },
                 {
                     text: "3)抽象工厂模式：深入探索面向对象设计的多样性",
-                    link: "/python/collection/23种设计模式/抽象工厂模式：深入探索面向对象设计的多样性",
+                    link: "/python/collection/23-design/抽象工厂模式：深入探索面向对象设计的多样性",
                 },
                 {
                     text: "4)建造者模式：构造复杂对象的艺术",
-                    link: "/python/collection/23种设计模式/建造者模式：构造复杂对象的艺术",
+                    link: "/python/collection/23-design/建造者模式：构造复杂对象的艺术",
                 },
                 {
                     text: "5)原型模式：复制对象的智能解决方案",
-                    link: "/python/collection/23种设计模式/原型模式：复制对象的智能解决方案",
+                    link: "/python/collection/23-design/原型模式：复制对象的智能解决方案",
                 },
             ],
         },
@@ -360,31 +361,31 @@ let sidebar_tmp = {
             items: [
                 {
                     text: "6)适配器模式：连接不兼容接口的桥梁",
-                    link: "/python/collection/23种设计模式/适配器模式：连接不兼容接口的桥梁",
+                    link: "/python/collection/23-design/适配器模式：连接不兼容接口的桥梁",
                 },
                 {
                     text: "7)代理模式：控制对象访问的智能方式",
-                    link: "/python/collection/23种设计模式/代理模式：控制对象访问的智能方式",
+                    link: "/python/collection/23-design/代理模式：控制对象访问的智能方式",
                 },
                 {
                     text: "8)桥接模式：解耦抽象与实现的设计艺术",
-                    link: "/python/collection/23种设计模式/桥接模式：解耦抽象与实现的设计艺术",
+                    link: "/python/collection/23-design/桥接模式：解耦抽象与实现的设计艺术",
                 },
                 {
                     text: "9)装饰器模式：动态扩展对象功能的设计艺术",
-                    link: "/python/collection/23种设计模式/装饰器模式：动态扩展对象功能的设计艺术",
+                    link: "/python/collection/23-design/装饰器模式：动态扩展对象功能的设计艺术",
                 },
                 {
                     text: "10)外观模式：简化复杂系统的统一接口",
-                    link: "/python/collection/23种设计模式/外观模式：简化复杂系统的统一接口",
+                    link: "/python/collection/23-design/外观模式：简化复杂系统的统一接口",
                 },
                 {
                     text: "11)组合模式：构建树形对象结构的设计艺术",
-                    link: "/python/collection/23种设计模式/组合模式：构建树形对象结构的设计艺术",
+                    link: "/python/collection/23-design/组合模式：构建树形对象结构的设计艺术",
                 },
                 {
                     text: "12)享元模式：优化资源利用的高效策略",
-                    link: "/python/collection/23种设计模式/享元模式：优化资源利用的高效策略",
+                    link: "/python/collection/23-design/享元模式：优化资源利用的高效策略",
                 },
             ],
         },
@@ -394,47 +395,47 @@ let sidebar_tmp = {
             items: [
                 {
                     text: "13)观察者模式：实现高效事件驱动编程的策略",
-                    link: "/python/collection/23种设计模式/观察者模式：实现高效事件驱动编程的策略",
+                    link: "/python/collection/23-design/观察者模式：实现高效事件驱动编程的策略",
                 },
                 {
                     text: "14)策略模式：灵活调整算法的设计精髓",
-                    link: "/python/collection/23种设计模式/策略模式：灵活调整算法的设计精髓",
+                    link: "/python/collection/23-design/策略模式：灵活调整算法的设计精髓",
                 },
                 {
                     text: "15)命令模式：封装操作为对象的强大技术",
-                    link: "/python/collection/23种设计模式/命令模式：封装操作为对象的强大技术",
+                    link: "/python/collection/23-design/命令模式：封装操作为对象的强大技术",
                 },
                 {
                     text: "16)中介者模式：简化对象间通信的协调者",
-                    link: "/python/collection/23种设计模式/中介者模式：简化对象间通信的协调者",
+                    link: "/python/collection/23-design/中介者模式：简化对象间通信的协调者",
                 },
                 {
                     text: "17)备忘录模式：恢复对象状态的智能方式",
-                    link: "/python/collection/23种设计模式/备忘录模式：恢复对象状态的智能方式",
+                    link: "/python/collection/23-design/备忘录模式：恢复对象状态的智能方式",
                 },
                 {
                     text: "18)模板方法模式：定义算法骨架的设计策略",
-                    link: "/python/collection/23种设计模式/模板方法模式：定义算法骨架的设计策略",
+                    link: "/python/collection/23-design/模板方法模式：定义算法骨架的设计策略",
                 },
                 {
                     text: "19)迭代器模式：统一访问集合元素的优雅方式",
-                    link: "/python/collection/23种设计模式/迭代器模式：统一访问集合元素的优雅方式",
+                    link: "/python/collection/23-design/迭代器模式：统一访问集合元素的优雅方式",
                 },
                 {
                     text: "20)状态模式：管理对象状态转换的动态策略",
-                    link: "/python/collection/23种设计模式/状态模式：管理对象状态转换的动态策略",
+                    link: "/python/collection/23-design/状态模式：管理对象状态转换的动态策略",
                 },
                 {
                     text: "21)责任链模式：灵活处理请求的分级策略",
-                    link: "/python/collection/23种设计模式/责任链模式：灵活处理请求的分级策略",
+                    link: "/python/collection/23-design/责任链模式：灵活处理请求的分级策略",
                 },
                 {
                     text: "22)解释器模式：专为语言处理定制的模式",
-                    link: "/python/collection/23种设计模式/解释器模式：专为语言处理定制的模式",
+                    link: "/python/collection/23-design/解释器模式：专为语言处理定制的模式",
                 },
                 {
                     text: "23)访问者模式：处理复杂对象结构的灵活方式",
-                    link: "/python/collection/23种设计模式/访问者模式：处理复杂对象结构的灵活方式",
+                    link: "/python/collection/23-design/访问者模式：处理复杂对象结构的灵活方式",
                 },
             ],
         },
