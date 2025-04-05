@@ -18,6 +18,10 @@ let fast_api_items = [
         text: "FastAPI 学习路线",
         link: "/python/web/fastapi-road",
     },
+    {
+        text: "JWT（JSON Web Token）详解",
+        link: "/python/web/jwt",
+    },
 ];
 let spider_items = [
     {text: "学习路线", link: "/spider/learn-road"},
@@ -63,6 +67,7 @@ let python_items = [
         link: "/python/视频源码",
     },
     {text: "常用命令", link: "/python/shorthand"},
+    {text: "pre-commit【代码格式化】", link: "/python/libs/pre-commit"},
 ];
 let python_col_items = [
     {
