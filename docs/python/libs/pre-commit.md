@@ -109,7 +109,7 @@ git commit -m "skip checks" --no-verify
 
 ## **7. 更新 **`pre-commit`** 钩子**
 
-如果你修改了 `.pre-commit-config.yaml`，需要运行：
+将钩子自动更新到最新版本。默认情况下，这会将钩子带到 default 分支上的 latest 标签。需要运行：
 
 ```shell
 pre-commit autoupdate  # 更新到最新的 hooks 版本
