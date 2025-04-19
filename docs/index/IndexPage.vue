@@ -1,27 +1,25 @@
 <template>
-  <section>
 
-    <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
+  <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 
+  </div>
+
+  <div id="center-div">
+    <div id="small-bg" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
+         :style="{ backgroundImage: `url(${randomImage})` }">
+      <!-- 背景部分 -->
     </div>
-
-    <div id="small-bg">
-      <div id="bg-overlay" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
-           :style="{ backgroundImage: `url(${randomImage})` }">
-        <!-- 背景部分 -->
+    <div class="content">
+      <div style="cursor: pointer" @click="openLink">
+        <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
       </div>
-      <div class="content">
-        <div style="cursor: pointer" @click="openLink">
-          <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
-        </div>
-        <div id="box-cursor">
-          <span id="box"></span>
-        </div>
+      <div id="box-cursor">
+        <span id="box"></span>
       </div>
     </div>
-    <SponsorsLinks/>
-  </section>
+  </div>
 
+  <sponsors-links/>
 </template>
 
 <script setup>
@@ -35,7 +33,7 @@ const openLink = () => {
 };
 const changeBgHeight = () => {
   const header = document.querySelector('header');
-  const bg = document.querySelector('#bg-overlay');
+  const bg = document.querySelector('#small-bg');
   console.log(header.clientHeight)
 
   const headerHeight = header.clientHeight;
@@ -136,6 +134,10 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
+.container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 
 body::-webkit-scrollbar {
   display: none;
@@ -153,6 +155,8 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   /* background-image: url('imgs/bg/small_1.jpg'); */
+  /* background-image: url('imgs/bg/small_1.jpg'); */
+  /* background-image: url('imgs/bg/1.jpg'); */
   /* background-size: cover; */
   /*background-size: 100 auto;*/
   /* background-size: cover; */
@@ -165,7 +169,7 @@ body::-webkit-scrollbar {
   z-index: 1;
 }
 
-#small-bg {
+#center-div {
   border-radius: 50px;
   height: 100vh;
   width: 100vw;
@@ -174,7 +178,6 @@ body::-webkit-scrollbar {
   position: relative;
   justify-content: center;
   align-items: center;
-  /* background-image: url('imgs/bg/small_2.png'); */
   background-size: contain;
   background-position: center;
   color: white;
@@ -183,7 +186,7 @@ body::-webkit-scrollbar {
   background-repeat: no-repeat;
 }
 
-#bg-overlay {
+#small-bg {
   position: absolute;
   top: 0;
   left: 0;
@@ -194,7 +197,6 @@ body::-webkit-scrollbar {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-image: url('imgs/bg/small_2.png'); */
   background-size: contain;
   background-position: center;
   color: white;
