@@ -1,36 +1,33 @@
 <template>
-  <div class="section-container">
-    <section id="first-section">
+  <section>
 
-      <div id="bg" :style="{ backgroundImage: `url(${randomImage})` }">
+    <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 
+    </div>
+
+    <div id="small-bg">
+      <div id="bg-overlay" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
+           :style="{ backgroundImage: `url(${randomImage})` }">
+        <!-- 背景部分 -->
       </div>
-
-      <div id="big-bg">
-        <div id="bg-overlay" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
-             :style="{ backgroundImage: `url(${randomImage})` }">
-          <!-- 背景部分 -->
+      <div class="content">
+        <div style="cursor: pointer" @click="openLink">
+          <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
         </div>
-        <div class="content">
-          <div style="cursor: pointer" @click="openLink">
-            <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
-          </div>
-          <div id="box-cursor">
-            <span id="box"></span>
-          </div>
+        <div id="box-cursor">
+          <span id="box"></span>
         </div>
       </div>
-    </section>
-    <section>
-    </section>
-
-  </div>
+    </div>
+    <SponsorsLinks/>
+  </section>
 
 </template>
 
 <script setup>
 import {onBeforeUnmount, onMounted, ref} from 'vue';
 import Typed from 'typed.js';
+import SponsorsLinks from "./SponsorsLinks.vue";
 // 响应式数据
 const randomImage = ref('');
 const openLink = () => {
@@ -43,7 +40,7 @@ const changeBgHeight = () => {
 
   const headerHeight = header.clientHeight;
   console.log(headerHeight)
-  const bg1 = document.querySelector('#bg');
+  const bg1 = document.querySelector('#big-bg');
   // bg.style.height = `calc(100vh)`;
   // bg1.style.height = `calc(100vh)`;
   bg.style.height = `calc(100vh - ${headerHeight}px)`;
@@ -139,39 +136,9 @@ onBeforeUnmount(() => {
 </script>
 
 <style>
-/* div {
-	padding-top: 0 !important;
-
-}
-
-header {
-	position: fixed !important;
-	opacity: 0.1;
-	z-index: 5;
-}
-
-header:hover {
-	top: 0;
-} */
-
-/* .vp-doc{
-	width:100% !important;
-} */
-/* .section-container{
-	width: 100vw;
-	background-color: antiquewhite;
-	scroll-snap-type:y mandatory;
-} */
-
-.container {
-  padding: 0 !important;
-  /* max-width:3000 !important; */
-  margin: 0 !important;
-}
 
 body::-webkit-scrollbar {
   display: none;
-  /* Safari 和 Chrome */
 }
 
 * {
@@ -179,15 +146,13 @@ body::-webkit-scrollbar {
   padding: 0;
 }
 
-#bg {
+#big-bg {
   height: 100vh;
   width: 100vw;
   position: absolute;
   justify-content: center;
   align-items: center;
   /* background-image: url('imgs/bg/small_1.jpg'); */
-  /* background-image: url('imgs/bg/small_1.jpg'); */
-  /* background-image: url('imgs/bg/1.jpg'); */
   /* background-size: cover; */
   /*background-size: 100 auto;*/
   /* background-size: cover; */
@@ -200,7 +165,7 @@ body::-webkit-scrollbar {
   z-index: 1;
 }
 
-#big-bg {
+#small-bg {
   border-radius: 50px;
   height: 100vh;
   width: 100vw;
@@ -210,11 +175,7 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   /* background-image: url('imgs/bg/small_2.png'); */
-  /* background-image: url('imgs/bg/small_1.jpg'); */
-  /* background-image: url('imgs/bg/1.jpg'); */
   background-size: contain;
-  /* background-size: 100% auto; */
-  /* background-size: cover; */
   background-position: center;
   color: white;
   font-size: 36px;
@@ -234,17 +195,12 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
   /* background-image: url('imgs/bg/small_2.png'); */
-  /* background-image: url('imgs/bg/small_1.jpg'); */
-  /* background-image: url('imgs/bg/1.jpg'); */
   background-size: contain;
-  /* background-size: 100% auto; */
-  /* background-size: cover; */
   background-position: center;
   color: white;
   font-size: 36px;
   z-index: 2;
   background-repeat: no-repeat;
-  /* 如果有其他样式 */
 }
 
 .content {
@@ -253,8 +209,7 @@ body::-webkit-scrollbar {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 3; /* 保证文字在最上层 */
-  /* 其他文字样式 */
+  z-index: 3;
 }
 
 #box {
