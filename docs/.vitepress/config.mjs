@@ -43,6 +43,7 @@ let spider_set_items = [
         text: "ast详解",
         link: "/spider/collection/ast",
     },
+    {text: "aiohttp", link: "/spider/collection/aiohttp"},
     {text: "浏览器指纹详解", link: "/spider/collection/browser-fingerprint"},
     {
         text: "DrissionPage学习笔记",
