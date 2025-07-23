@@ -71,7 +71,7 @@ let block_walk_items = [
   { text: "P3-信息差只是借口，认知差才是改变命运的分水岭", link: "/web3/block-walk/information-gap-vs-cognitive-gap" },
   { text: "P4-比特币为什么会不断上涨？", link: "/web3/block-walk/why-does-bitcoin-continue-to-rise" },
   { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
-  { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum.md" },
+  { text: "P6-投资比特币和以太坊的风险", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum.md" },
   
 ];
 let python_items = [
