@@ -57,10 +57,12 @@ let spider_set_items = [
 ];
 
 let web3_basics_items = [
-  { text: "为什么要有这个指南？", link: "/web3/web3forever" },
-  { text: "常见问题及解答？", link: "/web3/web3-qas" },
-  { text: "为什么不能碰合约？", link: "/web3/why-can’t-we-touch-the-contract" },
-  { text: "敬请期待...", link: "/web3/..." },
+  { text: "为什么要有这个指南？", link: "/web3/basics/web3forever" },
+  { text: "常见问题及解答", link: "/web3/basics/web3-qas" },
+  { text: "为什么不能碰合约？", link: "/web3/basics/why-can’t-we-touch-the-contract" },
+  { text: "教训合集", link: "/web3/basics/lesson" },
+  { text: "炒币感悟", link: "/web3/basics/insights" },
+  { text: "敬请期待...", link: "/web3/basics/..." },
   
 ];
 let block_walk_items = [
@@ -68,6 +70,7 @@ let block_walk_items = [
   { text: "P2-从爆仓中悟出的“必胜投资法”", link: "/web3/block-walk/winning-investment-method" },
   { text: "P3-信息差只是借口，认知差才是改变命运的分水岭", link: "/web3/block-walk/information-gap-vs-cognitive-gap" },
   { text: "P4-比特币为什么会不断上涨？", link: "/web3/block-walk/why-does-bitcoin-continue-to-rise" },
+  { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
   
 ];
 let python_items = [
@@ -229,7 +232,6 @@ let nav_config = [
         text: "Python",
         items: python_items,
       },
-
       {
         text: "FastAPI",
         items: fast_api_items,
@@ -238,7 +240,6 @@ let nav_config = [
         text: "Django",
         items: django_items
       },
-
       {
         text: "系列文章",
         items: python_col_items,
@@ -269,7 +270,19 @@ let nav_config = [
     items: web_intro_items,
   },
   { text: "程序员脱单指南", link: "/好文推荐/程序员脱单指南" }, 
-  { text: "币圈入圈指南", link: "/web3/web3forever" }, // { text: '好文推荐', link: '/好文推荐/' },
+  { text: "币圈入圈指南",
+    items:[
+      {
+        text: "入门必看",
+        items: web3_basics_items,
+      },
+      {
+        text: "区块漫步🚶",
+        items: block_walk_items,
+      },
+    ],
+    //  link: "/web3/web3forever" 
+    }, // { text: '好文推荐', link: '/好文推荐/' },
 ];
 let sidebar_config = {
   "/": nav_config,
