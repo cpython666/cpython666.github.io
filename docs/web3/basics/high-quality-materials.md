@@ -7,4 +7,4 @@
 
 [比特币白皮书 个人翻译+注解【知乎】](https://zhuanlan.zhihu.com/p/25039679)
 
-[囤比特币.pdf【九神】](/public/pdf/Hoarding-Bitcoin.pdf)
+[囤比特币.pdf【九神】](/pdf/Hoarding-Bitcoin.pdf)
