@@ -62,6 +62,8 @@ let web3_basics_items = [
   { text: "为什么不能碰合约？", link: "/web3/basics/why-can’t-we-touch-the-contract" },
   { text: "教训合集", link: "/web3/basics/lesson" },
   { text: "炒币感悟", link: "/web3/basics/insights" },
+  { text: "币圈骗局合集鉴赏", link: "/web3/basics/insights" },
+  { text: "优质资源", link: "/web3/basics/high-quality-materials" },
   { text: "敬请期待...", link: "/web3/basics/..." },
   
 ];
