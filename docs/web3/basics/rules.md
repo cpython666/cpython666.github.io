@@ -10,6 +10,11 @@
 - 只做btc，eth，ada【其他币已经亏惨了】
 - 数据发布前特别注意 ，设置止损或者突破交易【CPI，PPI，失业人数，非农等】
 
+## 经验分享
+- 爆仓图 APP：CoinGlass
+- 会议数据 APP：金十数据
+- 美股数据 APP：富途牛牛
+
 
 ## 一些思路
 ![](/imgs/web3/log-btc-short-alts.jpg)
