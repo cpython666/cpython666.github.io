@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 // giscus，评论
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
+import 'alertifyjs/build/css/alertify.min.css'
 
 // 图片缩放
 import mediumZoom from 'medium-zoom';

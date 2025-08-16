@@ -10,6 +10,7 @@
     "docs:preview": "vitepress preview docs --port 80"
   },
   "dependencies": {
+    "alertifyjs": "^1.14.0",
     "element-plus": "^2.6.3",
     "jszip": "^3.10.1",
     "oh-my-live2d": "^0.16.1",

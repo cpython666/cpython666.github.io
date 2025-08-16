@@ -1,0 +1,19 @@
+/* .alertify-notifier {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+} */
+
+
+/* alertify的弹窗样式  开始*/
+.ajs-message {
+    border: 1px solid white;
+    color: white;
+}
+
+.ajs-warning {
+    border: 1px solid rgb(79, 125, 239);
+    color: rgb(79, 125, 239);
+}
+/* alertify的弹窗样式  结束*/

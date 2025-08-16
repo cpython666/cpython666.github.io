@@ -471,6 +471,11 @@
   dependencies:
     vue-demi "*"
 
+alertifyjs@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.npmmirror.com/alertifyjs/-/alertifyjs-1.14.0.tgz"
+  integrity sha512-jUxJTcNYhJ2P1Wal73nmyTwMkaPim4PjZP9CAG+S8SK2SinraXxvOxnPrEY81/wc2iBPDFBP7mdg61db4WsuHQ==
+
 algoliasearch@^4.19.1, "algoliasearch@>= 4.9.1 < 6":
   version "4.23.2"
   resolved "https://registry.npmmirror.com/algoliasearch/-/algoliasearch-4.23.2.tgz"

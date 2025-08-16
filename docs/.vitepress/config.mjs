@@ -62,8 +62,10 @@ let web3_basics_items = [
   { text: "为什么不能碰合约？", link: "/web3/basics/why-can’t-we-touch-the-contract" },
   { text: "教训合集", link: "/web3/basics/lesson" },
   { text: "炒币感悟", link: "/web3/basics/insights" },
-  { text: "币圈骗局合集鉴赏", link: "/web3/basics/insights" },
+  { text: "币圈骗局合集鉴赏", link: "/web3/basics/crypto-scams" },
   { text: "优质资源", link: "/web3/basics/high-quality-materials" },
+  { text: "个人准则", link: "/web3/basics/rules" },
+  { text: "赞助", link: "/web3/basics/support" },
   { text: "敬请期待...", link: "/web3/basics/..." },
   
 ];
@@ -76,6 +78,8 @@ let block_walk_items = [
   { text: "P6-投资比特币和以太坊的风险", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum.md" },
   
 ];
+
+
 let python_items = [
   { text: "学习路线", link: "/python/学习路线" },
   {
@@ -523,14 +527,17 @@ export default defineConfig({
 
     // 像小鱼一样的鼠标
     // ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
+    ['link', { rel: 'stylesheet', href: '/css/index.css' }],
     // 引入外部 JavaScript 文件
     // ['script', { src: '/js/pointer.js' }],
 
     // 星露谷物语的飞鸟
     ["script", { src: "/js/birdfly.js" }],
-
     // 鼠标拖尾
     ["script", { src: "/js/mouse-trail.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
+
+    // ["script", { src: "/js/copy.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
+    // ["script", { src: "/js/alertify.min.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
     // ['script', { src: '/js/fuckspider.js' }],
     ["link", { rel: "icon", href: "/logo.svg" }], // 点击彩虹
     // <!--鼠标点击特效-->
