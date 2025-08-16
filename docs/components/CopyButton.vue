@@ -1,14 +1,11 @@
 <script setup>
 import copy_text from '../utils/copy.js'
-import alertify from 'alertifyjs'
-
-import { ref } from 'vue'
-
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   label: {
     type: String,
-    default: "比特币地址：" // 默认值
+    default: "比特币地址："
   },
   text: {
     type: String,
@@ -17,19 +14,26 @@ const props = defineProps({
 })
 
 const copied = ref(false)
+// 用来存放客户端导入的 alertify
+let alertify = null
+
+// 仅在浏览器端加载 alertifyjs
+onMounted(async () => {
+  alertify = (await import('alertifyjs')).default
+})
+
 const handleCopy = () => {
   copy_text(props.text)
     .then(() => {
       copied.value = true
       setTimeout(() => (copied.value = false), 2000)
       console.log('复制成功:', props.text)
-      alertify.success('复制成功！')
+      if (alertify) alertify.success('复制成功！')
     })
     .catch(() => {
-      alertify.warning('复制失败～')
+      if (alertify) alertify.warning('复制失败～')
     })
 }
-
 </script>
 
 <template>
