@@ -1,214 +1,37 @@
 import { defineConfig } from "vitepress";
 
-let fast_api_items = [
-  {
-    text: "现代、高性能的PythonWeb框架: FastAPI",
-    link: "/python/web/fastapi",
-  },
-  { text: "Python标准库: typing", link: "/python/web/typing" },
-  {
-    text: "数据验证和序列化: Pydantic",
-    link: "/python/web/pydantic",
-  },
-  {
-    text: "强大、灵活、轻量级ASGI框架: Starlette",
-    link: "/python/web/starlette",
-  },
-  {
-    text: "FastAPI 学习路线",
-    link: "/python/web/fastapi-road",
-  },
-  {
-    text: "JWT（JSON Web Token）详解",
-    link: "/python/web/jwt",
-  },
-];
-let spider_items = [
-  { text: "学习路线", link: "/spider/learn-road" },
-  {
-    text: "学习资源",
-    link: "/spider/learn-resource",
-  },
-  { text: "学习指南", link: "/spider/学习指南" },
-  { text: "买课指南", link: "/spider/买课指南" },
-  {
-    text: "视频源码",
-    link: "/spider/source-code",
-  },
-  { text: "练手网站", link: "/spider/练手网站" },
-];
-let spider_set_items = [
-  { text: "常用hook代码片段", link: "/spider/collection/hook" },
-  {
-    text: "ast详解",
-    link: "/spider/collection/ast",
-  },
-  { text: "aiohttp", link: "/spider/collection/aiohttp" },
-  { text: "浏览器指纹详解", link: "/spider/collection/browser-fingerprint" },
-  {
-    text: "DrissionPage学习笔记",
-    link: "/spider/collection/drissionpage",
-  },
-  { text: "Scrapy学习笔记", link: "/spider/collection/scrapy" },
-  {
-    text: "Crawlab使用记录",
-    link: "/spider/collection/crawlab",
-  },
-];
-
 let web3_basics_items = [
-  { text: "为什么要有这个指南？", link: "/web3/basics/web3forever" },
-  { text: "常见问题及解答", link: "/web3/basics/web3-qas" },
-  { text: "为什么不能碰合约？", link: "/web3/basics/why-can’t-we-touch-the-contract" },
-  { text: "教训合集", link: "/web3/basics/lesson" },
-  { text: "炒币感悟", link: "/web3/basics/insights" },
-  { text: "币圈骗局合集鉴赏", link: "/web3/basics/crypto-scams" },
-  { text: "优质资源", link: "/web3/basics/high-quality-materials" },
-  { text: "加密笑话", link: "/web3/basics/bitcoin-jokes" },
-  { text: "个人准则", link: "/web3/basics/rules" },
-  { text: "赞助", link: "/web3/basics/support" },
-  { text: "声明", link: "/web3/basics/statement" },
-  { text: "敬请期待...", link: "/web3/basics/..." },
+  { text: "为什么要有这个指南？", link: "/basics/web3forever" },
+  { text: "常见问题及解答", link: "/basics/web3-qas" },
+  { text: "为什么不能碰合约？", link: "/basics/why-can’t-we-touch-the-contract" },
+  { text: "教训合集", link: "/basics/lesson" },
+  { text: "炒币感悟", link: "/basics/insights" },
+  { text: "币圈骗局合集鉴赏", link: "/basics/crypto-scams" },
+  { text: "优质资源", link: "/basics/high-quality-materials" },
+  { text: "加密笑话", link: "/basics/bitcoin-jokes" },
+  { text: "个人准则", link: "/basics/rules" },
+  { text: "赞助", link: "/basics/support" },
+  { text: "声明", link: "/basics/statement" },
+  { text: "敬请期待...", link: "/basics/..." },
   
 ];
 let block_walk_items = [
-  { text: "P1-一个散户的醒悟：我走过的弯路，希望你不再重蹈", link: "/web3/block-walk/don’t-repeat-my-mistakes" },
-  { text: "P2-从爆仓中悟出的“必胜投资法”", link: "/web3/block-walk/winning-investment-method" },
-  { text: "P3-信息差只是借口，认知差才是改变命运的分水岭", link: "/web3/block-walk/information-gap-vs-cognitive-gap" },
-  { text: "P4-比特币为什么会不断上涨？", link: "/web3/block-walk/why-does-bitcoin-continue-to-rise" },
-  { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
-  { text: "P6-投资比特币和以太坊的风险", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum" },
-  { text: "P7-链上打狗，无限印钞？", link: "/web3/block-walk/beating-the-dog-on-the-chain-and-unlimited-money-printing" },
+  { text: "P1-一个散户的醒悟：我走过的弯路，希望你不再重蹈", link: "/block-walk/don’t-repeat-my-mistakes" },
+  { text: "P2-从爆仓中悟出的“必胜投资法”", link: "/block-walk/winning-investment-method" },
+  { text: "P3-信息差只是借口，认知差才是改变命运的分水岭", link: "/block-walk/information-gap-vs-cognitive-gap" },
+  { text: "P4-比特币为什么会不断上涨？", link: "/block-walk/why-does-bitcoin-continue-to-rise" },
+  { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
+  { text: "P6-投资比特币和以太坊的风险", link: "/block-walk/risks-of-investing-in-bitcoin-and-ethereum" },
+  { text: "P7-链上打狗，无限印钞？", link: "/block-walk/beating-the-dog-on-the-chain-and-unlimited-money-printing" },
   
 ];
 
 let high_quality_articles = [
-  { text: "我们真的需要比特币吗？", link: "/web3/high-quality-articles/do-we-really-need-bitcoin" },
+  { text: "我们真的需要比特币吗？", link: "/high-quality-articles/do-we-really-need-bitcoin" },
   
 ];
 
 
-let python_items = [
-  { text: "学习路线", link: "/python/学习路线" },
-  {
-    text: "学习资源",
-    link: "/python/学习资源",
-  },
-  { text: "学习指南", link: "/python/学习指南" },
-  { text: "买课指南", link: "/python/买课指南" },
-  {
-    text: "视频源码",
-    link: "/python/视频源码",
-  },
-  { text: "常用命令", link: "/python/shorthand" },
-];
-
-let django_items = [
-          {
-            text: "Django笔记",
-            link: "/python/web/django",
-          },
-          {
-            text: "探索SimpleUI: 让Django Admin焕发现代光彩",
-            link: "/python/web/simple-ui",
-          },
-        ];
-
-let python_col_items = [
-  {
-    text: "23种设计模式-Python",
-    link: "/python/collection/23-design/",
-  },
-  {
-    text: "PyQt6实战开发之旅",
-    link: "/python/collection/pyqt6",
-  },
-  { text: "分布式任务队列工具：Celery", link: "/python/collection/celery" },
-  {
-    text: "pre-commit 简明教程：让你的代码提交更规范",
-    link: "/python/libs/pre-commit",
-  },
-];
-let frontend_items = [
-  { text: "HTML", link: "/web/html" },
-  { text: "CSS", link: "/web/css" },
-  {
-    text: "JS",
-    link: "/web/js",
-  },
-  { text: "JQuery", link: "/web/jquery" },
-  { text: "NodeJs", link: "/web/nodejs" },
-  {
-    text: "Vue",
-    link: "/web/vue",
-  },
-  {
-    text: "系列文章",
-    items: [
-      {
-        text: "VitePress环境踩坑",
-        link: "/web/collection/vitepress环境差异记录",
-      },
-      {
-        text: "vitepress博客搭建",
-        link: "/web/collection/vitepress博客搭建",
-      },
-    ],
-  },
-];
-let backend_items = [
-  { text: "git提交规范", link: "/backend/git" },
-  { text: "cron表达式: 设置定时任务", link: "/backend/cron" },
-  {
-    text: "docker笔记",
-    link: "/backend/docker",
-  },
-  { text: "nginx笔记", link: "/backend/nginx" },
-  { text: "布隆过滤器", link: "/backend/布隆过滤器" },
-];
-
-let algorithm_items = [
-  {
-    text: "探索递归：从简单到复杂的迷人之旅",
-    link: "/算法/递归",
-  },
-  {
-    text: "探索广度优先搜索（BFS）：从概念到实践",
-    link: "/算法/bfs",
-  },
-  { text: "深度优先搜索（DFS）：探索图的无尽可能性", link: "/算法/dfs" },
-  {
-    text: "系列文章",
-    items: [
-      {
-        text: "蓝桥杯万字攻略：算法模板大放送！-c++",
-        link: "/算法/collection/蓝桥杯万字攻略：算法模板大放送！-c++",
-      },
-      {
-        text: "一分钟学算法-递归-斐波那契数列递归解法及优化",
-        link: "/算法/collection/一分钟学算法-递归-斐波那契数列递归解法及优化",
-      }, // { text: '经典算法五十例-算法五十重天', link: '/算法/collection/经典算法' },
-    ],
-  },
-];
-let web_intro_items = [
-  { text: "站长介绍", link: "/web-intro/" },
-  {
-    text: "团队介绍",
-    link: "/web-intro/team-intro",
-  },
-  { text: "开发缘由", link: "/web-intro/development-origins" },
-  {
-    text: "开发日记",
-    link: "/web-intro/development-diary",
-  },
-  { text: "交流群", link: "/web-intro/community-group" },
-  { text: "支持", link: "/web-intro/support" },
-  {
-    text: "旧版首页",
-    link: "/index/old/index-0.1",
-  },
-];
 let nav_config = [
   {
     text: "主站",
@@ -219,94 +42,26 @@ let nav_config = [
     link: "/",
   },
   {
-    text: "工具",
-    link: "/spider-tools/",
-  },
-  {
     text: "资源导航",
     link: "/nav/",
   },
-  {
-    text: "爬虫",
-    items: [
-      {
-        text: "关于爬虫",
-        items: spider_items,
-      },
-      {
-        text: "系列文章",
-        items: spider_set_items,
-      },
-    ],
-  },
-
-  {
-    text: "Python",
-    items: [
-      {
-        text: "Python",
-        items: python_items,
-      },
-      {
-        text: "FastAPI",
-        items: fast_api_items,
-      },
-      {
-        text: "Django",
-        items: django_items
-      },
-      {
-        text: "系列文章",
-        items: python_col_items,
-      },
-    ],
-  },
-  {
-    text: "前后端/算法",
-    items: [
-      {
-        text: "前端",
-        items: frontend_items,
-      },
-      {
-        text: "后端",
-        items: backend_items,
-      },
-
-      {
-        text: "算法",
-        items: algorithm_items,
-      },
-    ],
-  },
-
-  {
-    text: "网站相关",
-    items: web_intro_items,
-  },
-  { text: "程序员脱单指南", link: "/好文推荐/程序员脱单指南" }, 
-  { text: "币圈入圈指南",
-    items:[
-      {
-        text: "入门必看",
+    {
+    text: "入门必看",
         items: web3_basics_items,
-      },
-      {
+
+  },
+        {
         text: "区块漫步🚶",
         items: block_walk_items,
       },
-      {
+            {
         text: "优质文章",
         items: high_quality_articles,
       },
-    ],
-    //  link: "/web3/web3forever" 
-    }, // { text: '好文推荐', link: '/好文推荐/' },
 ];
 let sidebar_config = {
   "/": nav_config,
-  "/spider-tools/": [],
-    "/web3/": [
+    "/basics/": [
     {
       text: "基础常识",
       collapsed: false,
@@ -318,216 +73,14 @@ let sidebar_config = {
       items: block_walk_items,
     },
   ],
-  "/python/": [
-    {
-      text: "Python之旅",
-      collapsed: false,
-      items: python_items,
-    },
-    {
-      text: "FastAPI",
-      collapsed: false,
-      items: fast_api_items,
-    },
-    {
-      text: "Django",
-      collapsed: false,
-      items: [
-        { text: "Django笔记", link: "/python/web/django" },
-        {
-          text: "探索SimpleUI: 让Django Admin焕发现代光彩",
-          link: "/python/web/simple-ui",
-        },
-      ],
-    },
-    {
-      text: "系列文章",
-      collapsed: false,
-      items: [
-        {
-          text: "23种设计模式-Python",
-          link: "/python/collection/23-design/",
-        },
-        {
-          text: "PyQt6实战开发之旅",
-          link: "/python/collection/PyQt6实战开发之旅",
-        },
-      ],
-    },
-  ],
-  "/web/": [
-    {
-      text: "前端",
-      collapsed: false,
-      items: backend_items,
-    },
-  ],
-  "/backend/": [
-    {
-      text: "后端",
-      collapsed: false,
-      items: backend_items,
-    },
-  ],
-  "/好文推荐/": [
-    {
-      text: "程序员脱单指南",
-      collapsed: false,
-      items: [
-        { text: "土味情话", link: "/好文推荐/twqh" },
-        {
-          text: "36计（待更新）",
-          link: "/好文推荐/程序员脱单指南",
-        },
-        { text: "七步流程法（待更新）", link: "/好文推荐/程序员脱单指南" },
-        {
-          text: "开场白（待更新）",
-          link: "/好文推荐/程序员脱单指南",
-        },
-        { text: "聊天技巧（待更新）", link: "/好文推荐/程序员脱单指南" },
-      ],
-    },
-  ],
-  "/web-intro/": [
-    {
-      text: "站长介绍",
-      collapsed: false,
-      items: web_intro_items,
-    },
-  ],
-  "/spider/": [
-    {
-      text: "爬虫系列",
-      collapsed: false,
-      items: spider_items,
-    },
-    {
-      text: "系列文章",
-      collapsed: false,
-      items: spider_set_items,
-    },
-  ],
-  "/python/collection/23-design/": [
-    {
-      text: "0)23种设计模式-Python，优缺点场景与示例代码",
-      link: "/python/collection/23-design/",
-    },
-    {
-      text: "创建型模式",
-      collapsed: false,
-      items: [
-        {
-          text: "1)独一无二：探索单例模式在现代编程中的奥秘与实践",
-          link: "/python/collection/23-design/独一无二：探索单例模式在现代编程中的奥秘与实践",
-        },
-        {
-          text: "2)工厂方法模式：解锁灵活的对象创建策略",
-          link: "/python/collection/23-design/工厂方法模式：解锁灵活的对象创建策略",
-        },
-        {
-          text: "3)抽象工厂模式：深入探索面向对象设计的多样性",
-          link: "/python/collection/23-design/抽象工厂模式：深入探索面向对象设计的多样性",
-        },
-        {
-          text: "4)建造者模式：构造复杂对象的艺术",
-          link: "/python/collection/23-design/建造者模式：构造复杂对象的艺术",
-        },
-        {
-          text: "5)原型模式：复制对象的智能解决方案",
-          link: "/python/collection/23-design/原型模式：复制对象的智能解决方案",
-        },
-      ],
-    },
-    {
-      text: "结构型模式",
-      collapsed: false,
-      items: [
-        {
-          text: "6)适配器模式：连接不兼容接口的桥梁",
-          link: "/python/collection/23-design/适配器模式：连接不兼容接口的桥梁",
-        },
-        {
-          text: "7)代理模式：控制对象访问的智能方式",
-          link: "/python/collection/23-design/代理模式：控制对象访问的智能方式",
-        },
-        {
-          text: "8)桥接模式：解耦抽象与实现的设计艺术",
-          link: "/python/collection/23-design/桥接模式：解耦抽象与实现的设计艺术",
-        },
-        {
-          text: "9)装饰器模式：动态扩展对象功能的设计艺术",
-          link: "/python/collection/23-design/装饰器模式：动态扩展对象功能的设计艺术",
-        },
-        {
-          text: "10)外观模式：简化复杂系统的统一接口",
-          link: "/python/collection/23-design/外观模式：简化复杂系统的统一接口",
-        },
-        {
-          text: "11)组合模式：构建树形对象结构的设计艺术",
-          link: "/python/collection/23-design/组合模式：构建树形对象结构的设计艺术",
-        },
-        {
-          text: "12)享元模式：优化资源利用的高效策略",
-          link: "/python/collection/23-design/享元模式：优化资源利用的高效策略",
-        },
-      ],
-    },
-    {
-      text: "结构型模式",
-      collapsed: false,
-      items: [
-        {
-          text: "13)观察者模式：实现高效事件驱动编程的策略",
-          link: "/python/collection/23-design/观察者模式：实现高效事件驱动编程的策略",
-        },
-        {
-          text: "14)策略模式：灵活调整算法的设计精髓",
-          link: "/python/collection/23-design/策略模式：灵活调整算法的设计精髓",
-        },
-        {
-          text: "15)命令模式：封装操作为对象的强大技术",
-          link: "/python/collection/23-design/命令模式：封装操作为对象的强大技术",
-        },
-        {
-          text: "16)中介者模式：简化对象间通信的协调者",
-          link: "/python/collection/23-design/中介者模式：简化对象间通信的协调者",
-        },
-        {
-          text: "17)备忘录模式：恢复对象状态的智能方式",
-          link: "/python/collection/23-design/备忘录模式：恢复对象状态的智能方式",
-        },
-        {
-          text: "18)模板方法模式：定义算法骨架的设计策略",
-          link: "/python/collection/23-design/模板方法模式：定义算法骨架的设计策略",
-        },
-        {
-          text: "19)迭代器模式：统一访问集合元素的优雅方式",
-          link: "/python/collection/23-design/迭代器模式：统一访问集合元素的优雅方式",
-        },
-        {
-          text: "20)状态模式：管理对象状态转换的动态策略",
-          link: "/python/collection/23-design/状态模式：管理对象状态转换的动态策略",
-        },
-        {
-          text: "21)责任链模式：灵活处理请求的分级策略",
-          link: "/python/collection/23-design/责任链模式：灵活处理请求的分级策略",
-        },
-        {
-          text: "22)解释器模式：专为语言处理定制的模式",
-          link: "/python/collection/23-design/解释器模式：专为语言处理定制的模式",
-        },
-        {
-          text: "23)访问者模式：处理复杂对象结构的灵活方式",
-          link: "/python/collection/23-design/访问者模式：处理复杂对象结构的灵活方式",
-        },
-      ],
-    },
-  ],
+
+
+
 };
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "星梦启航",
-  description: "Python斗罗的代码笔记",
+  title: "区块漫步",
+  description: "Python斗罗的Web3之旅",
   base: "/",
   head: [
     // 我的logo
