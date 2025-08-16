@@ -81,6 +81,11 @@ let block_walk_items = [
   
 ];
 
+let high_quality_articles = [
+  { text: "我们真的需要比特币吗？", link: "/web3/high-quality-articles/do-we-really-need-bitcoin" },
+  
+];
+
 
 let python_items = [
   { text: "学习路线", link: "/python/学习路线" },
@@ -288,6 +293,10 @@ let nav_config = [
       {
         text: "区块漫步🚶",
         items: block_walk_items,
+      },
+      {
+        text: "优质文章",
+        items: high_quality_articles,
       },
     ],
     //  link: "/web3/web3forever" 
