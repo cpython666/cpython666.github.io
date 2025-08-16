@@ -64,6 +64,7 @@ let web3_basics_items = [
   { text: "炒币感悟", link: "/web3/basics/insights" },
   { text: "币圈骗局合集鉴赏", link: "/web3/basics/crypto-scams" },
   { text: "优质资源", link: "/web3/basics/high-quality-materials" },
+  { text: "加密笑话", link: "/web3/basics/bitcoin-jokes" },
   { text: "个人准则", link: "/web3/basics/rules" },
   { text: "赞助", link: "/web3/basics/support" },
   { text: "声明", link: "/web3/basics/statement" },
