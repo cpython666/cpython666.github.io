@@ -66,6 +66,7 @@ let web3_basics_items = [
   { text: "优质资源", link: "/web3/basics/high-quality-materials" },
   { text: "个人准则", link: "/web3/basics/rules" },
   { text: "赞助", link: "/web3/basics/support" },
+  { text: "声明", link: "/web3/basics/statement" },
   { text: "敬请期待...", link: "/web3/basics/..." },
   
 ];
