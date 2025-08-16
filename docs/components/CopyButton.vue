@@ -41,7 +41,7 @@ const handleCopy = () => {
     <span class="label">{{ props.label }}</span>
     <code class="copy-text">{{ props.text }}</code>
     <button class="copy-btn" @click="handleCopy">
-      {{ copied ? "✅ 已复制" : "📋 点击复制" }}
+      {{ copied ? "✅" : "📋" }}
     </button>
   </div>
 </template>
@@ -51,6 +51,7 @@ const handleCopy = () => {
   display: flex;
   align-items: center;
   gap: 8px;
+  
 }
 
 .label {
