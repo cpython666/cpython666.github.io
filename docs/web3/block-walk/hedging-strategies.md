@@ -35,6 +35,7 @@
 [https://cpython666.github.io/web3/basics/rules.html](https://cpython666.github.io/web3/basics/rules.html)
 
 
-
-
-
+## 推文备份
+![](/imgs/web3/long-eth-short-alts-1.png)  
+![](/imgs/web3/long-eth-short-alts-2.png)  
+![](/imgs/web3/long-eth-short-alts-3.png)  
