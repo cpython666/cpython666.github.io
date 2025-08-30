@@ -79,6 +79,8 @@ let block_walk_items = [
   { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
   { text: "P6-投资比特币和以太坊的风险", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum" },
   { text: "P7-链上打狗，无限印钞？", link: "/web3/block-walk/beating-the-dog-on-the-chain-and-unlimited-money-printing" },
+  { text: "P8-分享一组对冲策略，做多龙头做空山寨的可行性分析🧐", link: "/web3/block-walk/hedging-strategies" },
+  { text: "P9-资产千万的大哥分享给我的全部心得", link: "/web3/block-walk/a-big-brother-with-tens-of-millions-of-assets" },
   
 ];
 
