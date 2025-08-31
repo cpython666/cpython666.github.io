@@ -38,6 +38,7 @@ let spider_items = [
   { text: "练手网站", link: "/spider/练手网站" },
 ];
 let spider_set_items = [
+  { text: "就业分享-谁的青春不迷茫", link: "/spider/collection/job-sharing" },
   { text: "常用hook代码片段", link: "/spider/collection/hook" },
   {
     text: "ast详解",
