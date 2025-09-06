@@ -60,7 +60,10 @@ let spider_set_items = [
 let web3_basics_items = [
   { text: "为什么要有这个指南？", link: "/web3/basics/web3forever" },
   { text: "常见问题及解答", link: "/web3/basics/web3-qas" },
-  { text: "为什么不能碰合约？", link: "/web3/basics/why-can’t-we-touch-the-contract" },
+  {
+    text: "为什么不能碰合约？",
+    link: "/web3/basics/why-can’t-we-touch-the-contract",
+  },
   { text: "教训合集", link: "/web3/basics/lesson" },
   { text: "炒币感悟", link: "/web3/basics/insights" },
   { text: "币圈骗局合集鉴赏", link: "/web3/basics/crypto-scams" },
@@ -70,26 +73,79 @@ let web3_basics_items = [
   { text: "赞助", link: "/web3/basics/support" },
   { text: "声明", link: "/web3/basics/statement" },
   { text: "敬请期待...", link: "/web3/basics/..." },
-  
 ];
 let block_walk_items = [
-  { text: "P1-一个散户的醒悟：我走过的弯路，希望你不再重蹈", link: "/web3/block-walk/don’t-repeat-my-mistakes" },
-  { text: "P2-从爆仓中悟出的“必胜投资法”", link: "/web3/block-walk/winning-investment-method" },
-  { text: "P3-信息差只是借口，认知差才是改变命运的分水岭", link: "/web3/block-walk/information-gap-vs-cognitive-gap" },
-  { text: "P4-比特币为什么会不断上涨？", link: "/web3/block-walk/why-does-bitcoin-continue-to-rise" },
-  { text: "P5-为什么我坚定投资比特币和以太坊？", link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum" },
-  { text: "P6-投资比特币和以太坊的风险", link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum" },
-  { text: "P7-链上打狗，无限印钞？", link: "/web3/block-walk/beating-the-dog-on-the-chain-and-unlimited-money-printing" },
-  { text: "P8-分享一组对冲策略，做多龙头做空山寨的可行性分析🧐", link: "/web3/block-walk/hedging-strategies" },
-  { text: "P9-资产千万的大哥分享给我的全部心得", link: "/web3/block-walk/a-big-brother-with-tens-of-millions-of-assets" },
-  
+  {
+    text: "P1-一个散户的醒悟：我走过的弯路，希望你不再重蹈",
+    link: "/web3/block-walk/don’t-repeat-my-mistakes",
+  },
+  {
+    text: "P2-从爆仓中悟出的“必胜投资法”",
+    link: "/web3/block-walk/winning-investment-method",
+  },
+  {
+    text: "P3-信息差只是借口，认知差才是改变命运的分水岭",
+    link: "/web3/block-walk/information-gap-vs-cognitive-gap",
+  },
+  {
+    text: "P4-比特币为什么会不断上涨？",
+    link: "/web3/block-walk/why-does-bitcoin-continue-to-rise",
+  },
+  {
+    text: "P5-为什么我坚定投资比特币和以太坊？",
+    link: "/web3/block-walk/why-i-am-determined-to-invest-in-bitcoin-and-ethereum",
+  },
+  {
+    text: "P6-投资比特币和以太坊的风险",
+    link: "/web3/block-walk/risks-of-investing-in-bitcoin-and-ethereum",
+  },
+  {
+    text: "P7-链上打狗，无限印钞？",
+    link: "/web3/block-walk/beating-the-dog-on-the-chain-and-unlimited-money-printing",
+  },
+  {
+    text: "P8-分享一组对冲策略，做多龙头做空山寨的可行性分析🧐",
+    link: "/web3/block-walk/hedging-strategies",
+  },
+  {
+    text: "P9-资产千万的大哥分享给我的全部心得",
+    link: "/web3/block-walk/a-big-brother-with-tens-of-millions-of-assets",
+  },
+];
+
+let blockchain_weekly_report = [
+  {
+    text: "区块链周报第一期: 沉睡七年比特币巨鲸高调换仓以太坊，是神之一手、内幕还是最后的逃命机会？[9/01-09/07]",
+    link: "/web3/blockchain-weekly-report/issue-1-09-01",
+  },
 ];
 
 let high_quality_articles = [
-  { text: "我们真的需要比特币吗？", link: "/web3/high-quality-articles/do-we-really-need-bitcoin" },
-  
+  {
+    text: "我们真的需要比特币吗？",
+    link: "/web3/high-quality-articles/do-we-really-need-bitcoin",
+  },
 ];
-
+let web3_items = [
+  {
+    text: "基础常识",
+    collapsed: false,
+    items: web3_basics_items,
+  },
+  {
+    text: "区块漫步🚶",
+    collapsed: false,
+    items: block_walk_items,
+  },
+  {
+    text: "优质文章",
+    items: high_quality_articles,
+  },
+  {
+    text: "区块链周报",
+    items: blockchain_weekly_report,
+  },
+];
 
 let python_items = [
   { text: "学习路线", link: "/python/学习路线" },
@@ -107,15 +163,15 @@ let python_items = [
 ];
 
 let django_items = [
-          {
-            text: "Django笔记",
-            link: "/python/web/django",
-          },
-          {
-            text: "探索SimpleUI: 让Django Admin焕发现代光彩",
-            link: "/python/web/simple-ui",
-          },
-        ];
+  {
+    text: "Django笔记",
+    link: "/python/web/django",
+  },
+  {
+    text: "探索SimpleUI: 让Django Admin焕发现代光彩",
+    link: "/python/web/simple-ui",
+  },
+];
 
 let python_col_items = [
   {
@@ -256,7 +312,7 @@ let nav_config = [
       },
       {
         text: "Django",
-        items: django_items
+        items: django_items,
       },
       {
         text: "系列文章",
@@ -287,40 +343,16 @@ let nav_config = [
     text: "网站相关",
     items: web_intro_items,
   },
-  { text: "程序员脱单指南", link: "/好文推荐/程序员脱单指南" }, 
-  { text: "币圈入圈指南",
-    items:[
-      {
-        text: "入门必看",
-        items: web3_basics_items,
-      },
-      {
-        text: "区块漫步🚶",
-        items: block_walk_items,
-      },
-      {
-        text: "优质文章",
-        items: high_quality_articles,
-      },
-    ],
-    //  link: "/web3/web3forever" 
-    }, // { text: '好文推荐', link: '/好文推荐/' },
+  { text: "程序员脱单指南", link: "/好文推荐/程序员脱单指南" },
+  {
+    text: "币圈入圈指南",
+    items: web3_items,
+  }, // { text: '好文推荐', link: '/好文推荐/' },
 ];
 let sidebar_config = {
   "/": nav_config,
   "/spider-tools/": [],
-    "/web3/": [
-    {
-      text: "基础常识",
-      collapsed: false,
-      items: web3_basics_items,
-    },
-    {
-      text: "区块漫步🚶",
-      collapsed: false,
-      items: block_walk_items,
-    },
-  ],
+  "/web3/": web3_items,
   "/python/": [
     {
       text: "Python之旅",
@@ -542,7 +574,7 @@ export default defineConfig({
 
     // 像小鱼一样的鼠标
     // ['link', { rel: 'stylesheet', href: '/css/nomouse.css' }],
-    ['link', { rel: 'stylesheet', href: '/css/index.css' }],
+    ["link", { rel: "stylesheet", href: "/css/index.css" }],
     // 引入外部 JavaScript 文件
     // ['script', { src: '/js/pointer.js' }],
 
