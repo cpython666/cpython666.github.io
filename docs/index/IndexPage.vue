@@ -147,6 +147,10 @@ body::-webkit-scrollbar {
   margin: 0;
   padding: 0;
 }
+/* 修复文章导航栏溢出样式问题 */
+nav{
+  width: 100%;
+}
 
 #big-bg {
   height: 100vh;
