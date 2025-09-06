@@ -31,7 +31,7 @@ const scrollToAnchor = (anchor) => {
     </div>
   </el-backtop>
   <div class="page">
-    <div class="nav">
+    <div class="my-nav">
       <el-affix :offset="5">
         <el-scrollbar height="100vh">
           <el-link type="primary" v-for="(sites, index) in navigationData" :key="index"
@@ -59,7 +59,7 @@ const scrollToAnchor = (anchor) => {
 </template>
 
 <style scoped>
-.nav {
+.my-nav {
   padding: 0px 5px;
 }
 
