@@ -143,10 +143,10 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* * {
+* {
   margin: 0;
   padding: 0;
-} */
+}
 
 #big-bg {
   height: 100vh;
