@@ -119,6 +119,10 @@ let blockchain_weekly_report = [
     link: "/web3/blockchain-weekly-report/",
   },
   {
+    text: "【草稿】「区块链周报第二期」标题待定[09/08-09/14]",
+    link: "/web3/blockchain-weekly-report/issue-2-09-08",
+  },
+  {
     text: "「区块链周报第一期」沉睡七年比特币巨鲸高调换仓以太坊，是神之一手、内幕还是最后的逃命机会？[09/01-09/07]",
     link: "/web3/blockchain-weekly-report/issue-1-09-01",
   },

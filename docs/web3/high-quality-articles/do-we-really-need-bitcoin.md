@@ -97,5 +97,5 @@
 
 ---
 
-> \[!TIP] 文案来源：
+> [!TIP] 文案来源：
 > [https://www.douyin.com/video/7533793756332576035](https://www.douyin.com/video/7533793756332576035)
