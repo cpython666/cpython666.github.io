@@ -115,6 +115,10 @@ let block_walk_items = [
 
 let blockchain_weekly_report = [
   {
+    text: "区块链周报介绍",
+    link: "/web3/blockchain-weekly-report/",
+  },
+  {
     text: "区块链周报第一期: 沉睡七年比特币巨鲸高调换仓以太坊，是神之一手、内幕还是最后的逃命机会？[9/01-09/07]",
     link: "/web3/blockchain-weekly-report/issue-1-09-01",
   },
