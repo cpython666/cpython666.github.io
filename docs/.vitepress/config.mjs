@@ -119,7 +119,7 @@ let blockchain_weekly_report = [
     link: "/web3/blockchain-weekly-report/",
   },
   {
-    text: "区块链周报第一期: 沉睡七年比特币巨鲸高调换仓以太坊，是神之一手、内幕还是最后的逃命机会？[9/01-09/07]",
+    text: "「区块链周报第一期」沉睡七年比特币巨鲸高调换仓以太坊，是神之一手、内幕还是最后的逃命机会？[09/01-09/07]",
     link: "/web3/blockchain-weekly-report/issue-1-09-01",
   },
 ];
@@ -128,6 +128,10 @@ let high_quality_articles = [
   {
     text: "我们真的需要比特币吗？",
     link: "/web3/high-quality-articles/do-we-really-need-bitcoin",
+  },
+  {
+    text: "币圈几件黑天鹅事件，你经历了几件?",
+    link: "/web3/high-quality-articles/how-many-black-swan-events-have-you-experienced",
   },
 ];
 let web3_items = [
@@ -142,12 +146,12 @@ let web3_items = [
     items: block_walk_items,
   },
   {
-    text: "优质文章",
-    items: high_quality_articles,
-  },
-  {
     text: "区块链周报",
     items: blockchain_weekly_report,
+  },
+  {
+    text: "优质文章",
+    items: high_quality_articles,
   },
 ];
 
