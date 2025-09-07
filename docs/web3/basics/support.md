@@ -2,6 +2,7 @@
 > OKX 钱包 账户6
 > 
 > 赞助本博客，可以获取UP的好友位，加好友备注赞助交易截图  
+> 赞助可以获得本页面的广告位宣传
 > wx: w021105x
 
   <CopyButton label="Ethereum" text="0x730bc48d0d110d31be8e08ddc6451e7a22b0341a" />
