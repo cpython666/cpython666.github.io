@@ -119,7 +119,7 @@ let blockchain_weekly_report = [
     link: "/web3/blockchain-weekly-report/",
   },
   {
-    text: "【草稿】「区块链周报第二期」标题待定[09/08-09/14]",
+    text: "「区块链周报第二期」纳斯达克下场RWA，CEX自建链百花齐放[09/08-09/14]",
     link: "/web3/blockchain-weekly-report/issue-2-09-08",
   },
   {
