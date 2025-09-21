@@ -119,6 +119,10 @@ let blockchain_weekly_report = [
     link: "/web3/blockchain-weekly-report/",
   },
   {
+    text: "「区块链周报第三期」DEX2.0大战一触即发，谁能撼动Hyperliquid王座？[09/15-09/21]",
+    link: "/web3/blockchain-weekly-report/issue-3-09-15",
+  },
+  {
     text: "「区块链周报第二期」纳斯达克下场RWA，CEX自建链百花齐放[09/08-09/14]",
     link: "/web3/blockchain-weekly-report/issue-2-09-08",
   },
