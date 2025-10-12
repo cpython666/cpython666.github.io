@@ -141,6 +141,14 @@ let high_quality_articles = [
     text: "币圈几件黑天鹅事件，你经历了几件?",
     link: "/web3/high-quality-articles/how-many-black-swan-events-have-you-experienced",
   },
+  {
+    text: "我的朋友-超仔",
+    link: "/web3/high-quality-articles/my-friend-chaozai",
+  },
+  {
+    text: "黑天鹅给我撞上了-记录币圈10-11",
+    link: "/web3/high-quality-articles/black-swan-10-11",
+  },
 ];
 let web3_items = [
   {

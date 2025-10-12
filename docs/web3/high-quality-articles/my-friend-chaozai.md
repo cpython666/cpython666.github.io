@@ -1,4 +1,6 @@
 # 我的朋友-超仔
+> 推文来源于巴黎哥  [https://x.com/jiujinshan2022](https://x.com/jiujinshan2022)
+
 
 哎
 我朋友超仔
@@ -304,3 +306,10 @@
 那里有的更多是爆仓
 那里有的更多是负债累累
 那里有的更多是妻离子散...
+
+![](/imgs/web3/high-quality-articles/my-friend-chaozai/1.png)  
+![](/imgs/web3/high-quality-articles/my-friend-chaozai/2.png)  
+![](/imgs/web3/high-quality-articles/my-friend-chaozai/3.png)  
+![](/imgs/web3/high-quality-articles/my-friend-chaozai/4.png)  
+
+其他超仔相关推文：[https://x.com/search?q=from%3Ajiujinshan2022%20%E8%B6%85%E4%BB%94&src=typed_query](https://x.com/search?q=from%3Ajiujinshan2022%20%E8%B6%85%E4%BB%94&src=typed_query)
