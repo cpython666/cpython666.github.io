@@ -52,6 +52,7 @@ Bill说出了我的心声啊，交易所肯定会说是流动性对手盘的原�
 ![](/imgs/web3/high-quality-articles/10-11/zhainan.png)  
 ![](/imgs/web3/high-quality-articles/10-11/beijiang.png)  
 ![](/imgs/web3/high-quality-articles/10-11/bawangxian.png)  
+![](/imgs/web3/high-quality-articles/10-11/heshang.png)  
 
 
 
