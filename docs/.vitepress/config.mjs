@@ -614,6 +614,7 @@ export default defineConfig({
     // <!--鼠标点击特效-->
     // ['script', { type: "text/javascript", src: '/js/clickjs/meme.js' }],
     ["script", { type: "text/javascript", src: "/js/clickjs/anime.min.js" }],
+    ["script", { type: "text/javascript", src: "/js/clarity.js" }],
     [
       "script",
       {
