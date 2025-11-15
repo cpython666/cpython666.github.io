@@ -302,6 +302,14 @@ let nav_config = [
     link: "/",
   },
   {
+    text: "文章导航",
+    link: "/navigation/",
+  },
+  {
+    text: "项目",
+    link: "/projects/",
+  },
+  {
     text: "工具",
     link: "/spider-tools/",
   },
@@ -309,69 +317,10 @@ let nav_config = [
     text: "资源导航",
     link: "/nav/",
   },
-  {
-    text: "爬虫",
-    items: [
-      {
-        text: "关于爬虫",
-        items: spider_items,
-      },
-      {
-        text: "系列文章",
-        items: spider_set_items,
-      },
-    ],
-  },
-
-  {
-    text: "Python",
-    items: [
-      {
-        text: "Python",
-        items: python_items,
-      },
-      {
-        text: "FastAPI",
-        items: fast_api_items,
-      },
-      {
-        text: "Django",
-        items: django_items,
-      },
-      {
-        text: "系列文章",
-        items: python_col_items,
-      },
-    ],
-  },
-  {
-    text: "前后端/算法",
-    items: [
-      {
-        text: "前端",
-        items: frontend_items,
-      },
-      {
-        text: "后端",
-        items: backend_items,
-      },
-
-      {
-        text: "算法",
-        items: algorithm_items,
-      },
-    ],
-  },
-
-  {
+    {
     text: "网站相关",
     items: web_intro_items,
   },
-  { text: "程序员脱单指南", link: "/好文推荐/程序员脱单指南" },
-  {
-    text: "币圈入圈指南",
-    items: web3_items,
-  }, // { text: '好文推荐', link: '/好文推荐/' },
 ];
 let sidebar_config = {
   "/": nav_config,
@@ -418,7 +367,7 @@ let sidebar_config = {
     {
       text: "前端",
       collapsed: false,
-      items: backend_items,
+      items: frontend_items,
     },
   ],
   "/backend/": [
@@ -426,6 +375,13 @@ let sidebar_config = {
       text: "后端",
       collapsed: false,
       items: backend_items,
+    },
+  ],
+  "/算法/": [
+    {
+      text: "算法",
+      collapsed: false,
+      items: algorithm_items,
     },
   ],
   "/好文推荐/": [
@@ -585,6 +541,7 @@ let sidebar_config = {
 };
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+
   title: "星梦启航",
   description: "Python斗罗的代码笔记",
   base: "/",
@@ -756,4 +713,8 @@ export default defineConfig({
     //   placement: '广告'
     // }
   },
+    define: {
+    __API_BASE__: JSON.stringify('https://api.example.com'),
+    __APP_VERSION__: '"1.0.0"',
+  }
 });

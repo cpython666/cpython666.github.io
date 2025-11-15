@@ -8,9 +8,9 @@
         <div v-for="(site, sIndex) in category.items" :key="sIndex" class="site"
              @mouseover="site.showTooltip = true" @mouseleave="site.showTooltip = false">
           <div class="card" :title="site.desc">
-            <a :href="site.link" class="site-link" target="_blank">
+            <a :href="site.link" class="site-link" target="_blank" rel="noopener noreferrer">
               <div class="card-head">
-                <img :src="site.icon" class="site-icon" :alt="site.title">
+                <img :src="site.icon" class="site-icon" :alt="site.title" loading="lazy">
                 <div class="h4">{{ site.title }}</div>
                 <label class="toggle">
                   <input type="checkbox">
@@ -40,8 +40,8 @@
         </div>
         <div id="ad" v-if="category.title=='站长推荐'" class="flex-grow justify-center w-100"
              style="display: flex; justify-content: center; align-items: center;">
-          <el-link type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank">
-            <img style="width:960px;height:70px;" src="/imgs/ads/qgwl.jpeg"/>
+          <el-link type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
+            <img style="width:960px;height:70px;" src="/imgs/ads/qgwl.jpeg" loading="lazy"/>
           </el-link>
         </div>
 <!--        -->
@@ -250,6 +250,8 @@ img {
 .navigation .h2 {
   font-size: 24px;
   font-weight: 500;
+  /* 防止滚动到标题时被头部遮挡 */
+  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 12px);
 
 }
 
