@@ -293,10 +293,10 @@ let web_intro_items = [
   },
 ];
 let nav_config = [
-  {
-    text: "主站",
-    link: "http://www.stardream.vip/",
-  },
+  // {
+  //   text: "主站",
+  //   link: "http://www.stardream.vip/",
+  // },
   {
     text: "主页",
     link: "/",
