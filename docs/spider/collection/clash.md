@@ -1,4 +1,4 @@
-# Clash 常用配置
+# Clash 使用步骤和常用配置
 ![/imgs/spider/clash.png](/imgs/spider/clash.png)
 
 一般使用步骤：
