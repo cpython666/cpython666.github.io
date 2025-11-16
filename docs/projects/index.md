@@ -9,6 +9,5 @@ sidebar: false
 import ProjectPage from './ProjectPage.vue';
 </script>
 
-# 项目
 
 <ProjectPage />
