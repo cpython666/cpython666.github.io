@@ -148,6 +148,13 @@
 
 👉 **如果你的目标只是：轻量访问海外网站，让爬虫走境外节点，那么文章方向完全没问题。**
 ## 声明
-当然，以上都是我个人的探索和猜想。
-如果有理解不准的地方，也欢迎大家在评论区补充。
-你有什么想法，也欢迎一起讨论！
+当然，以上都是我个人的探索和猜想。  
+如果有理解不准的地方，也欢迎大家在评论区补充。  
+你有什么想法，也欢迎一起讨论！  
+
+相关文章：  
+Clash知识库：[https://clash.wiki/](https://clash.wiki/)
+
+Clash 外部控制设置：[https://clash.wiki/runtime/external-controller.html](https://clash.wiki/runtime/external-controller.html)
+
+Clash Restful API：[https://clash.gitbook.io/doc/restful-api/config](https://clash.gitbook.io/doc/restful-api/config)
