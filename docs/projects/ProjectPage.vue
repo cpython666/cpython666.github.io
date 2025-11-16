@@ -64,6 +64,10 @@ const onImgErr = (e) => {
 .projects-page {
   display: grid;
   gap: 16px;
+  width: 100%;
+  max-width: 1120px;
+  margin: 16px auto;
+  padding: 0 12px;
 }
 
 .page-header {

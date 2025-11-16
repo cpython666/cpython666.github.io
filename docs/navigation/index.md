@@ -4,6 +4,12 @@ sidebar: false
 ---
 
 <style>
+.doc-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 16px auto;
+  padding: 0 12px;
+}
 .page-header {
   display: flex;
   align-items: center;
@@ -214,6 +220,7 @@ const sidebarTotal = computed(() => sidebarGroups.value.reduce((s, g) => s + g.i
 const groupCount = (g) => g.items.length + g.sections.reduce((s, sec) => s + sec.items.length, 0)
 </script>
 
+<div class="doc-container">
 <div class="page-header">
   <div>
     <h1>文章导航[待优化...]</h1>
@@ -271,4 +278,6 @@ const groupCount = (g) => g.items.length + g.sections.reduce((s, sec) => s + sec
       </ul>
     </template>
   </details>
+</div>
+
 </div>

@@ -115,6 +115,7 @@ function selectPanel(item) {
   margin: 16px auto;
   width: 100%;
   max-width: 1120px;
+  padding: 0 12px;
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 16px;
