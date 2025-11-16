@@ -6,7 +6,7 @@
     </header>
 
     <section class="cards">
-      <article v-for="p in items" :key="p.id" class="card">
+      <article v-for="p in viewItems" :key="p.id" class="card">
         <a :href="p.url" class="image" target="_blank" rel="noopener noreferrer">
           <img
             :src="p.image || defaultImg"
@@ -18,6 +18,12 @@
         </a>
 
         <div class="content">
+          <div class="stats stats-top">
+            <span class="stat" title="GitHub Stars">
+              <span class="icon">⭐</span>
+              {{ p.stars ?? '—' }}
+            </span>
+          </div>
           <h3 class="title">
             <a :href="p.url" target="_blank" rel="noopener noreferrer">{{ p.title }}</a>
           </h3>
@@ -45,9 +51,88 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { projects, sortProjects } from './data.js'
 
+// 排序后的项目数据
 const items = sortProjects(projects)
+// 展示用数据，附加 stars 字段
+const viewItems = ref(items.map(p => ({ ...p, stars: null })))
+
+// 你的 GitHub 用户名（批量拉取该用户仓库）
+const GH_USER = 'cpython666'
+
+// 从链接解析 GitHub 仓库 owner/repo
+const parseRepoFromUrl = (url) => {
+  try {
+    const u = new URL(url)
+    if (u.hostname !== 'github.com') return null
+    const segs = u.pathname.split('/').filter(Boolean)
+    if (segs.length < 2) return null
+    return { owner: segs[0], repo: segs[1] }
+  } catch (_) {
+    return null
+  }
+}
+
+// 缓存 stars，减少请求次数
+const userRepoStars = ref(new Map())
+const otherRepoStars = new Map()
+
+async function fetchUserRepos() {
+  try {
+    const map = new Map()
+    let page = 1
+    const per = 100
+    while (true) {
+      const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=${per}&page=${page}`)
+      if (!res.ok) break
+      const data = await res.json()
+      if (!Array.isArray(data) || data.length === 0) break
+      data.forEach(r => map.set(r.name.toLowerCase(), r.stargazers_count || 0))
+      if (data.length < per) break
+      page += 1
+      if (page > 10) break // 安全上限，避免异常循环
+    }
+    userRepoStars.value = map
+  } catch (_) {}
+}
+
+async function fetchRepoStars(owner, repo) {
+  const key = `${owner}/${repo}`.toLowerCase()
+  if (otherRepoStars.has(key)) return otherRepoStars.get(key)
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`)
+    if (!res.ok) { otherRepoStars.set(key, 0); return 0 }
+    const j = await res.json()
+    const stars = j.stargazers_count || 0
+    otherRepoStars.set(key, stars)
+    return stars
+  } catch (_) {
+    otherRepoStars.set(key, 0)
+    return 0
+  }
+}
+
+async function updateStars() {
+  for (const p of viewItems.value) {
+    const info = parseRepoFromUrl(p.url)
+    if (!info) continue
+    const { owner, repo } = info
+    let stars = 0
+    if (owner.toLowerCase() === GH_USER.toLowerCase()) {
+      stars = userRepoStars.value.get(repo.toLowerCase()) ?? 0
+    } else {
+      stars = await fetchRepoStars(owner, repo)
+    }
+    p.stars = stars
+  }
+}
+
+onMounted(async () => {
+  await fetchUserRepos()
+  await updateStars()
+})
 
 const defaultImg = '/imgs/app/default.svg'
 const onImgErr = (e) => {
@@ -126,6 +211,7 @@ const onImgErr = (e) => {
   flex-direction: column;
   gap: 8px;
   padding: 14px 16px 16px;
+  position: relative;
 }
 
 .title {
@@ -184,6 +270,30 @@ const onImgErr = (e) => {
   display: flex;
   gap: 8px;
   margin-top: auto;
+}
+
+.stats {
+  display: flex;
+  gap: 8px;
+}
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 6px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg-soft);
+}
+.stat .icon { font-size: 14px; }
+
+.stats-top {
+  position: absolute;
+  top: 14px;
+  right: 16px;
 }
 
 .btn {
