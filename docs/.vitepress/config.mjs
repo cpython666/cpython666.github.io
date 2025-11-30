@@ -316,6 +316,10 @@ let nav_config = [
     link: "/spider-tools/",
   },
   {
+    text: "博客会员",
+    link: "/vip/",
+  },
+  {
     text: "资源导航",
     link: "/nav/",
   },
@@ -715,6 +719,8 @@ export default defineConfig({
     //   code: '广告',
     //   placement: '广告'
     // }
+    // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
+    vipActivationHashes: ["e5b1764ba2392383c2c97b5ea76f9978a590be0ef0811fdd0d7b53b0c0cd0ebc"],
   },
     define: {
     __API_BASE__: JSON.stringify('https://api.example.com'),

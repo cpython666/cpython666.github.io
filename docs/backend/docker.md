@@ -1,3 +1,6 @@
+---
+memberOnly: true
+---
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 
@@ -42,4 +45,3 @@ docker ps -a
 #查看运行的容器：
 docker ps
 ```
-
