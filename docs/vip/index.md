@@ -7,12 +7,23 @@ sidebar: false
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import alertify from 'alertifyjs'
 import { useData } from 'vitepress'
 
-const showAccount = () => {
-  alertify.success('加微：w021105x 备注：购买博客VIP')
+let alertifyRef = null
+const loadAlertify = async () => {
+  if (alertifyRef) return alertifyRef
+  if (typeof window === 'undefined') return null
+  const mod = await import('alertifyjs')
+  alertifyRef = mod.default || mod
+  return alertifyRef
 }
+const toast = async (type, msg) => {
+  const al = await loadAlertify()
+  if (!al) return
+  if (al[type]) al[type](msg)
+  else al.success(msg)
+}
+const showAccount = () => { toast('success', '加微：w021105x 备注：开通vip') }
 
 const plans = ref([
   {
@@ -72,9 +83,9 @@ const vipPosts = ref([
 const VIP_KEY = 'vp_member_unlock:*'
 const isVip = ref(localStorage.getItem(VIP_KEY) === '1')
 const clearUnlock = () => {
-  try { localStorage.removeItem(VIP_KEY); isVip.value = false; alertify.success('已清除会员解锁') } catch (_) {}
+  try { localStorage.removeItem(VIP_KEY); isVip.value = false; toast('success', '已清除会员解锁') } catch (_) {}
 }
-onMounted(() => { isVip.value = localStorage.getItem(VIP_KEY) === '1' })
+onMounted(async () => { isVip.value = localStorage.getItem(VIP_KEY) === '1'; await loadAlertify() })
 
 const { theme } = useData()
 const inputCode = ref('')
@@ -86,7 +97,7 @@ const sha256 = async (s) => {
 }
 const activateVip = async () => {
   const v = inputCode.value.trim()
-  if (!v) { alertify.warning('请输入激活码'); return }
+  if (!v) { toast('warning', '请输入激活码'); return }
   const items = actList.map(s => String(s))
   const allHex = items.every(x => /^[0-9a-fA-F]{64}$/.test(x))
   let ok = false
@@ -99,9 +110,9 @@ const activateVip = async () => {
   if (ok) {
     localStorage.setItem(VIP_KEY, '1')
     isVip.value = true
-    alertify.success('激活成功，VIP 已解锁')
+    toast('success', '激活成功，VIP 已解锁')
   } else {
-    alertify.error('激活码无效')
+    toast('error', '激活码无效')
   }
 }
 </script>

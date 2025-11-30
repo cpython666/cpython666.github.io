@@ -49,7 +49,7 @@ sidebar: false
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   display: flex;
   flex-direction: column;
-  height: 300px; /* 每个分类卡片固定高度 */
+  /* 分栏模式下高度自适应 */
 }
 .hub-card:hover {
   transform: translateY(-1px);
@@ -57,7 +57,7 @@ sidebar: false
   border-color: var(--el-color-primary);
 }
 .hub-card h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
-.hub-card .links { flex: 1; overflow-y: auto; padding-right: 4px; }
+.hub-card .links { flex: 1; padding-right: 4px; }
 .hub-card a {
   display: inline-block;
   margin: 4px 8px 0 0;
@@ -68,6 +68,27 @@ sidebar: false
   text-decoration: none;
 }
 .hub-card a:hover { background: var(--el-color-primary); color: #fff; }
+
+/* 分栏类型布局（列式导航） */
+.nav-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+.col-block {
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--el-bg-color-overlay);
+  box-shadow: var(--el-box-shadow-light);
+  border: 1px solid var(--el-border-color-light);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.col-block:hover { transform: translateY(-1px); box-shadow: var(--el-box-shadow); border-color: var(--el-color-primary); }
+.col-block h3 { margin: 0 0 8px; font-size: 16px; font-weight: 600; }
+.col-block .links { display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.col-block a { display: inline-block; padding: 4px 8px; border-radius: 8px; background: var(--el-color-primary-light-9); color: var(--el-text-color-primary); text-decoration: none; }
+.col-block a:hover { background: var(--el-color-primary); color: #fff; }
 
 .articles { margin-top: 20px; }
 .articles details {
@@ -92,11 +113,30 @@ sidebar: false
 .articles li { margin: 0; }
 .articles a { display: block; padding: 6px 10px; border-radius: 8px; background: var(--el-color-primary-light-9); text-decoration: none; color: var(--el-text-color-primary); }
 .articles a:hover { background: var(--el-color-primary); color: #fff; }
+
+/* 顶部分栏切换控件 */
+.seg-switch { display: inline-flex; border: 1px solid var(--el-border-color); border-radius: 10px; overflow: hidden; background: var(--el-bg-color); margin-top: 12px; }
+.seg-item { padding: 6px 12px; cursor: pointer; color: var(--el-text-color-secondary); user-select: none; }
+.seg-item:hover { background: var(--el-color-primary-light-9); color: var(--el-color-primary); }
+.seg-item.is-active { background: var(--el-color-primary); color: #fff; }
+
+.columns3 { display: grid; grid-template-columns: 220px 260px 1fr; gap: 14px; margin-top: 16px; }
+.col { padding: 14px; border-radius: 12px; background: var(--el-bg-color-overlay); box-shadow: var(--el-box-shadow-light); border: 1px solid var(--el-border-color-light); }
+.col-title { margin: 0 0 10px; font-size: 16px; font-weight: 600; }
+.list { display: flex; flex-direction: column; gap: 6px; }
+.item { padding: 6px 10px; border-radius: 8px; background: var(--el-color-primary-light-9); color: var(--el-text-color-primary); cursor: pointer; }
+.list a.item { display: block; }
+.item:hover { background: var(--el-color-primary); color: #fff; }
+.item.is-active { background: var(--el-color-primary); color: #fff; }
+.count { margin-left: 6px; color: var(--el-text-color-secondary); font-size: 12px; }
+.col .links { display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.col .links a { display: inline-block; padding: 4px 8px; border-radius: 8px; background: var(--el-color-primary-light-9); color: var(--el-text-color-primary); text-decoration: none; }
+.col .links a:hover { background: var(--el-color-primary); color: #fff; }
 </style>
 
 <script setup>
 import { useData } from 'vitepress'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 const { site, theme } = useData()
 
 // 自动收集 docs 下的所有 Markdown 页面
@@ -179,9 +219,67 @@ const navCards = computed(() => {
   return cards
 })
 
+const normalizeNode = (n) => ({
+  text: n?.text || '',
+  link: n?.link,
+  items: Array.isArray(n?.items) ? n.items.map(normalizeNode) : []
+})
+
+const sidebarTree = computed(() => {
+  const sb = (theme.value && theme.value.sidebar) || {}
+  const allow = Array.isArray(theme.value?.blogNavInclude) ? new Set(theme.value.blogNavInclude) : null
+  const exclude = Array.isArray(theme.value?.blogNavExclude) ? new Set(theme.value.blogNavExclude) : null
+  const groups = []
+  for (const [path, arr] of Object.entries(sb)) {
+    if (path === '/') continue
+    if (allow && !allow.has(path)) continue
+    if (exclude && exclude.has(path)) continue
+    const name = path.replace(/^\//, '').replace(/\/$/, '') || '其他'
+    const nodes = Array.isArray(arr) ? arr.map(normalizeNode) : []
+    groups.push({ path, name, nodes })
+  }
+  return groups.sort((a, b) => a.name.localeCompare(b.name))
+})
+
+const activeIndices = ref([0])
+const columns = computed(() => {
+  const cols = []
+  const groups = sidebarTree.value
+  cols.push({ title: '一级导航', items: groups.map(g => ({ text: g.name, items: g.nodes })) })
+  let nodes = groups[activeIndices.value[0]]?.nodes || []
+  let level = 1
+  while (nodes && nodes.length) {
+    cols.push({ title: level === 1 ? '二级分类' : `${level + 1}级`, items: nodes })
+    const ai = activeIndices.value[level] ?? 0
+    const chosen = nodes[ai]
+    nodes = chosen?.items || []
+    level++
+    if (level > 8) break
+  }
+  return cols
+})
+
+const onHover = (ci, ni) => {
+  const arr = activeIndices.value.slice(0, ci)
+  arr[ci] = ni
+  activeIndices.value = arr
+}
+
+const gridColsStyle = computed(() => {
+  const n = columns.value.length
+  const extra = Math.max(n - 3, 0)
+  const repeat = extra ? '260px '.repeat(extra) : ''
+  return { gridTemplateColumns: `220px 260px ${repeat}1fr` }
+})
+
+const activeCol = ref(0)
+const activeSection = ref(0)
+
 // 侧边栏双/三层结构自动判断
 const sidebarGroups = computed(() => {
   const sb = (theme.value && theme.value.sidebar) || {}
+  const allow = Array.isArray(theme.value?.blogNavInclude) ? new Set(theme.value.blogNavInclude) : null
+  const exclude = Array.isArray(theme.value?.blogNavExclude) ? new Set(theme.value.blogNavExclude) : null
 
   const collectLeaves = (node) => {
     const res = []
@@ -213,7 +311,9 @@ const sidebarGroups = computed(() => {
     const name = path.replace(/^\//, '').replace(/\/$/, '') || '其他'
     groups.push({ path, name, sections, items })
   }
-  return groups.sort((a, b) => a.name.localeCompare(b.name))
+  let filtered = allow ? groups.filter(g => allow.has(g.path)) : groups
+  if (exclude && exclude.size) filtered = filtered.filter(g => !exclude.has(g.path))
+  return filtered.sort((a, b) => a.name.localeCompare(b.name))
 })
 
 const sidebarTotal = computed(() => sidebarGroups.value.reduce((s, g) => s + g.items.length + g.sections.reduce((ss, sec) => ss + sec.items.length, 0), 0))
@@ -234,11 +334,16 @@ const groupCount = (g) => g.items.length + g.sections.reduce((s, sec) => s + sec
   
 </div>
 
-<div class="nav-hub" v-if="navCards.length">
-  <div class="hub-card" v-for="card in navCards" :key="card.title">
-    <h3>{{ card.title }}</h3>
-    <div class="links">
-      <a v-for="lnk in card.links" :key="lnk.link" :href="lnk.link">{{ lnk.text }}</a>
+<div class="columns3" :style="gridColsStyle">
+  <div class="col" v-for="(col, ci) in columns" :key="ci">
+    <h3 class="col-title">{{ col.title }}</h3>
+    <div class="list">
+      <template v-for="(node, ni) in col.items" :key="(node.link || '') + node.text + ni">
+        <a v-if="node.link && (!node.items || !node.items.length)" class="item" :href="node.link">{{ node.text }}</a>
+        <div v-else class="item" :class="{ 'is-active': (activeIndices[ci] ?? 0) === ni }" @mouseenter="onHover(ci, ni)">
+          {{ node.text }}<span class="count" v-if="node.items && node.items.length">（{{ node.items.length }}）</span>
+        </div>
+      </template>
     </div>
   </div>
 </div>
