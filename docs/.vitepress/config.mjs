@@ -121,6 +121,10 @@ let blockchain_weekly_report = [
     link: "/web3/blockchain-weekly-report/",
   },
   {
+    text: "「区块链周报第四期」稳定币买一切时代序章，链上美股天时地利，金融核心正在迁移？[2026/05/31]",
+    link: "/web3/blockchain-weekly-report/issue-4-2026-05-31",
+  },
+  {
     text: "「区块链周报第三期」DEX2.0大战一触即发，谁能撼动Hyperliquid王座？[09/15-09/21]",
     link: "/web3/blockchain-weekly-report/issue-3-09-15",
   },
