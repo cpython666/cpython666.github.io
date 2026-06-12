@@ -298,6 +298,57 @@ let web_intro_items = [
     link: "/index/old/index-0.1",
   },
 ];
+let life_items = [
+  { text: "人生感悟", link: "/life/" },
+  {
+    text: "自动化数据采集危险啦，我的饭碗裂开啦",
+    link: "/life/ai-automation-data-collection",
+  },
+  {
+    text: "毕业两年，我还没开始我的人生。杭漂程序员生活公开！",
+    link: "/life/two-years-after-graduation-hangzhou-programmer",
+  },
+  {
+    text: "写给两年前刚毕业的自己：三条忠告",
+    link: "/life/advice-to-myself-two-years-ago",
+  },
+  {
+    text: "做正确的事，无惧风雨，交给时间",
+    link: "/life/do-the-right-thing",
+  },
+  {
+    text: "做自媒体，是为了被“对的人”找到",
+    link: "/life/self-media-found-by-right-people",
+  },
+  {
+    text: "做自媒体，就是在向世界发射信号。想赚钱，先修心",
+    link: "/life/self-media-signal-money-mind",
+  },
+  {
+    text: "自主思考，找到自己的特长和节奏。我喜欢看什么样的博主？",
+    link: "/life/independent-thinking-strength-rhythm",
+  },
+  {
+    text: "推荐两个我最近反复看的博主：陈昌文、路飞",
+    link: "/life/recommended-bloggers-chenchangwen-lufei",
+  },
+  {
+    text: "不开美颜，是一种筛选，我不是gay也是",
+    link: "/life/no-beauty-filter-not-gay",
+  },
+  {
+    text: "程序员如何找对象？如何聊天？",
+    link: "/life/programmer-dating-chat",
+  },
+  {
+    text: "用交易思维看白冰和抱抱盲兔，他们的爆仓几乎是必然的",
+    link: "/life/trading-thinking-baibing-mangtu",
+  },
+  {
+    text: "那时候的我，靠幻想和宇宙活着",
+    link: "/life/fantasy-and-universe",
+  },
+];
 let nav_config = [
   // {
   //   text: "主站",
@@ -322,6 +373,10 @@ let nav_config = [
   {
     text: "博客会员",
     link: "/vip/",
+  },
+  {
+    text: "人生感悟",
+    link: "/life/",
   },
   {
     text: "资源导航",
@@ -385,6 +440,13 @@ let sidebar_config = {
       text: "后端",
       collapsed: false,
       items: backend_items,
+    },
+  ],
+  "/life/": [
+    {
+      text: "人生感悟",
+      collapsed: false,
+      items: life_items,
     },
   ],
   "/算法/": [
