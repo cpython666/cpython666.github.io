@@ -788,6 +788,18 @@ export default defineConfig({
     // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
     vipActivationHashes: ["e5b1764ba2392383c2c97b5ea76f9978a590be0ef0811fdd0d7b53b0c0cd0ebc"],
     blogNavExclude: ["/nav/","/spider-tools/"],
+    blogNavTitles: {
+      "/backend/": "后端",
+      "/life/": "人生感悟",
+      "/python/": "Python",
+      "/python/collection/23-design/": "23种设计模式-Python",
+      "/spider/": "爬虫",
+      "/web/": "前端",
+      "/web-intro/": "网站相关",
+      "/web3/": "币圈入圈指南",
+      "/好文推荐/": "好文推荐",
+      "/算法/": "算法",
+    },
   },
     define: {
     __API_BASE__: JSON.stringify('https://api.example.com'),
