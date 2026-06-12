@@ -58,6 +58,35 @@ let spider_set_items = [
     link: "/spider/collection/crawlab",
   },
 ];
+let spider_drissionpage_imported_items = [
+  { text: "合集介绍", link: "/spider/dp-series/" },
+  { text: "P0-为什么学习数据采集？为什么是自动化？为什么选择DrissionPage？", link: "/spider/dp-series/p0-why-data-collection" },
+  { text: "P1-本专栏的目的，会讲那些知识？DrissionPage自动化数据采集", link: "/spider/dp-series/p1-series-intro" },
+  { text: "P2-Hello～DrissionPage，开端即巅峰，专栏可以结束了", link: "/spider/dp-series/p2-hello-drissionpage" },
+  { text: "P3-DrissionPage批量监听采集接口数据", link: "/spider/dp-series/p3-listen-api-data" },
+  { text: "P4-自动化批量保存文章的方法与系统设计指南", link: "/spider/dp-series/p4-save-articles-system-design" },
+  { text: "P5-DrissionPage监听websocket请求", link: "/spider/dp-series/p5-listen-websocket" },
+  { text: "P6-快速、精准、优雅提取网页大部分表格数据-DrissionPage自动化数据采集", link: "/spider/dp-series/p6-extract-table-data" },
+  { text: "P7-DrissionPage项目部署服务器的最佳实践", link: "/spider/dp-series/p7-deploy-server" },
+];
+let spider_drissionpage_system_items = [
+  { text: "合集介绍", link: "/spider/drissionpage-system/" },
+  { text: "P1-DrissionPage数据采集中间系统【源码及讲解】", link: "/spider/drissionpage-system/p1-system-source-guide" },
+  { text: "P2-自动化采集系统-体验优化", link: "/spider/drissionpage-system/p2-system-ux-optimization" },
+  { text: "P3-自动化采集系统功能丰富-支持截图，接口文档描述完善", link: "/spider/drissionpage-system/p3-screenshot-api-docs" },
+];
+let spider_questionnaire_items = [
+  { text: "合集介绍", link: "/spider/questionnaire/" },
+  { text: "P1-Selenium自动做问卷星", link: "/spider/questionnaire/p1-selenium-wjx" },
+  { text: "P2-问卷代码示例-已脱敏【自动化填问卷的第一桶金，半小时一百块】", link: "/spider/questionnaire/p2-questionnaire-code-example" },
+  { text: "P3-填问卷不再手动！自动生成自动化代码，一键搞定所有问卷类型！", link: "/spider/questionnaire/p3-generate-automation-code" },
+];
+let spider_scrapy_series_items = [
+  { text: "合集介绍", link: "/spider/scrapy-series/" },
+  { text: "P1-Scrapy简介", link: "/spider/scrapy-series/p1-scrapy-intro" },
+  { text: "P2-快速开始-项目实战", link: "/spider/scrapy-series/p2-quick-start-project" },
+  { text: "P3-注意事项【Scrapy】", link: "/spider/scrapy-series/p3-scrapy-notes" },
+];
 
 let web3_basics_items = [
   { text: "为什么要有这个指南？", link: "/web3/basics/web3forever" },
@@ -492,6 +521,26 @@ let sidebar_config = {
       text: "系列文章",
       collapsed: false,
       items: spider_set_items,
+    },
+    {
+      text: "DrissionPage自动化数据采集",
+      collapsed: false,
+      items: spider_drissionpage_imported_items,
+    },
+    {
+      text: "DrissionPage自动化数据采集中间系统",
+      collapsed: false,
+      items: spider_drissionpage_system_items,
+    },
+    {
+      text: "自动化填写问卷系列-Python-自动化",
+      collapsed: false,
+      items: spider_questionnaire_items,
+    },
+    {
+      text: "Scrapy-合集",
+      collapsed: false,
+      items: spider_scrapy_series_items,
     },
   ],
   "/python/collection/23-design/": [
