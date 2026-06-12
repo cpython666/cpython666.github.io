@@ -51,11 +51,6 @@ const sponsors = [
     logo: '/imgs/sponsors/qgwl_logo.png',
     link: 'https://www.qg.net/product/proxyip.html?source=star',
   },
-  {
-    name: 'Evolution Host',
-    logo: '/imgs/sponsors/evolution_host.png',
-    link: 'https://evolution-host.com/',
-  },
 ]
 
 const friends = [
