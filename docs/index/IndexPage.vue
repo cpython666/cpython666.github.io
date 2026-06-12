@@ -29,7 +29,7 @@ import SponsorsLinks from "./SponsorsLinks.vue";
 // 响应式数据
 const randomImage = ref('');
 const openLink = () => {
-  window.open('http://www.stardream.vip/', '_blank');
+  window.location.href = '/';
 };
 const changeBgHeight = () => {
   const header = document.querySelector('header');
