@@ -17,6 +17,19 @@
     color: rgb(79, 125, 239);
 }
 /* alertify的弹窗样式  结束*/
+
+.vp-doc p {
+  text-indent: 2em;
+}
+
+.vp-doc p:has(> img:first-child),
+.vp-doc li p,
+.vp-doc blockquote p,
+.vp-doc table p,
+.vp-doc .custom-block p {
+  text-indent: 0;
+}
+
 .member-gate-overlay {
   position: fixed;
   inset: 0;
