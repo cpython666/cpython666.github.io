@@ -45,13 +45,13 @@
 
 后端开发：Java后端，Python后端，数据采集【爬虫】，应用系统工程师，erp
 
-![](https://cdn.nlark.com/yuque/0/2025/png/38536969/1747582806925-7f8ce57b-e782-460f-9f95-6a9d78657797.png)
+![](/imgs/spider/collection/job-sharing-backend-roadmap.png)
 
-![](https://cdn.nlark.com/yuque/0/2025/png/38536969/1747585229553-d802f8e3-47ac-4ba5-8eb1-e5526d8509d4.png)
+![](/imgs/spider/collection/job-sharing-interview-review.png)
 
-![](https://cdn.nlark.com/yuque/0/2025/png/38536969/1747585248484-6868d8e8-e995-4bc5-8f38-20e7dad0295a.png)
+![](/imgs/spider/collection/job-sharing-market-demand.png)
 
-![](https://cdn.nlark.com/yuque/0/2025/png/38536969/1747585276614-240ca9d6-72db-4241-b7d8-b3f8707b8726.png)
+![](/imgs/spider/collection/job-sharing-career-choice.png)
 
 ## 三年内薪资增长曲线如何？
 

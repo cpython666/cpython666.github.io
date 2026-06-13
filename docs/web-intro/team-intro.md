@@ -3,7 +3,7 @@ import { VPTeamMembers } from 'vitepress/theme'
 
 const members = [
   {
-    avatar: 'https://www.github.com/cpython666.png',
+    avatar: '/imgs/web-intro/cpython666-avatar.png',
     name: 'cpython666',
     title: 'Creator',
     links: [

@@ -38,5 +38,5 @@
 现在看到视频的想找对象的程序员，立刻马上找自己能放出来的照片，写自己的自我介绍。然后去小红书发文章
 
 <!-- 这是一张图片，ocr 内容为： -->
-![](https://cdn.nlark.com/yuque/0/2026/png/38536969/1778503265186-caad82db-4aae-4edf-833f-fe39cb916e37.png)
+![](/imgs/life/dating-chat-screenshot.png)
 

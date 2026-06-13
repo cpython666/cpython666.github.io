@@ -24,7 +24,7 @@ legacy_unique_id: "28"
 比如说让你根据一个表格里的信息去填写问卷，使用自动化就可以轻松的实现，我前面就有三集视频专门讲哪个填问卷的东西。
 
 
-![image.png](/imgs/spider/imported/drissionpage/image_1dece706-268e-4670-a3e9-e19d2e65ab31.png "image.png")
+![image.png](/imgs/spider/drissionpage/data-collection-market.png "image.png")
 
 但是大家不要只看下理论能实现的就好像看到了葵花宝典一样，觉得学完之后就能天下第一成为武林至尊了。于是赶紧去网上找班报班了，最后学了没有达到自己的预期大喊上当。理论上可以，但是难度不小，并且还有风险。互联网岗位应该就属爬虫岗位最容易进去踩缝纫机了。
 

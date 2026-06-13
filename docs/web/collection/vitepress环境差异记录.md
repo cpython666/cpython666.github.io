@@ -8,7 +8,7 @@
 通过简单的 `document.readyState` 检查，可以有效解决因页面加载速度差异导致的事件监听问题。这个技术不仅适用于 `DOMContentLoaded` 事件，也可以用于处理其他依赖于特定加载状态的脚本执行逻辑。<br />
 希望能够给大家一定的借鉴，如果有帮到你，希望可以给出免费的三连。
 
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/38536969/1713271373783-6dfbad1f-34f8-48ea-a163-93402ad6bba3.png#averageHue=%23fcfcfc&clientId=ub283c129-0e75-4&from=paste&height=582&id=ud7daf30b&originHeight=727&originWidth=1409&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=43044&status=done&style=none&taskId=u1ff8ce63-2946-45b1-8e85-606b74c231f&title=&width=1127.2)
+![image.png](/imgs/web/vitepress-env-difference.png)
 
 ## 我直接执行就可以正常显示，那么添加事件监听是不是有点没必要
 

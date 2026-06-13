@@ -7,7 +7,7 @@
 
 <a name="Nchsb"></a>
 
-# ![PyQt6实战开发之旅.png](https://cdn.nlark.com/yuque/0/2023/png/38536969/1700992326629-1751928f-a81b-4a11-b416-b3cfab22c329.png#averageHue=%23141f2f&clientId=u445f37d0-f369-4&from=drop&id=u2b8770dd&originHeight=1440&originWidth=1920&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=2352480&status=done&style=none&taskId=u95f201a3-045b-4313-9be8-a3eb3f3bf84&title=)
+# ![PyQt6实战开发之旅.png](/imgs/python/collection/pyqt6-series-cover.png)
 
 # 视频教程
 
@@ -2696,7 +2696,7 @@ if __name__ == "__main__":
 
 ## 【自定义磨砂动态背景】前端及pyqt6实现
 
-![](https://cdn.nlark.com/yuque/0/2023/jpeg/38536969/1703518332788-d1b87444-f625-47f8-9977-b0627b20f13f.jpeg#averageHue=%23d0e0d9&clientId=u0cfaab1b-8444-4&from=paste&id=u305e3618&originHeight=2160&originWidth=3644&originalType=url&ratio=1.25&rotation=0&showTitle=false&status=done&style=none&taskId=uad2bb042-6a75-4991-b172-910b3482523&title=)<br />如何实现一个自定义的磨砂动态背景呢？<br />这种效果看起来特别的高端，很新颖美观。<br />具体的效果可以看这里的演示：[https://www.bilibili.com/video/BV1zj411H7wd/](https://www.bilibili.com/video/BV1zj411H7wd/)<br />其实原理就是底层有多个多彩多边形在移动，然后再盖上一层模糊滤镜。<br />前端的话css比较强大可以控制多边形的颜色同时变化，效果更好点。但是我用pyqt6实现的效果自我感觉也不赖。<br />我这里封装了两个类，给出了一个使用的demo，大家可以研究一下。如果有帮到你，希望给出一个免费的三连。
+![](/imgs/python/collection/frosted-background-preview.jpeg)<br />如何实现一个自定义的磨砂动态背景呢？<br />这种效果看起来特别的高端，很新颖美观。<br />具体的效果可以看这里的演示：[https://www.bilibili.com/video/BV1zj411H7wd/](https://www.bilibili.com/video/BV1zj411H7wd/)<br />其实原理就是底层有多个多彩多边形在移动，然后再盖上一层模糊滤镜。<br />前端的话css比较强大可以控制多边形的颜色同时变化，效果更好点。但是我用pyqt6实现的效果自我感觉也不赖。<br />我这里封装了两个类，给出了一个使用的demo，大家可以研究一下。如果有帮到你，希望给出一个免费的三连。
 <a name="n7fJx"></a>
 
 ### 自定义磨砂动态背景代码
@@ -2835,4 +2835,4 @@ if __name__ == '__main__':
 
 ### 参数说明：
 
-type参数说明：<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/38536969/1703518883205-4a0cf819-429d-410a-9337-4269001a6031.png#averageHue=%23eedada&clientId=u0cfaab1b-8444-4&from=paste&height=612&id=u2ad74cc3&originHeight=765&originWidth=516&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=97683&status=done&style=none&taskId=u7e024163-2684-4f54-a015-33da1399f66&title=&width=412.8)
+type参数说明：<br />![image.png](/imgs/python/collection/frosted-background-type-options.png)

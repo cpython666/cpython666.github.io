@@ -16,7 +16,7 @@ legacy_unique_id: "WTcv4"
 + Scrapy并不是一个爬虫，它只是一个“解决方案”，也就是说，如果它访问到一个“一无所知”的网站，是什么也做不了的。Scrapy是用于提取结构化信息的工具，即需要人工的介入来配置合适的XPath或者CSS表达式。Scrapy也不是数据库，它并不会储存数据，也不会索引数据，它只能从一堆网页中抽取数据，但是我们却可以将抽取的数据插入到数据库中。
 
 ## Scrapy架构
-![](/imgs/spider/imported/scrapy-series/scrapy-architecture.png)  
+![](/imgs/spider/scrapy-series/scrapy-architecture.png)  
 
 
 Scrapy Engine (引擎): 是框架的核心，负责Spider、ItemPipeline、Downloader、Scheduler中间的通讯，信号、数据传递等。并在发生相应的动作时触发事件。
