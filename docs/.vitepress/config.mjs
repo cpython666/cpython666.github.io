@@ -19,6 +19,10 @@ let fast_api_items = [
     link: "/python/web/fastapi-road",
   },
   {
+    text: "P1-FastAPI简介-合集规划介绍",
+    link: "/python/web/fastapi-intro",
+  },
+  {
     text: "JWT（JSON Web Token）详解",
     link: "/python/web/jwt",
   },
@@ -53,10 +57,27 @@ let spider_set_items = [
     link: "/spider/collection/drissionpage",
   },
   { text: "Scrapy学习笔记", link: "/spider/collection/scrapy" },
+  { text: "python小白学习路线，必会知识点详细解析，资源推荐", link: "/spider/collection/python-beginner-roadmap" },
+  { text: "能听到的音乐就能下载，音乐下载通杀", link: "/spider/collection/music-download-all-in-one" },
+  { text: "数据采集使用自动化真的慢吗？实测速度震惊！", link: "/spider/collection/automation-data-collection-speed-test" },
+  { text: "爬虫学习路线-自动化，80%需求有手就行", link: "/spider/collection/crawler-roadmap-automation" },
+  { text: "xpath简介及常用语法", link: "/spider/collection/xpath-intro" },
+  { text: "现在的引流爬虫太猖狂了，兄弟们注意点别进去了", link: "/spider/collection/traffic-crawler-warning" },
+  { text: "爬虫可以做哪些事情？项目探究，项目推荐", link: "/spider/collection/crawler-project-ideas" },
+  { text: "网站数据采集-分析思路/流程", link: "/spider/collection/website-data-collection-analysis" },
+  { text: "数据采集系统的通用设计思路", link: "/spider/collection/data-collection-system-design" },
+  { text: "通用爬虫介绍和实现思路", link: "/spider/collection/general-crawler-design" },
   {
     text: "Crawlab使用记录",
     link: "/spider/collection/crawlab",
   },
+];
+let spider_anti_crawler_game_items = [
+  { text: "合集介绍", link: "/spider/anti-crawler-game/" },
+  { text: "大眼瞪小眼编码，视觉层面混淆-O10编码解码", link: "/spider/anti-crawler-game/visual-obfuscation-o10" },
+  { text: "很损的反爬，不相信科学了，赶紧分享给大家，薛定谔的数据", link: "/spider/anti-crawler-game/schrodinger-anti-crawler-data" },
+  { text: "反爬之行为检测-鼠标与按钮位置匹配", link: "/spider/anti-crawler-game/behavior-detection-mouse-button" },
+  { text: "看似最简单，实则很难的验证码【爬虫反爬】", link: "/spider/anti-crawler-game/hard-simple-captcha" },
 ];
 let spider_drissionpage_imported_items = [
   { text: "合集介绍", link: "/spider/dp-series/" },
@@ -68,12 +89,15 @@ let spider_drissionpage_imported_items = [
   { text: "P5-DrissionPage监听websocket请求", link: "/spider/dp-series/p5-listen-websocket" },
   { text: "P6-快速、精准、优雅提取网页大部分表格数据-DrissionPage自动化数据采集", link: "/spider/dp-series/p6-extract-table-data" },
   { text: "P7-DrissionPage项目部署服务器的最佳实践", link: "/spider/dp-series/p7-deploy-server" },
+  { text: "P8-自动化的检测与反检测-DrissionPage自动化数据采集", link: "/spider/dp-series/p8-anti-detection" },
 ];
 let spider_drissionpage_system_items = [
   { text: "合集介绍", link: "/spider/drissionpage-system/" },
   { text: "P1-DrissionPage数据采集中间系统【源码及讲解】", link: "/spider/drissionpage-system/p1-system-source-guide" },
   { text: "P2-自动化采集系统-体验优化", link: "/spider/drissionpage-system/p2-system-ux-optimization" },
   { text: "P3-自动化采集系统功能丰富-支持截图，接口文档描述完善", link: "/spider/drissionpage-system/p3-screenshot-api-docs" },
+  { text: "P4-自动化采集系统代码优化-实例化浏览器管理类", link: "/spider/drissionpage-system/p4-browser-manager-refactor" },
+  { text: "P5-增加响应状态码-后续系统功能规划【自动化采集系统代码】", link: "/spider/drissionpage-system/p5-response-status-planning" },
 ];
 let spider_questionnaire_items = [
   { text: "合集介绍", link: "/spider/questionnaire/" },
@@ -86,6 +110,8 @@ let spider_scrapy_series_items = [
   { text: "P1-Scrapy简介", link: "/spider/scrapy-series/p1-scrapy-intro" },
   { text: "P2-快速开始-项目实战", link: "/spider/scrapy-series/p2-quick-start-project" },
   { text: "P3-注意事项【Scrapy】", link: "/spider/scrapy-series/p3-scrapy-notes" },
+  { text: "P1-scrapy教程-scrapy框架简介", link: "/spider/scrapy-series/p4-scrapy-framework-intro" },
+  { text: "P2-第一个scrapy项目【scrapy教程】", link: "/spider/scrapy-series/p5-first-scrapy-project" },
 ];
 
 let web3_basics_items = [
@@ -219,6 +245,9 @@ let python_items = [
     link: "/python/视频源码",
   },
   { text: "常用命令", link: "/python/shorthand" },
+  { text: "常用命令总敲错？记不住？让你的命令短起来！-invoke【python三方库】", link: "/python/libs/invoke" },
+  { text: "用Python手搓限流类-支持同步与异步，内存或者redis", link: "/python/libs/rate-limiter" },
+  { text: "文本差异对比如此简单！", link: "/python/libs/text-diff-simple" },
 ];
 
 let django_items = [
@@ -246,6 +275,76 @@ let python_col_items = [
     text: "pre-commit 简明教程：让你的代码提交更规范",
     link: "/python/libs/pre-commit",
   },
+];
+let python_subtitle_extractor_items = [
+  { text: "字幕提取器系列", link: "/python/subtitle-extractor/" },
+  { text: "P1-用Python批量提取视频文案，超详细-字幕提取器", link: "/python/subtitle-extractor/p1-video-copy-extractor" },
+  { text: "P2-提取视频文案的几种场景及其优缺点-字幕提取器", link: "/python/subtitle-extractor/p2-subtitle-extraction-scenarios" },
+  { text: "P3-【开源自制】字幕提取器-OCR版-1.0，文案提取不再烦恼！", link: "/python/subtitle-extractor/p3-ocr-subtitle-extractor-1" },
+  { text: "P4-字幕提取器-OCR版-1.0，使用教程及后续改进方向，进步空间很大", link: "/python/subtitle-extractor/p4-ocr-subtitle-extractor-guide" },
+  { text: "P5-字幕提取器-OCR版-2.0，多线程，批量自动化，实现了真正的一步到位", link: "/python/subtitle-extractor/p5-ocr-subtitle-extractor-2" },
+];
+let python_basics_imported_items = [
+  { text: "Python基础合集", link: "/python/python-basics/" },
+];
+let python_pygame_series_items = [
+  { text: "Pygame游戏开发合集", link: "/python/pygame-series/" },
+  { text: "P0-合集介绍", link: "/python/pygame-series/p0-series-intro" },
+  { text: "P1-教程文档", link: "/python/pygame-series/p1-docs" },
+  { text: "P2-设置logo与标题", link: "/python/pygame-series/p2-window-logo-title" },
+  { text: "P3-下雨特效", link: "/python/pygame-series/p3-rain-effect" },
+  { text: "P4-点击后粒子爆炸", link: "/python/pygame-series/p4-particle-explosion" },
+  { text: "P5-数字粒子消散", link: "/python/pygame-series/p5-number-particle-dissolve" },
+  { text: "P6-画面显示fps", link: "/python/pygame-series/p6-show-fps" },
+  { text: "P7-画出一个棋盘背景", link: "/python/pygame-series/p7-chessboard-background" },
+  { text: "P8-物体运动尾迹拖尾", link: "/python/pygame-series/p8-motion-trail" },
+  { text: "P9-代码-鼠标环形文字旋转动画特效", link: "/python/pygame-series/p9-rotating-text-effect" },
+  { text: "P10-炫彩小球交互效果-pygame实现", link: "/python/pygame-series/p10-colorful-ball-interaction" },
+];
+let python_pyqt6_series_items = [
+  { text: "PyQt6实战开发之旅-合集", link: "/python/pyqt6-series/" },
+  { text: "P1-PyQt6学习感悟", link: "/python/pyqt6-series/p1-learning-reflection" },
+  { text: "P2-合集简介", link: "/python/pyqt6-series/p2-series-intro" },
+  { text: "P3-第一个程序-Hello,PyQt6~", link: "/python/pyqt6-series/p3-hello-pyqt6" },
+  { text: "P4-居中显示窗口", link: "/python/pyqt6-series/p4-center-window" },
+  { text: "P5-PyQt6-初探QMainWindow-各模块的学习方法", link: "/python/pyqt6-series/p5-qmainwindow-overview" },
+  { text: "P6-多页面切换实例", link: "/python/pyqt6-series/p6-multi-page-switch" },
+  { text: "P7-顶部菜单栏实例", link: "/python/pyqt6-series/p7-menu-bar" },
+  { text: "P8-多种栏示例", link: "/python/pyqt6-series/p8-bars-demo" },
+  { text: "P9-左侧菜单控制右侧多页面切换", link: "/python/pyqt6-series/p9-sidebar-page-switch" },
+  { text: "P10-pyqt6中如何实现多页面切换？", link: "/python/pyqt6-series/p10-how-to-switch-pages" },
+  { text: "P11-QTabweight与Qstackweight的区别", link: "/python/pyqt6-series/p11-qtabwidget-qstackedwidget" },
+  { text: "P12-Qframe与Qweight的区别", link: "/python/pyqt6-series/p12-qframe-qwidget" },
+  { text: "P13-先显示登陆页面，登陆成功后显示主页面", link: "/python/pyqt6-series/p13-login-before-main-window" },
+  { text: "P14-窗口渐显与渐隐", link: "/python/pyqt6-series/p14-window-fade" },
+  { text: "P15-窗口居中变大出现", link: "/python/pyqt6-series/p15-window-scale-in" },
+  { text: "P16-最小化窗口到托盘，右键菜单，窗口恢复", link: "/python/pyqt6-series/p16-minimize-to-tray" },
+  { text: "P17-背景运动及模糊滤镜", link: "/python/pyqt6-series/p17-background-motion-blur" },
+  { text: "P18-窗口自定义拖拽功能", link: "/python/pyqt6-series/p18-custom-window-drag" },
+  { text: "P19-窗口双击更换背景", link: "/python/pyqt6-series/p19-double-click-change-bg" },
+  { text: "P20-多软件图标排布", link: "/python/pyqt6-series/p20-app-icon-layout" },
+  { text: "P21-点击按钮打开新页面", link: "/python/pyqt6-series/p21-open-new-page" },
+  { text: "P22-窗口中画一个框", link: "/python/pyqt6-series/p22-draw-rectangle" },
+  { text: "P23-介绍一下QGraphicsScene和QGraphicsView", link: "/python/pyqt6-series/p23-qgraphicsscene-qgraphicsview" },
+  { text: "P24-图片浏览，可以放大缩小拖拽", link: "/python/pyqt6-series/p24-image-viewer" },
+  { text: "P25-图片浏览，ctrl+滚轮放大缩小，左键按压拖拽，右键按压画框，框显示坐标信息", link: "/python/pyqt6-series/p25-image-viewer-box-select" },
+  { text: "P26-图片场景输出为图片", link: "/python/pyqt6-series/p26-export-scene-image" },
+  { text: "P27-浮点数滑块", link: "/python/pyqt6-series/p27-float-slider" },
+  { text: "P28-QListWidget中添加Widget", link: "/python/pyqt6-series/p28-qlistwidget-add-widget" },
+  { text: "P29-更换主题", link: "/python/pyqt6-series/p29-change-theme" },
+  { text: "P30-多选列表", link: "/python/pyqt6-series/p30-multi-select-list" },
+  { text: "P31-主线程中执行耗时任务时GUI 被阻塞，如何强制处理事件循环中的待处理事件，以更新 GUI", link: "/python/pyqt6-series/p31-process-events-when-gui-blocked" },
+  { text: "P32-单独线程处理任务", link: "/python/pyqt6-series/p32-worker-thread" },
+  { text: "P33-防锯齿选项", link: "/python/pyqt6-series/p33-antialiasing" },
+  { text: "P34-配置相关QSettings", link: "/python/pyqt6-series/p34-qsettings" },
+  { text: "P35-【自定义磨砂动态背景】前端及pyqt6实现", link: "/python/pyqt6-series/p35-frosted-dynamic-background" },
+];
+let python_django_series_items = [
+  { text: "Django-合集", link: "/python/django-series/" },
+  { text: "drf限流模块-源码翻译及解读【django】", link: "/python/django-series/drf-throttling-source" },
+  { text: "django-orm常用的方法函数【django】", link: "/python/django-series/django-orm-methods" },
+  { text: "django-simpleui【django】", link: "/python/django-series/django-simpleui" },
+  { text: "Django最常用命令合集", link: "/python/django-series/django-common-commands" },
 ];
 let frontend_items = [
   { text: "HTML", link: "/web/html" },
@@ -377,6 +476,49 @@ let life_items = [
     text: "那时候的我，靠幻想和宇宙活着",
     link: "/life/fantasy-and-universe",
   },
+  {
+    text: "我想要的生活，好像也很简单。目前我的人生规划[幻想]",
+    link: "/life/simple-life-plan",
+  },
+  {
+    text: "毕业杭州工作五个月存了多少钱？花销怎么样？",
+    link: "/life/hangzhou-five-month-savings",
+  },
+  {
+    text: "送钱的需求长什么样，钱这么好赚吗？",
+    link: "/life/what-easy-money-demand-looks-like",
+  },
+  {
+    text: "大家都是怎么过生日的？我是怎么过生日的？",
+    link: "/life/how-we-spend-birthdays",
+  },
+  {
+    text: "大家都有一堆亮眼的title，只有我是个真草根",
+    link: "/life/grassroots-without-bright-title",
+  },
+  {
+    text: "拷打自己五个月前的简历，进来体验当面试官，24春招面试回顾",
+    link: "/life/review-my-resume-after-five-months",
+  },
+  {
+    text: "想做自媒体不敢开始？不敢露脸怕被别人看到？",
+    link: "/life/afraid-to-start-self-media",
+  },
+  {
+    text: "AI时代，学习方式的变革：一天打造浏览器插件，我成了“产品经理+测试”",
+    link: "/life/ai-learning-browser-plugin-product-manager",
+  },
+  {
+    text: "代码写的垃圾是会被打的",
+    link: "/life/bad-code-will-be-punished",
+  },
+];
+let breakthrough_notes_items = [
+  { text: "普通人的破局笔记", link: "/breakthrough-notes/" },
+  {
+    text: "找资源宝典：资源无界，打破信息壁垒-说明",
+    link: "/breakthrough-notes/resource-treasure-manual",
+  },
 ];
 let nav_config = [
   // {
@@ -406,6 +548,14 @@ let nav_config = [
   {
     text: "人生感悟",
     link: "/life/",
+  },
+  {
+    text: "破局笔记",
+    link: "/breakthrough-notes/",
+  },
+  {
+    text: "区块漫步",
+    link: "/web3/block-walk/",
   },
   {
     text: "资源导航",
@@ -456,6 +606,31 @@ let sidebar_config = {
         },
       ],
     },
+    {
+      text: "字幕提取器系列",
+      collapsed: true,
+      items: python_subtitle_extractor_items,
+    },
+    {
+      text: "Python基础合集",
+      collapsed: true,
+      items: python_basics_imported_items,
+    },
+    {
+      text: "Pygame游戏开发合集",
+      collapsed: true,
+      items: python_pygame_series_items,
+    },
+    {
+      text: "PyQt6实战开发之旅-合集",
+      collapsed: true,
+      items: python_pyqt6_series_items,
+    },
+    {
+      text: "Django-合集",
+      collapsed: true,
+      items: python_django_series_items,
+    },
   ],
   "/web/": [
     {
@@ -476,6 +651,13 @@ let sidebar_config = {
       text: "人生感悟",
       collapsed: false,
       items: life_items,
+    },
+  ],
+  "/breakthrough-notes/": [
+    {
+      text: "普通人的破局笔记",
+      collapsed: false,
+      items: breakthrough_notes_items,
     },
   ],
   "/算法/": [
@@ -521,6 +703,11 @@ let sidebar_config = {
       text: "系列文章",
       collapsed: false,
       items: spider_set_items,
+    },
+    {
+      text: "网络爬虫的反爬与反反爬博弈艺术鉴赏",
+      collapsed: false,
+      items: spider_anti_crawler_game_items,
     },
     {
       text: "DrissionPage自动化数据采集",
@@ -839,6 +1026,7 @@ export default defineConfig({
     blogNavExclude: ["/nav/","/spider-tools/"],
     blogNavTitles: {
       "/backend/": "后端",
+      "/breakthrough-notes/": "普通人的破局笔记",
       "/life/": "人生感悟",
       "/python/": "Python",
       "/python/collection/23-design/": "23种设计模式-Python",

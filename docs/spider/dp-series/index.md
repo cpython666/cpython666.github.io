@@ -10,3 +10,4 @@ DrissionPage自动化数据采集
 - [P5-DrissionPage监听websocket请求](/spider/dp-series/p5-listen-websocket)
 - [P6-快速、精准、优雅提取网页大部分表格数据-DrissionPage自动化数据采集](/spider/dp-series/p6-extract-table-data)
 - [P7-DrissionPage项目部署服务器的最佳实践](/spider/dp-series/p7-deploy-server)
+- [P8-自动化的检测与反检测-DrissionPage自动化数据采集](/spider/dp-series/p8-anti-detection)
