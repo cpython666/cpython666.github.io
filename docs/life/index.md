@@ -2,6 +2,14 @@
 
 一些关于工作、技术、生活和时代变化的碎碎念。
 
+## 专题专栏
+
+- [年度总结与Flag](/life/yearly-flags/)
+- [毕业节点复盘](/life/graduation-milestones/)
+- [粉丝里程碑](/life/follower-milestones/)
+
+## 文章
+
 - [自动化数据采集危险啦，我的饭碗裂开啦](/life/ai-automation-data-collection)
 - [毕业两年，我还没开始我的人生。杭漂程序员生活公开！](/life/two-years-after-graduation-hangzhou-programmer)
 - [写给两年前刚毕业的自己：三条忠告](/life/advice-to-myself-two-years-ago)

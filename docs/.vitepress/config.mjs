@@ -513,6 +513,18 @@ let life_items = [
     link: "/life/bad-code-will-be-punished",
   },
 ];
+let life_yearly_flag_items = [
+  { text: "年度总结与Flag", link: "/life/yearly-flags/" },
+  { text: "25年的flag做到了多少？", link: "/life/yearly-flags/2025-flag-review" },
+];
+let life_graduation_milestone_items = [
+  { text: "毕业节点复盘", link: "/life/graduation-milestones/" },
+];
+let life_follower_milestone_items = [
+  { text: "粉丝里程碑", link: "/life/follower-milestones/" },
+  { text: "【千粉纪念】一千个粉丝了，激情不再！", link: "/life/follower-milestones/1000-followers-passion-fades" },
+  { text: "3000粉丝了，和兄弟们对齐下颗粒度", link: "/life/follower-milestones/3000-followers-self-media-review" },
+];
 let breakthrough_notes_items = [
   { text: "普通人的破局笔记", link: "/breakthrough-notes/" },
   {
@@ -651,6 +663,21 @@ let sidebar_config = {
       text: "人生感悟",
       collapsed: false,
       items: life_items,
+    },
+    {
+      text: "年度总结与Flag",
+      collapsed: false,
+      items: life_yearly_flag_items,
+    },
+    {
+      text: "毕业节点复盘",
+      collapsed: false,
+      items: life_graduation_milestone_items,
+    },
+    {
+      text: "粉丝里程碑",
+      collapsed: false,
+      items: life_follower_milestone_items,
     },
   ],
   "/breakthrough-notes/": [
@@ -1028,6 +1055,9 @@ export default defineConfig({
       "/backend/": "后端",
       "/breakthrough-notes/": "普通人的破局笔记",
       "/life/": "人生感悟",
+      "/life/follower-milestones/": "粉丝里程碑",
+      "/life/graduation-milestones/": "毕业节点复盘",
+      "/life/yearly-flags/": "年度总结与Flag",
       "/python/": "Python",
       "/python/collection/23-design/": "23种设计模式-Python",
       "/spider/": "爬虫",
