@@ -512,6 +512,10 @@ let life_items = [
     text: "代码写的垃圾是会被打的",
     link: "/life/bad-code-will-be-punished",
   },
+  {
+    text: "全自动写代码，博客全自动改造，一句话生成表情包动态图标，CodeX太好用了，我已经不自己写代码了",
+    link: "/life/codex-auto-coding-blog-refactor",
+  },
 ];
 let life_yearly_flag_items = [
   { text: "年度总结与Flag", link: "/life/yearly-flags/" },

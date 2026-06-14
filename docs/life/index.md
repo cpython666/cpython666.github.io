@@ -31,3 +31,4 @@
 - [想做自媒体不敢开始？不敢露脸怕被别人看到？](/life/afraid-to-start-self-media)
 - [AI时代，学习方式的变革：一天打造浏览器插件，我成了“产品经理+测试”](/life/ai-learning-browser-plugin-product-manager)
 - [代码写的垃圾是会被打的](/life/bad-code-will-be-punished)
+- [全自动写代码，博客全自动改造，一句话生成表情包动态图标，CodeX太好用了，我已经不自己写代码了](/life/codex-auto-coding-blog-refactor)
