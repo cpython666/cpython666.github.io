@@ -168,6 +168,10 @@ let block_walk_items = [
     text: "P9-资产千万的大哥分享给我的全部心得",
     link: "/web3/block-walk/a-big-brother-with-tens-of-millions-of-assets",
   },
+  {
+    text: "P10-做外汇黄金的常识，算了下我交易过几个小目标的黄金",
+    link: "/web3/block-walk/forex-gold-trading-basics",
+  },
 ];
 
 let blockchain_weekly_report = [
