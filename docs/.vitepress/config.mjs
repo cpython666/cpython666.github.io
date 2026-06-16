@@ -1,4 +1,131 @@
 import { defineConfig } from "vitepress";
+import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { join, relative, sep } from "node:path";
+
+const SITE_URL = "https://cpython666.github.io";
+const SITE_NAME = "星梦启航";
+const SITE_AUTHOR = "Python斗罗";
+const SITE_DESCRIPTION =
+  "Python斗罗的个人代码笔记，分享 Python、爬虫、自动化数据采集、Web3、AI 工具、程序员成长和自媒体复盘。";
+const SITE_KEYWORDS = "Python,爬虫,自动化数据采集,DrissionPage,Web3,AI工具,程序员成长,自媒体";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
+const NO_INDEX_PREFIXES = ["草稿箱/", "视频待办列表/"];
+
+function isNoIndexPage(page, frontmatter = {}) {
+  const normalizedPage = page.replace(/\\/g, "/");
+  return frontmatter.noindex === true || NO_INDEX_PREFIXES.some((prefix) => normalizedPage.startsWith(prefix));
+}
+
+function pageToPath(page) {
+  const normalizedPage = page.replace(/\\/g, "/");
+  const path = normalizedPage
+    .replace(/(^|\/)index\.md$/, "$1")
+    .replace(/\.md$/, "");
+
+  if (!path || path === "/") {
+    return "/";
+  }
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+function pageToUrl(page) {
+  return `${SITE_URL}${encodeURI(pageToPath(page))}`;
+}
+
+function categoryDescription(relativePath = "") {
+  if (relativePath.startsWith("spider/")) {
+    return "围绕 Python 爬虫、自动化数据采集、DrissionPage、反爬与项目实战的经验记录。";
+  }
+  if (relativePath.startsWith("python/")) {
+    return "围绕 Python 学习路线、三方库、GUI、Web 后端和项目实践的代码笔记。";
+  }
+  if (relativePath.startsWith("web3/")) {
+    return "围绕 Web3、比特币、以太坊、交易风险、链上生态和投资认知的个人复盘。";
+  }
+  if (relativePath.startsWith("life/")) {
+    return "围绕程序员成长、自媒体、普通人破局、工作生活和长期主义的个人思考。";
+  }
+  if (relativePath.startsWith("web/")) {
+    return "围绕前端、VitePress、Vue、JavaScript 和网站搭建的学习记录。";
+  }
+  if (relativePath.startsWith("backend/")) {
+    return "围绕后端开发、Docker、Nginx、Git 和工程化实践的学习笔记。";
+  }
+  return SITE_DESCRIPTION;
+}
+
+function resolvePageTitle(pageData = {}) {
+  return pageData.frontmatter?.title || pageData.title || SITE_NAME;
+}
+
+function resolvePageDescription(pageData = {}) {
+  const frontmatter = pageData.frontmatter || {};
+  if (frontmatter.description) {
+    return String(frontmatter.description);
+  }
+
+  const title = resolvePageTitle(pageData);
+  if (!title || title === SITE_NAME) {
+    return SITE_DESCRIPTION;
+  }
+
+  const suffix = categoryDescription(pageData.relativePath || "");
+  return `${title}，${suffix}`;
+}
+
+function toIsoDate(value) {
+  if (!value) {
+    return undefined;
+  }
+
+  const raw = String(value).trim();
+  const normalized = raw.includes("T") ? raw : raw.replace(" ", "T");
+  const date = new Date(normalized);
+  if (Number.isNaN(date.getTime())) {
+    return raw;
+  }
+  return date.toISOString();
+}
+
+function escapeXml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+function collectHtmlFiles(dir, files = []) {
+  if (!existsSync(dir)) {
+    return files;
+  }
+
+  for (const item of readdirSync(dir)) {
+    const filePath = join(dir, item);
+    const stats = statSync(filePath);
+    if (stats.isDirectory()) {
+      collectHtmlFiles(filePath, files);
+    } else if (item.endsWith(".html")) {
+      files.push(filePath);
+    }
+  }
+
+  return files;
+}
+
+function htmlFileToSitemapUrl(filePath, outDir) {
+  const relPath = relative(outDir, filePath).split(sep).join("/");
+  if (relPath === "404.html" || NO_INDEX_PREFIXES.some((prefix) => relPath.startsWith(prefix))) {
+    return null;
+  }
+
+  const routePath = `/${relPath}`
+    .replace(/\/index\.html$/, "/")
+    .replace(/\.html$/, "");
+
+  return `${SITE_URL}${encodeURI(routePath)}`;
+}
 
 let fast_api_items = [
   {
@@ -885,9 +1012,98 @@ let sidebar_config = {
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 
-  title: "星梦启航",
-  description: "Python斗罗的代码笔记",
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
   base: "/",
+  transformPageData(pageData) {
+    return {
+      description: resolvePageDescription(pageData),
+    };
+  },
+  transformHead({ page, pageData }) {
+    const frontmatter = pageData.frontmatter || {};
+    const title = resolvePageTitle(pageData);
+    const description = resolvePageDescription(pageData);
+    const url = pageToUrl(page);
+    const noIndex = isNoIndexPage(page, frontmatter);
+    const publishedAt = toIsoDate(frontmatter.created_at || frontmatter.date);
+    const updatedAt = toIsoDate(frontmatter.updated_at || frontmatter.lastUpdated || frontmatter.created_at || frontmatter.date);
+    const isHome = page === "index.md";
+
+    const head = [
+      ["link", { rel: "canonical", href: url }],
+      ["meta", { name: "description", content: description }],
+      ["meta", { name: "keywords", content: String(frontmatter.keywords || SITE_KEYWORDS) }],
+      ["meta", { property: "og:locale", content: "zh_CN" }],
+      ["meta", { property: "og:site_name", content: SITE_NAME }],
+      ["meta", { property: "og:type", content: isHome ? "website" : "article" }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: description }],
+      ["meta", { property: "og:url", content: url }],
+      ["meta", { property: "og:image", content: String(frontmatter.image || DEFAULT_OG_IMAGE) }],
+      ["meta", { name: "twitter:card", content: "summary_large_image" }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: description }],
+      ["meta", { name: "twitter:image", content: String(frontmatter.image || DEFAULT_OG_IMAGE) }],
+    ];
+
+    if (noIndex) {
+      head.push(["meta", { name: "robots", content: "noindex,nofollow,noarchive" }]);
+      return head;
+    }
+
+    const structuredData = isHome
+      ? {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE_NAME,
+          url: SITE_URL,
+          description,
+          inLanguage: "zh-CN",
+          publisher: {
+            "@type": "Person",
+            name: SITE_AUTHOR,
+            url: `${SITE_URL}/web-intro/`,
+          },
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: title,
+          description,
+          url,
+          mainEntityOfPage: url,
+          image: String(frontmatter.image || DEFAULT_OG_IMAGE),
+          inLanguage: "zh-CN",
+          author: {
+            "@type": "Person",
+            name: SITE_AUTHOR,
+            url: `${SITE_URL}/web-intro/`,
+          },
+          publisher: {
+            "@type": "Person",
+            name: SITE_AUTHOR,
+            url: `${SITE_URL}/web-intro/`,
+          },
+          ...(publishedAt ? { datePublished: publishedAt } : {}),
+          ...(updatedAt ? { dateModified: updatedAt } : {}),
+        };
+
+    head.push(["script", { type: "application/ld+json" }, JSON.stringify(structuredData)]);
+    return head;
+  },
+  buildEnd(siteConfig) {
+    const urls = collectHtmlFiles(siteConfig.outDir)
+      .map((filePath) => htmlFileToSitemapUrl(filePath, siteConfig.outDir))
+      .filter(Boolean)
+      .sort();
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
+      .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`)
+      .join("\n")}\n</urlset>\n`;
+
+    writeFileSync(join(siteConfig.outDir, "sitemap.xml"), sitemap, "utf-8");
+  },
   head: [
     // 我的logo
     ["script", { src: "/js/cpython666.js" }], // <script src="https://gist.github.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079.js"></script>
@@ -911,6 +1127,9 @@ export default defineConfig({
     // ["script", { src: "/js/alertify.min.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
     // ['script', { src: '/js/fuckspider.js' }],
     ["link", { rel: "icon", href: "/logo.svg" }], // 点击彩虹
+    ["meta", { name: "author", content: SITE_AUTHOR }],
+    ["meta", { name: "theme-color", content: "#20B0E3" }],
+    ["meta", { name: "format-detection", content: "telephone=no" }],
     // <!--鼠标点击特效-->
     // ['script', { type: "text/javascript", src: '/js/clickjs/meme.js' }],
     ["script", { type: "text/javascript", src: "/js/clickjs/anime.min.js" }],

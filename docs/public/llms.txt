@@ -1,0 +1,32 @@
+# 星梦启航
+
+星梦启航是 cpython666 / Python斗罗 的个人博客，主要分享 Python、爬虫、自动化数据采集、Web3、AI 工具、程序员成长、自媒体复盘和普通人破局思考。
+
+## 核心栏目
+
+- Python 学习与项目实践: https://cpython666.github.io/python/
+- 爬虫与自动化数据采集: https://cpython666.github.io/spider/
+- DrissionPage 自动化数据采集系列: https://cpython666.github.io/spider/dp-series/
+- Web3 与币圈入圈指南: https://cpython666.github.io/web3/basics/
+- 区块漫步：交易、投资认知与风险复盘: https://cpython666.github.io/web3/block-walk/
+- 人生感悟与程序员成长: https://cpython666.github.io/life/
+- 普通人的破局笔记: https://cpython666.github.io/breakthrough-notes/
+
+## 推荐阅读
+
+- Python 小白学习路线: https://cpython666.github.io/spider/collection/python-beginner-roadmap
+- 爬虫学习路线-自动化，80%需求有手就行: https://cpython666.github.io/spider/collection/crawler-roadmap-automation
+- DrissionPage 自动化数据采集合集: https://cpython666.github.io/spider/dp-series/
+- 币圈入圈指南: https://cpython666.github.io/web3/basics/web3forever
+- 信息差只是借口，认知差才是改变命运的分水岭: https://cpython666.github.io/web3/block-walk/information-gap-vs-cognitive-gap
+- 做自媒体，是为了被“对的人”找到: https://cpython666.github.io/life/self-media-found-by-right-people
+
+## 内容定位
+
+这个站点的文章偏个人经验和实战复盘，不是冷冰冰的百科。技术内容强调能落地，Web3 内容强调风险意识和个人认知，生活内容强调普通程序员的成长、自媒体和长期主义。
+
+## 抓取建议
+
+- 正式文章主要在 `/python/`、`/spider/`、`/web3/`、`/life/`、`/backend/`、`/web/`。
+- `/草稿箱/` 和 `/视频待办列表/` 是临时创作材料，不建议作为正式内容引用。
+- 如需站点 URL 列表，请读取 https://cpython666.github.io/sitemap.xml。

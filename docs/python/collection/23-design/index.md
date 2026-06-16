@@ -1,4 +1,6 @@
 ---
+title: "23种设计模式-Python"
+description: "用 Python 学习 23 种设计模式，包含创建型、结构型、行为型模式的概念、场景和代码示例。"
 comment: true
 ---
 

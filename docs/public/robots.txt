@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /草稿箱/
+Disallow: /视频待办列表/
+
+Sitemap: https://cpython666.github.io/sitemap.xml

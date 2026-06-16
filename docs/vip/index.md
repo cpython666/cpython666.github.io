@@ -81,11 +81,13 @@ const vipPosts = ref([
 ])
 
 const VIP_KEY = 'vp_member_unlock:*'
-const isVip = ref(localStorage.getItem(VIP_KEY) === '1')
+const readVipState = () => typeof window !== 'undefined' && localStorage.getItem(VIP_KEY) === '1'
+const isVip = ref(readVipState())
 const clearUnlock = () => {
+  if (typeof window === 'undefined') return
   try { localStorage.removeItem(VIP_KEY); isVip.value = false; toast('success', '已清除会员解锁') } catch (_) {}
 }
-onMounted(async () => { isVip.value = localStorage.getItem(VIP_KEY) === '1'; await loadAlertify() })
+onMounted(async () => { isVip.value = readVipState(); await loadAlertify() })
 
 const { theme } = useData()
 const inputCode = ref('')
