@@ -77,7 +77,19 @@ const plans = ref([
 ])
 
 const vipPosts = ref([
-  { title: 'Docker笔记', path: '/backend/docker' }
+  { title: 'Docker笔记', path: '/backend/docker' },
+  { title: '找资源宝典：资源无界，打破信息壁垒-说明', path: '/breakthrough-notes/resource-treasure-manual' },
+  { title: 'P1-DrissionPage数据采集中间系统【源码及讲解】', path: '/spider/drissionpage-system/p1-system-source-guide' },
+  { title: 'P2-自动化采集系统-体验优化', path: '/spider/drissionpage-system/p2-system-ux-optimization' },
+  { title: 'P3-自动化采集系统功能丰富-支持截图，接口文档描述完善', path: '/spider/drissionpage-system/p3-screenshot-api-docs' },
+  { title: 'P4-自动化采集系统代码优化-实例化浏览器管理类', path: '/spider/drissionpage-system/p4-browser-manager-refactor' },
+  { title: 'P5-增加响应状态码-后续系统功能规划【自动化采集系统代码】', path: '/spider/drissionpage-system/p5-response-status-planning' },
+  { title: '用Python手搓限流类-支持同步与异步，内存或者redis', path: '/python/libs/rate-limiter' },
+  { title: 'P3-【开源自制】字幕提取器-OCR版-1.0，文案提取不再烦恼！', path: '/python/subtitle-extractor/p3-ocr-subtitle-extractor-1' },
+  { title: 'P5-字幕提取器-OCR版-2.0，多线程，批量自动化，实现了真正的一步到位', path: '/python/subtitle-extractor/p5-ocr-subtitle-extractor-2' },
+  { title: '数据采集系统的通用设计思路', path: '/spider/collection/data-collection-system-design' },
+  { title: '通用爬虫介绍和实现思路', path: '/spider/collection/general-crawler-design' },
+  { title: '网站数据采集-分析思路/流程', path: '/spider/collection/website-data-collection-analysis' }
 ])
 
 const VIP_KEY = 'vp_member_unlock:*'

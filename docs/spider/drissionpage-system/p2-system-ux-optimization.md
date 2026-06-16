@@ -3,6 +3,7 @@ title: "P2-自动化采集系统-体验优化"
 date: "2025-01-14 21:38:38.096414"
 updated: "2025-01-14 22:17:06.697637"
 privacy: "会员可见"
+memberOnly: true
 visit_count: 5
 legacy_id: 109
 legacy_unique_id: "UKWdg"

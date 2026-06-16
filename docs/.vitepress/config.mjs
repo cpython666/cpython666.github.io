@@ -1276,7 +1276,7 @@ export default defineConfig({
     //   placement: '广告'
     // }
     // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
-    vipActivationHashes: ["e5b1764ba2392383c2c97b5ea76f9978a590be0ef0811fdd0d7b53b0c0cd0ebc"],
+    vipActivationHashes: ["8873ecdec2da162100e9bd7789ecb8bd7b0ea671d784853b7dde966bf05e510e"],
     blogNavExclude: ["/nav/","/spider-tools/"],
     blogNavTitles: {
       "/backend/": "后端",

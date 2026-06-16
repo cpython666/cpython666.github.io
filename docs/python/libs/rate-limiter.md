@@ -2,6 +2,7 @@
 title: "用Python手搓限流类-支持同步与异步，内存或者redis"
 created_at: 2025-03-10 22:55:19
 updated_at: 2025-03-10 23:33:51
+memberOnly: true
 ---
 
 # 用Python手搓限流类-支持同步与异步，内存或者redis
