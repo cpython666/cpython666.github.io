@@ -1,6 +1,7 @@
 <script setup>
 import { useData } from 'vitepress'
 import { computed, ref, watchEffect } from 'vue'
+import { data as memberArticlePaths } from './member.data.mjs'
 
 const { theme } = useData()
 
@@ -9,6 +10,16 @@ const activePath = ref('')
 
 const normalizeLink = (link = '') => link.replace(/\/$/, '')
 const stripSlash = (value = '') => value.replace(/^\//, '').replace(/\/$/, '')
+const normalizeArticlePath = (path = '') => {
+  const clean = path.split('#')[0].split('?')[0]
+  return clean.endsWith('/') ? clean : normalizeLink(clean)
+}
+
+const memberPathSet = new Set()
+for (const path of memberArticlePaths || []) {
+  memberPathSet.add(path)
+  memberPathSet.add(normalizeArticlePath(path))
+}
 
 const decodeText = (value = '') => {
   try {
@@ -57,6 +68,8 @@ const configuredTitle = (path) => {
   return titles[path] || titles[normalizeLink(path)] || navTitleMap.value.get(normalizeLink(path)) || fallbackTitle(path)
 }
 
+const isMemberArticle = (link = '') => memberPathSet.has(normalizeArticlePath(link)) || memberPathSet.has(link)
+
 const collectArticles = (items, groupText, sectionTrail = []) => {
   const result = []
   const walk = (node, trail) => {
@@ -68,6 +81,7 @@ const collectArticles = (items, groupText, sectionTrail = []) => {
         link: node.link,
         section: trail.filter(Boolean).join(' / '),
         group: groupText,
+        memberOnly: isMemberArticle(node.link),
       })
     }
     if (Array.isArray(node.items)) node.items.forEach(child => walk(child, nextTrail))
@@ -126,7 +140,7 @@ const visibleArticles = computed(() => {
   if (!normalizedQuery.value) return source
 
   return source.filter(item => {
-    const haystack = `${item.text} ${item.group} ${item.section} ${item.link}`.toLowerCase()
+    const haystack = `${item.text} ${item.group} ${item.section} ${item.link} ${item.memberOnly ? '会员 vip' : ''}`.toLowerCase()
     return haystack.includes(normalizedQuery.value)
   })
 })
@@ -200,7 +214,14 @@ const selectGroup = (path) => {
               <span>{{ section.articles.length }}</span>
             </div>
             <div class="article-list">
-              <a v-for="article in section.articles" :key="article.link" class="article-link" :href="article.link">
+              <a
+                v-for="article in section.articles"
+                :key="article.link"
+                class="article-link"
+                :class="{ member: article.memberOnly }"
+                :href="article.link"
+              >
+                <span v-if="article.memberOnly" class="member-badge" aria-label="会员文章">VIP</span>
                 <span class="article-title">{{ article.text }}</span>
                 <span class="article-path">{{ article.link }}</span>
               </a>
@@ -426,6 +447,7 @@ const selectGroup = (path) => {
 }
 
 .article-link {
+  position: relative;
   display: flex;
   min-height: 88px;
   flex-direction: column;
@@ -440,15 +462,39 @@ const selectGroup = (path) => {
   transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
 }
 
+.article-link.member {
+  border-color: color-mix(in srgb, var(--vp-c-brand-1) 34%, var(--vp-c-divider));
+}
+
 .article-link:hover {
   transform: translateY(-1px);
   border-color: var(--vp-c-brand-2);
   background: var(--vp-c-bg-soft);
 }
 
+.member-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 20px;
+  padding: 0 7px;
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 55%, transparent);
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 11px;
+  font-weight: 750;
+  line-height: 1;
+}
+
 .article-title {
   display: -webkit-box;
   overflow: hidden;
+  padding-right: 42px;
   font-weight: 650;
   line-height: 1.55;
   -webkit-box-orient: vertical;
