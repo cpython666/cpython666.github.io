@@ -108,17 +108,23 @@ export default {
         overlay.innerHTML = `
           <div class="member-gate-dialog">
             <h3>${title}</h3>
+            <p>这篇内容属于会员专属，输入会员密码后即可继续阅读。</p>
             <div class="row">
               <input type="password" placeholder="输入密码" />
               <div class="member-gate-error"></div>
-              <button type="button">确认</button>
+              <button class="member-gate-primary" type="button" data-action="unlock">确认解锁</button>
+              <div class="member-gate-actions">
+                <a href="/vip/">了解/开通会员</a>
+                <button type="button" data-action="back">返回上一页</button>
+              </div>
             </div>
           </div>
         `;
         const input = overlay.querySelector('input');
-        const btn = overlay.querySelector('button');
+        const btn = overlay.querySelector('[data-action="unlock"]');
+        const backBtn = overlay.querySelector('[data-action="back"]');
         const err = overlay.querySelector('.member-gate-error');
-        btn.addEventListener('click', async () => {
+        const submitUnlock = async () => {
           const v = (input?.value || '').trim();
           let ok = false;
           if (globalPass !== undefined && globalPass !== null) {
@@ -149,6 +155,17 @@ export default {
           } else if (err) {
             err.textContent = '密码错误';
             input?.focus();
+          }
+        };
+        btn.addEventListener('click', submitUnlock);
+        input?.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') submitUnlock();
+        });
+        backBtn?.addEventListener('click', () => {
+          if (history.length > 1) {
+            history.back();
+          } else {
+            location.href = '/';
           }
         });
         document.body.appendChild(overlay);

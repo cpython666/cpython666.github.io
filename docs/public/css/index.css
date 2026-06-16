@@ -32,27 +32,36 @@
 
 .member-gate-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(2px);
+  inset: var(--vp-nav-height, 64px) 0 0 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.18));
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99999;
+  padding: 24px;
+  pointer-events: none;
+  z-index: 40;
 }
 .member-gate-dialog {
   background: var(--vp-c-bg);
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 18px;
-  width: 320px;
+  border-radius: 10px;
+  padding: 22px;
+  width: 360px;
   max-width: 90%;
   box-shadow: var(--vp-shadow-2);
   color: var(--vp-c-text-1);
+  pointer-events: auto;
 }
 .member-gate-dialog h3 {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-size: 18px;
+}
+.member-gate-dialog p {
+  margin: 0 0 16px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  line-height: 1.7;
+  text-indent: 0;
 }
 .member-gate-dialog .row {
   display: grid;
@@ -68,13 +77,33 @@
   color: var(--vp-c-text-1);
   outline: none;
 }
-.member-gate-dialog button {
+.member-gate-dialog button,
+.member-gate-actions a {
   height: 36px;
-  border: none;
+  border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.member-gate-primary {
+  border: none !important;
   background: var(--vp-c-brand-1);
   color: #fff;
-  cursor: pointer;
+}
+.member-gate-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.member-gate-actions a,
+.member-gate-actions button {
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
 }
 .member-gate-error {
   color: var(--vp-c-danger-1);
@@ -84,4 +113,5 @@
 .member-lock-blur {
   filter: blur(12px);
   pointer-events: none;
+  user-select: none;
 }
