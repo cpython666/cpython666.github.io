@@ -1,77 +1,118 @@
-function initBirdFly() {
-// 可以设置下每个鸟的构造函数，定制化效果，懒得写了，搞毕业论文
+(function () {
+    const STORAGE_KEY = 'cpython666:disable-birdfly';
+    const CHANGE_EVENT = 'cpython666-effects-change';
+    let birds = [];
+    let animationId = null;
 
-    // 设置鸟的数量
-    const birdCount = 5; // 你可以根据需要调整鸟的数量
+    function getBirdFlyDisabled() {
+        try {
+            return localStorage.getItem(STORAGE_KEY) === '1';
+        } catch (error) {
+            return false;
+        }
+    }
 
-    // 创建鸟的元素
+    function cleanupBirdFly() {
+        if (animationId !== null) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
+        birds.forEach(function (bird) {
+            if (bird.parentNode) {
+                bird.parentNode.removeChild(bird);
+            }
+        });
+        birds = [];
+    }
+
     function createBirdElement(src) {
         const bird = document.createElement('img');
         bird.src = src;
         bird.style.position = 'fixed';
         bird.style.zIndex = 5;
-        bird.style.width = '50px'; // 根据需要调整鸟的大小
+        bird.style.width = '50px';
         bird.style.height = 'auto';
+        bird.dataset.effectName = 'birdfly';
         return bird;
     }
 
-    const birds = [];
-    const birdSrc = '/imgs/birdfly.gif'; // 替换为火烈鸟图像的实际路径
+    function initBirdFly() {
+        cleanupBirdFly();
 
-    for (let i = 0; i < birdCount; i++) {
-        const bird = createBirdElement(birdSrc);
-        birds.push(bird);
-        document.body.appendChild(bird);
-    }
-	const bird = createBirdElement('/imgs/bird2.gif');
-	bird.style.width = '16px'; // 根据需要调整鸟的大小
-    bird.style.height = 'auto';
-	birds.push(bird);
-	document.body.appendChild(bird);
+        if (getBirdFlyDisabled()) {
+            return;
+        }
 
-    // 获取页面宽度和高度
-    const pageWidth = window.innerWidth;
-    const pageHeight = window.innerHeight;
+        const birdCount = 5;
+        const pageWidth = window.innerWidth;
+        const pageHeight = window.innerHeight;
+        const targetLeft = -50;
+        const speed = 1;
 
-    birds.forEach((bird,index) => {
-        // 设置鸟的初始位置
-		if(index<=2){
-			bird.style.top = `${20+(index+1)*30}px`; // 50是鸟的高度
-		}else{
-			bird.style.top = `${Math.random() * (pageHeight - 50)}px`; // 50是鸟的高度
-		}
-        bird.style.left = `${pageWidth+(index+1)*30}px`;
-    });
+        for (let i = 0; i < birdCount; i++) {
+            const bird = createBirdElement('/imgs/birdfly.gif');
+            birds.push(bird);
+            document.body.appendChild(bird);
+        }
 
-    // 设置鸟的目标位置
-    const targetLeft = -50; // 目标位置，左边界外
+        const smallBird = createBirdElement('/imgs/bird2.gif');
+        smallBird.style.width = '16px';
+        birds.push(smallBird);
+        document.body.appendChild(smallBird);
 
-    // 设置鸟的速度（像素/帧）
-    const speed = 1; // 根据需要调整速度
-
-    // 创建动画函数
-    function animate() {
-        birds.forEach(bird => {
-            const currentLeft = parseFloat(bird.style.left);
-            if (currentLeft <= targetLeft) {
-                // 如果鸟已经飞到左边界外，重新设置初始位置
-                bird.style.top = `${Math.random() * (pageHeight - 50)}px`;
-                bird.style.left = `${pageWidth}px`;
+        birds.forEach(function (bird, index) {
+            if (index <= 2) {
+                bird.style.top = `${20 + (index + 1) * 30}px`;
             } else {
-                // 否则，继续向左移动
-                bird.style.left = `${currentLeft - speed}px`;
+                bird.style.top = `${Math.random() * (pageHeight - 50)}px`;
             }
+            bird.style.left = `${pageWidth + (index + 1) * 30}px`;
         });
 
-        requestAnimationFrame(animate);
+        function animate() {
+            if (getBirdFlyDisabled()) {
+                cleanupBirdFly();
+                return;
+            }
+
+            birds.forEach(function (bird) {
+                const currentLeft = parseFloat(bird.style.left);
+
+                if (currentLeft <= targetLeft) {
+                    bird.style.top = `${Math.random() * (pageHeight - 50)}px`;
+                    bird.style.left = `${pageWidth}px`;
+                } else {
+                    bird.style.left = `${currentLeft - speed}px`;
+                }
+            });
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        animate();
     }
 
-    // 启动动画
-    animate();
-}
-// 检测文档加载状态
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBirdFly);
-} else {
-    initBirdFly();
-}
+    function applyBirdFlySetting() {
+        if (getBirdFlyDisabled()) {
+            cleanupBirdFly();
+            return;
+        }
+
+        if (!birds.length && animationId === null) {
+            initBirdFly();
+        }
+    }
+
+    window.CPython666Effects = window.CPython666Effects || {};
+    window.CPython666Effects.applyBirdFlySetting = applyBirdFlySetting;
+    window.CPython666Effects.isBirdFlyDisabled = getBirdFlyDisabled;
+
+    window.addEventListener(CHANGE_EVENT, applyBirdFlySetting);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBirdFly);
+    } else {
+        initBirdFly();
+    }
+})();

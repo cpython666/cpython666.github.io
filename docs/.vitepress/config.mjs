@@ -550,6 +550,7 @@ let web_intro_items = [
     text: "开发日记",
     link: "/web-intro/development-diary",
   },
+  { text: "特效设置", link: "/web-intro/effects-settings" },
   { text: "交流群", link: "/web-intro/community-group" },
   { text: "支持", link: "/web-intro/support" },
   {
