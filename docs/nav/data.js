@@ -3533,6 +3533,30 @@ export const navigationData = [
         ]
     },
     {
+        title: 'Skill',
+        items: [
+            {
+                "link": "https://github.com/DietrichGebert/ponytail",
+                "icon": "/logos/github.png",
+                "title": "Ponytail",
+                "desc": "Ponytail 是一个面向多种 AI 编码助手的跨平台技能库与插件项目，聚焦把可复用的 agent skill、规则和工作流沉淀下来。",
+                "categories": ["Skill", "Agent Skill", "GitHub"]
+            },
+        ]
+    },
+    {
+        title: 'Agent',
+        items: [
+            {
+                "link": "https://developers.openai.com/codex",
+                "icon": "/logos/chatgpt.png",
+                "title": "Codex",
+                "desc": "Codex 是 OpenAI 的编码 agent，支持在 CLI、IDE 和应用内执行编码、调试、审查与自动化工作流。",
+                "categories": ["Agent", "Coding", "OpenAI"]
+            },
+        ]
+    },
+    {
         title: 'AI图像绘画',
         items: [
 
