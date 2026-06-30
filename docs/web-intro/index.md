@@ -8,7 +8,7 @@
 如果感兴趣，可以使用我的推广链接，非常的感谢：[https://www.lcayun.com/aff/DECEDOZS](https://www.lcayun.com/aff/DECEDOZS)
 ![https://www.lcayun.com/aff/DECEDOZS](/support/lky.png)
 
-**AI 中转站推荐**：如果你也在用 Codex、Claude Code 这类 AI 编程工具，官方额度不够用时，可以试试这个中转站。不用翻墙就能用，价格也比较香，相当于官方 0.几折，适合日常写代码、改项目、跑小任务。
+**AI 中转站推荐**：如果你也在用 Codex、Claude Code 这类 AI 编程工具，官方额度不够用时，可以试试这个中转站。不用翻墙就能用，价格也比较香，相当于官方 0.几折；平台有信誉、服务稳定、不跑路，适合日常写代码、改项目、跑小任务。
 
 想支持站长的话，可以通过我的邀请链接注册使用，非常感谢：[https://xfastapi.ai/register?aff=8XQ944ESTPWY](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
 
