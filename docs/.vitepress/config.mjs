@@ -648,6 +648,10 @@ let life_items = [
     text: "全自动写代码，博客全自动改造，一句话生成表情包动态图标，CodeX太好用了，我已经不自己写代码了",
     link: "/life/codex-auto-coding-blog-refactor",
   },
+  {
+    text: "Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐",
+    link: "/life/codex-relay-provider-history-sync",
+  },
 ];
 let life_yearly_flag_items = [
   { text: "年度总结与Flag", link: "/life/yearly-flags/" },
