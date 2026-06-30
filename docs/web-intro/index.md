@@ -8,6 +8,10 @@
 如果感兴趣，可以使用我的推广链接，非常的感谢：[https://www.lcayun.com/aff/DECEDOZS](https://www.lcayun.com/aff/DECEDOZS)
 ![https://www.lcayun.com/aff/DECEDOZS](/support/lky.png)
 
+**AI 中转站推荐**：如果你也在用 Codex、Claude Code 这类 AI 编程工具，官方额度不够用时，可以试试这个中转站。价格比较香，适合日常写代码、改项目、跑小任务。
+
+想支持站长的话，可以通过我的邀请链接注册使用，非常感谢：[https://xfastapi.ai/register?aff=8XQ944ESTPWY](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
+
 
 **魔法推荐**：2025-04-05 之前的ikunVPN跑路了，呜呜🥹，对不起大家。这也告诉我们一个道理就是，不要购买太长期的，月付就可以，币面大额损失。  
 2025/09/06 飞鸟云疑似跑路，暂无魔法推荐，有好用的可以向我推荐。  
