@@ -299,9 +299,16 @@ let block_walk_items = [
     text: "P10-做外汇黄金的常识，算了下我交易过几个小目标的黄金",
     link: "/web3/block-walk/forex-gold-trading-basics",
   },
+];
+
+let smart_money_tracking_items = [
   {
-    text: "P11-多空趋势已经改变！聪明钱已经建仓布局多单",
-    link: "/web3/block-walk/smart-money-trend-changed",
+    text: "系列介绍",
+    link: "/web3/smart-money-tracking/",
+  },
+  {
+    text: "P1-多空趋势已经改变！聪明钱已经建仓布局多单",
+    link: "/web3/smart-money-tracking/smart-money-trend-changed",
   },
 ];
 
@@ -356,6 +363,11 @@ let web3_items = [
     text: "区块漫步🚶",
     collapsed: false,
     items: block_walk_items,
+  },
+  {
+    text: "聪明钱追踪",
+    collapsed: false,
+    items: smart_money_tracking_items,
   },
   {
     text: "区块链周报",
