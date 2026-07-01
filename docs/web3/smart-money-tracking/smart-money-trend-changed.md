@@ -80,6 +80,10 @@ keywords: "聪明钱追踪,比特币,BTC,Hyperliquid,链上数据,多空趋势,W
 
 ## 相关视频
 
+下面是当时「聪明钱追踪」系列的视频发布记录：
+
+![聪明钱追踪系列视频发布记录](/imgs/web3/smart-money-tracking/video-list.png)
+
 ### 四个月后的反思：多空指标究竟有没有用？
 
 <div class="bilibili-video">
