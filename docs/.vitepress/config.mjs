@@ -326,6 +326,10 @@ let smart_money_tracking_items = [
     text: "P1-多空趋势已经改变！聪明钱已经建仓布局多单",
     link: "/web3/smart-money-tracking/smart-money-trend-changed",
   },
+  {
+    text: "P2-HYPE 要回调了？ADA 还有未来吗？",
+    link: "/web3/smart-money-tracking/hype-ada-smart-money-short",
+  },
 ];
 
 let blockchain_weekly_report = [
