@@ -156,6 +156,8 @@ watch(isArticlePage, (visible) => {
   left: auto;
   z-index: 30;
   display: flex;
+  width: 42px;
+  align-items: center;
   flex-direction: column;
   gap: 8px;
 }
@@ -228,6 +230,7 @@ watch(isArticlePage, (visible) => {
   .article-tools {
     right: 12px;
     bottom: 16px;
+    width: 40px;
   }
 
   .article-tool-button {

@@ -148,7 +148,7 @@ body::-webkit-scrollbar {
   padding: 0;
 }
 /* 修复文章导航栏溢出样式问题 */
-nav{
+.VPNavBarMenu {
   width: 100%;
 }
 
