@@ -6,17 +6,21 @@ import 'alertifyjs/build/css/alertify.min.css'
 
 // 图片缩放
 import mediumZoom from 'medium-zoom';
-import { onMounted, watch, nextTick } from 'vue';
+import { h, onMounted, watch, nextTick } from 'vue';
 
 // import WebLink from './components/WebLink.vue'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import ArticleTools from './components/ArticleTools.vue'
 import VipBtn from './components/VipBtn.vue'
 
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
+  Layout: () => h(DefaultTheme.Layout, null, {
+    'layout-bottom': () => h(ArticleTools),
+  }),
   async enhanceApp({ app }) {
     app.use(ElementPlus);
     app.component('VipBtn', VipBtn);
