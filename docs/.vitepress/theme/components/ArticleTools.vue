@@ -224,6 +224,15 @@ watch(isArticlePage, (visible) => {
   body.article-reading-mode .VPContent.has-sidebar {
     padding-left: 0 !important;
   }
+
+  body.article-reading-mode .VPDoc .aside {
+    display: none;
+  }
+
+  body.article-reading-mode .VPDoc .content {
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
 
 @media (max-width: 959px) {
