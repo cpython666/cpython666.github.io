@@ -327,7 +327,7 @@ let smart_money_tracking_items = [
     link: "/web3/smart-money-tracking/smart-money-trend-changed",
   },
   {
-    text: "P2-HYPE 要回调了？ADA 还有未来吗？",
+    text: "P2-HYPE要回调了？聪明钱更多在做空。ADA还有未来吗？我仿佛看到了曙光「聪明钱追踪」",
     link: "/web3/smart-money-tracking/hype-ada-smart-money-short",
   },
 ];
