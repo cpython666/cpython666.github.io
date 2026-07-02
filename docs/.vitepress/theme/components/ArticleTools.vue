@@ -150,8 +150,10 @@ watch(isArticlePage, (visible) => {
 <style>
 .article-tools {
   position: fixed;
-  right: max(20px, env(safe-area-inset-right));
-  bottom: max(24px, env(safe-area-inset-bottom));
+  top: auto;
+  right: 20px;
+  bottom: 24px;
+  left: auto;
   z-index: 30;
   display: flex;
   flex-direction: column;
@@ -224,8 +226,8 @@ watch(isArticlePage, (visible) => {
 
 @media (max-width: 959px) {
   .article-tools {
-    right: max(12px, env(safe-area-inset-right));
-    bottom: max(16px, env(safe-area-inset-bottom));
+    right: 12px;
+    bottom: 16px;
   }
 
   .article-tool-button {
