@@ -1,0 +1,138 @@
+---
+name: x-backup
+description: 备份 X/Twitter 账号帖子、图片和可见评论流到 cpython666.github.io 博客时使用。适用于需要复用已登录 Chrome、采集 X 帖子详情、评论人 id/主页链接/评论内容/时间、图片资源，并沉淀为本地 JSON/Markdown 的任务。
+---
+
+# X 备份 Skill
+
+## 适用场景
+
+当用户要把 X/Twitter 上某个博主的帖子备份到博客，尤其需要正文、图片、评论人 id、主页链接、评论内容和时间时，使用这个 skill。
+
+优先使用仓库内脚本：
+
+```bash
+npm run backup:x -- --handle wufantouzi
+```
+
+首次使用建议先登录：
+
+```bash
+npm run backup:x -- --handle wufantouzi --login-only
+```
+
+## 核心经验
+
+- 未登录 X 时，主页可能能看到部分帖子，但详情页评论会被登录弹窗挡住，不能用于评论备份。
+- 登录态下，帖子详情页 DOM 会渲染主帖和评论流，`time` 标签里有标准 `datetime`。
+- X 可能因为账号语言、IP 或地区自动把中文帖展示成英文翻译，正文会出现 `Translated from Chinese` 和 `Show original`。采集前必须点击 `Show original`/`显示原文`/`查看原文`，最终归档只保存中文原文。
+- 图片真实地址通常来自 `pbs.twimg.com/media/...`，可把 `name=small|medium` 改为 `name=large`，`format=webp` 可改为 `format=jpg` 后下载。
+- 目前不备份视频；脚本只提取 `pbs.twimg.com/media/` 图片资源，没有处理 `video.twimg.com`、mp4、m3u8 或 GIF 视频流。
+- “所有帖子”不是一次接口返回，页面是虚拟无限滚动。采集器必须滚动、去重、断点保存。
+- 评论也不是天然全量。默认只采集详情页当前排序下可见的一级对话流。
+- 不主动点击评论下的 `1 Reply` 之类入口采集楼中楼；但如果页面自然展示出“普通评论 -> 博主回复”的连续形态，要按显示顺序保存，博主回复标记为 `author-visible-reply`。
+- X 评论区容易混入机器人评论。默认按作者昵称、handle 和评论正文过滤 `固炮`、`炮友`、`破处`、`约炮`、`找炮`、`寻男`、`点主页`、`免费破` 等词；需要调整时用 `--comment-blocklist` 传入英文逗号分隔词表。
+
+## 数据结构
+
+输出位置默认是：
+
+```text
+docs/public/backups/x/<handle>/index.json
+docs/public/backups/x/<handle>/posts/<post-id>.json
+docs/public/backups/x/<handle>/<post-id>.md
+docs/public/backups/x/<handle>/media/
+```
+
+博客页面 `/backup/` 先读取轻量 `index.json`，再按需加载 `posts/<post-id>.json` 详情，避免几千条帖子全塞进一个大 JSON。Markdown 是附加导出物，用于人工阅读、提交归档或迁移；删除 `.md` 不会让页面内容消失。需要从现有 JSON 重建 Markdown 时运行：
+
+```bash
+npm run backup:x -- --handle wufantouzi --render-md-only
+```
+
+`index.json` 结构：
+
+```json
+{
+  "source": {
+    "type": "x",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "updatedAt": "2026-07-03T00:00:00.000Z",
+  "count": 1,
+  "posts": [
+    {
+      "id": "1975171860573655100",
+      "url": "https://x.com/wufantouzi/status/1975171860573655100",
+      "author": {
+        "name": "wu fan",
+        "handle": "wufantouzi",
+        "profileUrl": "https://x.com/wufantouzi"
+      },
+      "excerpt": "帖子摘要",
+      "createdAt": "2025-10-06T12:10:43.000Z",
+      "detailPath": "./posts/1975171860573655100.json",
+      "commentCount": 1,
+      "imageCount": 0,
+      "schemaVersion": 3
+    }
+  ]
+}
+```
+
+`posts/<post-id>.json` 保存完整正文、图片和评论：
+
+```json
+{
+  "id": "1975171860573655100",
+  "text": "帖子正文",
+  "createdAt": "2025-10-06T12:10:43.000Z",
+  "images": [],
+  "comments": [
+    {
+      "id": "1975172021081268275",
+      "url": "https://x.com/hantaichaode/status/1975172021081268275",
+      "relation": "visible-reply",
+      "author": {
+        "name": "Turn韩晟青",
+        "handle": "hantaichaode",
+        "profileUrl": "https://x.com/hantaichaode"
+      },
+      "text": "哥，是2017年吧",
+      "createdAt": "2025-10-06T12:11:21.000Z"
+    }
+  ]
+}
+```
+
+## 工作流
+
+1. 确认仓库已经有 `scripts/x-backup.mjs` 和 `docs/backup/index.md`。
+2. 如果还没有登录态，先运行 `npm run backup:x -- --handle <handle> --login-only`，在弹出的浏览器里登录 X。
+3. 如果要删掉旧归档重新备份，运行 `npm run backup:x -- --handle <handle> --reset`。不要手动删除整个目录，否则 `/backup/` 静态 import 的空索引会丢失。
+4. 小范围测试单帖：
+
+   ```bash
+   npm run backup:x -- --handle wufantouzi --post https://x.com/wufantouzi/status/1975171860573655100
+   ```
+
+5. 再采集主页可见帖子：
+
+   ```bash
+   npm run backup:x -- --handle wufantouzi --profile-max-posts 40
+   ```
+
+6. 运行 `npm run docs:build` 验证页面能构建。
+
+## 实现注意
+
+- 脚本只能做读取，不要发帖、点赞、关注、私信或修改账号状态。
+- 采集要限速，滚动后等待页面渲染，避免连续高频请求。
+- 每采完一条帖子就写入 `index.json`，方便中断续采。
+- 增量采集时，如果某个帖子已经存在且不是翻译态内容，直接跳过详情页；如果旧内容里包含 `Translated from`/`Show original`，允许重新抓取修复。
+- 如果点击原文后页面仍然是翻译态，跳过保存，避免英文翻译污染归档。
+- 评论过滤必须在保存前做，过滤目标包括 `author.name`、`author.handle` 和 `text`，不要只看评论正文。
+- 评论正文不要用整页文本硬切，优先按 `article` 容器提取作者、时间、状态链接和内容。
+- 主页列表用于发现帖子 ID；详情页用于最终正文、图片、评论和精确时间。
+- 如果页面出现验证码、异常登录校验或账号安全提示，停止采集并让用户手动处理。
