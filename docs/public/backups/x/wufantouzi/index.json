@@ -4,8 +4,8 @@
     "handle": "wufantouzi",
     "profileUrl": "https://x.com/wufantouzi"
   },
-  "updatedAt": "2026-07-04T15:39:56.182Z",
-  "count": 18,
+  "updatedAt": "2026-07-04T15:40:54.921Z",
+  "count": 20,
   "posts": [
     {
       "id": "2073074750444769476",
@@ -275,6 +275,40 @@
       "visibleTime": "9:47 PM · Jun 26, 2026",
       "detailPath": "./posts/2070504282562941431.json",
       "commentCount": 4,
+      "imageCount": 1,
+      "blockedCommentCount": 0,
+      "schemaVersion": 3
+    },
+    {
+      "id": "2070504197053677935",
+      "url": "https://x.com/wufantouzi/status/2070504197053677935",
+      "author": {
+        "name": "wu fan",
+        "handle": "wufantouzi",
+        "profileUrl": "https://x.com/wufantouzi"
+      },
+      "excerpt": "低风险理财策略年化20%+优化版 如果手里还有现金的 wufantouzi发布了一条动Time，点击查看 https:// web.tsdaq.com/#/time/pages/t imeDetail/index?timeid=157796 …",
+      "createdAt": "2026-06-26T13:47:23.000Z",
+      "visibleTime": "9:47 PM · Jun 26, 2026",
+      "detailPath": "./posts/2070504197053677935.json",
+      "commentCount": 10,
+      "imageCount": 1,
+      "blockedCommentCount": 0,
+      "schemaVersion": 3
+    },
+    {
+      "id": "2070203148539416916",
+      "url": "https://x.com/wufantouzi/status/2070203148539416916",
+      "author": {
+        "name": "wu fan",
+        "handle": "wufantouzi",
+        "profileUrl": "https://x.com/wufantouzi"
+      },
+      "excerpt": "今日crcl最低跌到了67u/股 市值跌破了170亿美金 btc跌到了最低58000 usdc的发行量目前跌到了738亿u 与峰值相比btc跌了53% usdc的发行量与峰值相比只跌了10% 但即使如此 crcl还是跟随btc的趋势一起大跌 一个月前crcl140u如今跌了50%到70u不足 有人说是因为usdc增发不及预期 其实对比btc的跌幅由于beta",
+      "createdAt": "2026-06-25T17:51:07.000Z",
+      "visibleTime": "1:51 AM · Jun 26, 2026",
+      "detailPath": "./posts/2070203148539416916.json",
+      "commentCount": 23,
       "imageCount": 1,
       "blockedCommentCount": 0,
       "schemaVersion": 3
