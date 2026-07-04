@@ -1,0 +1,125 @@
+{
+  "index": 0,
+  "id": "2070504282562941431",
+  "url": "https://x.com/wufantouzi/status/2070504282562941431",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "今天的策略进行对比\n策略1最抗跌\nwufantouzi发布了一条动Time，点击查看\nhttps://\nweb.tsdaq.com/#/time/pages/t\nimeDetail/index?timeid=157846\n…",
+  "translated": false,
+  "createdAt": "2026-06-26T13:47:43.000Z",
+  "visibleTime": "9:47 PM · Jun 26, 2026",
+  "metrics": {
+    "replies": "16",
+    "likes": "8",
+    "bookmarks": "2",
+    "views": "11860"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HLvoqEIWIAAGF3O?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [
+    {
+      "text": "https://web.tsdaq.com/#/time/pages/timeDetail/index?timeid=157846…",
+      "url": "https://t.co/tvOF0j5Wa8"
+    }
+  ],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:39:45.658Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2070504282562941431",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2070504770948022556",
+      "url": "https://x.com/DanielOrlaskey/status/2070504770948022556",
+      "author": {
+        "name": "美股仙入",
+        "handle": "DanielOrlaskey",
+        "profileUrl": "https://x.com/DanielOrlaskey"
+      },
+      "text": "我的策略分析",
+      "translated": false,
+      "createdAt": "2026-06-26T13:49:40.000Z",
+      "visibleTime": "Jun 26",
+      "metrics": {
+        "bookmark": "1",
+        "views": "312"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2070513832892710956",
+      "url": "https://x.com/wanfeng16/status/2070513832892710956",
+      "author": {
+        "name": "西红柿炒鸡蛋",
+        "handle": "wanfeng16",
+        "profileUrl": "https://x.com/wanfeng16"
+      },
+      "text": "直接拿正股",
+      "translated": false,
+      "createdAt": "2026-06-26T14:25:40.000Z",
+      "visibleTime": "Jun 26",
+      "metrics": {
+        "views": "192"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2070667812272541910",
+      "url": "https://x.com/MARKVAN911/status/2070667812272541910",
+      "author": {
+        "name": "MARK VAN",
+        "handle": "MARKVAN911",
+        "profileUrl": "https://x.com/MARKVAN911"
+      },
+      "text": "把投资当成化学实验了吗",
+      "translated": false,
+      "createdAt": "2026-06-27T00:37:32.000Z",
+      "visibleTime": "Jun 27",
+      "metrics": {
+        "views": "131"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2072723227273752688",
+      "url": "https://x.com/wufantouzi/status/2072723227273752688",
+      "author": {
+        "name": "wu fan",
+        "handle": "wufantouzi",
+        "profileUrl": "https://x.com/wufantouzi"
+      },
+      "text": "没有无缘无故的爱\n也没有无缘无故的恨\n\n有的人骂你\n也许是他某天看你的帖子\n自己偷偷跟了一单亏了钱\n又不好意思说恨是埋下了\n但是跟你那单是事实存在且亏了钱的\n\n有人挺你\n也许是他某天看你帖子\n偷偷跟了一单\n恰好赚了\n虽然没给你分钱但是记下你的好了\n\n所以被骂几乎都不冤枉\n毕竟不可能是每次都对\nShow more",
+      "translated": false,
+      "createdAt": "2026-07-02T16:45:01.000Z",
+      "visibleTime": "Jul 3",
+      "metrics": {
+        "replies": "68",
+        "reposts": "3",
+        "likes": "112",
+        "bookmarks": "9",
+        "views": "18290"
+      },
+      "images": [],
+      "links": [],
+      "relation": "author-visible-reply"
+    }
+  ]
+}
