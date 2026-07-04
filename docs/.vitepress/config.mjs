@@ -61,6 +61,9 @@ function categoryDescription(relativePath = "") {
   if (relativePath.startsWith("life/")) {
     return "围绕程序员成长、自媒体、普通人破局、工作生活和长期主义的个人思考。";
   }
+  if (relativePath.startsWith("backup/")) {
+    return "用于备份值得长期保存的文章、帖子、图片和评论流。";
+  }
   if (relativePath.startsWith("web/")) {
     return "围绕前端、VitePress、Vue、JavaScript 和网站搭建的学习记录。";
   }
@@ -708,6 +711,9 @@ let breakthrough_notes_items = [
     link: "/breakthrough-notes/resource-treasure-manual",
   },
 ];
+let backup_items = [
+  { text: "备份", link: "/backup/" },
+];
 let nav_config = [
   // {
   //   text: "主站",
@@ -734,12 +740,12 @@ let nav_config = [
     link: "/vip/",
   },
   {
-    text: "人生感悟",
-    link: "/life/",
-  },
-  {
     text: "破局笔记",
     link: "/breakthrough-notes/",
+  },
+  {
+    text: "备份",
+    link: "/backup/",
   },
   {
     text: "区块漫步",
@@ -861,6 +867,13 @@ let sidebar_config = {
       text: "普通人的破局笔记",
       collapsed: false,
       items: breakthrough_notes_items,
+    },
+  ],
+  "/backup/": [
+    {
+      text: "备份",
+      collapsed: false,
+      items: backup_items,
     },
   ],
   "/算法/": [
@@ -1329,6 +1342,7 @@ export default defineConfig({
     blogNavExclude: ["/nav/","/spider-tools/"],
     blogNavTitles: {
       "/backend/": "后端",
+      "/backup/": "备份",
       "/breakthrough-notes/": "普通人的破局笔记",
       "/life/": "人生感悟",
       "/life/follower-milestones/": "粉丝里程碑",
