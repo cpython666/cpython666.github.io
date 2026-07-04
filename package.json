@@ -1,10 +1,12 @@
 {
   "devDependencies": {
     "medium-zoom": "^1.1.0",
+    "playwright": "^1.61.1",
     "vitepress": "^1.6.4",
     "vitepress-plugin-comment-with-giscus": "^1.1.12"
   },
   "scripts": {
+    "backup:x": "node scripts/x-backup.mjs",
     "docs:dev": "vitepress dev docs --port 8080",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs --port 80"
