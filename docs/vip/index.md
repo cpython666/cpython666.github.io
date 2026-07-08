@@ -133,62 +133,75 @@ const activateVip = async () => {
 
 <style scoped>
 .vip-page { max-width: 1120px; margin: 16px auto; padding: 0 12px; }
-.plan-card { text-align: center; }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.plan-card { padding: 18px; text-align: center; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 8px; box-shadow: var(--vp-shadow-1); }
 .feature-list { list-style: none; padding: 0; margin: 0; }
 .feature-item { display: grid; grid-template-columns: 24px auto; gap: 8px; align-items: center; padding: 6px 0; }
 .feature-icon { font-size: 14px; }
 .vip-section { margin-top: 24px; }
 .vip-tools { display: flex; gap: 8px; align-items: center; margin: 12px 0; }
 .vip-activate { display: grid; grid-template-columns: 1fr auto; gap: 8px; max-width: 420px; }
+.vip-alert { padding: 10px 12px; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 8px; }
+.vip-alert.is-ok { border-color: #67c23a; }
+.vip-alert.is-warn { border-color: #e6a23c; }
+.vip-input { box-sizing: border-box; width: 100%; padding: 8px 10px; color: var(--vp-c-text-1); background: var(--vp-c-bg); border: 1px solid var(--vp-c-divider); border-radius: 6px; }
+.vip-button { padding: 8px 12px; color: #fff; cursor: pointer; background: var(--vp-c-brand-1); border: 0; border-radius: 6px; }
+.vip-button.danger { background: #c45656; }
+.vip-link { color: var(--vp-c-brand-1); text-decoration: none; }
+.vip-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
+.vip-table th, .vip-table td { padding: 8px; text-align: left; border: 1px solid var(--vp-c-divider); }
+@media (max-width: 760px) {
+  .plans { grid-template-columns: 1fr; }
+  .vip-tools, .vip-activate { display: flex; flex-direction: column; align-items: stretch; }
+}
 </style>
 
 <div class="vip-page">
   <h1>博客会员</h1>
   <p>目前的开通方式是加我微信并备注开通 VIP，我会手动开通。【之前网站购买过vip的无需再次开通，找我要激活码即可】</p>
   <div class="vip-tools">
-    <el-alert :title="'会员状态：' + (isVip ? '已解锁' : '未解锁')" :type="isVip ? 'success' : 'warning'" show-icon />
-    <el-button size="small" type="danger" plain @click="clearUnlock">清除会员解锁</el-button>
+    <div class="vip-alert" :class="isVip ? 'is-ok' : 'is-warn'">会员状态：{{ isVip ? '已解锁' : '未解锁' }}</div>
+    <button class="vip-button danger" type="button" @click="clearUnlock">清除会员解锁</button>
   </div>
   <div class="vip-activate">
-    <el-input v-model="inputCode" placeholder="输入激活码"></el-input>
-    <el-button type="primary" @click="activateVip">激活VIP</el-button>
+    <input v-model="inputCode" class="vip-input" placeholder="输入激活码">
+    <button class="vip-button" type="button" @click="activateVip">激活VIP</button>
   </div>
-  <el-row :gutter="16">
-    <el-col v-for="(plan, index) in plans" :key="index" :xs="24" :sm="12" :md="8">
-      <el-card class="plan-card" shadow="hover">
-        <h3>{{ plan.name }}</h3>
-        <div>{{ plan.price }}</div>
-        <ul class="feature-list">
-          <li v-for="(feature, idx) in plan.features" :key="idx" class="feature-item">
-            <span class="feature-icon" :style="{ color: feature.status ? '#67C23A' : '#F56C6C' }">{{ feature.status ? '✔︎' : '✘' }}</span>
-            <template v-if="feature.url">
-              <el-link :href="feature.url" target="_blank">{{ feature.content }}</el-link>
-            </template>
-            <template v-else>{{ feature.content }}</template>
-          </li>
-        </ul>
-        <VipBtn :type="plan.type" :label="plan.buttonText" :color="'#fff'" @click="showAccount" />
-      </el-card>
-    </el-col>
-  </el-row>
+  <div class="plans">
+    <section v-for="(plan, index) in plans" :key="index" class="plan-card">
+      <h3>{{ plan.name }}</h3>
+      <div>{{ plan.price }}</div>
+      <ul class="feature-list">
+        <li v-for="(feature, idx) in plan.features" :key="idx" class="feature-item">
+          <span class="feature-icon" :style="{ color: feature.status ? '#67C23A' : '#F56C6C' }">{{ feature.status ? '✔︎' : '✘' }}</span>
+          <a v-if="feature.url" class="vip-link" :href="feature.url" target="_blank">{{ feature.content }}</a>
+          <template v-else>{{ feature.content }}</template>
+        </li>
+      </ul>
+      <VipBtn :type="plan.type" :label="plan.buttonText" :color="'#fff'" @click="showAccount" />
+    </section>
+  </div>
 
   <div class="vip-section">
-    <el-alert title="友情提示" type="info" description="不是购买 VIP 不要添加联系方式。已经开源的代码都在 GitHub 和博客中，找不到的就是 VIP 专属，开通 VIP 我发给你。工作加班很忙，望理解！" show-icon/>
+    <div class="vip-alert">友情提示：不是购买 VIP 不要添加联系方式。已经开源的代码都在 GitHub 和博客中，找不到的就是 VIP 专属，开通 VIP 我发给你。工作加班很忙，望理解！</div>
   </div>
   <div class="vip-section">
-    <el-alert title="友情提示" type="info" description="目前定价均为计划，并不代表最终上线的价格，我们的服务与盈利方式还在探索中，这可能是早鸟价，也可能永远是个计划，取决于开发进度。" show-icon/>
+    <div class="vip-alert">友情提示：目前定价均为计划，并不代表最终上线的价格，我们的服务与盈利方式还在探索中，这可能是早鸟价，也可能永远是个计划，取决于开发进度。</div>
   </div>
   <div class="vip-section">
-    <el-alert title="友情提示" type="info" description="目前开通 VIP 支付方式是加我微信然后转账，我手动开通。" show-icon/>
+    <div class="vip-alert">友情提示：目前开通 VIP 支付方式是加我微信然后转账，我手动开通。</div>
   </div>
 
   <h2 class="vip-section">VIP 文章</h2>
-  <el-table :data="vipPosts" size="small" style="width: 100%">
-    <el-table-column prop="title" label="标题"/>
-    <el-table-column label="链接">
-      <template #default="scope">
-        <el-link :href="scope.row.path">{{ scope.row.path }}</el-link>
-      </template>
-    </el-table-column>
-  </el-table>
+  <table class="vip-table">
+    <thead>
+      <tr><th>标题</th><th>链接</th></tr>
+    </thead>
+    <tbody>
+      <tr v-for="post in vipPosts" :key="post.path">
+        <td>{{ post.title }}</td>
+        <td><a class="vip-link" :href="post.path">{{ post.path }}</a></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

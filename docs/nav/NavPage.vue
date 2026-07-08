@@ -1,6 +1,5 @@
 <script setup>
 import { navigationData } from './data.js';
-import { ElBacktop, ElScrollbar, ElLink, ElInput } from 'element-plus'
 import WebLink from './WebLink.vue'
 import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue'
 
@@ -13,14 +12,6 @@ const filteredNav = computed(() => {
   if (!q) return navigationData
   return navigationData.filter((s) => s.title.includes(q))
 })
-
-let headingEls = []
-
-const collectHeadingEls = () => {
-  headingEls = navigationData
-    .map((s) => document.getElementById(s.title))
-    .filter(Boolean)
-}
 
 const handleScroll = () => {
   const navHeight = document.querySelector('header')?.offsetHeight || 0
@@ -47,9 +38,10 @@ const scrollToAnchor = (id) => {
   }
 }
 
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
 onMounted(() => {
   nextTick(() => {
-    collectHeadingEls()
     window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
   })
@@ -62,52 +54,29 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <el-backtop :bottom="100">
-    <div style="
-        height: 100%;
-        width: 100%;
-        background-color: var(--el-bg-color-overlay);
-        box-shadow: var(--el-box-shadow-lighter);
-        text-align: center;
-        line-height: 40px;
-        color: #1989fa;
-      ">
-      UP
-    </div>
-  </el-backtop>
+  <button class="backtop" type="button" aria-label="回到顶部" @click="scrollToTop">UP</button>
   <div class="page">
     <div class="my-nav">
       <div class="nav-card">
         <div class="nav-search">
-          <el-input v-model="searchText" placeholder="搜索分类" clearable size="small" />
+          <input v-model="searchText" class="nav-input" placeholder="搜索分类" type="search" />
         </div>
-          <el-scrollbar height="100vh">
-            <el-link
+          <div class="nav-scroll">
+            <a
               v-for="(sites, index) in filteredNav"
               :key="index"
-              type="primary"
-              :underline="false"
+              class="nav-link"
               :class="{ 'is-active': activeAnchor === '#' + sites.title }"
               :title="sites.title"
               href="#"
               @click.prevent="scrollToAnchor(sites.title)"
             >
               {{ sites.title }}
-            </el-link>
-          </el-scrollbar>
+            </a>
+          </div>
       </div>
     </div>
     <div>
-<!--              <el-link type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank">-->
-<!--          <img style="width: 450px" src="/imgs/ads/green.jpg"/>-->
-<!--        </el-link>-->
-<!--      <div class="flex-grow justify-center w-100" style="display: flex; justify-content: center; align-items: center;">-->
-<!--        <el-link type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank">-->
-<!--          <img style="width: 450px" src="/imgs/ads/green.jpg"/>-->
-<!--        </el-link>-->
-<!--      </div>-->
-
-
       <WebLink :datalist="navigationData"></WebLink>
       <div class="source-note">
         资源链接来源于
@@ -128,11 +97,11 @@ onBeforeUnmount(() => {
 }
 
 .nav-card {
-  background: var(--el-bg-color-overlay);
+  background: var(--vp-c-bg-soft);
   border-radius: 12px;
-  box-shadow: var(--el-box-shadow-light);
+  box-shadow: var(--vp-shadow-2);
   padding: 10px;
-  border: 1px solid var(--el-border-color-light);
+  border: 1px solid var(--vp-c-divider);
   backdrop-filter: blur(6px);
   position: relative;
   z-index: 20;
@@ -147,46 +116,49 @@ onBeforeUnmount(() => {
 
 .nav-search { padding: 6px 8px 0; }
 
-.el-scrollbar {
-  overflow: visible !important;
+.nav-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+}
+
+.nav-scroll {
+  max-height: 100vh;
+  overflow: auto;
   width: 100%;
 }
 
-.el-link {
+.nav-link {
   display: block;
   margin: 3px 6px;
   padding: 6px 8px;
   text-decoration: none;
   transition: all 0.2s ease;
-  color: var(--el-text-color-primary);
-  background: var(--el-color-primary-light-9);
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-alt);
   border-radius: 10px;
   border: none;
   text-align: center;
-}
-
-.el-link__inner {
-  display: block;
   min-width: 5em;
   white-space: nowrap !important;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.el-link:hover {
-  background: var(--el-color-primary);
+.nav-link:hover {
+  background: var(--vp-c-brand-1);
   color: #fff;
   transform: translateX(2px);
 }
 
-.el-link.is-active {
-  background: linear-gradient(90deg, var(--el-color-primary), var(--el-color-primary-light-3));
+.nav-link.is-active {
+  background: var(--vp-c-brand-1);
   color: #fff;
   box-shadow: 0 4px 12px rgba(24, 144, 255, 0.35);
-}
-
-.el-link .el-icon--right.el-icon {
-  vertical-align: text-bottom;
 }
 
 .page {
@@ -199,21 +171,36 @@ onBeforeUnmount(() => {
 }
 
 .source-note {
-  background: var(--el-color-primary-light-9);
+  background: var(--vp-c-bg-soft);
   border-radius: 12px;
   padding: 10px 14px;
   margin: 12px 0 0;
-  color: var(--el-text-color-primary);
+  color: var(--vp-c-text-1);
   font-weight: 600;
 }
 .source-note a {
-  color: var(--el-text-color-primary);
+  color: var(--vp-c-text-1);
   text-decoration: none;
 }
 .source-note a:hover { text-decoration: underline; }
 .source-note .note-updating {
   font-weight: 500;
-  color: var(--el-text-color-secondary);
+  color: var(--vp-c-text-2);
   margin-left: 8px;
+}
+
+.backtop {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  color: var(--vp-c-brand-1);
+  cursor: pointer;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 50%;
+  box-shadow: var(--vp-shadow-2);
 }
 </style>

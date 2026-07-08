@@ -2,18 +2,16 @@
 	<div>
 		<h3>{{ panelTitle }}</h3>
 		<div class="input-container">
-			<el-input v-model="inputText" style="width: 100%" :rows="6" type="textarea" placeholder="请输入要编码/解码的内容" />
+			<textarea v-model="inputText" class="tool-textarea" rows="6" placeholder="请输入要编码/解码的内容"></textarea>
 		</div>
 		<div class="output-container">
 			<div>
 				<div class="hint">编码后的文字</div>
-				<el-input v-model="encodedText" class="output" style="width: 100%" :rows="8" type="textarea"
-					placeholder="编码后的文字" />
+				<textarea v-model="encodedText" class="tool-textarea output" rows="8" placeholder="编码后的文字"></textarea>
 			</div>
 			<div>
 				<div class="hint">解码后的文字</div>
-				<el-input v-model="decodedText" class="output" style="width: 100%" :rows="8" type="textarea"
-					placeholder="解码后的文字" />
+				<textarea v-model="decodedText" class="tool-textarea output" rows="8" placeholder="解码后的文字"></textarea>
 			</div>
 
 		</div>
@@ -22,7 +20,6 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import {ElInput} from 'element-plus'
 
 const panelTitle = ref('URL 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');
@@ -48,6 +45,16 @@ function decodeURL() {
 <style scoped>
 .input-container {
 	margin-bottom: 20px;
+}
+
+.tool-textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	color: var(--vp-c-text-1);
+	background: var(--vp-c-bg);
+	border: 1px solid var(--vp-c-divider);
+	border-radius: 6px;
 }
 
 .output-container {

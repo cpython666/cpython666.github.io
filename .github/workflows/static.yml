@@ -37,13 +37,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: yarn # 根据包管理器可改为 npm / pnpm / yarn
+          cache: npm
       - name: 配置 GitHub Pages
         uses: actions/configure-pages@v4
       - name: 安装依赖
-        run: yarn install # 也可以使用 npm ci / pnpm install / yarn install / bun install
+        run: npm ci
       - name: 构建 VitePress 站点
-        run: yarn docs:build # 也可以使用 npm run docs:build / pnpm docs:build / bun run docs:build
+        run: npm run docs:build
       - name: 上传构建产物
         uses: actions/upload-pages-artifact@v3
         with:

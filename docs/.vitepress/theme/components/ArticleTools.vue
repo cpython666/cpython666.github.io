@@ -1,7 +1,5 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { ArrowUp, CloseBold, FullScreen, Share } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
 import { useData, useRoute } from 'vitepress'
 
 const { frontmatter, page } = useData()
@@ -9,6 +7,8 @@ const route = useRoute()
 
 const readingMode = ref(false)
 const canScrollTop = ref(false)
+const toastText = ref('')
+let toastTimer
 
 const hiddenPrefixes = [
   '/nav/',
@@ -59,6 +59,14 @@ const fallbackCopy = (text) => {
   return copied
 }
 
+const showToast = (text) => {
+  toastText.value = text
+  clearTimeout(toastTimer)
+  toastTimer = window.setTimeout(() => {
+    toastText.value = ''
+  }, 1800)
+}
+
 const copyShareText = async () => {
   const url = new URL(window.location.href)
   url.hash = ''
@@ -70,9 +78,9 @@ const copyShareText = async () => {
     } else if (!fallbackCopy(text)) {
       throw new Error('copy failed')
     }
-    ElMessage.success('文章标题和链接已复制')
+    showToast('文章标题和链接已复制')
   } catch {
-    ElMessage.error('复制失败，请手动复制地址栏链接')
+    showToast('复制失败，请手动复制地址栏链接')
   }
 }
 
@@ -89,6 +97,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  clearTimeout(toastTimer)
   window.removeEventListener('scroll', updateScrollState)
   window.removeEventListener('keydown', handleKeydown)
   document.body.classList.remove('article-reading-mode')
@@ -106,44 +115,33 @@ watch(isArticlePage, (visible) => {
 
 <template>
   <nav v-if="isArticlePage" class="article-tools" aria-label="文章阅读工具">
-    <el-tooltip content="回到顶部" placement="left">
-      <button
-        class="article-tool-button"
-        type="button"
-        aria-label="回到顶部"
-        :disabled="!canScrollTop"
-        @click="scrollToTop"
-      >
-        <el-icon :size="19"><ArrowUp /></el-icon>
-      </button>
-    </el-tooltip>
+    <button
+      class="article-tool-button"
+      type="button"
+      title="回到顶部"
+      aria-label="回到顶部"
+      :disabled="!canScrollTop"
+      @click="scrollToTop"
+    >↑</button>
 
-    <el-tooltip :content="readingMode ? '退出沉浸式阅读' : '沉浸式阅读'" placement="left">
-      <button
-        class="article-tool-button article-tool-button--reading"
-        :class="{ 'is-active': readingMode }"
-        type="button"
-        :aria-label="readingMode ? '退出沉浸式阅读' : '沉浸式阅读'"
-        :aria-pressed="readingMode"
-        @click="toggleReadingMode"
-      >
-        <el-icon :size="18">
-          <CloseBold v-if="readingMode" />
-          <FullScreen v-else />
-        </el-icon>
-      </button>
-    </el-tooltip>
+    <button
+      class="article-tool-button article-tool-button--reading"
+      :class="{ 'is-active': readingMode }"
+      type="button"
+      :title="readingMode ? '退出沉浸式阅读' : '沉浸式阅读'"
+      :aria-label="readingMode ? '退出沉浸式阅读' : '沉浸式阅读'"
+      :aria-pressed="readingMode"
+      @click="toggleReadingMode"
+    >{{ readingMode ? '×' : '⛶' }}</button>
 
-    <el-tooltip content="复制文章标题和链接" placement="left">
-      <button
-        class="article-tool-button"
-        type="button"
-        aria-label="复制文章标题和链接"
-        @click="copyShareText"
-      >
-        <el-icon :size="18"><Share /></el-icon>
-      </button>
-    </el-tooltip>
+    <button
+      class="article-tool-button"
+      type="button"
+      title="复制文章标题和链接"
+      aria-label="复制文章标题和链接"
+      @click="copyShareText"
+    >↗</button>
+    <p v-if="toastText" class="article-tool-toast">{{ toastText }}</p>
   </nav>
 </template>
 
@@ -169,6 +167,8 @@ watch(isArticlePage, (visible) => {
   width: 42px;
   height: 42px;
   padding: 0;
+  font-size: 20px;
+  line-height: 1;
   color: var(--vp-c-text-2);
   cursor: pointer;
   background: color-mix(in srgb, var(--vp-c-bg) 92%, transparent);
@@ -204,6 +204,22 @@ watch(isArticlePage, (visible) => {
   color: var(--vp-c-brand-1);
   background: var(--vp-c-brand-soft);
   border-color: var(--vp-c-brand-1);
+}
+
+.article-tool-toast {
+  position: absolute;
+  right: 52px;
+  bottom: 0;
+  width: max-content;
+  max-width: 220px;
+  padding: 7px 10px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  box-shadow: var(--vp-shadow-2);
 }
 
 @media (min-width: 960px) {

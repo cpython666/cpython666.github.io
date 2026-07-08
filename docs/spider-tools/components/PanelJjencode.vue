@@ -2,27 +2,26 @@
 	<div>
 		<h3>{{ panelTitle }}</h3>
 		<div class="input-container">
-			<el-input v-model="inputText" style="width: 100%" :rows="6" type="textarea" placeholder="请输入要编码/解码的内容" />
+			<textarea v-model="inputText" class="tool-textarea" rows="6" placeholder="请输入要编码/解码的内容"></textarea>
 		</div>
 		<div>
 			<div>
-				全局变量名:<el-input v-model="globalValue" style="width: 240px" placeholder="全局变量名" />
+				全局变量名:<input v-model="globalValue" class="tool-input" placeholder="全局变量名" />
 			</div>
 			<div style="display: flex;align-items: center;border: 1px solid blue;padding-left: 5px;">
-				<el-checkbox disabled v-model="checked">回文（顺读和倒读都一样）【有bug，先禁用】</el-checkbox>
+				<label><input v-model="checked" type="checkbox" disabled> 回文（顺读和倒读都一样）【有bug，先禁用】</label>
 				<p>Value: {{ checked }}</p>
 			</div>
-			<el-button type="primary" @click="encodeURL">编码</el-button>
-			<el-button type="primary" @click="decodeURL">解码</el-button>
+			<button class="tool-button" type="button" @click="encodeURL">编码</button>
+			<button class="tool-button" type="button" @click="decodeURL">解码</button>
 			<div>编码无问题，汉字编码后解码可能会出错</div>
 		</div>
-		<el-input v-model="outputText" style="width: 100%" :rows="8" type="textarea" placeholder="编码/解码后的文字" />
+		<textarea v-model="outputText" class="tool-textarea" rows="8" placeholder="编码/解码后的文字"></textarea>
 	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import {ElInput,ElCheckbox,ElButton} from 'element-plus'
 
 const panelTitle = ref('JJencode 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');
@@ -546,6 +545,32 @@ function decodeURL() {
 <style scoped>
 .input-container {
 	margin-bottom: 20px;
+}
+
+.tool-textarea,
+.tool-input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	color: var(--vp-c-text-1);
+	background: var(--vp-c-bg);
+	border: 1px solid var(--vp-c-divider);
+	border-radius: 6px;
+}
+
+.tool-input {
+	width: 240px;
+	margin: 0 0 8px 6px;
+}
+
+.tool-button {
+	padding: 8px 14px;
+	margin: 12px 8px 12px 0;
+	color: #fff;
+	cursor: pointer;
+	background: var(--vp-c-brand-1);
+	border: 0;
+	border-radius: 6px;
 }
 
 .output-container {

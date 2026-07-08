@@ -40,14 +40,10 @@
         </div>
         <div id="ad" v-if="category.title=='站长推荐'" class="flex-grow justify-center w-100"
              style="display: flex; justify-content: center; align-items: center;">
-          <el-link type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
             <img style="width:960px;height:70px;" src="/imgs/ads/qgwl.jpeg" loading="lazy"/>
-          </el-link>
+          </a>
         </div>
-<!--        -->
-<!--        <el-link v-if="category.title=='站长推荐'" type="primary" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank">-->
-<!--          <img style="width: 450px" src="/imgs/ads/green.jpg"/>-->
-<!--        </el-link>-->
       </div>
     </div>
   </div>
@@ -55,10 +51,8 @@
 
 <script>
 import {reactive} from 'vue';
-import {ElLink} from "element-plus";
 
 export default {
-  components: {ElLink},
   props: {
     datalist: {
       type: Array,

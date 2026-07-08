@@ -2,18 +2,16 @@
 	<div>
 		<h3>{{ panelTitle }}</h3>
 		<div class="input-container">
-			<el-input v-model="inputText" style="width: 100%" :rows="6" type="textarea" placeholder="请输入要编码/解码的内容" />
+			<textarea v-model="inputText" class="tool-textarea" rows="6" placeholder="请输入要编码/解码的内容"></textarea>
 		</div>
-		<el-button type="primary" @click="encodeURL">编码</el-button>
-		<el-button type="primary" @click="decodeURL">解码</el-button>
-		<el-input v-model="outputText" style="width: 100%" :rows="8" type="textarea"
-			placeholder="编码/解码后的文字" />
+		<button class="tool-button" type="button" @click="encodeURL">编码</button>
+		<button class="tool-button" type="button" @click="decodeURL">解码</button>
+		<textarea v-model="outputText" class="tool-textarea" rows="8" placeholder="编码/解码后的文字"></textarea>
 	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import {ElInput,ElButton} from 'element-plus'
 const panelTitle = ref('AAencode 编码解码');
 const inputText = ref('alert("您好啊，我是Python斗罗~")');
 const outputText = ref('');
@@ -105,6 +103,26 @@ encodeURL()
 <style scoped>
 .input-container {
 	margin-bottom: 20px;
+}
+
+.tool-textarea {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 8px;
+	color: var(--vp-c-text-1);
+	background: var(--vp-c-bg);
+	border: 1px solid var(--vp-c-divider);
+	border-radius: 6px;
+}
+
+.tool-button {
+	padding: 8px 14px;
+	margin: 0 8px 12px 0;
+	color: #fff;
+	cursor: pointer;
+	background: var(--vp-c-brand-1);
+	border: 0;
+	border-radius: 6px;
 }
 
 .output-container {

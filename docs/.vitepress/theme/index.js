@@ -1,17 +1,12 @@
 import DefaultTheme from 'vitepress/theme'
-// giscus，评论
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
 import 'alertifyjs/build/css/alertify.min.css'
 
 // 图片缩放
 import mediumZoom from 'medium-zoom';
-import { h, onMounted, watch, nextTick } from 'vue';
+import { computed, h, onMounted, watch, nextTick } from 'vue';
 
-// import WebLink from './components/WebLink.vue'
-
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
 import ArticleTools from './components/ArticleTools.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 import VipBtn from './components/VipBtn.vue'
@@ -24,9 +19,8 @@ export default {
     'layout-bottom': () => h(ArticleTools),
   }),
   async enhanceApp({ app }) {
-    app.use(ElementPlus);
     app.component('VipBtn', VipBtn);
-    if (!import.meta.env.SSR) {
+    if (!import.meta.env.SSR && window.location.pathname === '/') {
       const { loadOml2d } = await import('oh-my-live2d');
       loadOml2d({
         models: [
@@ -37,31 +31,39 @@ export default {
       });
     }
   },
-    // 添加 giscus 评论系统的 script 标签
   setup() {
-    // Get frontmatter and route
     const { frontmatter, theme } = useData();
     const route = useRoute();
-    // giscus配置
-    giscusTalk({
-      repo: 'cpython666/cpython666.github.io', //仓库
-      repoId: 'R_kgDOKKcFRg', //仓库ID
-      category: 'Announcements', // 讨论分类
-      categoryId: 'DIC_kwDOKKcFRs4Cesp-', //讨论分类ID
-      mapping: 'pathname',
-      inputPosition: 'bottom',
-      lang: 'zh-CN',
-      }, 
+    const commentHiddenPrefixes = [
+      '/backup/',
+      '/nav/',
+      '/navigation/',
+      '/projects/',
+      '/spider-tools/',
+      '/vip/',
+      '/web-intro/',
+      '/index/',
+    ];
+    const commentFrontmatter = computed(() => ({
+      ...frontmatter.value,
+      comment: route.path !== '/'
+        && frontmatter.value.layout !== 'home'
+        && frontmatter.value.comment !== false
+        && !commentHiddenPrefixes.some((prefix) => route.path.startsWith(prefix)),
+    }));
+    giscusTalk(
       {
-        frontmatter, route
+        repo: 'cpython666/cpython666.github.io',
+        repoId: 'R_kgDOKKcFRg',
+        category: 'Announcements',
+        categoryId: 'DIC_kwDOKKcFRs4Cesp-',
+        mapping: 'pathname',
+        inputPosition: 'bottom',
+        lang: 'zh-CN',
       },
-      //默认值为true，表示已启用，此参数可以忽略；
-      //如果为false，则表示未启用,您可以使用“comment:true”序言在页面上单独启用它
-      true
+      { frontmatter: commentFrontmatter, route },
+      false
     );
-
-
-
 
     const initZoom = () => {
       // mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' }); // 默认

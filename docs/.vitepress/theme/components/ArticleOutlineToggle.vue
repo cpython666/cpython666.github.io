@@ -1,6 +1,5 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { Hide, View } from '@element-plus/icons-vue'
 
 const STORAGE_KEY = 'article-reading-outline-visible'
 const PREVIEW_CLASS = 'article-reading-outline-preview'
@@ -76,10 +75,7 @@ watch(outlineVisible, applyOutlineState)
       @pointerdown.stop
       @click.stop.prevent="toggleOutline"
     >
-      <el-icon :size="16">
-        <View v-if="outlineVisible" />
-        <Hide v-else />
-      </el-icon>
+      {{ outlineVisible ? 'o' : 'x' }}
     </button>
     <div
       class="article-outline-preview-zone"
