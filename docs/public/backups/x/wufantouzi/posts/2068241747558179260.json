@@ -1,0 +1,819 @@
+{
+  "index": 0,
+  "id": "2068241747558179260",
+  "url": "https://x.com/wufantouzi/status/2068241747558179260",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "crcl的中文名\n其实就应该叫“钱矿”",
+  "translated": false,
+  "createdAt": "2026-06-20T07:57:13.000Z",
+  "visibleTime": "3:57 PM · Jun 20, 2026",
+  "metrics": {
+    "replies": "67",
+    "reposts": "4",
+    "likes": "96",
+    "bookmarks": "16",
+    "views": "84148"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HLPe41gXsAEuJd2?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:50:35.598Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2068241747558179260",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2068258650624565488",
+      "url": "https://x.com/xiaomustock/status/2068258650624565488",
+      "author": {
+        "name": "川沐｜Trumoo",
+        "handle": "xiaomustock",
+        "profileUrl": "https://x.com/xiaomustock"
+      },
+      "text": "别在粪坑游泳了",
+      "translated": false,
+      "createdAt": "2026-06-20T09:04:23.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "replies": "38",
+        "reposts": "5",
+        "likes": "266",
+        "bookmarks": "4",
+        "views": "34546"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2068242803956871234",
+      "url": "https://x.com/TyzAIduck2025/status/2068242803956871234",
+      "author": {
+        "name": "AIduck2025（蓝鸟会）TermMax",
+        "handle": "TyzAIduck2025",
+        "profileUrl": "https://x.com/TyzAIduck2025"
+      },
+      "text": "投资1万刀。5年能翻几倍",
+      "translated": false,
+      "createdAt": "2026-06-20T08:01:25.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "replies": "4",
+        "like": "1",
+        "views": "6395"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2068267040385958325",
+      "url": "https://x.com/ohouhou717/status/2068267040385958325",
+      "author": {
+        "name": "Weilan ｜预测世界杯就在Gate",
+        "handle": "ohouhou717",
+        "profileUrl": "https://x.com/ohouhou717"
+      },
+      "text": "钱矿这名字挺接地气的",
+      "translated": false,
+      "createdAt": "2026-06-20T09:37:43.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1661"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 1,
+      "id": "2068261536515437010",
+      "url": "https://x.com/ablenavy/status/2068261536515437010",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "既然叫钱矿，那我赶紧带把铲子去进场试试运气！",
+      "translated": false,
+      "createdAt": "2026-06-20T09:15:51.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "764"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2068336186146635804",
+      "url": "https://x.com/sjl166/status/2068336186146635804",
+      "author": {
+        "name": "斯嘉丽 Scar",
+        "handle": "sjl166",
+        "profileUrl": "https://x.com/sjl166"
+      },
+      "text": "",
+      "translated": false,
+      "createdAt": "2026-06-20T14:12:29.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1789"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2068289061522211317",
+      "url": "https://x.com/leowang19951020/status/2068289061522211317",
+      "author": {
+        "name": "Leo Wang",
+        "handle": "leowang19951020",
+        "profileUrl": "https://x.com/leowang19951020"
+      },
+      "text": "不容易啊，为了吸引韭菜专门弄了一个基金，哈哈哈",
+      "translated": false,
+      "createdAt": "2026-06-20T11:05:13.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "reply": "1",
+        "likes": "4",
+        "views": "3247"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2069279168387559536",
+      "url": "https://x.com/NordenLee2097/status/2069279168387559536",
+      "author": {
+        "name": "Norden Lee",
+        "handle": "NordenLee2097",
+        "profileUrl": "https://x.com/NordenLee2097"
+      },
+      "text": "粪坑蝶泳？",
+      "translated": false,
+      "createdAt": "2026-06-23T04:39:33.000Z",
+      "visibleTime": "Jun 23",
+      "metrics": {
+        "views": "58"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 5,
+      "id": "2068836186865438989",
+      "url": "https://x.com/ZoomingFrog/status/2068836186865438989",
+      "author": {
+        "name": "Zooming",
+        "handle": "ZoomingFrog",
+        "profileUrl": "https://x.com/ZoomingFrog"
+      },
+      "text": "“圈钱”",
+      "translated": false,
+      "createdAt": "2026-06-21T23:19:18.000Z",
+      "visibleTime": "Jun 22",
+      "metrics": {
+        "views": "149"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 6,
+      "id": "2068292573379379606",
+      "url": "https://x.com/mkwsh001/status/2068292573379379606",
+      "author": {
+        "name": "mk",
+        "handle": "mkwsh001",
+        "profileUrl": "https://x.com/mkwsh001"
+      },
+      "text": "crcl就是时间成本太高",
+      "translated": false,
+      "createdAt": "2026-06-20T11:19:11.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1439"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 7,
+      "id": "2068818605836472708",
+      "url": "https://x.com/mrjihai1/status/2068818605836472708",
+      "author": {
+        "name": "mrjihai",
+        "handle": "mrjihai1",
+        "profileUrl": "https://x.com/mrjihai1"
+      },
+      "text": "撒比，怎么不去吃屎啊",
+      "translated": false,
+      "createdAt": "2026-06-21T22:09:27.000Z",
+      "visibleTime": "Jun 22",
+      "metrics": {
+        "views": "162"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 8,
+      "id": "2068272862985924674",
+      "url": "https://x.com/Kinx6munIW96627/status/2068272862985924674",
+      "author": {
+        "name": "唐哥",
+        "handle": "Kinx6munIW96627",
+        "profileUrl": "https://x.com/Kinx6munIW96627"
+      },
+      "text": "这个票 这辈子到头了",
+      "translated": false,
+      "createdAt": "2026-06-20T10:00:51.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1299"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 1,
+      "id": "2068292757316076005",
+      "url": "https://x.com/tothemoonjustin/status/2068292757316076005",
+      "author": {
+        "name": "全职交易员",
+        "handle": "tothemoonjustin",
+        "profileUrl": "https://x.com/tothemoonjustin"
+      },
+      "text": "这是比特币周末稳定了，就又开始喊了",
+      "translated": false,
+      "createdAt": "2026-06-20T11:19:55.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "reply": "1",
+        "views": "3625"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2068288360653730249",
+      "url": "https://x.com/tothemoonjustin/status/2068288360653730249",
+      "author": {
+        "name": "全职交易员",
+        "handle": "tothemoonjustin",
+        "profileUrl": "https://x.com/tothemoonjustin"
+      },
+      "text": "你们觉得他没有这个认知吗？他不知道是粪坑吗？他才不在乎，他赚的是你们手续费，稳赚不赔",
+      "translated": false,
+      "createdAt": "2026-06-20T11:02:26.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "likes": "5",
+        "views": "2956"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2068287934189507018",
+      "url": "https://x.com/tothemoonjustin/status/2068287934189507018",
+      "author": {
+        "name": "全职交易员",
+        "handle": "tothemoonjustin",
+        "profileUrl": "https://x.com/tothemoonjustin"
+      },
+      "text": "讲真，基金被下架了吗？",
+      "translated": false,
+      "createdAt": "2026-06-20T11:00:45.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "like": "1",
+        "views": "2655"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2068860186778112380",
+      "url": "https://x.com/AKheVFRitM1108/status/2068860186778112380",
+      "author": {
+        "name": "fei.yu",
+        "handle": "AKheVFRitM1108",
+        "profileUrl": "https://x.com/AKheVFRitM1108"
+      },
+      "text": "闭上你嘴吧，奶来一堆散户有屁用",
+      "translated": false,
+      "createdAt": "2026-06-22T00:54:40.000Z",
+      "visibleTime": "Jun 22",
+      "metrics": {
+        "views": "136"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 5,
+      "id": "2068418263789244769",
+      "url": "https://x.com/ricci_nov/status/2068418263789244769",
+      "author": {
+        "name": "RicciNov",
+        "handle": "ricci_nov",
+        "profileUrl": "https://x.com/ricci_nov"
+      },
+      "text": "这会儿也算是低点了吧",
+      "translated": false,
+      "createdAt": "2026-06-20T19:38:38.000Z",
+      "visibleTime": "Jun 21",
+      "metrics": {
+        "views": "502"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 6,
+      "id": "2068335984090218516",
+      "url": "https://x.com/HaidiWang126/status/2068335984090218516",
+      "author": {
+        "name": "前海",
+        "handle": "HaidiWang126",
+        "profileUrl": "https://x.com/HaidiWang126"
+      },
+      "text": "钱矿",
+      "translated": false,
+      "createdAt": "2026-06-20T14:11:41.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "755"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 7,
+      "id": "2068496243379376636",
+      "url": "https://x.com/QinFeng17622/status/2068496243379376636",
+      "author": {
+        "name": "大吃货",
+        "handle": "QinFeng17622",
+        "profileUrl": "https://x.com/QinFeng17622"
+      },
+      "text": "废都废了",
+      "translated": false,
+      "createdAt": "2026-06-21T00:48:29.000Z",
+      "visibleTime": "Jun 21",
+      "metrics": {
+        "views": "477"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 8,
+      "id": "2068249438993404340",
+      "url": "https://x.com/myminetrading/status/2068249438993404340",
+      "author": {
+        "name": "Mymine交易观察",
+        "handle": "myminetrading",
+        "profileUrl": "https://x.com/myminetrading"
+      },
+      "text": "CRCL中文名就叫 「趁热吃了」",
+      "translated": false,
+      "createdAt": "2026-06-20T08:27:47.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "likes": "5",
+        "views": "1872"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 1,
+      "id": "2068270455505691023",
+      "url": "https://x.com/dlaine19/status/2068270455505691023",
+      "author": {
+        "name": "dlaine",
+        "handle": "dlaine19",
+        "profileUrl": "https://x.com/dlaine19"
+      },
+      "text": "买了，130买的，能1300吗",
+      "translated": false,
+      "createdAt": "2026-06-20T09:51:17.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "like": "1",
+        "views": "2023"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2068259413400678422",
+      "url": "https://x.com/linganguooo/status/2068259413400678422",
+      "author": {
+        "name": "欧阳盆栽",
+        "handle": "linganguooo",
+        "profileUrl": "https://x.com/linganguooo"
+      },
+      "text": "别再推了，都给买成中概股了",
+      "translated": false,
+      "createdAt": "2026-06-20T09:07:25.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "likes": "6",
+        "views": "1720"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2068260160330428692",
+      "url": "https://x.com/SQ_CRCL/status/2068260160330428692",
+      "author": {
+        "name": "SQ.CRCL",
+        "handle": "SQ_CRCL",
+        "profileUrl": "https://x.com/SQ_CRCL"
+      },
+      "text": "这个名字好",
+      "translated": false,
+      "createdAt": "2026-06-20T09:10:23.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1200"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2068354222840860823",
+      "url": "https://x.com/aknosaxi/status/2068354222840860823",
+      "author": {
+        "name": "knowhy",
+        "handle": "aknosaxi",
+        "profileUrl": "https://x.com/aknosaxi"
+      },
+      "text": "感觉差不多到底了",
+      "translated": false,
+      "createdAt": "2026-06-20T15:24:09.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1056"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 5,
+      "id": "2068260016818397213",
+      "url": "https://x.com/bobby79446955/status/2068260016818397213",
+      "author": {
+        "name": "bobby",
+        "handle": "bobby79446955",
+        "profileUrl": "https://x.com/bobby79446955"
+      },
+      "text": "高管减持怎么看...",
+      "translated": false,
+      "createdAt": "2026-06-20T09:09:49.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1975"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 6,
+      "id": "2068241933575790697",
+      "url": "https://x.com/blu0222/status/2068241933575790697",
+      "author": {
+        "name": "cong",
+        "handle": "blu0222",
+        "profileUrl": "https://x.com/blu0222"
+      },
+      "text": "BUY!",
+      "translated": false,
+      "createdAt": "2026-06-20T07:57:57.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1552"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 7,
+      "id": "2068294991643017483",
+      "url": "https://x.com/CryptoLeo68/status/2068294991643017483",
+      "author": {
+        "name": "无情哈拉少",
+        "handle": "CryptoLeo68",
+        "profileUrl": "https://x.com/CryptoLeo68"
+      },
+      "text": "重生之我在crcl里躲牛市",
+      "translated": false,
+      "createdAt": "2026-06-20T11:28:47.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "like": "1",
+        "views": "771"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 8,
+      "id": "2068951689240203376",
+      "url": "https://x.com/JingweiHe8/status/2068951689240203376",
+      "author": {
+        "name": "JW Bond",
+        "handle": "JingweiHe8",
+        "profileUrl": "https://x.com/JingweiHe8"
+      },
+      "text": "圆圆不是更加好听吗",
+      "translated": false,
+      "createdAt": "2026-06-22T06:58:16.000Z",
+      "visibleTime": "Jun 22",
+      "metrics": {
+        "views": "135"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 9,
+      "id": "2068257994132058139",
+      "url": "https://x.com/billsoon7/status/2068257994132058139",
+      "author": {
+        "name": "billsoon",
+        "handle": "billsoon7",
+        "profileUrl": "https://x.com/billsoon7"
+      },
+      "text": "Continual Refill, Continual Loss",
+      "translated": false,
+      "createdAt": "2026-06-20T09:01:46.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1914"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 1,
+      "id": "2068250059494642004",
+      "url": "https://x.com/heqiqi/status/2068250059494642004",
+      "author": {
+        "name": "heqi",
+        "handle": "heqiqi",
+        "profileUrl": "https://x.com/heqiqi"
+      },
+      "text": "怎么买啊？ 国内买不了每股",
+      "translated": false,
+      "createdAt": "2026-06-20T08:30:15.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "replies": "4",
+        "views": "3286"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2068347559580676411",
+      "url": "https://x.com/Chenhong02212/status/2068347559580676411",
+      "author": {
+        "name": "Chen",
+        "handle": "Chenhong02212",
+        "profileUrl": "https://x.com/Chenhong02212"
+      },
+      "text": "骂他的这么多，见底的概率越大",
+      "translated": false,
+      "createdAt": "2026-06-20T14:57:40.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "likes": "2",
+        "views": "641"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2068269132177699009",
+      "url": "https://x.com/zhangjunnin/status/2068269132177699009",
+      "author": {
+        "name": "l love you",
+        "handle": "zhangjunnin",
+        "profileUrl": "https://x.com/zhangjunnin"
+      },
+      "text": "这傻逼还有十几万人关注，都跟着跳粪坑得了",
+      "translated": false,
+      "createdAt": "2026-06-20T09:46:02.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "1057"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2068263110130143370",
+      "url": "https://x.com/Cryptoqixia/status/2068263110130143370",
+      "author": {
+        "name": "七夏",
+        "handle": "Cryptoqixia",
+        "profileUrl": "https://x.com/Cryptoqixia"
+      },
+      "text": "现在是拥抱 ai 时间",
+      "translated": false,
+      "createdAt": "2026-06-20T09:22:06.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "918"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 6,
+      "id": "2068275147057107446",
+      "url": "https://x.com/Tenten_Peng/status/2068275147057107446",
+      "author": {
+        "name": "腾腾同学",
+        "handle": "Tenten_Peng",
+        "profileUrl": "https://x.com/Tenten_Peng"
+      },
+      "text": "真能到万亿吗？",
+      "translated": false,
+      "createdAt": "2026-06-20T10:09:56.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "760"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 7,
+      "id": "2068528409232433231",
+      "url": "https://x.com/starmoonqq/status/2068528409232433231",
+      "author": {
+        "name": "小蹦豆子",
+        "handle": "starmoonqq",
+        "profileUrl": "https://x.com/starmoonqq"
+      },
+      "text": "别在粪坑游泳了",
+      "translated": false,
+      "createdAt": "2026-06-21T02:56:18.000Z",
+      "visibleTime": "Jun 21",
+      "metrics": {
+        "like": "1",
+        "views": "182"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 8,
+      "id": "2068298422059418012",
+      "url": "https://x.com/airdrop_99999/status/2068298422059418012",
+      "author": {
+        "name": "歪脖山上的喷子",
+        "handle": "airdrop_99999",
+        "profileUrl": "https://x.com/airdrop_99999"
+      },
+      "text": "天天在粪坑玩，还是等ai相关大跌再吹crcl呢",
+      "translated": false,
+      "createdAt": "2026-06-20T11:42:25.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "846"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 9,
+      "id": "2068309421470646292",
+      "url": "https://x.com/BNZCDY/status/2068309421470646292",
+      "author": {
+        "name": "币安交易所高返佣注册",
+        "handle": "BNZCDY",
+        "profileUrl": "https://x.com/BNZCDY"
+      },
+      "text": "Fan account\n就应该叫钱矿",
+      "translated": false,
+      "createdAt": "2026-06-20T12:26:08.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "450"
+      },
+      "images": [],
+      "links": [
+        {
+          "text": "Fan account",
+          "url": "https://help.x.com/rules-and-policies/authenticity"
+        }
+      ],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 10,
+      "id": "2068267878038778193",
+      "url": "https://x.com/0Xnujabes/status/2068267878038778193",
+      "author": {
+        "name": "luv",
+        "handle": "0Xnujabes",
+        "profileUrl": "https://x.com/0Xnujabes"
+      },
+      "text": "别在粪坑游泳了",
+      "translated": false,
+      "createdAt": "2026-06-20T09:41:03.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "755"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 11,
+      "id": "2068289600897077619",
+      "url": "https://x.com/leige2017/status/2068289600897077619",
+      "author": {
+        "name": "leige",
+        "handle": "leige2017",
+        "profileUrl": "https://x.com/leige2017"
+      },
+      "text": "叫钱矿挺贴切：稳定币越多人用，铲子越不用停。",
+      "translated": false,
+      "createdAt": "2026-06-20T11:07:22.000Z",
+      "visibleTime": "Jun 20",
+      "metrics": {
+        "views": "690"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

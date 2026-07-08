@@ -1,0 +1,115 @@
+{
+  "index": 0,
+  "id": "2061176747781923018",
+  "url": "https://x.com/wufantouzi/status/2061176747781923018",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "日文区翻译过来的 oo 是啥意思\n半天没理解",
+  "translated": false,
+  "createdAt": "2026-05-31T20:03:26.000Z",
+  "visibleTime": "4:03 AM · Jun 1, 2026",
+  "metrics": {
+    "replies": "72",
+    "likes": "5",
+    "views": "14255"
+  },
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T16:08:58.942Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2061176747781923018",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2061240672548745635",
+      "url": "https://x.com/ablenavy/status/2061240672548745635",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "说不定是翻译器在卖萌，正瞪大眼睛（oo）看着你呢，或者是它也迷糊了！",
+      "translated": false,
+      "createdAt": "2026-06-01T00:17:26.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "reply": "1",
+        "views": "193"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2061177263698096165",
+      "url": "https://x.com/Moon1ightSt/status/2061177263698096165",
+      "author": {
+        "name": "Moonlight月光",
+        "handle": "Moon1ightSt",
+        "profileUrl": "https://x.com/Moon1ightSt"
+      },
+      "text": "是两颗眼珠子吗？",
+      "translated": false,
+      "createdAt": "2026-05-31T20:05:29.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "replies": "2",
+        "likes": "4",
+        "views": "1144"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2061178253893832825",
+      "url": "https://x.com/Cullen23Edward/status/2061178253893832825",
+      "author": {
+        "name": "edward cullen ｜BNB ｜TermMax",
+        "handle": "Cullen23Edward",
+        "profileUrl": "https://x.com/Cullen23Edward"
+      },
+      "text": "？",
+      "translated": false,
+      "createdAt": "2026-05-31T20:09:25.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "reply": "1",
+        "like": "1",
+        "views": "810"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2061183311167238238",
+      "url": "https://x.com/AustinA830667/status/2061183311167238238",
+      "author": {
+        "name": "Austin｜一只猫",
+        "handle": "AustinA830667",
+        "profileUrl": "https://x.com/AustinA830667"
+      },
+      "text": "欧金金。几把和蛋蛋。我看到一个日本人转发中推男娘的时候说因为男娘有oo所以很有魅力",
+      "translated": false,
+      "createdAt": "2026-05-31T20:29:30.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "reply": "1",
+        "like": "1",
+        "views": "1106"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

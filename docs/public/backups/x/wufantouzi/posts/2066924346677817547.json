@@ -1,0 +1,76 @@
+{
+  "index": 0,
+  "id": "2066924346677817547",
+  "url": "https://x.com/wufantouzi/status/2066924346677817547",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "终于解套了\n跑吗\n还是拿点利润",
+  "translated": false,
+  "createdAt": "2026-06-16T16:42:20.000Z",
+  "visibleTime": "12:42 AM · Jun 17, 2026",
+  "metrics": {
+    "replies": "37",
+    "repost": "1",
+    "likes": "22",
+    "bookmark": "1",
+    "views": "23513"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HK8wuCZXoAAQ4R5?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:52:03.510Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2066924346677817547",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2067602470876881374",
+      "url": "https://x.com/quschdnjs/status/2067602470876881374",
+      "author": {
+        "name": "Michael 宝塔镇河妖",
+        "handle": "quschdnjs",
+        "profileUrl": "https://x.com/quschdnjs"
+      },
+      "text": "留一半赌狗",
+      "translated": false,
+      "createdAt": "2026-06-18T13:36:57.000Z",
+      "visibleTime": "Jun 18",
+      "metrics": {
+        "views": "54"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2066929256836505786",
+      "url": "https://x.com/ablenavy/status/2066929256836505786",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "解套了必须先庆祝一下！拿点利润吃顿好的，剩下的交给缘分吧",
+      "translated": false,
+      "createdAt": "2026-06-16T17:01:51.000Z",
+      "visibleTime": "Jun 17",
+      "metrics": {
+        "views": "254"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

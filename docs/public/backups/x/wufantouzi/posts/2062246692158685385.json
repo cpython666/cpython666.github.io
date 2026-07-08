@@ -1,0 +1,92 @@
+{
+  "index": 0,
+  "id": "2062246692158685385",
+  "url": "https://x.com/wufantouzi/status/2062246692158685385",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "60年前\n一个尖端芯片上的晶体管数量是4个\n现在是118亿个\n这就是摩尔定律的可怕\n你的交易如果能每年翻倍一次\n60年后地球都是你的",
+  "translated": false,
+  "createdAt": "2026-06-03T18:55:00.000Z",
+  "visibleTime": "2:55 AM · Jun 4, 2026",
+  "metrics": {
+    "replies": "21",
+    "reposts": "4",
+    "likes": "48",
+    "bookmarks": "5",
+    "views": "15480"
+  },
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:59:32.887Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2062246692158685385",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2062340871165739343",
+      "url": "https://x.com/ablenavy/status/2062340871165739343",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "指数增长的力量太恐怖了，无论是芯片还是投资，时间复利都不可小觑。",
+      "translated": false,
+      "createdAt": "2026-06-04T01:09:14.000Z",
+      "visibleTime": "Jun 4",
+      "metrics": {
+        "like": "1",
+        "views": "179"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2062246798220284093",
+      "url": "https://x.com/runa3202lpeu/status/2062246798220284093",
+      "author": {
+        "name": "热币_93 | 赵南在线",
+        "handle": "runa3202lpeu",
+        "profileUrl": "https://x.com/runa3202lpeu"
+      },
+      "text": "老铁这比喻绝了",
+      "translated": false,
+      "createdAt": "2026-06-03T18:55:26.000Z",
+      "visibleTime": "Jun 4",
+      "metrics": {
+        "views": "510"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2062730592274489698",
+      "url": "https://x.com/pair3_pass/status/2062730592274489698",
+      "author": {
+        "name": "傻币克星",
+        "handle": "pair3_pass",
+        "profileUrl": "https://x.com/pair3_pass"
+      },
+      "text": "如果你射精的数量能每年翻倍，那以后全世界都是你孙子",
+      "translated": false,
+      "createdAt": "2026-06-05T02:57:51.000Z",
+      "visibleTime": "Jun 5",
+      "metrics": {
+        "like": "1",
+        "views": "58"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

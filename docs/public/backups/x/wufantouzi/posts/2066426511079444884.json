@@ -1,0 +1,81 @@
+{
+  "index": 0,
+  "id": "2066426511079444884",
+  "url": "https://x.com/wufantouzi/status/2066426511079444884",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "一、纳斯达克100期货 NQ2609\n\n1. 高点→最低点跌幅\n\n高点：31100.00\n低点：28512.00\n下跌幅度\n(31100 - 28512) ÷ 31100 × 100% = 8.32%\n\n2. 低点→当前反弹涨幅\n\n现价：30567.50\n反弹幅度\n(30567.5 - 28512) ÷ 28512 × 100% = 7.21%\n\n二、BTC/USDT\n\n1. 高点→最低点跌幅\n\n高点：82850.00\n低点：59130.91\n下跌幅度\n(82850 - 59130.91) ÷ 82850 × 100% = 28.63%\n\n2. 低点→当前反弹涨幅\n\n现价：65780.49\n反弹幅度 =\n(65780.49 - 59130.91) ÷ 59130.91 × 100% = 11.25%\n\n三、倍数对比\n\n1. 下跌阶段\n\n28.63% ÷ 8.32% = 3.44倍\n下跌时\n比特币跌幅是纳斯达克100期货的3.44倍\n\n2. 反弹阶段：\n\n11.25% ÷ 7.21% = 1.56倍\n从最低点反弹至今\n比特币上涨幅度是纳斯达克100期货的1.56倍\n\n汇总简表\n• 下跌力度：BTC波动是纳指 3.44倍\n\n• 反弹力度：BTC波动是纳指 1.56倍\n\n你还玩btc吗",
+  "translated": false,
+  "createdAt": "2026-06-15T07:44:07.000Z",
+  "visibleTime": "3:44 PM · Jun 15, 2026",
+  "metrics": {
+    "replies": "59",
+    "reposts": "3",
+    "likes": "42",
+    "bookmarks": "7",
+    "views": "19276"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HK1r1u5WsAAKR93?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    },
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HK1r1u5WcAAn4PX?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:52:30.740Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2066426511079444884",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2066428511808823704",
+      "url": "https://x.com/ablenavy/status/2066428511808823704",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "心脏不好的已经退出了，现在只敢隔着屏幕看大家心跳加速。",
+      "translated": false,
+      "createdAt": "2026-06-15T07:52:04.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "166"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2066435175647695334",
+      "url": "https://x.com/bbxjasper/status/2066435175647695334",
+      "author": {
+        "name": "Jasper @building BBX",
+        "handle": "bbxjasper",
+        "profileUrl": "https://x.com/bbxjasper"
+      },
+      "text": "纳指期货这波从高点砸下来两千多点，事后画线谁都会，真到那个位置敢伸手接的没几个",
+      "translated": false,
+      "createdAt": "2026-06-15T08:18:33.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "681"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

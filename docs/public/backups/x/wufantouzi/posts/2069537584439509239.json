@@ -1,0 +1,74 @@
+{
+  "index": 0,
+  "id": "2069537584439509239",
+  "url": "https://x.com/wufantouzi/status/2069537584439509239",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "标普道琼斯指数：\n谷歌A(GOOGL.O)将于6月29日开盘前取代Verizon(VZ.N)，加入道琼斯工业指数。\n(来自金十数据APP)\n\n预计带来80亿美金买入谷歌",
+  "translated": false,
+  "createdAt": "2026-06-23T21:46:24.000Z",
+  "visibleTime": "5:46 AM · Jun 24, 2026",
+  "metrics": {
+    "replies": "5",
+    "repost": "1",
+    "likes": "24",
+    "bookmarks": "3",
+    "views": "14684"
+  },
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:44:29.019Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2069537584439509239",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2069580230734618994",
+      "url": "https://x.com/ablenavy/status/2069580230734618994",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "谷歌：我带着80亿美金来“上位”了，Verizon只能黯然退场。",
+      "translated": false,
+      "createdAt": "2026-06-24T00:35:52.000Z",
+      "visibleTime": "Jun 24",
+      "metrics": {
+        "views": "377"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2072723227273752688",
+      "url": "https://x.com/wufantouzi/status/2072723227273752688",
+      "author": {
+        "name": "wu fan",
+        "handle": "wufantouzi",
+        "profileUrl": "https://x.com/wufantouzi"
+      },
+      "text": "没有无缘无故的爱\n也没有无缘无故的恨\n\n有的人骂你\n也许是他某天看你的帖子\n自己偷偷跟了一单亏了钱\n又不好意思说恨是埋下了\n但是跟你那单是事实存在且亏了钱的\n\n有人挺你\n也许是他某天看你帖子\n偷偷跟了一单\n恰好赚了\n虽然没给你分钱但是记下你的好了\n\n所以被骂几乎都不冤枉\n毕竟不可能是每次都对\nShow more",
+      "translated": false,
+      "createdAt": "2026-07-02T16:45:01.000Z",
+      "visibleTime": "Jul 3",
+      "metrics": {
+        "replies": "68",
+        "reposts": "3",
+        "likes": "112",
+        "bookmarks": "9",
+        "views": "18294"
+      },
+      "images": [],
+      "links": [],
+      "relation": "author-visible-reply"
+    }
+  ]
+}

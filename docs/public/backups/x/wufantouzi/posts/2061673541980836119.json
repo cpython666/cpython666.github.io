@@ -1,0 +1,99 @@
+{
+  "index": 0,
+  "id": "2061673541980836119",
+  "url": "https://x.com/wufantouzi/status/2061673541980836119",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "最近买的盈利了",
+  "translated": false,
+  "createdAt": "2026-06-02T04:57:31.000Z",
+  "visibleTime": "12:57 PM · Jun 2, 2026",
+  "metrics": {
+    "replies": "26",
+    "likes": "14",
+    "views": "11261"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HJyJJuPXwAAj6nv?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T16:05:49.015Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2061673541980836119",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2061677327663399194",
+      "url": "https://x.com/ablenavy/status/2061677327663399194",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "眼光真好！这次的投资很有见地",
+      "translated": false,
+      "createdAt": "2026-06-02T05:12:33.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "262"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2061703030710718603",
+      "url": "https://x.com/TenMore_X/status/2061703030710718603",
+      "author": {
+        "name": "TenMore",
+        "handle": "TenMore_X",
+        "profileUrl": "https://x.com/TenMore_X"
+      },
+      "text": "旱地拔葱",
+      "translated": false,
+      "createdAt": "2026-06-02T06:54:41.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "191"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2061742574499709414",
+      "url": "https://x.com/BNZCDY/status/2061742574499709414",
+      "author": {
+        "name": "币安交易所高返佣注册",
+        "handle": "BNZCDY",
+        "profileUrl": "https://x.com/BNZCDY"
+      },
+      "text": "Fan account\n这只是刚刚开始",
+      "translated": false,
+      "createdAt": "2026-06-02T09:31:49.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "111"
+      },
+      "images": [],
+      "links": [
+        {
+          "text": "Fan account",
+          "url": "https://help.x.com/rules-and-policies/authenticity"
+        }
+      ],
+      "relation": "visible-reply"
+    }
+  ]
+}

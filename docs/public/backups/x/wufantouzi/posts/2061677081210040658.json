@@ -1,0 +1,109 @@
+{
+  "index": 0,
+  "id": "2061677081210040658",
+  "url": "https://x.com/wufantouzi/status/2061677081210040658",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "今天还收到了腾讯的股息\n大约 1%",
+  "translated": false,
+  "createdAt": "2026-06-02T05:11:34.000Z",
+  "visibleTime": "1:11 PM · Jun 2, 2026",
+  "metrics": {
+    "replies": "54",
+    "likes": "28",
+    "bookmark": "1",
+    "views": "19269"
+  },
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T16:05:16.140Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2061677081210040658",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2061678239492579741",
+      "url": "https://x.com/ChainLog7/status/2061678239492579741",
+      "author": {
+        "name": "joker ｜预测世界杯就在Gate",
+        "handle": "ChainLog7",
+        "profileUrl": "https://x.com/ChainLog7"
+      },
+      "text": "1%也是爱呀  腾讯稳得很～",
+      "translated": false,
+      "createdAt": "2026-06-02T05:16:11.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "886"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2061677914979209644",
+      "url": "https://x.com/ablenavy/status/2061677914979209644",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "1%也是爱，这就是传说中的“睡后收入”，羡慕嫉妒恨！",
+      "translated": false,
+      "createdAt": "2026-06-02T05:14:53.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "488"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2061702815278596215",
+      "url": "https://x.com/TrinityWuzx/status/2061702815278596215",
+      "author": {
+        "name": "Trinity Wu",
+        "handle": "TrinityWuzx",
+        "profileUrl": "https://x.com/TrinityWuzx"
+      },
+      "text": "分红税国内是一定会收的",
+      "translated": false,
+      "createdAt": "2026-06-02T06:53:50.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "831"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 4,
+      "id": "2061689592869519593",
+      "url": "https://x.com/myminetrading/status/2061689592869519593",
+      "author": {
+        "name": "Mymine交易观察",
+        "handle": "myminetrading",
+        "profileUrl": "https://x.com/myminetrading"
+      },
+      "text": "這1% 你檢查一下郵箱 是不是還同時寄了email 給妳遊戲的限時皮膚折扣",
+      "translated": false,
+      "createdAt": "2026-06-02T06:01:17.000Z",
+      "visibleTime": "Jun 2",
+      "metrics": {
+        "views": "638"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "index": 0,
+  "id": "2066383847911031087",
+  "url": "https://x.com/wufantouzi/status/2066383847911031087",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "以后的手机上都没有app\n只有一个大模型\n里面嵌套无数的Ai智能体\n现在有多少企业会因此倒闭\n\n下一个软件入口可能只能活2-3家\n下一个硬件入口的机会会大一点\n从这个角度看\nAi眼镜、机器人都是Ai硬件入口",
+  "translated": false,
+  "createdAt": "2026-06-15T04:54:35.000Z",
+  "visibleTime": "12:54 PM · Jun 15, 2026",
+  "metrics": {
+    "replies": "61",
+    "reposts": "5",
+    "likes": "56",
+    "bookmarks": "5",
+    "views": "20144"
+  },
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T15:53:08.175Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2066383847911031087",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2066386654039023745",
+      "url": "https://x.com/ohouhou717/status/2066386654039023745",
+      "author": {
+        "name": "Weilan ｜预测世界杯就在Gate",
+        "handle": "ohouhou717",
+        "profileUrl": "https://x.com/ohouhou717"
+      },
+      "text": "硬件入口确实是个方向",
+      "translated": false,
+      "createdAt": "2026-06-15T05:05:44.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "522"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2066397616091595004",
+      "url": "https://x.com/ablenavy/status/2066397616091595004",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "以后不用愁APP占内存了，直接愁买不买得起那些酷炫的AI眼镜和机器人吧！",
+      "translated": false,
+      "createdAt": "2026-06-15T05:49:18.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "189"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2066404445584597238",
+      "url": "https://x.com/bbxjasper/status/2066404445584597238",
+      "author": {
+        "name": "Jasper @building BBX",
+        "handle": "bbxjasper",
+        "profileUrl": "https://x.com/bbxjasper"
+      },
+      "text": "硬件入口只活2-3家我信，但“手机没有app”这步迈得太大了——大模型再强，调外部服务那一刻总得有个接口，无非从图标变成了API",
+      "translated": false,
+      "createdAt": "2026-06-15T06:16:26.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "271"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 5,
+      "id": "2066397544729694270",
+      "url": "https://x.com/ChanceYawn/status/2066397544729694270",
+      "author": {
+        "name": "阳成AI",
+        "handle": "ChanceYawn",
+        "profileUrl": "https://x.com/ChanceYawn"
+      },
+      "text": "梭哈AI硬件",
+      "translated": false,
+      "createdAt": "2026-06-15T05:49:01.000Z",
+      "visibleTime": "Jun 15",
+      "metrics": {
+        "views": "283"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "index": 0,
+  "id": "2061393576957772184",
+  "url": "https://x.com/wufantouzi/status/2061393576957772184",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "这不是来了吗",
+  "translated": false,
+  "createdAt": "2026-06-01T10:25:02.000Z",
+  "visibleTime": "6:25 PM · Jun 1, 2026",
+  "metrics": {
+    "replies": "85",
+    "reposts": "8",
+    "likes": "65",
+    "bookmarks": "34",
+    "views": "54121"
+  },
+  "images": [
+    {
+      "alt": "Image",
+      "url": "https://pbs.twimg.com/media/HJuKhwiWUAMS3s_?format=jpg&name=large",
+      "downloadError": "fetch failed"
+    }
+  ],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-07-04T16:08:05.009Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2061393576957772184",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2061408905809510737",
+      "url": "https://x.com/ChainLog7/status/2061408905809510737",
+      "author": {
+        "name": "joker ｜预测世界杯就在Gate",
+        "handle": "ChainLog7",
+        "profileUrl": "https://x.com/ChainLog7"
+      },
+      "text": "终于来了！",
+      "translated": false,
+      "createdAt": "2026-06-01T11:25:56.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "views": "1196"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2061395269108019244",
+      "url": "https://x.com/ablenavy/status/2061395269108019244",
+      "author": {
+        "name": "iGarlic",
+        "handle": "ablenavy",
+        "profileUrl": "https://x.com/ablenavy"
+      },
+      "text": "千呼万唤始出来，差点以为它迷路了",
+      "translated": false,
+      "createdAt": "2026-06-01T10:31:45.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "views": "1453"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2061420148381385134",
+      "url": "https://x.com/0x404page/status/2061420148381385134",
+      "author": {
+        "name": "0xFuck.ETH",
+        "handle": "0x404page",
+        "profileUrl": "https://x.com/0x404page"
+      },
+      "text": "这个可以的",
+      "translated": false,
+      "createdAt": "2026-06-01T12:10:37.000Z",
+      "visibleTime": "Jun 1",
+      "metrics": {
+        "views": "3959"
+      },
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}
