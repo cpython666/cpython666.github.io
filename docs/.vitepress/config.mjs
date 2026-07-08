@@ -333,6 +333,10 @@ let smart_money_tracking_items = [
     text: "P2-HYPE要回调了？聪明钱更多在做空。ADA还有未来吗？我仿佛看到了曙光「聪明钱追踪」",
     link: "/web3/smart-money-tracking/hype-ada-smart-money-short",
   },
+  {
+    text: "P16-AI不是万能的：做 Hyperliquid 聪明钱追踪，我走过的弯路",
+    link: "/web3/smart-money-tracking/ai-not-omnipotent-hyperliquid-lessons",
+  },
 ];
 
 let blockchain_weekly_report = [
