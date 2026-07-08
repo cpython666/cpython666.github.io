@@ -2,9 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
 import 'alertifyjs/build/css/alertify.min.css'
-
-// 图片缩放
-import mediumZoom from 'medium-zoom';
+import 'photoswipe/style.css';
 import { computed, h, onMounted, watch, nextTick } from 'vue';
 
 import ArticleTools from './components/ArticleTools.vue'
@@ -65,10 +63,113 @@ export default {
       false
     );
 
-    const initZoom = () => {
-      // mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' }); // 默认
-      mediumZoom('.main img', { background: 'var(--vp-c-bg)' }); // 不显式添加{data-zoomable}的情况下为所有图像启用此功能
+    const zoomImageSelector = ".vp-doc img:not(.no-zoom):not(.site-icon), .x-backup__media img";
+    const imageUrlPattern = /\.(avif|gif|jpe?g|png|svg|webp)([?#].*)?$/i;
+    const getImageSrc = (img) => {
+      const link = img.closest("a")?.href || "";
+      if (imageUrlPattern.test(link)) return link;
+      return img.currentSrc || img.src;
     };
+    const getZoomItems = () => Array.from(document.querySelectorAll(zoomImageSelector))
+      .filter((img) => img.currentSrc || img.src)
+      .map((img) => {
+        const width = img.naturalWidth || img.width || 1600;
+        const height = img.naturalHeight || img.height || Math.round(width * 0.625);
+        return {
+          src: getImageSrc(img),
+          msrc: img.currentSrc || img.src,
+          width,
+          height,
+          alt: img.alt || img.title || "image",
+          element: img,
+        };
+      });
+    const openPhotoSwipe = async (target) => {
+      const items = getZoomItems();
+      const index = items.findIndex((item) => item.element === target);
+      if (index < 0) return;
+      const { default: PhotoSwipe } = await import("photoswipe");
+      const gallery = new PhotoSwipe({
+        dataSource: items,
+        index,
+        bgOpacity: 0.88,
+        paddingFn: () => ({ top: 56, bottom: 64, left: 16, right: 16 }),
+        showHideAnimationType: "fade",
+        showAnimationDuration: 0,
+        hideAnimationDuration: 0,
+        wheelToZoom: true,
+      });
+      gallery.on("uiRegister", () => {
+        gallery.ui.registerElement({
+          name: "download",
+          order: 8,
+          isButton: true,
+          tagName: "a",
+          html: "↓",
+          title: "下载图片",
+          onInit: (el, pswp) => {
+            const update = () => {
+              if (!pswp.currSlide) return;
+              el.href = pswp.currSlide.data.src;
+              el.download = "";
+              el.target = "_blank";
+              el.rel = "noreferrer";
+            };
+            pswp.on("change", update);
+            update();
+          },
+        });
+        gallery.ui.registerElement({
+          name: "original",
+          order: 9,
+          isButton: true,
+          tagName: "a",
+          html: "↗",
+          title: "打开原图",
+          onInit: (el, pswp) => {
+            const update = () => {
+              if (!pswp.currSlide) return;
+              el.href = pswp.currSlide.data.src;
+              el.target = "_blank";
+              el.rel = "noreferrer";
+            };
+            pswp.on("change", update);
+            update();
+          },
+        });
+        gallery.ui.registerElement({
+          name: "caption",
+          appendTo: "root",
+          order: 20,
+          isButton: false,
+          html: '<div class="pswp-caption"></div>',
+          onInit: (el, pswp) => {
+            const caption = el.querySelector(".pswp-caption");
+            const update = () => {
+              if (!pswp.currSlide) return;
+              const text = pswp.currSlide.data.alt || "";
+              caption.textContent = text;
+              el.hidden = !text;
+            };
+            pswp.on("change", update);
+            update();
+          },
+        });
+      });
+      gallery.init();
+    };
+    const initZoom = () => {
+      if (import.meta.env.SSR) return;
+      document.querySelectorAll(zoomImageSelector).forEach((img) => img.classList.add("is-zoomable"));
+    };
+    if (!import.meta.env.SSR) {
+      document.addEventListener("click", (event) => {
+        const target = event.target.closest?.(zoomImageSelector);
+        if (!target) return;
+        event.preventDefault();
+        openPhotoSwipe(target);
+      });
+    }
     onMounted(() => {
       initZoom();
     });

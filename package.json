@@ -1,6 +1,5 @@
 {
   "devDependencies": {
-    "medium-zoom": "^1.1.0",
     "playwright": "^1.61.1",
     "vitepress": "^1.6.4",
     "vitepress-plugin-comment-with-giscus": "^1.1.12"
@@ -15,6 +14,7 @@
     "alertifyjs": "^1.14.0",
     "jszip": "^3.10.1",
     "oh-my-live2d": "^0.16.1",
+    "photoswipe": "^5.4.4",
     "typed.js": "^2.1.0"
   }
 }

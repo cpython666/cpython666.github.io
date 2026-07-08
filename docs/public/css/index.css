@@ -30,6 +30,46 @@
   text-indent: 0;
 }
 
+.vp-doc img.is-zoomable,
+.x-backup__media img.is-zoomable {
+  cursor: zoom-in;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.vp-doc img.is-zoomable:hover,
+.x-backup__media img.is-zoomable:hover {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.pswp {
+  --pswp-bg: rgba(0, 0, 0, 0.88);
+}
+
+.pswp__button--download,
+.pswp__button--original {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pswp-caption {
+  position: absolute;
+  right: 16px;
+  bottom: 18px;
+  left: 16px;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
 .bilibili-video {
   width: 100%;
   aspect-ratio: 16 / 9;
