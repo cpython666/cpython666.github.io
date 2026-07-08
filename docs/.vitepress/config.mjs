@@ -1070,6 +1070,20 @@ export default defineConfig({
   description: SITE_DESCRIPTION,
   base: "/",
   buildConcurrency: 8,
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return;
+            if (id.includes("/oh-my-live2d/")) return "vendor-live2d";
+            if (id.includes("/typed.js/")) return "vendor-home";
+            if (id.includes("/jszip/")) return "vendor-tools";
+          },
+        },
+      },
+    },
+  },
   transformPageData(pageData) {
     return {
       description: resolvePageDescription(pageData),
