@@ -30,9 +30,6 @@ npm run backup:x -- --handle wufantouzi --skip-media
 # 自定义评论屏蔽词，用英文逗号分隔
 npm run backup:x -- --handle wufantouzi --comment-blocklist 固炮,炮友,破处
 
-# 不重新采集，只根据 index.json 重新生成 Markdown
-npm run backup:x -- --handle wufantouzi --render-md-only
-
 # 清空该账号归档并保留空 index.json，适合重新备份前使用
 npm run backup:x -- --handle wufantouzi --reset
 ```
@@ -42,7 +39,7 @@ npm run backup:x -- --handle wufantouzi --reset
 - 输出目录：`docs/public/backups/x/<handle>/`
 - 展示页面：`/backup/`
 - 预览页面先读取轻量 `index.json`，再按需加载 `posts/<post-id>.json` 详情，避免几千条帖子都塞进一个大 JSON。
-- Markdown 是附加导出文件，删除 `.md` 不会影响页面展示。
+- 页面展示只依赖 `index.json` 和 `posts/*.json`。
 - 目前只备份正文、图片和可见评论流，不备份视频。
 - 脚本会增量采集，已存在且不是翻译态的帖子不会重复进入详情页。
 - 如果 X 因 IP 或语言设置展示英文翻译，脚本会尝试点击 `Show original` / `显示原文`，最终只保存中文原文。

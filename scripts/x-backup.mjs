@@ -32,7 +32,6 @@ function parseArgs(argv) {
     cdp: "",
     headless: false,
     loginOnly: false,
-    renderMarkdownOnly: false,
     reset: false,
     skipMedia: false,
     commentBlocklist: [...DEFAULT_COMMENT_BLOCKLIST],
@@ -53,7 +52,6 @@ function parseArgs(argv) {
     else if (arg === "--cdp") options.cdp = next();
     else if (arg === "--headless") options.headless = true;
     else if (arg === "--login-only") options.loginOnly = true;
-    else if (arg === "--render-md-only") options.renderMarkdownOnly = true;
     else if (arg === "--reset") options.reset = true;
     else if (arg === "--skip-media") options.skipMedia = true;
     else if (arg === "--comment-blocklist") options.commentBlocklist = parseBlocklist(next());
@@ -147,7 +145,6 @@ Options:
   --reply-scrolls <n>       Max detail page scrolls for visible top-level conversation. Default ${DEFAULT_REPLY_SCROLLS}.
   --skip-media              Save media URLs but do not download files.
   --comment-blocklist <csv> Filter comments by author name, handle, and text. Default: ${DEFAULT_COMMENT_BLOCKLIST.join(",")}.
-  --render-md-only          Rebuild Markdown files from existing index.json without opening Chrome.
   --reset                   Clear this handle archive and recreate an empty index.json.
   --login-only              Open Chrome profile for manual X login, then press Enter here.
   --cdp <url>               Connect to an existing Chrome remote debugging endpoint, for example http://127.0.0.1:9222.
@@ -167,21 +164,6 @@ async function main() {
       profileUrl: `https://x.com/${options.handle}`,
     });
     console.log(`Reset archive at ${outputDir}.`);
-    return;
-  }
-
-  if (options.renderMarkdownOnly) {
-    const archive = await readJsonIfExists(join(outputDir, "index.json"), null);
-    const posts = await loadArchivePosts(outputDir, archive);
-    for (const post of posts) {
-      await writePostMarkdown(post, outputDir);
-    }
-    await writeArchiveIndex(outputDir, archive?.source || {
-      type: "x",
-      handle: options.handle,
-      profileUrl: `https://x.com/${options.handle}`,
-    }, posts);
-    console.log(`Rendered ${posts.length} Markdown files from ${join(outputDir, "index.json")}.`);
     return;
   }
 
@@ -229,7 +211,6 @@ async function main() {
       await downloadPostMedia(post, outputDir);
     }
 
-    await writePostMarkdown(post, outputDir);
     postsById.set(post.id, post);
     await writeArchiveIndex(outputDir, source, Array.from(postsById.values()));
     console.log(`Saved ${post.id} with ${post.comments.length} visible comments.`);
@@ -649,55 +630,6 @@ async function loadArchivePosts(outputDir, archive) {
   }
 
   return posts;
-}
-
-async function writePostMarkdown(post, outputDir) {
-  const target = join(outputDir, `${post.id}.md`);
-  const lines = [
-    "---",
-    `source: x`,
-    `id: "${post.id}"`,
-    `url: "${post.url}"`,
-    `author: "${escapeYaml(post.author.name)}"`,
-    `handle: "${escapeYaml(post.author.handle)}"`,
-    `createdAt: "${post.createdAt}"`,
-    "---",
-    "",
-    `# ${post.author.name} @${post.author.handle}`,
-    "",
-    `[原帖](${post.url})`,
-    "",
-    post.text,
-    "",
-  ];
-
-  if (post.images.length) {
-    lines.push("## 图片", "");
-    for (const image of post.images) {
-      lines.push(`![${image.alt || "media"}](${image.localPath || image.url})`, "");
-    }
-  }
-
-  if (post.comments.length) {
-    lines.push("## 可见评论流", "");
-    for (const comment of post.comments) {
-      const tag = comment.relation === "author-visible-reply" ? "作者回复" : "评论";
-      lines.push(`### ${tag}: ${comment.author.name} @${comment.author.handle}`);
-      lines.push("");
-      lines.push(`- 时间: ${comment.createdAt || comment.visibleTime}`);
-      lines.push(`- 主页: ${comment.author.profileUrl}`);
-      lines.push(`- 链接: ${comment.url}`);
-      lines.push("");
-      lines.push(comment.text || "(无正文)");
-      lines.push("");
-    }
-  }
-
-  await writeFile(target, `${lines.join("\n").replace(/\n{3,}/g, "\n\n")}\n`);
-}
-
-function escapeYaml(value) {
-  return String(value || "").replaceAll("\\", "\\\\").replaceAll('"', '\\"');
 }
 
 async function readJsonIfExists(path, fallback) {

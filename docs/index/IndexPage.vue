@@ -74,7 +74,6 @@ const images = [
   'imgs/bg/small_15.jpg',
   'imgs/bg/small_16.jpg',
   'imgs/bg/small_17.jpg',
-  'imgs/bg/small_18.jpg',
 
   'imgs/bg/small_1.png',
   'imgs/bg/small_2.png',

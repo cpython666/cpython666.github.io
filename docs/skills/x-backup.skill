@@ -1,6 +1,6 @@
 ---
 name: x-backup
-description: 备份 X/Twitter 账号帖子、图片和可见评论流到 cpython666.github.io 博客时使用。适用于需要复用已登录 Chrome、采集 X 帖子详情、评论人 id/主页链接/评论内容/时间、图片资源，并沉淀为本地 JSON/Markdown 的任务。
+description: 备份 X/Twitter 账号帖子、图片和可见评论流到 cpython666.github.io 博客时使用。适用于需要复用已登录 Chrome、采集 X 帖子详情、评论人 id/主页链接/评论内容/时间、图片资源，并沉淀为本地 JSON 的任务。
 ---
 
 # X 备份 Skill
@@ -40,15 +40,10 @@ npm run backup:x -- --handle wufantouzi --login-only
 ```text
 docs/public/backups/x/<handle>/index.json
 docs/public/backups/x/<handle>/posts/<post-id>.json
-docs/public/backups/x/<handle>/<post-id>.md
 docs/public/backups/x/<handle>/media/
 ```
 
-博客页面 `/backup/` 先读取轻量 `index.json`，再按需加载 `posts/<post-id>.json` 详情，避免几千条帖子全塞进一个大 JSON。Markdown 是附加导出物，用于人工阅读、提交归档或迁移；删除 `.md` 不会让页面内容消失。需要从现有 JSON 重建 Markdown 时运行：
-
-```bash
-npm run backup:x -- --handle wufantouzi --render-md-only
-```
+博客页面 `/backup/` 先读取轻量 `index.json`，再按需加载 `posts/<post-id>.json` 详情，避免几千条帖子全塞进一个大 JSON。
 
 `index.json` 结构：
 
