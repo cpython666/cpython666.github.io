@@ -6,6 +6,7 @@ import 'photoswipe/style.css';
 import { computed, h, onMounted, watch, nextTick } from 'vue';
 
 import ArticleTools from './components/ArticleTools.vue'
+import ArticleHits from './components/ArticleHits.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 import VipBtn from './components/VipBtn.vue'
 
@@ -14,6 +15,8 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'aside-outline-before': () => h(ArticleOutlineToggle),
+    'doc-before': () => h(ArticleHits),
+    'home-features-after': () => h(ArticleHits),
     'layout-bottom': () => h(ArticleTools),
   }),
   async enhanceApp({ app }) {

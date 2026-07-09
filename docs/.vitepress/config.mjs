@@ -1325,7 +1325,7 @@ export default defineConfig({
       text: "在 github 上编辑此页",
     },
     footer: {
-      message: `本站收录内容源自互联网，不对其网站内容或交易负责。&ensp;|&ensp;如有内容侵犯权益，请联系站长删除相关内容！`,
+      message: `<span data-home-hits-wrap style="display:none;margin:0 0 10px"><img data-home-hits data-src="https://hits.sh/cpython666.github.io.svg?view=today-total&label=today%20/%20total&color=4cce5a&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAxNCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGNjZTVhIiBzdHJva2Utd2lkdGg9IjEuNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMS41IDdzMi4zLTMuOCA2LTMuOCA2IDMuOCA2IDMuOC0yLjMgMy44LTYgMy44LTYtMy44LTYtMy44WiIvPjxjaXJjbGUgY3g9IjcuNSIgY3k9IjciIHI9IjEuNyIvPjwvZz48cmVjdCB4PSIxNiIgeT0iOCIgd2lkdGg9IjMiIGhlaWdodD0iNCIgZmlsbD0iIzRjY2U1YSIvPjxyZWN0IHg9IjIxIiB5PSI1IiB3aWR0aD0iMyIgaGVpZ2h0PSI3IiBmaWxsPSIjNGNjZTVhIi8+PHJlY3QgeD0iMjYiIHk9IjIiIHdpZHRoPSIzIiBoZWlnaHQ9IjEwIiBmaWxsPSIjNGNjZTVhIi8+PC9zdmc+" alt="今日和总访问量" loading="lazy" style="width:auto;height:20px;vertical-align:middle"></span><br>本站收录内容源自互联网，不对其网站内容或交易负责。&ensp;|&ensp;如有内容侵犯权益，请联系站长删除相关内容！`,
       copyright:
         '<a href="https://space.bilibili.com/1909782963" target="_blank">Copyright © 2024 IT.Python斗罗</a>&ensp;|&ensp;<span id="runtime"></span>',
     },
