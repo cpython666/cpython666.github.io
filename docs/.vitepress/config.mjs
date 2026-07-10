@@ -337,6 +337,10 @@ let smart_money_tracking_items = [
     text: "P16-AI不是万能的：做 Hyperliquid 聪明钱追踪，我走过的弯路",
     link: "/web3/smart-money-tracking/ai-not-omnipotent-hyperliquid-lessons",
   },
+  {
+    text: "P17-聪明钱分析系统的运行流程",
+    link: "/web3/smart-money-tracking/smart-money-analysis-system-flow",
+  },
 ];
 
 let blockchain_weekly_report = [
