@@ -19,6 +19,7 @@ memberOnly: true
 
 ![](https://cdn.nlark.com/yuque/0/2026/png/38536969/1783671418136-811ec8b0-6aaa-4b87-8279-d8f6476d7bec.png)
 
-[hyperliquid_trader_stats](https://github.com/cpython666/hyperliquid_trader_stats)
+## 代码仓库
 
-[IPProxyPoolPro](https://github.com/cpython666/IPProxyPoolPro)
+- [hyperliquid_trader_stats](https://github.com/cpython666/hyperliquid_trader_stats)
+- [IPProxyPoolPro](https://github.com/cpython666/IPProxyPoolPro)
