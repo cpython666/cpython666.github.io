@@ -15,9 +15,9 @@ memberOnly: true
 
 代理池：可配置测试哪个站点的代理。
 
-![](https://cdn.nlark.com/yuque/0/2026/png/38536969/1783671404903-472e66c7-4318-43b1-9fdd-c30090042774.png)
+![](/imgs/web3/smart-money-tracking/smart-money-analysis-system-flow/flow-1.png)
 
-![](https://cdn.nlark.com/yuque/0/2026/png/38536969/1783671418136-811ec8b0-6aaa-4b87-8279-d8f6476d7bec.png)
+![](/imgs/web3/smart-money-tracking/smart-money-analysis-system-flow/flow-2.png)
 
 ## 代码仓库
 

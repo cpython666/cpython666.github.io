@@ -696,6 +696,10 @@ let life_items = [
     link: "/life/codex-auto-coding-blog-refactor",
   },
   {
+    text: "一个让 AI 编程更“懒”、更少写废代码的 skill",
+    link: "/life/ponytail-ai-coding-skill",
+  },
+  {
     text: "Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐",
     link: "/life/codex-relay-provider-history-sync",
   },
