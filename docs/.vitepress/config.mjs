@@ -691,9 +691,15 @@ let life_items = [
     text: "代码写的垃圾是会被打的",
     link: "/life/bad-code-will-be-punished",
   },
+];
+let life_ai_items = [
   {
     text: "全自动写代码，博客全自动改造，一句话生成表情包动态图标，CodeX太好用了，我已经不自己写代码了",
     link: "/life/codex-auto-coding-blog-refactor",
+  },
+  {
+    text: "CodeX 可以定制皮肤啦",
+    link: "/life/codex-dream-skin",
   },
   {
     text: "一个让 AI 编程更“懒”、更少写废代码的 skill",
@@ -857,6 +863,11 @@ let sidebar_config = {
       text: "人生感悟",
       collapsed: false,
       items: life_items,
+    },
+    {
+      text: "AI 主题",
+      collapsed: false,
+      items: life_ai_items,
     },
     {
       text: "年度总结与Flag",
