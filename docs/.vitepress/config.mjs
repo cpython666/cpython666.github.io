@@ -861,27 +861,27 @@ let sidebar_config = {
   "/life/": [
     {
       text: "人生感悟",
-      collapsed: false,
+      collapsed: true,
       items: life_items,
     },
     {
       text: "AI 主题",
-      collapsed: false,
+      collapsed: true,
       items: life_ai_items,
     },
     {
       text: "年度总结与Flag",
-      collapsed: false,
+      collapsed: true,
       items: life_yearly_flag_items,
     },
     {
       text: "毕业节点复盘",
-      collapsed: false,
+      collapsed: true,
       items: life_graduation_milestone_items,
     },
     {
       text: "粉丝里程碑",
-      collapsed: false,
+      collapsed: true,
       items: life_follower_milestone_items,
     },
   ],
