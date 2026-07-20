@@ -448,7 +448,8 @@ let python_col_items = [
     text: "PyQt6实战开发之旅",
     link: "/python/collection/pyqt6",
   },
-  { text: "分布式任务队列工具：Celery", link: "/python/collection/celery" },
+  { text: "Celery 从基础到精通", link: "/python/collection/celery" },
+  { text: "uv 从基础到精通", link: "/python/collection/uv" },
   {
     text: "pre-commit 简明教程：让你的代码提交更规范",
     link: "/python/libs/pre-commit",
