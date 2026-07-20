@@ -78,8 +78,13 @@ watch(outlineVisible, applyOutlineState)
 }
 
 @media (min-width: 960px) {
+  .VPDoc .aside-container {
+    overflow-x: clip;
+  }
+
   .VPDoc .aside-content {
     position: relative;
+    min-width: 0;
   }
 
   .article-outline-toggle {
@@ -138,10 +143,20 @@ watch(outlineVisible, applyOutlineState)
   }
 
   .VPDocAsideOutline .content {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
     padding-right: 32px;
     transition:
       border-color 0.2s ease,
       opacity 0.2s ease;
+  }
+
+  .VPDocAsideOutline .VPDocOutlineItem,
+  .VPDocAsideOutline .outline-link {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .VPDocAsideOutline .content::after {
