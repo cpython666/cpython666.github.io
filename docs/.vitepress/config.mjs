@@ -443,6 +443,9 @@ let python_third_party_items = [
   { text: "Python 三方包", link: "/python/libs/" },
   { text: "Celery 从基础到精通", link: "/python/libs/celery" },
   { text: "uv 从基础到精通", link: "/python/libs/uv" },
+  { text: "Python Agent 开发：从入门到精通", link: "/python/libs/agent" },
+  { text: "Pytest 从基础到精通", link: "/python/libs/pytest" },
+  { text: "常用命令总敲错？记不住？让你的命令短起来！-invoke", link: "/python/libs/invoke" },
 ];
 let python_subtitle_extractor_items = [
   { text: "字幕提取器系列", link: "/python/subtitle-extractor/" },
@@ -1081,6 +1084,12 @@ let sidebar_config = {
     },
   ],
 };
+
+// 默认收起所有合集；VitePress 会自动展开当前页面所在的合集。
+Object.values(sidebar_config).flat().forEach((item) => {
+  if (item.items) item.collapsed = true;
+});
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 

@@ -2,20 +2,13 @@
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const STORAGE_KEY = 'article-reading-outline-visible'
-const PREVIEW_CLASS = 'article-reading-outline-preview'
 
 const mounted = ref(false)
 const outlineVisible = ref(true)
 
-const removeOutlinePreview = () => {
-  if (typeof document === 'undefined') return
-  document.body.classList.remove(PREVIEW_CLASS)
-}
-
 const applyOutlineState = () => {
   if (typeof document === 'undefined') return
   document.body.classList.toggle('article-reading-outline-hidden', !outlineVisible.value)
-  if (outlineVisible.value) removeOutlinePreview()
 }
 
 const readOutlineState = () => {
@@ -41,13 +34,7 @@ const saveOutlineState = () => {
 
 const toggleOutline = () => {
   outlineVisible.value = !outlineVisible.value
-  removeOutlinePreview()
   saveOutlineState()
-}
-
-const showOutlinePreview = () => {
-  if (outlineVisible.value) return
-  document.body.classList.add(PREVIEW_CLASS)
 }
 
 onMounted(() => {
@@ -58,7 +45,6 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.body.classList.remove('article-reading-outline-hidden')
-  removeOutlinePreview()
 })
 
 watch(outlineVisible, applyOutlineState)
@@ -75,14 +61,14 @@ watch(outlineVisible, applyOutlineState)
       @pointerdown.stop
       @click.stop.prevent="toggleOutline"
     >
-      {{ outlineVisible ? 'o' : 'x' }}
+      <svg v-if="outlineVisible" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
+        <circle cx="12" cy="12" r="2.75" />
+      </svg>
+      <svg v-else viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m3 3 18 18M10.6 6.1A10 10 0 0 1 12 6c6 0 9.5 6 9.5 6a16 16 0 0 1-2.2 2.8M6.2 6.2C3.8 8 2.5 12 2.5 12s3.5 6 9.5 6a9 9 0 0 0 3-.5M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+      </svg>
     </button>
-    <div
-      class="article-outline-preview-zone"
-      aria-hidden="true"
-      @pointerenter="showOutlinePreview"
-      @pointerleave="removeOutlinePreview"
-    />
   </div>
 </template>
 
@@ -102,22 +88,6 @@ watch(outlineVisible, applyOutlineState)
     right: 10px;
     z-index: 40;
     display: block;
-    pointer-events: auto;
-  }
-
-  .article-outline-preview-zone {
-    display: none;
-  }
-
-  body.article-reading-outline-hidden .article-outline-preview-zone {
-    position: absolute;
-    top: 34px;
-    right: 0;
-    z-index: 2;
-    display: block;
-    width: 112px;
-    height: 330px;
-    cursor: default;
     pointer-events: auto;
   }
 
@@ -152,6 +122,16 @@ watch(outlineVisible, applyOutlineState)
     transform: translateY(-1px);
   }
 
+  .article-outline-toggle__button svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
   .article-outline-toggle__button:focus-visible {
     outline: 2px solid var(--vp-c-brand-1);
     outline-offset: 2px;
@@ -169,56 +149,67 @@ watch(outlineVisible, applyOutlineState)
   }
 
   body.article-reading-outline-hidden .VPDocAsideOutline .content {
-    min-height: 340px;
     border-left-color: transparent;
   }
 
-  body.article-reading-outline-hidden .VPDocAsideOutline .outline-marker,
   body.article-reading-outline-hidden .VPDocAsideOutline .outline-title,
-  body.article-reading-outline-hidden .VPDocAsideOutline nav {
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-link {
+    position: relative;
+    color: transparent !important;
     pointer-events: none;
-    visibility: hidden;
-    opacity: 0;
-    transition:
-      visibility 0.18s ease,
-      opacity 0.18s ease;
   }
 
-  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content {
-    border-left-color: var(--vp-c-divider);
-  }
-
-  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-marker,
-  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-title,
-  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline nav {
-    pointer-events: auto;
-    visibility: visible;
-    opacity: 1;
-  }
-
-  body.article-reading-outline-hidden .VPDocAsideOutline .content::after {
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-title::after,
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-link::after {
     position: absolute;
-    top: 44px;
-    right: 4px;
-    width: 52px;
-    height: 280px;
+    top: 50%;
+    left: 0;
+    width: 48px;
+    height: 3px;
     content: '';
-    opacity: 0.72;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 30px,
-      color-mix(in srgb, var(--vp-c-text-3) 32%, transparent) 30px,
-      color-mix(in srgb, var(--vp-c-text-3) 32%, transparent) 33px,
-      transparent 33px,
-      transparent 58px
-    );
+    background: color-mix(in srgb, var(--vp-c-text-3) 35%, transparent);
     border-radius: 999px;
+    transform: translateY(-50%);
     transition: opacity 0.18s ease;
   }
 
-  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content::after {
+  body.article-reading-outline-hidden .VPDocAsideOutline li:nth-child(3n + 1) > .outline-link::after {
+    width: 32px;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline li:nth-child(3n + 2) > .outline-link::after {
+    width: 40px;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-marker {
+    opacity: 0.9 !important;
+    background: var(--vp-c-text-1);
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover {
+    border-left-color: var(--vp-c-divider);
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-title {
+    color: var(--vp-c-text-1) !important;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-link {
+    color: var(--vp-c-text-2) !important;
+    pointer-events: auto;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-link.active {
+    color: var(--vp-c-text-1) !important;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-title::after,
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-link::after {
     opacity: 0;
+  }
+
+  body.article-reading-outline-hidden .VPDocAsideOutline .content:hover .outline-marker {
+    background: var(--vp-c-brand-1);
   }
 }
 
