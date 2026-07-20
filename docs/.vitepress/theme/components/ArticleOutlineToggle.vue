@@ -70,7 +70,7 @@ watch(outlineVisible, applyOutlineState)
       class="article-outline-toggle__button"
       type="button"
       :title="outlineVisible ? '隐藏目录' : '显示目录'"
-      :aria-label="outlineVisible ? '隐藏沉浸式阅读目录' : '显示沉浸式阅读目录'"
+      :aria-label="outlineVisible ? '隐藏文章目录' : '显示文章目录'"
       :aria-pressed="outlineVisible"
       @pointerdown.stop
       @click.stop.prevent="toggleOutline"
@@ -92,11 +92,11 @@ watch(outlineVisible, applyOutlineState)
 }
 
 @media (min-width: 960px) {
-  body.article-reading-mode .VPDoc .aside-content {
+  .VPDoc .aside-content {
     position: relative;
   }
 
-  body.article-reading-mode .article-outline-toggle {
+  .article-outline-toggle {
     position: absolute;
     top: 0;
     right: 10px;
@@ -109,7 +109,7 @@ watch(outlineVisible, applyOutlineState)
     display: none;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden .article-outline-preview-zone {
+  body.article-reading-outline-hidden .article-outline-preview-zone {
     position: absolute;
     top: 34px;
     right: 0;
@@ -157,25 +157,25 @@ watch(outlineVisible, applyOutlineState)
     outline-offset: 2px;
   }
 
-  body.article-reading-mode .VPDocAsideOutline .content {
+  .VPDocAsideOutline .content {
     padding-right: 32px;
     transition:
       border-color 0.2s ease,
       opacity 0.2s ease;
   }
 
-  body.article-reading-mode .VPDocAsideOutline .content::after {
+  .VPDocAsideOutline .content::after {
     pointer-events: none;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden .VPDocAsideOutline .content {
+  body.article-reading-outline-hidden .VPDocAsideOutline .content {
     min-height: 340px;
     border-left-color: transparent;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden .VPDocAsideOutline .outline-marker,
-  body.article-reading-mode.article-reading-outline-hidden .VPDocAsideOutline .outline-title,
-  body.article-reading-mode.article-reading-outline-hidden .VPDocAsideOutline nav {
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-marker,
+  body.article-reading-outline-hidden .VPDocAsideOutline .outline-title,
+  body.article-reading-outline-hidden .VPDocAsideOutline nav {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
@@ -184,19 +184,19 @@ watch(outlineVisible, applyOutlineState)
       opacity 0.18s ease;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content {
+  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content {
     border-left-color: var(--vp-c-divider);
   }
 
-  body.article-reading-mode.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-marker,
-  body.article-reading-mode.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-title,
-  body.article-reading-mode.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline nav {
+  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-marker,
+  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .outline-title,
+  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline nav {
     pointer-events: auto;
     visibility: visible;
     opacity: 1;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden .VPDocAsideOutline .content::after {
+  body.article-reading-outline-hidden .VPDocAsideOutline .content::after {
     position: absolute;
     top: 44px;
     right: 4px;
@@ -217,7 +217,7 @@ watch(outlineVisible, applyOutlineState)
     transition: opacity 0.18s ease;
   }
 
-  body.article-reading-mode.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content::after {
+  body.article-reading-outline-hidden.article-reading-outline-preview .VPDocAsideOutline .content::after {
     opacity: 0;
   }
 }

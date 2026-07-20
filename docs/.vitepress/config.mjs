@@ -439,21 +439,10 @@ let django_items = [
   },
 ];
 
-let python_col_items = [
-  {
-    text: "23种设计模式-Python",
-    link: "/python/collection/23-design/",
-  },
-  {
-    text: "PyQt6实战开发之旅",
-    link: "/python/collection/pyqt6",
-  },
-  { text: "Celery 从基础到精通", link: "/python/collection/celery" },
-  { text: "uv 从基础到精通", link: "/python/collection/uv" },
-  {
-    text: "pre-commit 简明教程：让你的代码提交更规范",
-    link: "/python/libs/pre-commit",
-  },
+let python_third_party_items = [
+  { text: "Python 三方包", link: "/python/libs/" },
+  { text: "Celery 从基础到精通", link: "/python/libs/celery" },
+  { text: "uv 从基础到精通", link: "/python/libs/uv" },
 ];
 let python_subtitle_extractor_items = [
   { text: "字幕提取器系列", link: "/python/subtitle-extractor/" },
@@ -818,6 +807,11 @@ let sidebar_config = {
           link: "/python/collection/PyQt6实战开发之旅",
         },
       ],
+    },
+    {
+      text: "Python 三方包",
+      collapsed: true,
+      items: python_third_party_items,
     },
     {
       text: "字幕提取器系列",
