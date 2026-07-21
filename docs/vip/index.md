@@ -54,8 +54,7 @@ const plans = ref([
       { content: '全部资源的搜索', status: 1 },
       { content: '全部资源的浏览', status: 1 },
       { content: '阅读VIP专属文章', status: 1 },
-      { content: '全部项目源码', status: 1 },
-      { content: '找资源宝典：资源无界，打破信息壁垒', url: '/blog/bNExJ', status: 1 },
+      { content: '找资源宝典：资源无界，打破信息壁垒', url: '/breakthrough-notes/resource-treasure-manual', status: 1 },
       { content: '会员专属-微信交流群', status: 1 },
       { content: '持续增加中～', status: 1 }
     ]
@@ -70,6 +69,7 @@ const plans = ref([
       { content: '购买服务一律五折', status: 1 },
       { content: '至尊会员标识', status: 1 },
       { content: '专业版全部权益', status: 1 },
+      { content: '全部项目源码：代理池和hyperliquid聪明钱追踪完全体最新版源码', status: 1 },
       { content: '技术咨询，路线规划', status: 1 },
       { content: '持续增加中～', status: 1 }
     ]
@@ -133,11 +133,17 @@ const activateVip = async () => {
 
 <style scoped>
 .vip-page { max-width: 1120px; margin: 16px auto; padding: 0 12px; }
-.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
-.plan-card { padding: 18px; text-align: center; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 8px; box-shadow: var(--vp-shadow-1); }
-.feature-list { list-style: none; padding: 0; margin: 0; }
-.feature-item { display: grid; grid-template-columns: 24px auto; gap: 8px; align-items: center; padding: 6px 0; }
-.feature-icon { font-size: 14px; }
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 18px; align-items: stretch; }
+.plan-card { position: relative; display: flex; flex-direction: column; min-height: 410px; padding: 24px 22px 20px; text-align: center; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 14px; box-shadow: var(--vp-shadow-1); transition: transform .2s, box-shadow .2s; }
+.plan-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, .1); }
+.plan-card.is-featured { border: 2px solid #8e44ad; box-shadow: 0 10px 28px rgba(142, 68, 173, .18); }
+.plan-card.is-featured::before { content: '推荐'; position: absolute; top: 14px; right: 14px; padding: 3px 9px; color: #fff; font-size: 12px; background: #8e44ad; border-radius: 999px; }
+.plan-card h3 { margin: 0 0 6px; font-size: 24px; }
+.plan-price { margin-bottom: 20px; color: var(--vp-c-text-2); font-size: 20px; }
+.feature-list { flex: 1; list-style: none; padding: 0; margin: 0 0 18px; }
+.feature-item { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; padding: 9px 0; text-align: left; line-height: 1.5; }
+.feature-icon { padding-top: 2px; font-size: 14px; }
+.feature-item.is-source { padding: 12px 10px; margin: 4px -10px; background: rgba(142, 68, 173, .08); border-radius: 8px; }
 .vip-section { margin-top: 24px; }
 .vip-tools { display: flex; gap: 8px; align-items: center; margin: 12px 0; }
 .vip-activate { display: grid; grid-template-columns: 1fr auto; gap: 8px; max-width: 420px; }
@@ -168,11 +174,11 @@ const activateVip = async () => {
     <button class="vip-button" type="button" @click="activateVip">激活VIP</button>
   </div>
   <div class="plans">
-    <section v-for="(plan, index) in plans" :key="index" class="plan-card">
+    <section v-for="(plan, index) in plans" :key="index" class="plan-card" :class="{ 'is-featured': plan.name === '旗舰版' }">
       <h3>{{ plan.name }}</h3>
-      <div>{{ plan.price }}</div>
+      <div class="plan-price">{{ plan.price }}</div>
       <ul class="feature-list">
-        <li v-for="(feature, idx) in plan.features" :key="idx" class="feature-item">
+        <li v-for="(feature, idx) in plan.features" :key="idx" class="feature-item" :class="{ 'is-source': feature.content.startsWith('全部项目源码') }">
           <span class="feature-icon" :style="{ color: feature.status ? '#67C23A' : '#F56C6C' }">{{ feature.status ? '✔︎' : '✘' }}</span>
           <a v-if="feature.url" class="vip-link" :href="feature.url" target="_blank">{{ feature.content }}</a>
           <template v-else>{{ feature.content }}</template>
