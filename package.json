@@ -2,13 +2,16 @@
   "devDependencies": {
     "playwright": "^1.61.1",
     "vitepress": "^1.6.4",
-    "vitepress-plugin-comment-with-giscus": "^1.1.12"
+    "vitepress-plugin-comment-with-giscus": "^1.1.12",
+    "wrangler": "^4.112.0"
   },
   "scripts": {
     "backup:x": "node scripts/x-backup.mjs",
     "docs:dev": "vitepress dev docs --port 8080",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --port 80"
+    "docs:preview": "vitepress preview docs --port 80",
+    "deploy": "npm run docs:build && wrangler deploy",
+    "preview": "npm run docs:build && wrangler dev"
   },
   "dependencies": {
     "alertifyjs": "^1.14.0",
