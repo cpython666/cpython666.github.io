@@ -188,6 +188,10 @@ let spider_items = [
   { text: "练手网站", link: "/spider/练手网站" },
 ];
 let spider_set_items = [
+  {
+    text: "杭州拱墅闪电签爬虫 Python 开发",
+    link: "/spider/collection/hangzhou-shandianqian-crawler",
+  },
   { text: "就业分享-谁的青春不迷茫", link: "/spider/collection/job-sharing" },
   { text: "几乎免费的海外代理【clash妙用🤩】【无广告】", link: "/spider/collection/cheap-ip" },
   { text: "Clash 常用配置", link: "/spider/collection/clash" },
@@ -340,6 +344,14 @@ let smart_money_tracking_items = [
   {
     text: "P17-聪明钱分析系统的运行流程",
     link: "/web3/smart-money-tracking/smart-money-analysis-system-flow",
+  },
+  {
+    text: "机构巨鲸都在做空，美股危险了",
+    link: "/web3/smart-money-tracking/institutions-whales-short",
+  },
+  {
+    text: "这就是数据分析的魅力！聪明钱追踪仍需要时间检验。",
+    link: "/web3/smart-money-tracking/data-analysis-charm",
   },
 ];
 
@@ -553,6 +565,10 @@ let backend_items = [
   },
   { text: "nginx笔记", link: "/backend/nginx" },
   { text: "布隆过滤器", link: "/backend/布隆过滤器" },
+  {
+    text: "北京凯迅 Python 后端开发面试对话整理",
+    link: "/backend/beijing-kaixun-python-interview",
+  },
 ];
 
 let algorithm_items = [
@@ -600,6 +616,18 @@ let web_intro_items = [
 ];
 let life_items = [
   { text: "人生感悟", link: "/life/" },
+  {
+    text: "Agent开发的时代来啦，全栈开发的时代来啦，自动化数据采集的时代来啦",
+    link: "/life/agent-fullstack-data-collection",
+  },
+  {
+    text: "海力士暴跌，如来。这次不一样？次次都一样！",
+    link: "/life/hynix-drop-same-story",
+  },
+  {
+    text: "知道自己不懂并不可怕，可怕的是不懂却以为自己很懂",
+    link: "/life/know-what-you-dont-know",
+  },
   {
     text: "自动化数据采集危险啦，我的饭碗裂开啦",
     link: "/life/ai-automation-data-collection",
@@ -686,6 +714,10 @@ let life_items = [
   },
 ];
 let life_ai_items = [
+  {
+    text: "主流模型免费版生图能力对比从夯到拉，ChatGPT，Claude，豆包，千问，智谱，Kimi，gemini，Grok",
+    link: "/life/free-model-image-generation-comparison",
+  },
   {
     text: "全自动写代码，博客全自动改造，一句话生成表情包动态图标，CodeX太好用了，我已经不自己写代码了",
     link: "/life/codex-auto-coding-blog-refactor",
