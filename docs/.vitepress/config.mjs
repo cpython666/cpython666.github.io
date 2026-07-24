@@ -188,10 +188,6 @@ let spider_items = [
   { text: "练手网站", link: "/spider/练手网站" },
 ];
 let spider_set_items = [
-  {
-    text: "杭州拱墅闪电签爬虫 Python 开发",
-    link: "/spider/collection/hangzhou-shandianqian-crawler",
-  },
   { text: "就业分享-谁的青春不迷茫", link: "/spider/collection/job-sharing" },
   { text: "几乎免费的海外代理【clash妙用🤩】【无广告】", link: "/spider/collection/cheap-ip" },
   { text: "Clash 常用配置", link: "/spider/collection/clash" },
@@ -565,10 +561,6 @@ let backend_items = [
   },
   { text: "nginx笔记", link: "/backend/nginx" },
   { text: "布隆过滤器", link: "/backend/布隆过滤器" },
-  {
-    text: "北京凯迅 Python 后端开发面试对话整理",
-    link: "/backend/beijing-kaixun-python-interview",
-  },
 ];
 
 let algorithm_items = [
