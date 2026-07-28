@@ -77,6 +77,7 @@ const plans = ref([
 ])
 
 const vipPosts = ref([
+  { title: 'GEO系统研究报告', path: '/life/geo-system-research-report' },
   { title: 'Docker笔记', path: '/backend/docker' },
   { title: '找资源宝典：资源无界，打破信息壁垒-说明', path: '/breakthrough-notes/resource-treasure-manual' },
   { title: 'P1-DrissionPage数据采集中间系统【源码及讲解】', path: '/spider/drissionpage-system/p1-system-source-guide' },

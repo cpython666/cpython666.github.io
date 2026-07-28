@@ -707,6 +707,10 @@ let life_items = [
 ];
 let life_ai_items = [
   {
+    text: "GEO系统研究报告",
+    link: "/life/geo-system-research-report",
+  },
+  {
     text: "主流模型免费版生图能力对比从夯到拉，ChatGPT，Claude，豆包，千问，智谱，Kimi，gemini，Grok",
     link: "/life/free-model-image-generation-comparison",
   },
