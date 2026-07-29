@@ -707,6 +707,10 @@ let life_items = [
 ];
 let life_ai_items = [
   {
+    text: "一天做出来的GEO系统长什么样？",
+    link: "/life/geo-system-built-in-one-day",
+  },
+  {
     text: "GEO系统研究报告",
     link: "/life/geo-system-research-report",
   },
