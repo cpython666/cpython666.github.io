@@ -36,6 +36,13 @@
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
+.vp-doc img.is-zoomable {
+  display: block;
+  max-width: min(100%, 520px);
+  height: auto;
+  margin: 16px auto;
+}
+
 .vp-doc img.is-zoomable:hover,
 .x-backup__media img.is-zoomable:hover {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
@@ -46,14 +53,52 @@
   --pswp-bg: rgba(0, 0, 0, 0.88);
 }
 
-.pswp__button--download,
-.pswp__button--original {
-  font-size: 26px;
-  font-weight: 700;
-  line-height: 1;
+.pswp .pswp__button--download,
+.pswp .pswp__button--original {
+  width: 44px;
+  height: 44px;
+  margin: 8px 4px 0;
   color: #fff;
-  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.58);
+  opacity: 1;
   text-decoration: none;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  backdrop-filter: blur(8px);
+}
+
+.pswp .pswp__button--download .pswp__icn,
+.pswp .pswp__button--original .pswp__icn {
+  top: 9px;
+  left: 9px;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pswp .pswp__button--download:hover,
+.pswp .pswp__button--original:hover {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.pswp .pswp__button--download:active,
+.pswp .pswp__button--original:active {
+  background: rgba(255, 255, 255, 0.24);
+  transform: translateY(0);
+}
+
+.pswp .pswp__button--download:focus-visible,
+.pswp .pswp__button--original:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .pswp-caption {

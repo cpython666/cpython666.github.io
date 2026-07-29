@@ -108,7 +108,7 @@ export default {
           order: 8,
           isButton: true,
           tagName: "a",
-          html: "↓",
+          html: '<svg class="pswp__icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>',
           title: "下载图片",
           onInit: (el, pswp) => {
             const update = () => {
@@ -127,7 +127,7 @@ export default {
           order: 9,
           isButton: true,
           tagName: "a",
-          html: "↗",
+          html: '<svg class="pswp__icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6-9 9"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></svg>',
           title: "打开原图",
           onInit: (el, pswp) => {
             const update = () => {
