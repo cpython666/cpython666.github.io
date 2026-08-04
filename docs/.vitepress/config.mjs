@@ -431,20 +431,8 @@ let python_items = [
     link: "/python/视频源码",
   },
   { text: "常用命令", link: "/python/shorthand" },
-  { text: "常用命令总敲错？记不住？让你的命令短起来！-invoke【python三方库】", link: "/python/libs/invoke" },
   { text: "用Python手搓限流类-支持同步与异步，内存或者redis", link: "/python/libs/rate-limiter" },
   { text: "文本差异对比如此简单！", link: "/python/libs/text-diff-simple" },
-];
-
-let django_items = [
-  {
-    text: "Django笔记",
-    link: "/python/web/django",
-  },
-  {
-    text: "探索SimpleUI: 让Django Admin焕发现代光彩",
-    link: "/python/web/simple-ui",
-  },
 ];
 
 let python_third_party_items = [
@@ -842,7 +830,7 @@ let sidebar_config = {
         },
         {
           text: "PyQt6实战开发之旅",
-          link: "/python/collection/PyQt6实战开发之旅",
+          link: "/python/collection/pyqt6",
         },
       ],
     },
@@ -949,17 +937,12 @@ let sidebar_config = {
       text: "程序员脱单指南",
       collapsed: false,
       items: [
+        { text: "好文分享", link: "/好文推荐/" },
         { text: "土味情话", link: "/好文推荐/twqh" },
         {
-          text: "36计（待更新）",
+          text: "程序员脱单指南（36计 / 七步流程法 / 开场白 / 聊天技巧）",
           link: "/好文推荐/程序员脱单指南",
         },
-        { text: "七步流程法（待更新）", link: "/好文推荐/程序员脱单指南" },
-        {
-          text: "开场白（待更新）",
-          link: "/好文推荐/程序员脱单指南",
-        },
-        { text: "聊天技巧（待更新）", link: "/好文推荐/程序员脱单指南" },
       ],
     },
   ],
@@ -1130,13 +1113,61 @@ Object.values(sidebar_config).flat().forEach((item) => {
   if (item.items) item.collapsed = true;
 });
 
+// 校验侧边栏/导航中的站内链接是否有对应的 md 文件。
+// VitePress 只检查正文里的死链，侧边栏配置写错时会静默 404，所以在这里兜一层。
+function collectConfiguredLinks(nodes, out = new Set()) {
+  for (const node of nodes) {
+    if (!node || typeof node !== "object") continue;
+    if (typeof node.link === "string") out.add(node.link);
+    if (Array.isArray(node.items)) collectConfiguredLinks(node.items, out);
+  }
+  return out;
+}
+
+function assertSidebarLinksExist() {
+  const docsRoot = join(process.cwd(), "docs");
+  const links = collectConfiguredLinks([
+    ...nav_config,
+    ...Object.values(sidebar_config).flat(),
+  ]);
+
+  const dead = [];
+  for (const link of links) {
+    if (/^(https?:)?\/\//.test(link)) continue;
+    const clean = decodeURI(link.split(/[#?]/)[0]);
+    if (!clean.startsWith("/")) continue;
+
+    const base = join(docsRoot, clean);
+    const candidates = clean.endsWith("/")
+      ? [join(base, "index.md")]
+      : [`${base}.md`, join(base, "index.md")];
+    if (!candidates.some((candidate) => existsSync(candidate))) dead.push(link);
+  }
+
+  if (dead.length) {
+    throw new Error(
+      `侧边栏/导航存在死链（找不到对应 md 文件）：\n${dead.map((link) => `  - ${link}`).join("\n")}`
+    );
+  }
+}
+
+assertSidebarLinksExist();
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
 
   title: SITE_NAME,
   description: SITE_DESCRIPTION,
+  lang: "zh-CN",
   base: "/",
   buildConcurrency: 8,
+  markdown: {
+    lineNumbers: true,
+    image: {
+      // 图片懒加载
+      lazyLoading: true,
+    },
+  },
   vite: {
     build: {
       rollupOptions: {
@@ -1398,19 +1429,35 @@ export default defineConfig({
     },
     outlineTitle: "本页目录",
     lastUpdated: true,
-    markdown: {
-      lineNumbers: true,
-      image: {
-        // 默认禁用图片懒加载
-        lazyLoading: true,
-      },
-    },
+    lastUpdatedText: "最后更新",
+    returnToTopLabel: "回到顶部",
+    sidebarMenuLabel: "菜单",
+    darkModeSwitchLabel: "主题",
+    lightModeSwitchTitle: "切换到浅色模式",
+    darkModeSwitchTitle: "切换到深色模式",
     search: {
       provider: "local",
       options: {
         miniSearch: {
           options: {
             tokenize: tokenizeSearchText,
+          },
+        },
+        translations: {
+          button: {
+            buttonText: "搜索文档",
+            buttonAriaLabel: "搜索文档",
+          },
+          modal: {
+            displayDetails: "显示详细列表",
+            resetButtonTitle: "清除查询条件",
+            backButtonTitle: "关闭搜索",
+            noResultsText: "无法找到相关结果",
+            footer: {
+              selectText: "选择",
+              navigateText: "切换",
+              closeText: "关闭",
+            },
           },
         },
       },
@@ -1440,8 +1487,4 @@ export default defineConfig({
       "/算法/": "算法",
     },
   },
-    define: {
-    __API_BASE__: JSON.stringify('https://api.example.com'),
-    __APP_VERSION__: '"1.0.0"',
-  }
 });
