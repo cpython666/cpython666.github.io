@@ -707,14 +707,6 @@ let life_items = [
 ];
 let life_ai_items = [
   {
-    text: "一天做出来的GEO系统长什么样？",
-    link: "/life/geo-system-built-in-one-day",
-  },
-  {
-    text: "GEO系统研究报告",
-    link: "/life/geo-system-research-report",
-  },
-  {
     text: "主流模型免费版生图能力对比从夯到拉，ChatGPT，Claude，豆包，千问，智谱，Kimi，gemini，Grok",
     link: "/life/free-model-image-generation-comparison",
   },
@@ -733,6 +725,17 @@ let life_ai_items = [
   {
     text: "Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐",
     link: "/life/codex-relay-provider-history-sync",
+  },
+];
+let life_geo_items = [
+  { text: "星探计划：AI搜索时代的GEO探索", link: "/life/geo/" },
+  {
+    text: "一天做出来的GEO系统长什么样？",
+    link: "/life/geo-system-built-in-one-day",
+  },
+  {
+    text: "GEO系统研究报告",
+    link: "/life/geo-system-research-report",
   },
 ];
 let life_yearly_flag_items = [
@@ -898,6 +901,11 @@ let sidebar_config = {
       text: "AI 主题",
       collapsed: true,
       items: life_ai_items,
+    },
+    {
+      text: "星探计划",
+      collapsed: true,
+      items: life_geo_items,
     },
     {
       text: "年度总结与Flag",
@@ -1418,6 +1426,7 @@ export default defineConfig({
       "/backup/": "备份",
       "/breakthrough-notes/": "普通人的破局笔记",
       "/life/": "人生感悟",
+      "/life/geo/": "星探计划",
       "/life/follower-milestones/": "粉丝里程碑",
       "/life/graduation-milestones/": "毕业节点复盘",
       "/life/yearly-flags/": "年度总结与Flag",
