@@ -1,5 +1,7 @@
 ---
 title: "P1-PyQt6学习感悟"
+description: "PyQt6 该怎么学？聊聊为什么不必从头啃几百个控件、信号与槽其实没那么玄乎，以及有 Python 基础的人更高效的入门路径。"
+keywords: "PyQt6,PyQt6入门,信号与槽,Python GUI,学习方法"
 created_at: 2024-12-20 21:28:57
 updated_at: 2024-12-20 21:28:57
 ---

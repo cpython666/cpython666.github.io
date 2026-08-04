@@ -1,5 +1,7 @@
 ---
 title: "P20-多软件图标排布"
+description: "做出类似启动器的多图标网格界面：用 QGridLayout 排布多个软件图标，PyQt6 完整示例代码。"
+keywords: "PyQt6,图标排布,QGridLayout,网格布局,启动器界面"
 created_at: 2024-12-20 21:41:05
 updated_at: 2024-12-20 21:41:05
 ---

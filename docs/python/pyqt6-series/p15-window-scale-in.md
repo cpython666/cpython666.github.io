@@ -1,5 +1,7 @@
 ---
 title: "P15-窗口居中变大出现"
+description: "窗口从小放大同时保持居中，边放大边调用居中函数会闪动。改成预先算出初末状态的位置与大小，交给 QPropertyAnimation 处理。"
+keywords: "PyQt6,窗口动画,QPropertyAnimation,居中放大,窗口闪动"
 created_at: 2024-12-20 21:38:56
 updated_at: 2024-12-20 21:38:56
 ---

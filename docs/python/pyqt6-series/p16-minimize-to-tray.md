@@ -1,5 +1,7 @@
 ---
 title: "P16-最小化窗口到托盘，右键菜单，窗口恢复"
+description: "PyQt6 实现最小化到系统托盘：QSystemTrayIcon 图标、托盘右键菜单，以及双击托盘恢复窗口的完整写法。"
+keywords: "PyQt6,系统托盘,QSystemTrayIcon,右键菜单,最小化"
 created_at: 2024-12-20 21:39:17
 updated_at: 2024-12-20 21:39:17
 ---

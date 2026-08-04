@@ -1,5 +1,7 @@
 ---
 title: "主流模型免费版生图能力对比从夯到拉，ChatGPT，Claude，豆包，千问，智谱，Kimi，gemini，Grok"
+description: "同一组提示词横评 ChatGPT、Claude、豆包、千问、智谱、Kimi、Gemini、Grok 八家免费版的生图效果，从夯到拉排个序。"
+keywords: "AI生图,模型对比,ChatGPT,豆包,Gemini,Grok"
 ---
 
 这期视频是主流模型免费版的生图能力的对比的一个视频，评测的对象有：ChatGPT，Claude，豆包，千问，智谱，Kimi，gemini，Grok

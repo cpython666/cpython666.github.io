@@ -1,5 +1,7 @@
 ---
 title: "P11-QTabweight与Qstackweight的区别"
+description: "QTabWidget 与 QStackedWidget 到底差在哪：一个自带选项卡导航，一个只管堆叠、导航要自己做。从设计意图和用途逐条对比。"
+keywords: "PyQt6,QTabWidget,QStackedWidget,区别,多视图"
 created_at: 2024-12-20 21:37:04
 updated_at: 2024-12-20 21:37:04
 ---

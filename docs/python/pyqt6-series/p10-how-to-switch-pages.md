@@ -1,5 +1,7 @@
 ---
 title: "P10-pyqt6中如何实现多页面切换？"
+description: "PyQt6 实现多页面切换的两条主要路线：QStackedWidget 与 QTabWidget，分别说明用法、代码结构和各自的适用场景。"
+keywords: "PyQt6,多页面切换,QStackedWidget,QTabWidget,页面管理"
 created_at: 2024-12-20 21:36:43
 updated_at: 2024-12-20 21:36:43
 ---

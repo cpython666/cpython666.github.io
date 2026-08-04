@@ -1,5 +1,7 @@
 ---
 title: "P28-QListWidget中添加Widget"
+description: "用 setItemWidget 往 QListWidget 的每一行塞入自定义 Widget，做出图文混排的复杂列表项。"
+keywords: "PyQt6,QListWidget,setItemWidget,自定义列表项,列表控件"
 created_at: 2024-12-20 21:43:40
 updated_at: 2024-12-20 21:43:40
 ---

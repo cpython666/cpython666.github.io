@@ -1,5 +1,7 @@
 ---
 title: "P23-介绍一下QGraphicsScene和QGraphicsView"
+description: "QGraphicsScene 负责管理二维图元，QGraphicsView 负责展示与交互。讲清这套图形视图框架的分工，以及它比手写 paintEvent 强在哪。"
+keywords: "PyQt6,QGraphicsScene,QGraphicsView,图形视图框架,2D绘图"
 created_at: 2024-12-20 21:42:01
 updated_at: 2024-12-20 21:42:01
 ---

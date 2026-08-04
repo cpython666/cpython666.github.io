@@ -1,5 +1,7 @@
 ---
 title: "P27-浮点数滑块"
+description: "QSlider 只支持整数，想拖出小数怎么办？通过内部放大倍数封装一个支持浮点数的 PyQt6 滑块控件。"
+keywords: "PyQt6,浮点滑块,QSlider,自定义控件,小数取值"
 created_at: 2024-12-20 21:43:23
 updated_at: 2024-12-20 21:43:23
 ---

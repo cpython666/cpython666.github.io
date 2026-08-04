@@ -1,5 +1,7 @@
 ---
 title: "P12-Qframe与Qweight的区别"
+description: "QFrame 是 QWidget 的子类，多出了边框样式与阴影控制。对比两者的定位差异，说明什么时候该用 QFrame 当容器。"
+keywords: "PyQt6,QFrame,QWidget,区别,容器控件"
 created_at: 2024-12-20 21:37:55
 updated_at: 2024-12-20 21:37:55
 ---

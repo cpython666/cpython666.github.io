@@ -1,3 +1,9 @@
+---
+title: "CodeX 可以定制皮肤啦"
+description: "Codex Dream Skin 用带调试端口启动 Codex Desktop，再通过 Chromium DevTools Protocol 注入 CSS、JS 和背景图，给 CodeX 换上自定义皮肤。"
+keywords: "CodeX,Codex Dream Skin,自定义皮肤,CDP,DevTools Protocol"
+---
+
 # CodeX 可以定制皮肤啦
 
 ![](/imgs/life/codex-dream-skin/cover.png)

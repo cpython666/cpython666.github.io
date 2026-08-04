@@ -1,5 +1,7 @@
 ---
 title: "代码写的垃圾是会被打的"
+description: "怎么把 Python 代码写得像样：遵循 PEP 8、模块化拆分、加类型注解、统一格式化、命名习惯，以及用 logging 替掉 print。"
+keywords: "代码规范,PEP 8,类型注解,logging,Python最佳实践"
 created_at: 2025-03-30 16:22:13
 updated_at: 2025-03-30 20:49:07
 ---

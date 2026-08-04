@@ -1,5 +1,7 @@
 ---
 title: "P18-窗口自定义拖拽功能"
+description: "隐藏系统标题栏后窗口拖不动了？重写 mousePressEvent 与 mouseMoveEvent，给 PyQt6 无边框窗口加上自定义拖拽。"
+keywords: "PyQt6,窗口拖拽,无边框窗口,mouseMoveEvent,自定义标题栏"
 created_at: 2024-12-20 21:40:24
 updated_at: 2024-12-20 21:40:24
 ---

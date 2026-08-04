@@ -1,5 +1,7 @@
 ---
 title: "P31-主线程中执行耗时任务时GUI 被阻塞，如何强制处理事件循环中的待处理事件，以更新 GUI"
+description: "主线程跑耗时任务会让界面卡死不刷新。用 QApplication.processEvents() 强制处理事件循环中的待办事件，让 GUI 及时更新，同时说明它的局限。"
+keywords: "PyQt6,GUI阻塞,processEvents,事件循环,界面卡死"
 created_at: 2024-12-20 21:45:47
 updated_at: 2024-12-20 21:45:47
 ---

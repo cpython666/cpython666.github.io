@@ -1,5 +1,7 @@
 ---
 title: "P22-窗口中画一个框"
+description: "在 PyQt6 窗口里画出一个矩形框：重写 paintEvent，用 QPainter 配合 QPen 完成绘制。"
+keywords: "PyQt6,绘图,QPainter,paintEvent,绘制矩形"
 created_at: 2024-12-20 21:41:36
 updated_at: 2024-12-20 21:41:36
 ---

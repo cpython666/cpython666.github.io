@@ -1,5 +1,7 @@
 ---
 title: "P24-图片浏览，可以放大缩小拖拽"
+description: "基于 QGraphicsView 做一个支持滚轮缩放和鼠标拖拽的 PyQt6 图片浏览器，附完整可运行代码。"
+keywords: "PyQt6,图片浏览器,QGraphicsView,缩放,拖拽"
 created_at: 2024-12-20 21:42:18
 updated_at: 2024-12-20 21:42:18
 ---

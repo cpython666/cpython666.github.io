@@ -1,5 +1,7 @@
 ---
 title: "P5-PyQt6-初探QMainWindow-各模块的学习方法"
+description: "QMainWindow 的菜单栏、工具栏、状态栏和中央工作区分别负责什么，以及面对几百个 Qt 控件时该用什么顺序去查文档和学习。"
+keywords: "PyQt6,QMainWindow,菜单栏,工具栏,状态栏"
 created_at: 2024-12-20 21:33:09
 updated_at: 2024-12-20 21:33:09
 ---
