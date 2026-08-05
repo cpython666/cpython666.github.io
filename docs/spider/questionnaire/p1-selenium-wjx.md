@@ -1,5 +1,7 @@
 ---
 title: "P1-Selenium自动做问卷星"
+description: "用 Selenium 自动完成问卷星填写，附对应视频与文章索引，包括自动生成代码一键搞定各类题型的做法。"
+keywords: "Selenium,问卷星,自动填问卷,Python自动化,自动化脚本"
 date: "2024-10-21 23:23:50.282360"
 updated: "2024-11-06 23:52:24.648013"
 privacy: "登录可见"

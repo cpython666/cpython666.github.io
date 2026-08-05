@@ -1,5 +1,7 @@
 ---
 title: "python小白学习路线，必会知识点详细解析，资源推荐"
+description: "Python 小白学习路线与必会知识点解析，附资源推荐。特别建议在校生顺带学数据结构与算法，能帮你写出更好的代码。"
+keywords: "Python学习路线,Python入门,数据结构,学习资源,GitHub"
 created_at: 2024-10-27 15:05:47
 updated_at: 2024-10-27 15:05:47
 ---

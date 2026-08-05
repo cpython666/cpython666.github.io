@@ -1,5 +1,7 @@
 ---
 title: "P1-本专栏的目的，会讲那些知识？DrissionPage自动化数据采集"
+description: "DrissionPage 自动化数据采集专栏会涉及哪些知识点，按什么思路编排，以及做这个系列的原因。"
+keywords: "DrissionPage,专栏介绍,自动化采集,内容规划,爬虫教程"
 date: "2024-11-26 22:26:32.505632"
 updated: "2024-11-26 22:26:32.505669"
 privacy: "登录可见"

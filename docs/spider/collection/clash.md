@@ -1,3 +1,9 @@
+---
+title: "Clash 使用步骤和常用配置"
+description: "Clash 的订阅导入、节点选择、系统代理与开机自启配置步骤，以及 TUN 模式是什么、对爬虫程序有什么用。"
+keywords: "Clash,TUN模式,系统代理,订阅导入,分流规则"
+---
+
 # Clash 使用步骤和常用配置
 ![/imgs/spider/clash.png](/imgs/spider/clash.png)
 

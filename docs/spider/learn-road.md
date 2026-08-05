@@ -1,3 +1,9 @@
+---
+title: "爬虫学习路线"
+description: "从大佬水群聊天记录里攒出来的爬虫学习路线：浏览器调试、哈希与国标对称/非对称加密、webpack 模块打包、AST 等 JS 逆向专题。"
+keywords: "爬虫学习路线,JS逆向,AST,国标加密,webpack"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

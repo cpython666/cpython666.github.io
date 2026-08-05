@@ -1,5 +1,7 @@
 ---
 title: "P2-第一个scrapy项目【scrapy教程】"
+description: "从零跑通第一个 Scrapy 项目：安装 scrapy、创建项目、修改基本配置、创建爬虫、发送第一个请求，含 Linux/macOS 与 Windows 说明。"
+keywords: "Scrapy,第一个项目,安装scrapy,创建爬虫,Scrapy入门"
 created_at: 2025-02-20 23:00:23
 updated_at: 2025-02-20 23:00:23
 ---

@@ -1,3 +1,9 @@
+---
+title: "Hook 通用模板"
+description: "Hook Cookie、Request Header、无限 debugger、XHR、fetch 的 JS 注入通用模板。无限 debugger 常见于构造函数、定时器和 eval，可按场景调整。"
+keywords: "Hook,JS Hook,无限debugger,XHR劫持,前端反调试"
+---
+
 <a name="ZET0W"></a>
 
 # Hook 通用模板

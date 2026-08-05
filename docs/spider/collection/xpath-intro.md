@@ -1,5 +1,7 @@
 ---
 title: "xpath简介及常用语法"
+description: "刚学采集时最容易卡在网页解析上，原因多半是 XPath 不熟。系统整理 XPath 基础语法与常用表达式，提高解析效率。"
+keywords: "XPath,网页解析,XPath语法,数据提取,爬虫基础"
 created_at: 2024-11-10 16:15:02
 updated_at: 2024-11-10 17:47:33
 ---

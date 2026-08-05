@@ -1,3 +1,9 @@
+---
+title: "一些视频的源码"
+description: "视频配套源码索引，收录 Selenium 自动做问卷星等内容对应的代码与文章链接。"
+keywords: "视频源码,源码索引,Selenium,问卷星,配套代码"
+---
+
 <a href="https://www.lcayun.com/aff/DECEDOZS">
     <img src="/imgs/ads/lky.png" alt="广告" width="800" height="100">
 </a>

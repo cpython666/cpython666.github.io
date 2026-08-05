@@ -1,5 +1,7 @@
 ---
 title: "P6-快速、精准、优雅提取网页大部分表格数据-DrissionPage自动化数据采集"
+description: "网页表格数据提取的几种方案对比：写 XPath 硬拼、监听接口拿 JSON、pandas 直接转 Excel，按页面类型选择最优解。"
+keywords: "DrissionPage,表格数据,pandas,Excel导出,数据提取"
 date: "2024-12-03 23:26:22.691351"
 updated: "2024-12-03 23:42:05.061475"
 privacy: "登录可见"

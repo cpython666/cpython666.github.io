@@ -1,5 +1,7 @@
 ---
 title: "P1-scrapy教程-scrapy框架简介"
+description: "什么是框架？Scrapy 框架的基本组成与好处：高效异步处理、自动化数据提取、灵活扩展性和高度可配置。"
+keywords: "Scrapy,框架简介,爬虫框架,异步处理,可扩展性"
 created_at: 2025-02-04 22:59:37
 updated_at: 2025-02-04 22:59:37
 ---
