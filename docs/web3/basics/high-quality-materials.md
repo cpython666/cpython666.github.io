@@ -1,3 +1,9 @@
+---
+title: "优质资源收录"
+description: "Web3 学习资源收录：比特币白皮书原文与中文注解、《囤比特币》、WTF Academy 等 Solidity 与 Web3 开发教程。"
+keywords: "Web3学习资源,比特币白皮书,Solidity,WTF Academy,区块链教程"
+---
+
 # 优质资源收录
 ## 基础知识
 

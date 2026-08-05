@@ -1,3 +1,9 @@
+---
+title: "CCXT 加密货币交易库使用指南"
+description: "CCXT 是开源的加密货币交易库，为多家交易所提供统一接口。讲解安装、初始化交易所对象、获取市场数据与创建限价单。"
+keywords: "CCXT,加密货币交易库,量化交易,Binance,API对接"
+---
+
 CCXT（CryptoCurrency eXchange Trading Library）是一个开源的加密货币交易库，支持 JavaScript、Python 和 PHP 等多种编程语言。它为开发者提供了统一的接口，方便地连接和操作全球众多的加密货币交易所。([learnku.com][1], [CSDN 博客][2])
 
 ---

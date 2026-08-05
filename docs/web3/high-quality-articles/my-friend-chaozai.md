@@ -1,3 +1,9 @@
+---
+title: "我的朋友-超仔"
+description: "转载自巴黎哥的推文，讲述朋友超仔爆仓的经历。数字背后是真实的人和真实的代价。"
+keywords: "爆仓,真实故事,币圈,推文转载,风险警示"
+---
+
 # 我的朋友-超仔
 > 推文来源于巴黎哥  [https://x.com/jiujinshan2022](https://x.com/jiujinshan2022)
 

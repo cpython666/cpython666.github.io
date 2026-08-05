@@ -1,3 +1,9 @@
+---
+title: "Web3 常见问题解答"
+description: "Web3 新手常见问题：什么是区块链、什么是 U、用什么买币、什么样的人会亏完、去哪看资讯、怎么安装交易所、去哪学投资方法。"
+keywords: "Web3入门,区块链是什么,USDT,稳定币,新手问答"
+---
+
 ## 什么是区块链？
 [Vol 112.区块链到底是什么？【回形针PaperClip - YouTube】](https://youtu.be/TVlo66aOZE0?si=IboEgPlVb5B5hoal)
 > 比特币凭什么值 1 万亿人民币？区块链到底干了什么？匿名网络里绝对安全的数字货币真的存在吗？
