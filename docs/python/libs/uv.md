@@ -199,7 +199,7 @@ uv add httpx
 
 推荐 `.gitignore` 至少包含：
 
-```gitignore
+```text
 .venv/
 __pycache__/
 .pytest_cache/

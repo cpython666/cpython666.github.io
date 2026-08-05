@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
@@ -27,10 +28,26 @@ function tokenizeSearchText(text) {
     .map(({ segment }) => segment);
 }
 
+// 会员文章：privacy: "会员可见" 或 memberOnly: true
+function isMemberOnlyPage(frontmatter = {}) {
+  return (
+    frontmatter.memberOnly === true ||
+    frontmatter.memberOnly === "true" ||
+    String(frontmatter.privacy ?? "").includes("会员可见")
+  );
+}
+
 function isNoIndexPage(page, frontmatter = {}) {
   const normalizedPage = page.replace(/\\/g, "/");
-  return frontmatter.noindex === true || NO_INDEX_PREFIXES.some((prefix) => normalizedPage.startsWith(prefix));
+  return (
+    frontmatter.noindex === true ||
+    isMemberOnlyPage(frontmatter) ||
+    NO_INDEX_PREFIXES.some((prefix) => normalizedPage.startsWith(prefix))
+  );
 }
+
+// transformHead 阶段收集，buildEnd 生成 sitemap 时用：路由 -> { noIndex, lastmod }
+const PAGE_INDEX_META = new Map();
 
 function pageToPath(page) {
   const normalizedPage = page.replace(/\\/g, "/");
@@ -97,6 +114,15 @@ function toIsoDate(value) {
     return undefined;
   }
 
+  // frontmatter.lastUpdated 在 VitePress 里可能是布尔值，不能当日期用
+  if (typeof value === "boolean") {
+    return undefined;
+  }
+  if (value instanceof Date || typeof value === "number") {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+  }
+
   const raw = String(value).trim();
   const normalized = raw.includes("T") ? raw : raw.replace(" ", "T");
   const date = new Date(normalized);
@@ -104,6 +130,52 @@ function toIsoDate(value) {
     return raw;
   }
   return date.toISOString();
+}
+
+// 一次性从 git 历史里取每个文件的首次提交时间，给没写 created_at 的老文章兜底
+let gitCreatedAtMap = null;
+function getGitCreatedAt(relativePath) {
+  if (!relativePath) {
+    return undefined;
+  }
+
+  if (!gitCreatedAtMap) {
+    gitCreatedAtMap = new Map();
+    try {
+      const out = execFileSync(
+        "git",
+        [
+          // 不加这个的话，含中文的路径会被 git 转义成 "\345\255..." 形式而匹配不上
+          "-c",
+          "core.quotepath=false",
+          "log",
+          "--diff-filter=A",
+          "--no-renames",
+          "--reverse",
+          "--name-only",
+          "--format=%aI",
+          "--",
+          "docs",
+        ],
+        { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] }
+      );
+
+      let currentDate = "";
+      for (const line of out.split("\n")) {
+        const item = line.trim();
+        if (!item) continue;
+        if (/^\d{4}-\d{2}-\d{2}T/.test(item)) {
+          currentDate = item;
+        } else if (item.endsWith(".md") && !gitCreatedAtMap.has(item)) {
+          gitCreatedAtMap.set(item, currentDate);
+        }
+      }
+    } catch {
+      // 不在 git 仓库或取不到历史时静默跳过，退回没有日期的状态
+    }
+  }
+
+  return gitCreatedAtMap.get(`docs/${relativePath}`) ?? gitCreatedAtMap.get(relativePath);
 }
 
 function escapeXml(value) {
@@ -133,17 +205,15 @@ function collectHtmlFiles(dir, files = []) {
   return files;
 }
 
-function htmlFileToSitemapUrl(filePath, outDir) {
+function htmlFileToRoutePath(filePath, outDir) {
   const relPath = relative(outDir, filePath).split(sep).join("/");
   if (relPath === "404.html" || NO_INDEX_PREFIXES.some((prefix) => relPath.startsWith(prefix))) {
     return null;
   }
 
-  const routePath = `/${relPath}`
+  return `/${relPath}`
     .replace(/\/index\.html$/, "/")
     .replace(/\.html$/, "");
-
-  return `${SITE_URL}${encodeURI(routePath)}`;
 }
 
 let fast_api_items = [
@@ -1193,9 +1263,18 @@ export default defineConfig({
     const description = resolvePageDescription(pageData);
     const url = pageToUrl(page);
     const noIndex = isNoIndexPage(page, frontmatter);
-    const publishedAt = toIsoDate(frontmatter.created_at || frontmatter.date);
-    const updatedAt = toIsoDate(frontmatter.updated_at || frontmatter.lastUpdated || frontmatter.created_at || frontmatter.date);
+    // 大量老文章没写 created_at/updated_at，用 git 历史兜底：
+    // 发布时间取首次提交，修改时间取最后一次提交，避免把老文章标成今天新发的
+    const publishedAt =
+      toIsoDate(frontmatter.created_at || frontmatter.date) || toIsoDate(getGitCreatedAt(pageData.relativePath));
+    const updatedAt =
+      toIsoDate(frontmatter.updated_at || frontmatter.lastUpdated) ||
+      toIsoDate(pageData.lastUpdated) ||
+      toIsoDate(frontmatter.created_at || frontmatter.date) ||
+      publishedAt;
     const isHome = page === "index.md";
+
+    PAGE_INDEX_META.set(pageToPath(page), { noIndex, lastmod: updatedAt });
 
     const head = [
       ["link", { rel: "canonical", href: url }],
@@ -1260,13 +1339,22 @@ export default defineConfig({
     return head;
   },
   buildEnd(siteConfig) {
-    const urls = collectHtmlFiles(siteConfig.outDir)
-      .map((filePath) => htmlFileToSitemapUrl(filePath, siteConfig.outDir))
+    const entries = collectHtmlFiles(siteConfig.outDir)
+      .map((filePath) => htmlFileToRoutePath(filePath, siteConfig.outDir))
       .filter(Boolean)
-      .sort();
+      // 会员文章、noindex 页面不进 sitemap，避免和 robots meta 自相矛盾
+      .filter((routePath) => !PAGE_INDEX_META.get(routePath)?.noIndex)
+      .sort()
+      .map((routePath) => ({
+        url: `${SITE_URL}${encodeURI(routePath)}`,
+        lastmod: PAGE_INDEX_META.get(routePath)?.lastmod,
+      }));
 
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
-      .map((url) => `  <url>\n    <loc>${escapeXml(url)}</loc>\n  </url>`)
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries
+      .map(
+        ({ url, lastmod }) =>
+          `  <url>\n    <loc>${escapeXml(url)}</loc>${lastmod ? `\n    <lastmod>${escapeXml(lastmod)}</lastmod>` : ""}\n  </url>`
+      )
       .join("\n")}\n</urlset>\n`;
 
     writeFileSync(join(siteConfig.outDir, "sitemap.xml"), sitemap, "utf-8");
