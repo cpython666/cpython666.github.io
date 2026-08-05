@@ -1,3 +1,9 @@
+---
+title: "Git笔记"
+description: "Git 使用笔记与提交规范整理：提交信息格式、type 类型、scope 作用域、subject 标题、body 正文与 footer 页脚的写法。"
+keywords: "Git,提交规范,commit message,版本控制,Conventional Commits"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

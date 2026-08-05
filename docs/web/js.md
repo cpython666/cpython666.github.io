@@ -1,3 +1,9 @@
+---
+title: "JS"
+description: "JavaScript 常用片段速查：获取与解析 cookie、显示当前时间、计算时间差、列表操作、获取当前页面链接、数组排序、回到顶部与锚点被导航栏覆盖的处理。"
+keywords: "JavaScript,常用代码,cookie,数组排序,锚点定位"
+---
+
 # JS
 
 

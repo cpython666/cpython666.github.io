@@ -1,3 +1,9 @@
+---
+title: "团队介绍"
+description: "本站团队成员介绍，含头像、职能与 GitHub 等社交主页链接。"
+keywords: "团队介绍,成员,cpython666,GitHub,关于我们"
+---
+
 <script setup>
 import { VPTeamMembers } from 'vitepress/theme'
 

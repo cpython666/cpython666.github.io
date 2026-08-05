@@ -1,8 +1,9 @@
 ---
 title: 博客会员
+description: "博客会员说明页，介绍会员权益、开通方式与可见内容范围。"
+keywords: "博客会员,会员权益,订阅,开通说明,付费内容"
 layout: home
 sidebar: false
-
 ---
 
 <script setup>
