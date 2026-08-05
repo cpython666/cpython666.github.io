@@ -1,3 +1,9 @@
+---
+title: "Pydantic 详解"
+description: "Pydantic 基于类型注解做数据验证与序列化，是 FastAPI 的基础。讲解基本概念、核心特性、高级功能，以及它的优势与局限。"
+keywords: "Pydantic,数据验证,类型注解,FastAPI,序列化"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

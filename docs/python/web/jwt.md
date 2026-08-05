@@ -1,3 +1,9 @@
+---
+title: "JWT（JSON Web Token）详解"
+description: "JWT 是用于身份验证与信息安全传输的开放标准 RFC 7519，通过数字签名保证完整性。讲解原理、Python 实现生成与校验 Token，以及 RSA 密钥进阶用法。"
+keywords: "JWT,JSON Web Token,身份验证,RSA,API认证"
+---
+
 ### **JWT（JSON Web Token）详解**
 
 #### **1. 什么是 JWT？**

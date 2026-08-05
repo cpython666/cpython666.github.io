@@ -1,3 +1,9 @@
+---
+title: "uv 从基础到精通：给 Conda 用户的实战迁移指南"
+description: "uv 是 Astral 用 Rust 写的 Python 包与项目管理工具。面向长期使用 Conda 的读者，讲清两者区别、各平台安装方式与核心工作流。"
+keywords: "uv,Python包管理,Conda迁移,虚拟环境,Astral"
+---
+
 # uv 从基础到精通：给 Conda 用户的实战迁移指南
 
 > 适合读者：有 Python 基础、做过 Python 开发或自动化数据采集、长期使用 Conda，但尚未使用 uv。

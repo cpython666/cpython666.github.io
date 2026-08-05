@@ -1,3 +1,9 @@
+---
+title: "Python Agent 开发：从入门到精通"
+description: "面向有 Python 与采集经验但没接触过 Agent 的读者：从零理解 Agent 与聊天机器人的区别，手写 Agent 循环，再到工具、记忆、RAG、评测与生产部署。"
+keywords: "Agent开发,Python,LLM,RAG,工具调用"
+---
+
 # Python Agent 开发：从入门到精通
 
 > 面向读者：具备 Python 基础和自动化数据采集经验，但尚未接触 Agent 开发。

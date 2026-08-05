@@ -1,3 +1,9 @@
+---
+title: "Python typing 模块详解"
+description: "typing 模块用于类型注解，运行时不强制检查但能显著提升可读性并配合 mypy 发现潜在错误。讲解常用类型、高级用法与各版本写法演进。"
+keywords: "typing,类型注解,mypy,类型提示,静态检查"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

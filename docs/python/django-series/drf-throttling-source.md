@@ -1,5 +1,7 @@
 ---
 title: "drf限流模块-源码翻译及解读【django】"
+description: "DRF 限流文档看不明白，索性直接读两百多行源码并加上中文注释。逐段解读限流实现，顺带处理真实 IP 的获取问题。"
+keywords: "DRF,限流,throttling,源码解读,真实IP"
 created_at: 2024-12-20 23:22:18
 updated_at: 2024-12-20 23:22:18
 ---

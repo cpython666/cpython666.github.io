@@ -1,5 +1,7 @@
 ---
 title: "django-simpleui【django】"
+description: "django-simpleui 配置记录：加入 INSTALLED_APPS 的位置要求、设置中文语言、去掉或替换默认 Logo、修改后台名称与标题。"
+keywords: "django-simpleui,Django Admin,后台美化,中文配置,主题"
 created_at: 2024-12-20 23:32:48
 updated_at: 2024-12-20 23:32:48
 ---

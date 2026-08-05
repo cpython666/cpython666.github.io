@@ -1,5 +1,7 @@
 ---
 title: "Django最常用命令合集"
+description: "Django 常用命令速查：静态文件配置 STATICFILES_DIRS、模型管理、settings 中的语言时区数据库配置，以及中文与时区设置。"
+keywords: "Django,常用命令,settings配置,静态文件,时区设置"
 created_at: 2024-12-20 23:35:32
 updated_at: 2024-12-20 23:35:32
 ---

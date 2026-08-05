@@ -1,5 +1,7 @@
 ---
 title: "P6-画面显示fps"
+description: "在 Pygame 画面上实时显示帧率：用 Clock 对象控制帧率，再把 FPS 渲染成文字画到窗口上。"
+keywords: "Pygame,FPS,帧率显示,Clock,性能监控"
 created_at: 2024-12-20 23:04:10
 updated_at: 2024-12-20 23:04:10
 ---

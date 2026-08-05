@@ -1,5 +1,7 @@
 ---
 title: "文本差异对比如此简单！"
+description: "几千行文本靠人眼找差异不现实。用 Python 标准库 difflib 快速比较两段文本并输出 HTML，附 isjunk 参数与换行符处理的解读。"
+keywords: "difflib,文本对比,文本差异,Python标准库,HTML输出"
 created_at: 2025-01-21 22:58:26
 updated_at: 2025-01-21 22:58:26
 ---

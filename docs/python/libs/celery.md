@@ -1,3 +1,9 @@
+---
+title: "Celery 从基础到精通：面向 Python 与自动化数据采集开发者"
+description: "以 Celery 5.x + Redis 为主，从核心组件、Broker 选型讲到第一个可运行项目，目标是能设计、部署、监控和排查可靠的异步任务系统。"
+keywords: "Celery,分布式任务队列,Redis,异步任务,任务调度"
+---
+
 # Celery 从基础到精通：面向 Python 与自动化数据采集开发者
 
 > 适用范围：Python 开发者、自动化采集工程师；以 Celery 5.x + Redis 为主。

@@ -1,3 +1,8 @@
+---
+title: "探索SimpleUI：让Django Admin焕发现代光彩"
+description: "SimpleUI 基于 Vue 与 Element UI 为 Django Admin 提供现代化主题，内置 28 种主题，完全兼容原生功能无需修改代码。"
+keywords: "SimpleUI,Django Admin,后台美化,Vue,Element UI"
+---
 
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 

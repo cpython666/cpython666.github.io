@@ -1,3 +1,9 @@
+---
+title: "SQLAlchemy 2.0 介绍"
+description: "SQLAlchemy 2.0 相比 1.x 的重大更新：统一 API、异步支持、类型注解、新的查询 API、性能优化与增强的 ORM 支持。"
+keywords: "SQLAlchemy,SQLAlchemy 2.0,ORM,异步,类型注解"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 
