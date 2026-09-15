@@ -3542,6 +3542,13 @@ export const navigationData = [
                 "desc": "Ponytail 是一个面向多种 AI 编码助手的跨平台技能库与插件项目，聚焦把可复用的 agent skill、规则和工作流沉淀下来。",
                 "categories": ["Skill", "Agent Skill", "GitHub"]
             },
+            {
+                "link": "https://github.com/EverettFish/holo-card-studio",
+                "icon": "/logos/github.png",
+                "title": "Holo Card Studio",
+                "desc": "用于创建全息卡片效果的开源 Skill 项目。",
+                "categories": ["Skill", "GitHub"]
+            },
         ]
     },
     {
@@ -3626,6 +3633,25 @@ export const navigationData = [
                 "title": "AI 艺术二维码",
                 "desc": "使用 MewXAI星月熊 在几秒内创建令人惊叹的下一代艺术二维码和艺术字。 从此告别单调的黑白二维码和文字，留下令人深刻的印象！"
             },
+        ]
+    },
+    {
+        title: 'AI 3D',
+        items: [
+            {
+                "link": "https://studio.tripo3d.ai/zh/workspace/generate/9db6a788-a786-41a2-8000-124ddb6fc41c",
+                "icon": "/logos/ai55.png",
+                "title": "Tripo 3D",
+                "desc": "AI 3D 创作工作台，可从文字或图片生成 3D 模型。",
+                "categories": ["AI", "3D", "模型生成"]
+            },
+            {
+                "link": "https://www.meshy.ai/zh/workspace",
+                "icon": "/logos/ai55.png",
+                "title": "Meshy",
+                "desc": "AI 3D 模型生成与纹理创作平台。",
+                "categories": ["AI", "3D", "模型生成"]
+            }
         ]
     },
     {
