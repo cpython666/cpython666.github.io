@@ -26,20 +26,20 @@ const prompts = [
 ]
 const videoTitle = ref('')
 const promptText = (prompt) => prompt.text.replaceAll('{{视频标题}}', videoTitle.value || '{{视频标题}}')
-const copiedPrompt = ref('')
-const copyError = ref('')
+const copyNotice = ref('')
 let copyTimer
 
 const copyPrompt = async (prompt) => {
   clearTimeout(copyTimer)
-  copiedPrompt.value = ''
-  copyError.value = ''
+  copyNotice.value = ''
   try {
     await copyText(promptText(prompt))
-    copiedPrompt.value = prompt.title
-    copyTimer = setTimeout(() => { copiedPrompt.value = '' }, 2000)
+    copyNotice.value = '复制成功！'
   } catch {
-    copyError.value = '复制失败，请选中提示词手动复制。'
+    copyNotice.value = '复制失败，请选中提示词手动复制。'
+  } finally {
+    clearTimeout(copyTimer)
+    copyTimer = setTimeout(() => { copyNotice.value = '' }, 3000)
   }
 }
 
@@ -330,31 +330,32 @@ const selectGroup = (path) => {
       tabindex="0"
     >
       <div class="toolbar">
-        <div>
-          <p class="panel-kicker">复制后即可使用</p>
-          <h2>{{ prompts.length }} 条提示词</h2>
-        </div>
+        <h2>{{ prompts.length }} 条提示词</h2>
       </div>
       <div class="prompt-list">
         <article v-for="prompt in prompts" :key="prompt.title" class="prompt-card">
-          <h3>{{ prompt.title }}</h3>
+          <div class="prompt-heading">
+            <h3>{{ prompt.title }}</h3>
+            <button
+              class="copy-prompt"
+              type="button"
+              :aria-label="`复制提示词：${prompt.title}`"
+              @click="copyPrompt(prompt)"
+            >
+              复制
+            </button>
+          </div>
           <label v-if="prompt.text.includes('{{视频标题}}')" class="prompt-variable">
             视频标题
             <input v-model="videoTitle" type="text" placeholder="输入视频标题" />
           </label>
           <p class="prompt-text">{{ promptText(prompt) }}</p>
-          <button
-            class="copy-prompt"
-            type="button"
-            :aria-label="`复制提示词：${prompt.title}`"
-            @click="copyPrompt(prompt)"
-          >
-            {{ copiedPrompt === prompt.title ? '已复制' : '复制提示词' }}
-          </button>
         </article>
       </div>
-      <p class="copy-status" role="status">{{ copyError || (copiedPrompt ? `已复制：${copiedPrompt}` : '') }}</p>
     </section>
+    <div role="status" aria-live="polite">
+      <p v-if="copyNotice" class="copy-toast">{{ copyNotice }}</p>
+    </div>
   </main>
 </template>
 
@@ -496,8 +497,16 @@ const selectGroup = (path) => {
 }
 
 .prompt-card h3 {
+  min-width: 0;
   margin: 0;
   font-size: 17px;
+}
+
+.prompt-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .prompt-variable {
@@ -521,8 +530,7 @@ const selectGroup = (path) => {
 }
 
 .prompt-text {
-  flex: 1;
-  margin: 16px 0 20px;
+  margin: 16px 0 0;
   color: var(--vp-c-text-2);
   line-height: 1.8;
   overflow-wrap: anywhere;
@@ -531,6 +539,7 @@ const selectGroup = (path) => {
 }
 
 .copy-prompt {
+  flex-shrink: 0;
   min-height: 40px;
   padding: 6px 12px;
   border: 1px solid var(--vp-c-brand-2);
@@ -547,11 +556,23 @@ const selectGroup = (path) => {
   color: var(--vp-c-bg);
 }
 
-.copy-status {
-  min-height: 24px;
-  margin: 12px 0 0;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
+.copy-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  z-index: 200;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  padding: 12px 20px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  box-shadow: var(--vp-shadow-2);
+  font-size: 14px;
+  pointer-events: none;
 }
 
 .category-panel {
