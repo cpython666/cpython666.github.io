@@ -1,9 +1,62 @@
 <script setup>
 import { useData } from 'vitepress'
-import { computed, ref, watchEffect } from 'vue'
+import { computed, onBeforeUnmount, ref, watchEffect } from 'vue'
 import { data as memberArticlePaths } from './member.data.mjs'
+import copyText from '../utils/copy.js'
 
 const { theme } = useData()
+
+const tabs = [
+  { id: 'articles', text: '文章' },
+  { id: 'prompts', text: '提示词' },
+]
+const activeTab = ref('articles')
+const prompts = [
+  {
+    title: '生成视频封面的',
+    text: '以上面图片为素材，给出视频封面\n封面比例4:3\n视频标题是：{{视频标题}}\n封面上只需要有重点的几个字\n不需要有很多小文字，适当加点插画就可以\n风格：使用手写体或仿手写字体。大量使用简笔画、小图标、箭头、对话框、分隔线等手绘元素来辅助表达。色彩丰富活泼，常用荧光笔、彩铅效果。布局自由随性，充满个性和趣味性。',
+  },
+  {
+    title: '矫正视频字幕的',
+    text: '修复下这个字幕：\n里面可能提到了gpt-5.6-sol\nblender\ngodot，gdscript\n这些术语\n【可选】可参考视频文案是：',
+  },
+  { title: '训练数据截止时间', text: '你的训练时间截止什么日期？' },
+  { title: '骑自行车的鹈鹕', text: '生成一个动态的骑自行车的鹈鹕的svg' },
+  { title: '骑自行车的小姑娘', text: '生成一个动态的骑自行车的穿渔网袜的小姑娘的svg' },
+]
+const videoTitle = ref('')
+const promptText = (prompt) => prompt.text.replaceAll('{{视频标题}}', videoTitle.value || '{{视频标题}}')
+const copiedPrompt = ref('')
+const copyError = ref('')
+let copyTimer
+
+const copyPrompt = async (prompt) => {
+  clearTimeout(copyTimer)
+  copiedPrompt.value = ''
+  copyError.value = ''
+  try {
+    await copyText(promptText(prompt))
+    copiedPrompt.value = prompt.title
+    copyTimer = setTimeout(() => { copiedPrompt.value = '' }, 2000)
+  } catch {
+    copyError.value = '复制失败，请选中提示词手动复制。'
+  }
+}
+
+onBeforeUnmount(() => clearTimeout(copyTimer))
+
+const handleTabKeydown = (event, index) => {
+  let nextIndex
+  if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length
+  else if (event.key === 'ArrowLeft') nextIndex = (index + tabs.length - 1) % tabs.length
+  else if (event.key === 'Home') nextIndex = 0
+  else if (event.key === 'End') nextIndex = tabs.length - 1
+  else return
+
+  event.preventDefault()
+  activeTab.value = tabs[nextIndex].id
+  document.getElementById(`nav-tab-${activeTab.value}`)?.focus()
+}
 
 const query = ref('')
 const activePath = ref('')
@@ -166,79 +219,141 @@ const selectGroup = (path) => {
       <div class="hero-copy">
         <p class="eyebrow">站内索引</p>
         <h1>文章导航</h1>
-        <p class="summary">按博客配置自动生成分类与文章入口，新增文章后这里会同步更新。</p>
+        <p class="summary">按分类浏览站内文章，或切换到提示词，一键复制使用。</p>
       </div>
-      <div class="hero-stats" aria-label="文章统计">
-        <div>
-          <strong>{{ navGroups.length }}</strong>
-          <span>分类</span>
-        </div>
+      <div class="hero-stats" aria-label="内容统计">
         <div>
           <strong>{{ totalArticles }}</strong>
           <span>文章</span>
         </div>
+        <div>
+          <strong>{{ prompts.length }}</strong>
+          <span>提示词</span>
+        </div>
       </div>
     </section>
 
-    <section v-if="navGroups.length" class="nav-workspace">
-      <aside class="category-panel" aria-label="文章分类">
-        <button
-          v-for="group in navGroups"
-          :key="group.path"
-          class="category-button"
-          :class="{ active: activeGroupPath === group.path && !normalizedQuery }"
-          type="button"
-          @click="selectGroup(group.path)"
-        >
-          <span class="category-name">{{ group.text }}</span>
-          <span class="category-meta">{{ group.articles.length }}</span>
-        </button>
-      </aside>
+    <div class="content-tabs" role="tablist" aria-label="导航内容">
+      <button
+        v-for="(tab, index) in tabs"
+        :id="`nav-tab-${tab.id}`"
+        :key="tab.id"
+        class="content-tab"
+        type="button"
+        role="tab"
+        :aria-selected="activeTab === tab.id"
+        :aria-controls="`nav-panel-${tab.id}`"
+        :tabindex="activeTab === tab.id ? 0 : -1"
+        @click="activeTab = tab.id"
+        @keydown="handleTabKeydown($event, index)"
+      >
+        {{ tab.text }}
+        <span class="tab-count">{{ tab.id === 'articles' ? totalArticles : prompts.length }}</span>
+      </button>
+    </div>
 
-      <section class="article-panel">
-        <div class="toolbar">
-          <div>
-            <p class="panel-kicker">{{ normalizedQuery ? '搜索结果' : activeGroupText }}</p>
-            <h2>{{ normalizedQuery ? `找到 ${visibleArticles.length} 篇文章` : `${activeGroupArticleCount} 篇文章` }}</h2>
+    <section
+      v-show="activeTab === 'articles'"
+      id="nav-panel-articles"
+      role="tabpanel"
+      aria-labelledby="nav-tab-articles"
+      tabindex="0"
+    >
+      <div v-if="navGroups.length" class="nav-workspace">
+        <aside class="category-panel" aria-label="文章分类">
+          <button
+            v-for="group in navGroups"
+            :key="group.path"
+            class="category-button"
+            :class="{ active: activeGroupPath === group.path && !normalizedQuery }"
+            type="button"
+            @click="selectGroup(group.path)"
+          >
+            <span class="category-name">{{ group.text }}</span>
+            <span class="category-meta">{{ group.articles.length }}</span>
+          </button>
+        </aside>
+
+        <section class="article-panel">
+          <div class="toolbar">
+            <div>
+              <p class="panel-kicker">{{ normalizedQuery ? '搜索结果' : activeGroupText }}</p>
+              <h2>{{ normalizedQuery ? `找到 ${visibleArticles.length} 篇文章` : `${activeGroupArticleCount} 篇文章` }}</h2>
+            </div>
+            <label class="search-box">
+              <span>搜索</span>
+              <input v-model="query" type="search" placeholder="输入标题、分类或路径" />
+            </label>
           </div>
-          <label class="search-box">
-            <span>搜索</span>
-            <input v-model="query" type="search" placeholder="输入标题、分类或路径" />
-          </label>
-        </div>
 
-        <div v-if="groupedVisibleArticles.length" class="article-sections">
-          <section v-for="section in groupedVisibleArticles" :key="section.text" class="article-section">
-            <div class="section-heading">
-              <h3>{{ section.text }}</h3>
-              <span>{{ section.articles.length }}</span>
-            </div>
-            <div class="article-list">
-              <a
-                v-for="article in section.articles"
-                :key="article.link"
-                class="article-link"
-                :class="{ member: article.memberOnly }"
-                :href="article.link"
-              >
-                <span v-if="article.memberOnly" class="member-badge" aria-label="会员文章">VIP</span>
-                <span class="article-title">{{ article.text }}</span>
-                <span class="article-path">{{ article.link }}</span>
-              </a>
-            </div>
-          </section>
-        </div>
+          <div v-if="groupedVisibleArticles.length" class="article-sections">
+            <section v-for="section in groupedVisibleArticles" :key="section.text" class="article-section">
+              <div class="section-heading">
+                <h3>{{ section.text }}</h3>
+                <span>{{ section.articles.length }}</span>
+              </div>
+              <div class="article-list">
+                <a
+                  v-for="article in section.articles"
+                  :key="article.link"
+                  class="article-link"
+                  :class="{ member: article.memberOnly }"
+                  :href="article.link"
+                >
+                  <span v-if="article.memberOnly" class="member-badge" aria-label="会员文章">VIP</span>
+                  <span class="article-title">{{ article.text }}</span>
+                  <span class="article-path">{{ article.link }}</span>
+                </a>
+              </div>
+            </section>
+          </div>
 
-        <div v-else class="empty-state">
-          <h3>没有匹配的文章</h3>
-          <p>换个关键词试试看。</p>
-        </div>
-      </section>
+          <div v-else class="empty-state">
+            <h3>没有匹配的文章</h3>
+            <p>换个关键词试试看。</p>
+          </div>
+        </section>
+      </div>
+
+      <div v-else class="empty-state tab-empty-state">
+        <h3>暂无文章配置</h3>
+        <p>请先在 VitePress 配置里添加 sidebar 项。</p>
+      </div>
     </section>
 
-    <section v-else class="empty-state">
-      <h3>暂无文章配置</h3>
-      <p>请先在 VitePress 配置里添加 sidebar 项。</p>
+    <section
+      v-show="activeTab === 'prompts'"
+      id="nav-panel-prompts"
+      class="prompt-panel"
+      role="tabpanel"
+      aria-labelledby="nav-tab-prompts"
+      tabindex="0"
+    >
+      <div class="toolbar">
+        <div>
+          <p class="panel-kicker">复制后即可使用</p>
+          <h2>{{ prompts.length }} 条提示词</h2>
+        </div>
+      </div>
+      <div class="prompt-list">
+        <article v-for="prompt in prompts" :key="prompt.title" class="prompt-card">
+          <h3>{{ prompt.title }}</h3>
+          <label v-if="prompt.text.includes('{{视频标题}}')" class="prompt-variable">
+            视频标题
+            <input v-model="videoTitle" type="text" placeholder="输入视频标题" />
+          </label>
+          <p class="prompt-text">{{ promptText(prompt) }}</p>
+          <button
+            class="copy-prompt"
+            type="button"
+            :aria-label="`复制提示词：${prompt.title}`"
+            @click="copyPrompt(prompt)"
+          >
+            {{ copiedPrompt === prompt.title ? '已复制' : '复制提示词' }}
+          </button>
+        </article>
+      </div>
+      <p class="copy-status" role="status">{{ copyError || (copiedPrompt ? `已复制：${copiedPrompt}` : '') }}</p>
     </section>
   </main>
 </template>
@@ -315,6 +430,128 @@ const selectGroup = (path) => {
   gap: 24px;
   margin-top: 24px;
   align-items: start;
+}
+
+.content-tabs {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.content-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 4px;
+  border-bottom: 2px solid transparent;
+  color: var(--vp-c-text-2);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.content-tab:hover,
+.content-tab[aria-selected='true'] {
+  color: var(--vp-c-brand-1);
+}
+
+.content-tab[aria-selected='true'] {
+  border-bottom-color: var(--vp-c-brand-1);
+}
+
+.tab-count {
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--vp-c-default-soft);
+  font-size: 12px;
+}
+
+.content-tab:focus-visible,
+.prompt-variable input:focus-visible,
+.copy-prompt:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+
+.prompt-panel,
+.tab-empty-state {
+  margin-top: 24px;
+}
+
+.prompt-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+}
+
+.prompt-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+}
+
+.prompt-card h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.prompt-variable {
+  width: 100%;
+  margin-top: 16px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}
+
+.prompt-variable input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 40px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}
+
+.prompt-text {
+  flex: 1;
+  margin: 16px 0 20px;
+  color: var(--vp-c-text-2);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+.copy-prompt {
+  min-height: 40px;
+  padding: 6px 12px;
+  border: 1px solid var(--vp-c-brand-2);
+  border-radius: 6px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copy-prompt:hover {
+  background: var(--vp-c-brand-1);
+  color: var(--vp-c-bg);
+}
+
+.copy-status {
+  min-height: 24px;
+  margin: 12px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
 }
 
 .category-panel {
