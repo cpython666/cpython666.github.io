@@ -1361,7 +1361,7 @@ export default defineConfig({
   },
   head: [
     // 我的logo
-    ["script", { src: "/js/cpython666.js" }], // <script src="https://gist.github.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079.js"></script>
+    ["script", { src: "/js/cpython666.js", defer: "" }], // <script src="https://gist.github.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079.js"></script>
     // ['script', {
     //   // async:true,
     //   src: 'https://gist.githubusercontent.com/cpython666/94813553a7ac80b74cdf6fe0e9d6d079/raw/8730dd7b808f5bcb8b0a01cce9d442f4bca0a228/cpython666.js',
@@ -1374,9 +1374,9 @@ export default defineConfig({
     // ['script', { src: '/js/pointer.js' }],
 
     // 星露谷物语的飞鸟
-    ["script", { src: "/js/birdfly.js" }],
+    ["script", { src: "/js/birdfly.js", defer: "" }],
     // 鼠标拖尾
-    ["script", { src: "/js/mouse-trail.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
+    ["script", { src: "/js/mouse-trail.js", defer: "" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
 
     // ["script", { src: "/js/copy.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
     // ["script", { src: "/js/alertify.min.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
@@ -1387,13 +1387,14 @@ export default defineConfig({
     ["meta", { name: "format-detection", content: "telephone=no" }],
     // <!--鼠标点击特效-->
     // ['script', { type: "text/javascript", src: '/js/clickjs/meme.js' }],
-    ["script", { type: "text/javascript", src: "/js/clickjs/anime.min.js" }],
-    ["script", { type: "text/javascript", src: "/js/clarity.js" }],
+    ["script", { type: "text/javascript", src: "/js/clickjs/anime.min.js", defer: "" }],
+    ["script", { type: "text/javascript", src: "/js/clarity.js", defer: "" }],
     [
       "script",
       {
         type: "text/javascript",
         src: "/js/clickjs/fireworks.js",
+        defer: "",
       },
     ],
 

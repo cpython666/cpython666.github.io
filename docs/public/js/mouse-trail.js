@@ -1,6 +1,11 @@
 (function () {
     const STORAGE_KEY = 'cpython666:disable-mouse-trail';
     const CHANGE_EVENT = 'cpython666-effects-change';
+    if (window.CPython666Effects?.applyMouseTrailSetting) {
+        window.CPython666Effects.applyMouseTrailSetting();
+        return;
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let canvas = null;
     let animationId = null;
     let mouseMoveHandler = null;
@@ -39,7 +44,7 @@
     function initMouseTrail() {
         cleanupMouseTrail();
 
-        if (getMouseTrailDisabled()) {
+        if (!document.body || getMouseTrailDisabled() || document.hidden || reducedMotion.matches) {
             return;
         }
 
@@ -66,8 +71,12 @@
 
         const activeCanvas = canvas;
         const ctx = activeCanvas.getContext('2d');
+        if (!ctx) {
+            cleanupMouseTrail();
+            return;
+        }
         let trail = [];
-        let lastMousePosition = { x: 0, y: 0 };
+        let pendingPosition = null;
 
         function lerpColor(a, b, amount) {
             const [ar, ag, ab] = a;
@@ -96,8 +105,11 @@
         }
 
         function updateTrail() {
-            if (lastMousePosition.x !== 0 && lastMousePosition.y !== 0) {
-                trail.push({ ...lastMousePosition });
+            if (pendingPosition) {
+                trail.push(pendingPosition);
+                pendingPosition = null;
+            } else {
+                trail.splice(0, config.fadeOutSpeed);
             }
 
             if (trail.length > config.maxTrailLength) {
@@ -106,34 +118,32 @@
         }
 
         mouseMoveHandler = function (event) {
-            lastMousePosition.x = event.pageX;
-            lastMousePosition.y = event.pageY - window.scrollY;
+            pendingPosition = { x: event.clientX, y: event.clientY };
+            if (animationId === null) animationId = requestAnimationFrame(animate);
         };
 
         resizeHandler = function () {
             activeCanvas.width = window.innerWidth;
             activeCanvas.height = window.innerHeight;
+            trail = [];
+            pendingPosition = null;
+            if (animationId !== null) cancelAnimationFrame(animationId);
+            animationId = null;
         };
 
         window.addEventListener('mousemove', mouseMoveHandler);
         window.addEventListener('resize', resizeHandler);
 
         function animate() {
-            if (getMouseTrailDisabled()) {
-                cleanupMouseTrail();
-                return;
-            }
-
+            animationId = null;
             updateTrail();
             draw();
-            animationId = requestAnimationFrame(animate);
+            if (trail.length) animationId = requestAnimationFrame(animate);
         }
-
-        animate();
     }
 
     function applyMouseTrailSetting() {
-        if (getMouseTrailDisabled()) {
+        if (getMouseTrailDisabled() || document.hidden || reducedMotion.matches) {
             cleanupMouseTrail();
             return;
         }
@@ -148,10 +158,13 @@
     window.CPython666Effects.isMouseTrailDisabled = getMouseTrailDisabled;
 
     window.addEventListener(CHANGE_EVENT, applyMouseTrailSetting);
+    window.addEventListener('storage', applyMouseTrailSetting);
+    document.addEventListener('visibilitychange', applyMouseTrailSetting);
+    reducedMotion.addEventListener('change', applyMouseTrailSetting);
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMouseTrail);
+        document.addEventListener('DOMContentLoaded', applyMouseTrailSetting, { once: true });
     } else {
-        initMouseTrail();
+        applyMouseTrailSetting();
     }
 })();

@@ -14,7 +14,7 @@
         <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
       </div>
       <div id="box-cursor">
-        <span id="box"></span>
+        <span id="box" ref="typingBox"></span>
       </div>
     </div>
   </div>
@@ -28,24 +28,19 @@ import Typed from 'typed.js';
 import SponsorsLinks from "./SponsorsLinks.vue";
 // 响应式数据
 const randomImage = ref('');
+const typingBox = ref(null);
+let typed;
 const openLink = () => {
   window.location.href = '/';
 };
 const changeBgHeight = () => {
   const header = document.querySelector('header');
   const bg = document.querySelector('#small-bg');
-  console.log(header.clientHeight)
-
-  const headerHeight = header.clientHeight;
-  console.log(headerHeight)
   const bg1 = document.querySelector('#big-bg');
-  // bg.style.height = `calc(100vh)`;
-  // bg1.style.height = `calc(100vh)`;
+  if (!bg || !bg1) return;
+  const headerHeight = header?.clientHeight || 0;
   bg.style.height = `calc(100vh - ${headerHeight}px)`;
   bg1.style.height = `calc(100vh - ${headerHeight}px)`;
-
-
-  console.log('背景图片高度', bg.clientHeight)
 }
 // 图片列表
 const images = [
@@ -91,12 +86,7 @@ const getRandomImage = () => {
 
 // 设置随机背景图片
 const setRandomBackgroundImage = () => {
-  const a = getRandomImage();
-  randomImage.value = a;
-  if (randomImage.value === 'imgs/bg/result_image.png') {
-
-  }
-  console.log('改变了背景，', randomImage.value)
+  randomImage.value = getRandomImage();
 }
 onMounted(
     () => {
@@ -120,7 +110,11 @@ onMounted(
         loop: true,
         loopCount: 200
       };
-      new Typed('#box', options);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        typingBox.value.textContent = options.strings[0].replace(/\^\d+/g, '');
+      } else {
+        typed = new Typed(typingBox.value, options);
+      }
 
       setRandomBackgroundImage()
       changeBgHeight()
@@ -128,6 +122,7 @@ onMounted(
       window.addEventListener('resize', changeBgHeight);
     });
 onBeforeUnmount(() => {
+  typed?.destroy();
   window.removeEventListener('resize', changeBgHeight);
 });
 </script>
@@ -284,5 +279,14 @@ body::-webkit-scrollbar {
 
 .rotate-animation {
   animation: rotate 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #index-logo,
+  #index-logo:hover,
+  .rotate-animation {
+    animation: none;
+    transition: none;
+  }
 }
 </style>

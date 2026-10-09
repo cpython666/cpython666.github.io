@@ -11,7 +11,7 @@
           target="_blank"
       >
         <div class="card-inner">
-          <img :alt="sponsor.name" :src="sponsor.logo"/>
+          <img :alt="sponsor.name" :src="sponsor.logo" loading="lazy" decoding="async"/>
         </div>
       </a>
     </div>
@@ -27,7 +27,7 @@
           target="_blank"
       >
         <div class="card-inner">
-          <img :alt="link.name" :src="link.logo"/>
+          <img :alt="link.name" :src="link.logo" loading="lazy" decoding="async"/>
         </div>
       </a>
     </div>
