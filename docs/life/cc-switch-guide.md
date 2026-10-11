@@ -49,7 +49,10 @@ CC Switch 是一个开源免费的桌面软件，macOS、Windows、Linux 都能�
 
 1. 先在电脑上装好 CC Switch
 2. 登录中转站，在令牌列表里找到你要用的那个令牌
-3. 点「导入到 CC Switch」（不同中转站叫法略有不同），浏览器会提示是否打开 CC Switch，点允许
+3. 点这个令牌的「导入到 CCS」（CCS 就是 CC Switch 的缩写，不同中转站叫法略有不同），浏览器会提示是否打开 CC Switch，点允许
+
+![中转站 API 密钥页面的「导入到 CCS」按钮](/imgs/life/cc-switch/relay-import-button.png)
+
 4. CC Switch 会弹出一个确认框，列出要导入的内容
 
 ![CC Switch 导入供应商确认框](/imgs/life/cc-switch/import-confirm.png)
