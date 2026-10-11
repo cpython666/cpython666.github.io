@@ -260,7 +260,7 @@ let spider_items = [
 let spider_set_items = [
   { text: "就业分享-谁的青春不迷茫", link: "/spider/collection/job-sharing" },
   { text: "几乎免费的海外代理【clash妙用🤩】【无广告】", link: "/spider/collection/cheap-ip" },
-  { text: "Clash 常用配置", link: "/spider/collection/clash" },
+  { text: "Clash 使用教程：导入订阅、全局与规则模式", link: "/spider/collection/clash" },
   { text: "常用hook代码片段", link: "/spider/collection/hook" },
   {
     text: "ast详解",
@@ -783,6 +783,10 @@ let life_ai_items = [
   {
     text: "Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐",
     link: "/life/codex-relay-provider-history-sync",
+  },
+  {
+    text: "CC Switch 是干嘛的？怎么用？中转站一键导入、一键切换 API 供应商",
+    link: "/life/cc-switch-guide",
   },
 ];
 let life_geo_items = [
