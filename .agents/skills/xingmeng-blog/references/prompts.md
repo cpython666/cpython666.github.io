@@ -18,7 +18,7 @@
 | `training-cutoff` | 训练数据截止时间 | 你的训练时间截止什么日期？ |
 | `cycling-pelican-svg` | 骑自行车的鹈鹕 | 生成一个动态的骑自行车的鹈鹕的svg |
 | `cycling-girl-svg` | 骑自行车的小姑娘 | 生成一个动态的骑自行车的穿渔网袜的小姑娘的svg |
-| `project-knowledge-skill` | 建立并自动维护项目知识库 | 用户从“为本项目建立一个项目级 skill”到“现在开始：检查项目，建好结构，把以上规则精简地写进 AGENTS.md。”的整段原文，用于建立项目 Skill、按需参考文档及自动维护约定。长原文只存于 `NavIndex.vue` 的 `prompts` 数据，复用复制与分享功能。 |
+| `project-knowledge-skill` | 建立并自动维护项目知识库 | 用户提供的整段项目知识库提示词，包含项目 Skill 结构、自动维护及“更新skill”手动触发约定：从头回顾当前整个对话，对比已有内容，补遗漏、修正过时内容、去重，完成后列出新增和修改项；要求将该触发含义一并精简写入 `AGENTS.md`。长原文只存于 `NavIndex.vue` 的 `prompts` 数据，复用复制与分享功能，ID 保持不变。 |
 
 ## 分享协议
 
@@ -26,4 +26,4 @@
 - 分享不包含用户填写的视频标题或其他输入。新增提示词分配唯一的稳定 ID，改标题或排序时不要改已有 ID，以免旧链接失效。
 - 页面初始化、SPA 导航和 hash 变化时识别有效 ID，打开“提示词” Tab，再滚动、聚焦并高亮对应卡片；未知 hash 默认回到“文章” Tab。
 - 手动切换到提示词使用 `#prompts`，切到文章清除 hash；通过 `replaceState` 保留当前 query，避免仅切 Tab 就增加历史记录。
-- 验证状态：2026-10-10 已通过 `node scripts/check-prompt-sharing.mjs` 本地隔离构建及浏览器检查，覆盖六条提示词（包括 `project-knowledge-skill`）的复制、分享、直接定位和刷新，以及 SPA/query 跳转、历史导航和手机布局；新增长提示词在 320px/390px 手机布局下不溢出。线上发布状态以 GitHub Pages 部署结果为准，不能把本地通过或 Git 推送成功写成线上已生效。
+- 验证状态：2026-10-11 已通过 `node scripts/check-prompt-sharing.mjs` 本地隔离构建及浏览器检查，覆盖六条提示词（包括 `project-knowledge-skill`）的复制、分享、直接定位和刷新，以及 SPA/query 跳转、历史导航和手机布局；新版长提示词在 320px/390px 手机布局下不溢出。线上发布状态以 GitHub Pages 部署结果为准，不能把本地通过或 Git 推送成功写成线上已生效。
