@@ -34,6 +34,13 @@ const prompts = [
 ]
 const videoTitle = ref('')
 const promptText = (prompt) => prompt.text.replaceAll('{{视频标题}}', videoTitle.value || '{{视频标题}}')
+const selectedPrompt = ref(null)
+const promptDialog = ref(null)
+const openPrompt = async (prompt) => {
+  selectedPrompt.value = prompt
+  await nextTick()
+  promptDialog.value?.showModal()
+}
 const copyNotice = ref('')
 let copyTimer
 
@@ -53,7 +60,7 @@ const copyWithNotice = async (text, success, failure) => {
 
 const copyPrompt = (prompt) => copyWithNotice(promptText(prompt), '复制成功！', '复制失败，请选中提示词手动复制。')
 const sharePrompt = (prompt) => copyWithNotice(
-  `https://cpython666.github.io/navigation/#prompt-${prompt.id}`,
+  `${prompt.title}\nhttps://cpython666.github.io/navigation/#prompt-${prompt.id}`,
   '分享链接已复制！',
   '分享链接复制失败，请重试。',
 )
@@ -64,6 +71,7 @@ let previousRouteHook
 let routeHook
 
 const syncPromptLocation = async () => {
+  promptDialog.value?.close()
   cancelAnimationFrame(locateFrame)
   const hash = window.location.hash
   const prompt = prompts.find(item => hash === `#prompt-${item.id}`)
@@ -100,6 +108,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  promptDialog.value?.close()
   clearTimeout(copyTimer)
   cancelAnimationFrame(locateFrame)
   window.removeEventListener('hashchange', syncPromptLocation)
@@ -390,8 +399,9 @@ const selectGroup = (path) => {
       aria-labelledby="nav-tab-prompts"
       tabindex="0"
     >
-      <div class="toolbar">
-        <h2>{{ prompts.length }} 条提示词</h2>
+      <div class="toolbar prompt-toolbar">
+        <h2>提示词收藏 <span>{{ prompts.length }}</span></h2>
+        <p>找到灵感，复制即用。</p>
       </div>
       <div class="prompt-list">
         <article
@@ -410,29 +420,66 @@ const selectGroup = (path) => {
                 class="copy-prompt"
                 type="button"
                 :aria-label="`复制提示词：${prompt.title}`"
+                title="复制完整提示词"
                 @click="copyPrompt(prompt)"
               >
-                复制
+                <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
               </button>
               <button
                 class="copy-prompt"
                 type="button"
                 :aria-label="`分享提示词：${prompt.title}`"
+                title="复制标题和分享链接"
                 @click="sharePrompt(prompt)"
               >
-                分享
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 .1l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7-.1l-3 3a5 5 0 0 0 7 7l2-2"/></svg>
               </button>
             </div>
           </div>
-          <label v-if="prompt.text.includes('{{视频标题}}')" class="prompt-variable">
-            视频标题
-            <input v-model="videoTitle" type="text" placeholder="输入视频标题" />
-          </label>
+          <div class="prompt-meta">
+            <span>{{ promptText(prompt).length }} 字</span>
+            <span v-if="prompt.text.includes('{{视频标题}}')">可填写标题</span>
+          </div>
           <p class="prompt-text">{{ promptText(prompt) }}</p>
+          <button class="view-prompt" type="button" :aria-label="`查看完整提示词：${prompt.title}`" @click="openPrompt(prompt)">
+            查看完整内容 <span aria-hidden="true">↗</span>
+          </button>
         </article>
       </div>
     </section>
-    <div role="status" aria-live="polite">
+    <dialog
+      ref="promptDialog"
+      class="prompt-dialog"
+      aria-labelledby="prompt-dialog-title"
+      @close="selectedPrompt = null"
+      @click.self="promptDialog.close()"
+    >
+      <template v-if="selectedPrompt">
+        <header class="prompt-dialog-header">
+          <div>
+            <p class="eyebrow">完整提示词</p>
+            <h2 id="prompt-dialog-title">{{ selectedPrompt.title }}</h2>
+          </div>
+          <button class="close-prompt" type="button" aria-label="关闭完整提示词" @click="promptDialog.close()">×</button>
+        </header>
+        <div class="prompt-dialog-actions">
+          <button class="copy-prompt" type="button" :aria-label="`复制提示词：${selectedPrompt.title}`" @click="copyPrompt(selectedPrompt)">复制全文</button>
+          <button class="copy-prompt" type="button" :aria-label="`分享提示词：${selectedPrompt.title}`" @click="sharePrompt(selectedPrompt)">分享</button>
+          <span>{{ promptText(selectedPrompt).length }} 字</span>
+        </div>
+        <div class="prompt-dialog-body">
+          <label v-if="selectedPrompt.text.includes('{{视频标题}}')" class="prompt-variable">
+            视频标题
+            <input v-model="videoTitle" type="text" placeholder="输入视频标题" />
+          </label>
+          <p class="prompt-full-text">{{ promptText(selectedPrompt) }}</p>
+        </div>
+        <div role="status" aria-live="polite">
+          <p v-if="copyNotice" class="copy-toast">{{ copyNotice }}</p>
+        </div>
+      </template>
+    </dialog>
+    <div v-if="!selectedPrompt" role="status" aria-live="polite">
       <p v-if="copyNotice" class="copy-toast">{{ copyNotice }}</p>
     </div>
   </main>
@@ -549,7 +596,9 @@ const selectGroup = (path) => {
 
 .content-tab:focus-visible,
 .prompt-variable input:focus-visible,
-.copy-prompt:focus-visible {
+.copy-prompt:focus-visible,
+.view-prompt:focus-visible,
+.close-prompt:focus-visible {
   outline: 2px solid var(--vp-c-brand-1);
   outline-offset: 3px;
 }
@@ -559,21 +608,52 @@ const selectGroup = (path) => {
   margin-top: 24px;
 }
 
+.prompt-panel p,
+.prompt-dialog p {
+  text-indent: 0;
+}
+
 .prompt-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+}
+
+.prompt-toolbar h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.prompt-toolbar h2 span {
+  padding: 2px 9px;
+  border-radius: 8px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.prompt-toolbar p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
 }
 
 .prompt-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px;
+  min-width: 0;
+  padding: 22px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
+  border-radius: 16px;
   background: var(--vp-c-bg-soft);
   scroll-margin-top: calc(var(--vp-nav-height, 64px) + 16px);
+}
+
+.prompt-card:hover {
+  border-color: var(--vp-c-brand-2);
 }
 
 .prompt-card.is-linked {
@@ -585,14 +665,16 @@ const selectGroup = (path) => {
   min-width: 0;
   margin: 0;
   font-size: 17px;
+  line-height: 1.5;
 }
 
 .prompt-heading {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
   width: 100%;
+  min-height: 52px;
 }
 
 .prompt-actions {
@@ -600,9 +682,45 @@ const selectGroup = (path) => {
   gap: 6px;
 }
 
+.prompt-actions .copy-prompt {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  min-height: 34px;
+  padding: 7px;
+  border-color: var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
+}
+
+.prompt-actions .copy-prompt:hover {
+  border-color: var(--vp-c-brand-2);
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+}
+
+.prompt-actions svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.prompt-meta {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0 14px;
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+}
+
 .prompt-variable {
+  display: block;
   width: 100%;
-  margin-top: 16px;
+  margin-bottom: 20px;
   color: var(--vp-c-text-2);
   font-size: 13px;
 }
@@ -621,12 +739,129 @@ const selectGroup = (path) => {
 }
 
 .prompt-text {
-  margin: 16px 0 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  width: 100%;
+  height: 7.2em;
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+.prompt-text,
+.prompt-full-text {
   color: var(--vp-c-text-2);
   line-height: 1.8;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
   user-select: text;
+}
+
+.view-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.view-prompt:hover {
+  color: var(--vp-c-brand-2);
+}
+
+.view-prompt span {
+  font-size: 20px;
+}
+
+.prompt-dialog {
+  width: min(760px, calc(100% - 32px));
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  box-shadow: var(--vp-shadow-3);
+  overflow: hidden;
+}
+
+.prompt-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-dialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+:global(html:has(.prompt-dialog[open])) {
+  overflow: hidden;
+}
+
+.prompt-dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 16px;
+}
+
+.prompt-dialog-header h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 22px;
+  line-height: 1.4;
+}
+
+.close-prompt {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-2);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.close-prompt:hover {
+  color: var(--vp-c-text-1);
+}
+
+.prompt-dialog-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 20px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.prompt-dialog-actions span {
+  margin-left: auto;
+  color: var(--vp-c-text-3);
+  font-size: 12px;
+}
+
+.prompt-dialog-body {
+  min-height: 0;
+  padding: 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.prompt-full-text {
+  margin: 0;
+  font-size: 15px;
 }
 
 .copy-prompt {

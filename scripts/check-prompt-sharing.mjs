@@ -52,6 +52,19 @@ try {
   page.on('pageerror', error => errors.push(error.message))
   page.on('console', message => { if (message.text().includes('Hydration')) errors.push(message.text()) })
   const ids = ['video-cover', 'subtitle-correction', 'training-cutoff', 'cycling-pelican-svg', 'cycling-girl-svg', 'project-knowledge-skill']
+  const dialog = page.locator('.prompt-dialog')
+  const openPrompt = async id => {
+    const card = page.locator(`#prompt-${id}`)
+    await card.getByRole('button', { name: /^查看完整提示词/ }).click()
+    await dialog.waitFor({ state: 'visible' })
+    assert.equal(await dialog.locator('.prompt-full-text').textContent(), await card.locator('.prompt-text').textContent())
+    assert.ok(await dialog.evaluate(el => el.contains(document.activeElement)), 'dialog receives keyboard focus')
+  }
+  const expectDialogClosed = async id => {
+    await dialog.waitFor({ state: 'hidden' })
+    await page.waitForFunction(id => document.getElementById(`prompt-${id}`)
+      ?.querySelector('[aria-label^="查看完整提示词："]') === document.activeElement, id)
+  }
   const expectTarget = async id => {
     await page.waitForFunction(id => document.activeElement?.id === `prompt-${id}`, id)
     assert.equal(await page.locator('#nav-tab-prompts').getAttribute('aria-selected'), 'true')
@@ -59,6 +72,7 @@ try {
     assert.ok((await card.getAttribute('class')).includes('is-linked'))
     const bounds = await card.boundingBox()
     assert.ok(bounds.y >= 60 && bounds.y < 1000, 'card visible below fixed navigation')
+    assert.equal(await page.locator('.prompt-dialog[open]').count(), 0, 'deep links preserve card navigation')
   }
   await page.goto(`${base}/navigation/`, { waitUntil: 'networkidle' })
   assert.equal(await page.locator('#nav-tab-articles').getAttribute('aria-selected'), 'true')
@@ -66,15 +80,36 @@ try {
   assert.equal(new URL(page.url()).hash, '#prompts')
   await page.reload({ waitUntil: 'networkidle' })
   assert.equal(await page.locator('#nav-tab-prompts').getAttribute('aria-selected'), 'true')
-  await page.getByRole('textbox', { name: '视频标题' }).fill('本地标题，不应出现在分享链接')
   for (const id of ids) {
     const card = page.locator(`#prompt-${id}`)
+    const title = await card.locator('h3').textContent()
+    const shareText = `${title}\nhttps://cpython666.github.io/navigation/#prompt-${id}`
+    await openPrompt(id)
+    if (id === 'video-cover') {
+      await dialog.getByRole('textbox', { name: '视频标题' }).fill('本地标题，不应出现在分享链接')
+      assert.ok((await dialog.locator('.prompt-full-text').textContent()).includes('视频标题是：本地标题，不应出现在分享链接'))
+    }
+    await dialog.getByRole('button', { name: /^复制提示词/ }).click()
+    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), await dialog.locator('.prompt-full-text').textContent())
+    await dialog.getByRole('button', { name: /^分享提示词/ }).click()
+    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), shareText)
+    await dialog.getByRole('button', { name: '关闭完整提示词' }).click()
+    await expectDialogClosed(id)
     await card.getByRole('button', { name: /^复制提示词/ }).click()
-    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), await card.locator('.prompt-text').innerText())
+    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), await card.locator('.prompt-text').textContent())
     await card.getByRole('button', { name: /^分享提示词/ }).click()
-    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), `https://cpython666.github.io/navigation/#prompt-${id}`)
+    assert.equal(await page.evaluate(() => navigator.clipboard.readText()), shareText)
     assert.equal(await page.locator('.copy-toast').innerText(), '分享链接已复制！')
   }
+  const cardHeights = await page.locator('.prompt-card').evaluateAll(cards => cards.map(card => card.getBoundingClientRect().height))
+  assert.ok(Math.max(...cardHeights) - Math.min(...cardHeights) <= 1, 'short and long prompts use equal-height summary cards')
+  assert.ok(await page.locator('#prompt-project-knowledge-skill .prompt-text').evaluate(el => el.scrollHeight > el.clientHeight), 'long card text is summarized visually')
+  await openPrompt('project-knowledge-skill')
+  await page.keyboard.press('Escape')
+  await expectDialogClosed('project-knowledge-skill')
+  await openPrompt('training-cutoff')
+  await page.mouse.click(2, 2)
+  await expectDialogClosed('training-cutoff')
   // Direct entry and refresh work for every generated link.
   for (const id of ids) {
     await page.goto(`${base}/navigation/#prompt-${id}`, { waitUntil: 'networkidle' })
@@ -117,9 +152,17 @@ try {
       const bounds = card.getBoundingClientRect()
       return [...card.querySelectorAll('button')].every(button => button.getBoundingClientRect().right <= bounds.right)
     })), true)
+    await openPrompt('project-knowledge-skill')
+    assert.ok(await dialog.evaluate(el => {
+      const bounds = el.getBoundingClientRect()
+      return bounds.x >= 0 && bounds.y >= 0 && bounds.right <= innerWidth && bounds.bottom <= innerHeight
+        && el.scrollWidth <= el.clientWidth
+    }), 'full prompt dialog fits narrow viewport without horizontal overflow')
+    await dialog.getByRole('button', { name: '关闭完整提示词' }).click()
+    await expectDialogClosed('project-knowledge-skill')
   }
   assert.deepEqual(errors, [])
-  console.log('PASS: isolated build, prompt copy/share, stable private-input-free links, direct entry, refresh, SPA, history, unknown ID, error feedback, mobile layout, no hydration errors.')
+  console.log('PASS: isolated build, equal-height summaries, full-text dialogs, close/Escape/backdrop and focus return, complete copy, title-and-link sharing without private inputs, direct entry, refresh, SPA, history, unknown ID, error feedback, mobile layout, no hydration errors.')
   if (process.argv.includes('--preview')) {
     await browser.close()
     browser = undefined

@@ -14,8 +14,8 @@
 
 - `node scripts/check-effects.mjs`：Playwright 隔离页面只提供特效脚本，不读取文章；覆盖空闲停绘、鼠标轨迹、重叠烟花、开关恢复、resize、减少动态效果、隐藏页签及浏览器错误。
 - 此检查测量的是 canvas 绘制和存储读取，不是所有动画帧，也不是线上 Core Web Vitals；飞鸟仍可以持续飞行。
-- `node scripts/check-prompt-sharing.mjs`：自动创建仅含人工页面和会员 loader 替身的临时 fixture，隔离构建后用 Playwright 验证。2026-10-11 本地已通过：六条提示词的复制/分享、直接打开、刷新、SPA/query 同组件跳转、前进后退、错误 ID 回退、失败弹出提示、320px/390px 手机长卡片定位且无溢出及无 hydration 异常；没有全站构建或线上部署。
-- `node scripts/check-prompt-sharing.mjs --preview`：隔离构建和检查通过后保留本机预览服务，并输出访问地址；展示实际提示词组件和人工文章数据，不扫描仓库文章。2026-10-10 已验证检查全部通过且服务继续运行；按 `Ctrl+C` 停止服务并清理临时 fixture，不在文档保存临时端口。
+- `node scripts/check-prompt-sharing.mjs`：自动创建仅含人工页面和会员 loader 替身的临时 fixture，隔离构建后用 Playwright 验证。2026-10-11 本地已通过：等高四行摘要、六条提示词在卡片/弹窗内完整复制与“标题＋换行＋链接”分享、视频标题替换且不进入分享、关闭按钮/Escape/遮罩关闭并恢复焦点、旧链接定位而不自动弹窗、刷新、SPA/query 同组件跳转、前进后退、错误 ID 回退、失败弹出提示、320px/390px 手机卡片及弹窗无溢出、无 hydration 异常；没有全站构建或线上部署。
+- `node scripts/check-prompt-sharing.mjs --preview`：隔离构建和检查通过后保留本机预览服务，并输出访问地址；展示实际提示词组件和人工文章数据，不扫描仓库文章。2026-10-11 已验证检查全部通过且服务继续运行；按 `Ctrl+C` 停止服务并清理临时 fixture，不在文档保存临时端口。
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
 - 文档改动检查链接是否可解析，并使用 skill-creator 自带 `scripts/quick_validate.py` 检查 Skill 格式；格式通过不等同于产品测试通过。
