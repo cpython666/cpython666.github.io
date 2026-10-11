@@ -1,10 +1,11 @@
 <script setup>
-import { useData } from 'vitepress'
-import { computed, onBeforeUnmount, ref, watchEffect } from 'vue'
+import { useData, useRouter } from 'vitepress'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { data as memberArticlePaths } from './member.data.mjs'
 import copyText from '../utils/copy.js'
 
 const { theme } = useData()
+const router = useRouter()
 
 const tabs = [
   { id: 'articles', text: '文章' },
@@ -13,37 +14,97 @@ const tabs = [
 const activeTab = ref('articles')
 const prompts = [
   {
+    id: 'video-cover',
     title: '生成视频封面的',
     text: '以上面图片为素材，给出视频封面\n封面比例4:3\n视频标题是：{{视频标题}}\n封面上只需要有重点的几个字\n不需要有很多小文字，适当加点插画就可以\n风格：使用手写体或仿手写字体。大量使用简笔画、小图标、箭头、对话框、分隔线等手绘元素来辅助表达。色彩丰富活泼，常用荧光笔、彩铅效果。布局自由随性，充满个性和趣味性。',
   },
   {
+    id: 'subtitle-correction',
     title: '矫正视频字幕的',
     text: '修复下这个字幕：\n里面可能提到了gpt-5.6-sol\nblender\ngodot，gdscript\n这些术语\n【可选】可参考视频文案是：',
   },
-  { title: '训练数据截止时间', text: '你的训练时间截止什么日期？' },
-  { title: '骑自行车的鹈鹕', text: '生成一个动态的骑自行车的鹈鹕的svg' },
-  { title: '骑自行车的小姑娘', text: '生成一个动态的骑自行车的穿渔网袜的小姑娘的svg' },
+  { id: 'training-cutoff', title: '训练数据截止时间', text: '你的训练时间截止什么日期？' },
+  { id: 'cycling-pelican-svg', title: '骑自行车的鹈鹕', text: '生成一个动态的骑自行车的鹈鹕的svg' },
+  { id: 'cycling-girl-svg', title: '骑自行车的小姑娘', text: '生成一个动态的骑自行车的穿渔网袜的小姑娘的svg' },
+  {
+    id: 'project-knowledge-skill',
+    title: '建立并自动维护项目知识库',
+    text: '为本项目建立一个项目级 skill，作为之后所有 AI 对话共享的项目知识库，并让它自动维护。\n\n【建立】\n\n- 先了解项目，在 `.agents/skills/<项目名>/SKILL.md` 创建（已有就沿用完善）。SKILL.md 只放项目概览、关键约定和资料索引，细节按主题拆到 `references/`。\n- 在根目录 AGENTS.md 写入规则：处理本项目任务前先读这个 skill；完成一段有结论的工作后，按下面的规则更新它。\n\n【维护规则】\n\n- 不用等我提醒：有新的已确认决策、已核实的实现、踩坑或待办，就顺手更新；没有就不动。\n- 只写事实。讨论中的方案、未验证的猜测标“待定”，不能写成已完成。\n- 就地修改旧内容，不堆叠追加；过时的直接改掉。不复制大段代码，写文件路径即可。\n- 不写密钥和隐私信息；更新文档不代表可以提交、推送或做其他操作。\n- 更新后在回复末尾用一句话说明记了什么。\n\n现在开始：检查项目，建好结构，把以上规则精简地写进 AGENTS.md。',
+  },
 ]
 const videoTitle = ref('')
 const promptText = (prompt) => prompt.text.replaceAll('{{视频标题}}', videoTitle.value || '{{视频标题}}')
 const copyNotice = ref('')
 let copyTimer
 
-const copyPrompt = async (prompt) => {
+const copyWithNotice = async (text, success, failure) => {
   clearTimeout(copyTimer)
   copyNotice.value = ''
   try {
-    await copyText(promptText(prompt))
-    copyNotice.value = '复制成功！'
+    await copyText(text)
+    copyNotice.value = success
   } catch {
-    copyNotice.value = '复制失败，请选中提示词手动复制。'
+    copyNotice.value = failure
   } finally {
     clearTimeout(copyTimer)
     copyTimer = setTimeout(() => { copyNotice.value = '' }, 3000)
   }
 }
 
-onBeforeUnmount(() => clearTimeout(copyTimer))
+const copyPrompt = (prompt) => copyWithNotice(promptText(prompt), '复制成功！', '复制失败，请选中提示词手动复制。')
+const sharePrompt = (prompt) => copyWithNotice(
+  `https://cpython666.github.io/navigation/#prompt-${prompt.id}`,
+  '分享链接已复制！',
+  '分享链接复制失败，请重试。',
+)
+
+const linkedPrompt = ref('')
+let locateFrame
+let previousRouteHook
+let routeHook
+
+const syncPromptLocation = async () => {
+  cancelAnimationFrame(locateFrame)
+  const hash = window.location.hash
+  const prompt = prompts.find(item => hash === `#prompt-${item.id}`)
+  linkedPrompt.value = prompt?.id || ''
+  activeTab.value = prompt || hash === '#prompts' ? 'prompts' : 'articles'
+  if (!prompt) return
+  await nextTick()
+  locateFrame = requestAnimationFrame(() => {
+    const card = document.getElementById(`prompt-${prompt.id}`)
+    card?.scrollIntoView({ block: 'start', behavior: 'instant' })
+    card?.focus({ preventScroll: true })
+  })
+}
+
+const selectTab = (id) => {
+  cancelAnimationFrame(locateFrame)
+  activeTab.value = id
+  linkedPrompt.value = ''
+  const url = new URL(window.location.href)
+  url.hash = id === 'prompts' ? 'prompts' : ''
+  window.history.replaceState(window.history.state, '', url)
+}
+
+onMounted(() => {
+  syncPromptLocation()
+  window.addEventListener('hashchange', syncPromptLocation)
+  previousRouteHook = router.onAfterRouteChange
+  const previous = previousRouteHook ?? router.onAfterRouteChanged
+  routeHook = async (href) => {
+    await previous?.(href)
+    await syncPromptLocation()
+  }
+  router.onAfterRouteChange = routeHook
+})
+
+onBeforeUnmount(() => {
+  clearTimeout(copyTimer)
+  cancelAnimationFrame(locateFrame)
+  window.removeEventListener('hashchange', syncPromptLocation)
+  if (routeHook && router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
+})
 
 const handleTabKeydown = (event, index) => {
   let nextIndex
@@ -54,7 +115,7 @@ const handleTabKeydown = (event, index) => {
   else return
 
   event.preventDefault()
-  activeTab.value = tabs[nextIndex].id
+  selectTab(tabs[nextIndex].id)
   document.getElementById(`nav-tab-${activeTab.value}`)?.focus()
 }
 
@@ -244,7 +305,7 @@ const selectGroup = (path) => {
         :aria-selected="activeTab === tab.id"
         :aria-controls="`nav-panel-${tab.id}`"
         :tabindex="activeTab === tab.id ? 0 : -1"
-        @click="activeTab = tab.id"
+        @click="selectTab(tab.id)"
         @keydown="handleTabKeydown($event, index)"
       >
         {{ tab.text }}
@@ -333,17 +394,35 @@ const selectGroup = (path) => {
         <h2>{{ prompts.length }} 条提示词</h2>
       </div>
       <div class="prompt-list">
-        <article v-for="prompt in prompts" :key="prompt.title" class="prompt-card">
+        <article
+          v-for="prompt in prompts"
+          :id="`prompt-${prompt.id}`"
+          :key="prompt.id"
+          class="prompt-card"
+          :class="{ 'is-linked': linkedPrompt === prompt.id }"
+          tabindex="-1"
+          :aria-labelledby="`prompt-title-${prompt.id}`"
+        >
           <div class="prompt-heading">
-            <h3>{{ prompt.title }}</h3>
-            <button
-              class="copy-prompt"
-              type="button"
-              :aria-label="`复制提示词：${prompt.title}`"
-              @click="copyPrompt(prompt)"
-            >
-              复制
-            </button>
+            <h3 :id="`prompt-title-${prompt.id}`">{{ prompt.title }}</h3>
+            <div class="prompt-actions">
+              <button
+                class="copy-prompt"
+                type="button"
+                :aria-label="`复制提示词：${prompt.title}`"
+                @click="copyPrompt(prompt)"
+              >
+                复制
+              </button>
+              <button
+                class="copy-prompt"
+                type="button"
+                :aria-label="`分享提示词：${prompt.title}`"
+                @click="sharePrompt(prompt)"
+              >
+                分享
+              </button>
+            </div>
           </div>
           <label v-if="prompt.text.includes('{{视频标题}}')" class="prompt-variable">
             视频标题
@@ -494,6 +573,12 @@ const selectGroup = (path) => {
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
   background: var(--vp-c-bg-soft);
+  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 16px);
+}
+
+.prompt-card.is-linked {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
 }
 
 .prompt-card h3 {
@@ -504,9 +589,15 @@ const selectGroup = (path) => {
 
 .prompt-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   width: 100%;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 6px;
 }
 
 .prompt-variable {
