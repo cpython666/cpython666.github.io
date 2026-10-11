@@ -261,6 +261,7 @@ let spider_set_items = [
   { text: "就业分享-谁的青春不迷茫", link: "/spider/collection/job-sharing" },
   { text: "几乎免费的海外代理【clash妙用🤩】【无广告】", link: "/spider/collection/cheap-ip" },
   { text: "Clash 使用教程：导入订阅、全局与规则模式", link: "/spider/collection/clash" },
+  { text: "Clash 进阶：订阅节点部署成爬虫代理池", link: "/spider/collection/clash-nodes-for-crawler" },
   { text: "常用hook代码片段", link: "/spider/collection/hook" },
   {
     text: "ast详解",
