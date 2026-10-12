@@ -51,7 +51,7 @@ try {
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
   page.on('console', message => { if (message.text().includes('Hydration')) errors.push(message.text()) })
-  const ids = ['video-cover', 'subtitle-correction', 'training-cutoff', 'cycling-pelican-svg', 'cycling-girl-svg', 'project-knowledge-skill']
+  const ids = ['video-cover', 'video-cover-codex', 'subtitle-correction', 'subtitle-from-script', 'training-cutoff', 'cycling-pelican-svg', 'cycling-girl-svg', 'project-knowledge-skill']
   const dialog = page.locator('.prompt-dialog')
   const openPrompt = async id => {
     const card = page.locator(`#prompt-${id}`)
