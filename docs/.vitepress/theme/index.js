@@ -9,6 +9,8 @@ import ArticleTools from './components/ArticleTools.vue'
 import ArticleHits from './components/ArticleHits.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 import VipBtn from './components/VipBtn.vue'
+import WalineComment from './components/WalineComment.vue'
+import { useCommentEnabled } from './comment.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -16,6 +18,7 @@ export default {
   Layout: () => h(DefaultTheme.Layout, null, {
     'aside-outline-before': () => h(ArticleOutlineToggle),
     'doc-before': () => h(ArticleHits),
+    'doc-after': () => h(WalineComment),
     'home-features-after': () => h(ArticleHits),
     'layout-bottom': () => h(ArticleTools),
   }),
@@ -59,22 +62,10 @@ export default {
       }, { immediate: true });
     });
     onBeforeUnmount(() => stopLive2d?.());
-    const commentHiddenPrefixes = [
-      '/backup/',
-      '/nav/',
-      '/navigation/',
-      '/projects/',
-      '/spider-tools/',
-      '/vip/',
-      '/web-intro/',
-      '/index/',
-    ];
+    const commentEnabled = useCommentEnabled();
     const commentFrontmatter = computed(() => ({
       ...frontmatter.value,
-      comment: route.path !== '/'
-        && frontmatter.value.layout !== 'home'
-        && frontmatter.value.comment !== false
-        && !commentHiddenPrefixes.some((prefix) => route.path.startsWith(prefix)),
+      comment: commentEnabled.value,
     }));
     giscusTalk(
       {
