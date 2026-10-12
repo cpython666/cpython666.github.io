@@ -619,6 +619,7 @@ let backend_items = [
     link: "/backend/docker",
   },
   { text: "nginx笔记", link: "/backend/nginx" },
+  { text: "Jenkins 从零上手：最常用功能", link: "/backend/jenkins" },
   { text: "布隆过滤器", link: "/backend/布隆过滤器" },
 ];
 
