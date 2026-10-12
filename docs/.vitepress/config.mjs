@@ -620,6 +620,7 @@ let backend_items = [
   },
   { text: "nginx笔记", link: "/backend/nginx" },
   { text: "Jenkins 从零上手：最常用功能", link: "/backend/jenkins" },
+  { text: "go-zero 从零上手：最常用功能", link: "/backend/go-zero" },
   { text: "布隆过滤器", link: "/backend/布隆过滤器" },
 ];
 
