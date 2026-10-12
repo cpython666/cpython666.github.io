@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { useData, useRoute } from 'vitepress'
 
 // Waline 服务端地址（部署在 Vercel），留空时不渲染 Waline 评论区。
-export const walineServerURL = ''
+export const walineServerURL = 'https://cpython666-waline.vercel.app'
 
 const commentHiddenPrefixes = [
   '/backup/',
