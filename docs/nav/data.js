@@ -3492,6 +3492,18 @@ export const navigationData = [
         ]
     },
     {
+        title: 'AI模型检测',
+        items: [
+            {
+                "link": "https://github.com/xqy2006/ModelTrace",
+                "icon": "/icons/github.svg",
+                "title": "ModelTrace",
+                "desc": "通过生成挑战提取输出指纹，辅助识别模型家族与版本；支持手动和 API 测试，结果仅供参考。",
+                "categories": ["AI", "模型归因", "开源"]
+            }
+        ]
+    },
+    {
         title: 'AI代码编程',
         items: [
             {

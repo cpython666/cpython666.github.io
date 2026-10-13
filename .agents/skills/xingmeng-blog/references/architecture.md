@@ -21,8 +21,8 @@
 | 首页展示与打字效果 | `docs/index/IndexPage.vue` | Typed 与 resize 监听需随组件卸载清理 |
 | 文章工具、目录开关、阅读量 | `docs/.vitepress/theme/components/` | 优先复用现有组件 |
 | 复制文本 | `docs/utils/copy.js` | 提示词等调用此工具，调用方处理成功/失败反馈 |
-| 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面 |
-| 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/spider-tools/SpiderTools.vue` | 页面已有独立组件 |
+| 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/WebLink.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面；`navigationData` 按 `title` / `items` 分组，“AI模型检测”收录 ModelTrace；NavPage 负责搜索、分类和分批展示，WebLink 接收筛选后的 `items` 渲染卡片 |
+| 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/spider-tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
 | 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
 | 发布流程 | `.github/workflows/static.yml` | 构建产物目录为 `docs/.vitepress/dist` |
 

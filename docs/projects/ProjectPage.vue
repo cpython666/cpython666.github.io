@@ -406,6 +406,7 @@ onMounted(loadStars)
   min-width: 0;
   flex-direction: column;
   justify-content: center;
+  overflow-wrap: anywhere;
 }
 
 .featured-copy p {
@@ -421,17 +422,24 @@ onMounted(loadStars)
 }
 
 .featured-image {
+  position: relative;
   display: block;
+  align-self: center;
   overflow: hidden;
-  min-height: 190px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border-radius: 8px;
   background: var(--vp-c-bg-mute);
 }
 
-.featured-image img {
+.featured-image img,
+.image img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .controls {
@@ -515,13 +523,14 @@ onMounted(loadStars)
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 16px;
 }
 
 .card {
   display: grid;
   grid-template-rows: auto 1fr;
+  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -536,16 +545,12 @@ onMounted(loadStars)
 }
 
 .image {
+  position: relative;
   display: block;
+  overflow: hidden;
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--vp-c-bg-mute);
-}
-
-.image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .content {
@@ -566,6 +571,7 @@ onMounted(loadStars)
 .title {
   display: -webkit-box;
   overflow: hidden;
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: 18px;
   line-height: 1.45;
@@ -702,10 +708,6 @@ onMounted(loadStars)
 
   .featured {
     grid-template-columns: 1fr;
-  }
-
-  .featured-image {
-    min-height: 160px;
   }
 
   .controls {
