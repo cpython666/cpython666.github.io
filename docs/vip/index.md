@@ -55,7 +55,7 @@ const plans = ref([
       { content: '全部资源的搜索', status: 1 },
       { content: '全部资源的浏览', status: 1 },
       { content: '阅读VIP专属文章', status: 1 },
-      { content: '找资源宝典：资源无界，打破信息壁垒', url: '/breakthrough-notes/resource-treasure-manual', status: 1 },
+      { content: '找资源宝典：资源无界，打破信息壁垒（查看说明）', url: '/breakthrough-notes/resource-treasure-manual', status: 1 },
       { content: '会员专属-微信交流群', status: 1 },
       { content: '持续增加中～', status: 1 }
     ]
@@ -80,7 +80,7 @@ const plans = ref([
 const vipPosts = ref([
   { title: 'GEO系统研究报告', path: '/life/geo-system-research-report' },
   { title: 'Docker笔记', path: '/backend/docker' },
-  { title: '找资源宝典：资源无界，打破信息壁垒-说明', path: '/breakthrough-notes/resource-treasure-manual' },
+  { title: '找资源宝典：资源无界，打破信息壁垒', path: '/breakthrough-notes/resource-treasure-guide' },
   { title: 'P1-DrissionPage数据采集中间系统【源码及讲解】', path: '/spider/drissionpage-system/p1-system-source-guide' },
   { title: 'P2-自动化采集系统-体验优化', path: '/spider/drissionpage-system/p2-system-ux-optimization' },
   { title: 'P3-自动化采集系统功能丰富-支持截图，接口文档描述完善', path: '/spider/drissionpage-system/p3-screenshot-api-docs' },
@@ -157,7 +157,7 @@ const activateVip = async () => {
 .vip-button.danger { background: #c45656; }
 .vip-link { color: var(--vp-c-brand-1); text-decoration: none; }
 .vip-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
-.vip-table th, .vip-table td { padding: 8px; text-align: left; border: 1px solid var(--vp-c-divider); }
+.vip-table th, .vip-table td { padding: 8px; text-align: left; border: 1px solid var(--vp-c-divider); overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .plans { grid-template-columns: 1fr; }
   .vip-tools, .vip-activate { display: flex; flex-direction: column; align-items: stretch; }

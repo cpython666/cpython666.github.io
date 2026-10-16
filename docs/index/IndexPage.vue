@@ -1,25 +1,26 @@
 <template>
+  <div class="home-page">
+    <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 
-  <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
-
-  </div>
-
-  <div id="center-div">
-    <div id="small-bg" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
-         :style="{ backgroundImage: `url(${randomImage})` }">
-      <!-- 背景部分 -->
     </div>
-    <div class="content">
-      <div style="cursor: pointer" @click="openLink">
-        <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+
+    <div id="center-div">
+      <div id="small-bg" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
+           :style="{ backgroundImage: `url(${randomImage})` }">
+        <!-- 背景部分 -->
       </div>
-      <div id="box-cursor">
-        <span id="box" ref="typingBox"></span>
+      <div class="content">
+        <div style="cursor: pointer" @click="openLink">
+          <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+        </div>
+        <div id="box-cursor">
+          <span id="box" ref="typingBox"></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <sponsors-links/>
+    <sponsors-links/>
+  </div>
 </template>
 
 <script setup>
@@ -127,28 +128,15 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style>
-.container {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-/* 修复文章导航栏溢出样式问题 */
-.VPNavBarMenu {
-  width: 100%;
+<style scoped>
+.home-page {
+  position: relative;
+  overflow: hidden;
 }
 
 #big-bg {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -170,7 +158,7 @@ body::-webkit-scrollbar {
 #center-div {
   border-radius: 50px;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -190,7 +178,7 @@ body::-webkit-scrollbar {
   left: 0;
   border-radius: 50px;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -560,6 +560,7 @@ function decodeURL() {
 
 .tool-input {
 	width: 240px;
+	max-width: calc(100% - 6px);
 	margin: 0 0 8px 6px;
 }
 

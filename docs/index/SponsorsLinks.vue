@@ -72,7 +72,7 @@ const friends = [
   padding: 2rem 1rem;
   background-color: #f8f9fa;
   border-top: 1px solid #eee;
-  width: 100vw;
+  width: 100%;
 }
 
 .section-title {

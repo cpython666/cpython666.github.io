@@ -65,18 +65,19 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', syncCategoryHash)
 <template>
   <main class="resources-page">
     <header class="resources-hero">
-      <div>
-        <p class="eyebrow">发现好工具</p>
-        <h1>资源导航</h1>
+      <div class="hero-copy">
+        <div class="hero-title">
+          <h1>资源导航</h1>
+          <span class="resource-stats">{{ resources.length }} 个资源 · {{ groups.length }} 个分类</span>
+        </div>
         <p class="summary">开发、创作与学习，常用资源在这里找到。</p>
       </div>
-      <div class="resource-stats"><strong>{{ resources.length }}</strong> 个资源 <span>·</span> {{ groups.length }} 个分类</div>
+      <div class="resource-search">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input v-model="searchText" aria-label="搜索资源" type="search" placeholder="搜索名称、简介、标签或网址" @input="searchAll" />
+        <button v-if="searchText" type="button" aria-label="清除搜索" @click="selectCategory('')">清除</button>
+      </div>
     </header>
-    <div class="resource-search">
-      <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
-      <input v-model="searchText" aria-label="搜索资源" type="search" placeholder="搜索名称、简介、标签或网址" @input="searchAll" />
-      <button v-if="searchText" type="button" aria-label="清除搜索" @click="selectCategory('')">清除</button>
-    </div>
     <label class="mobile-categories">
       <span>分类</span>
       <select aria-label="资源分类" :value="activeCategory" @change="selectCategory($event.target.value)">
@@ -102,7 +103,7 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', syncCategoryHash)
           <span role="status" aria-live="polite">已显示 {{ visibleItems.length }} / {{ filteredItems.length }}</span>
         </div>
         <a v-if="showSponsor" class="sponsor-banner" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
-          <img src="/imgs/ads/qgwl.jpeg" alt="青果网络代理服务" width="960" height="70" loading="lazy" decoding="async" />
+          <img class="no-zoom" src="/imgs/ads/qgwl.jpeg" alt="青果网络代理服务" width="960" height="70" loading="lazy" decoding="async" />
         </a>
         <WebLink v-if="visibleItems.length" :items="visibleItems" />
         <div v-else-if="!showSponsor" class="empty-state">
@@ -118,21 +119,20 @@ onBeforeUnmount(() => window.removeEventListener('hashchange', syncCategoryHash)
 </template>
 
 <style scoped>
-.resources-page { width: min(1240px, calc(100% - 40px)); margin: 28px auto 48px; }
+.resources-page { width: min(1240px, calc(100% - 40px)); margin: 12px auto 48px; }
 .resources-page p { text-indent: 0; }
-.resources-hero { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding: 24px 0; }
-.eyebrow { margin: 0 0 10px; color: var(--vp-c-brand-1); font-size: 13px; font-weight: 700; }
-h1 { margin: 0; font-size: 40px; line-height: 1.2; }
-.summary { margin: 14px 0 0; color: var(--vp-c-text-2); line-height: 1.7; }
-.resource-stats { color: var(--vp-c-text-2); font-size: 14px; white-space: nowrap; }
-.resource-stats strong { color: var(--vp-c-text-1); font-size: 24px; }
-.resource-stats span { margin: 0 8px; }
-.resource-search { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 0 18px; border: 1px solid var(--vp-c-divider); border-radius: 12px; background: var(--vp-c-bg-soft); }
+.resources-hero { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 24px; padding: 12px 0 20px; border-bottom: 1px solid var(--vp-c-divider); }
+.hero-copy { min-width: 0; }
+.hero-title { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; }
+.hero-title h1 { margin: 0; font-size: 26px; line-height: 1.3; }
+.resources-hero .summary { margin: 6px 0 0; color: var(--vp-c-text-2); font-size: 13px; line-height: 1.6; }
+.resource-stats { color: var(--vp-c-text-3); font-size: 12px; white-space: nowrap; }
+.resource-search { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 14px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); }
 .resource-search:focus-within { border-color: var(--vp-c-brand-1); outline: 2px solid var(--vp-c-brand-soft); }
 .resource-search svg { flex: none; width: 20px; height: 20px; fill: none; stroke: var(--vp-c-text-3); stroke-width: 1.8; }
-.resource-search input { width: 100%; min-width: 0; padding: 14px 0; outline: none; background: transparent; color: var(--vp-c-text-1); font: inherit; }
+.resource-search input { width: 100%; min-width: 0; padding: 11px 0; outline: none; background: transparent; color: var(--vp-c-text-1); font: inherit; font-size: 14px; }
 .resource-search button { flex: none; color: var(--vp-c-brand-1); font-size: 13px; cursor: pointer; }
-.resource-workspace { display: grid; grid-template-columns: 192px minmax(0, 1fr); align-items: start; gap: 28px; margin-top: 28px; }
+.resource-workspace { display: grid; grid-template-columns: 192px minmax(0, 1fr); align-items: start; gap: 28px; margin-top: 20px; }
 .resource-sidebar { position: sticky; top: calc(var(--vp-nav-height, 64px) + 16px); min-width: 0; }
 .sidebar-heading { margin: 0 0 12px; padding-left: 12px; color: var(--vp-c-text-3); font-size: 12px; font-weight: 600; }
 .resource-sidebar nav { display: grid; gap: 4px; max-height: calc(100dvh - 160px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
@@ -141,10 +141,10 @@ h1 { margin: 0; font-size: 40px; line-height: 1.2; }
 .category-button.active { color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); font-weight: 600; }
 .category-count { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .8; }
 .resource-results { min-width: 0; scroll-margin-top: calc(var(--vp-nav-height, 64px) + 20px); }
-.results-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.results-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .results-heading h2 { margin: 0; padding: 0; border: 0; font-size: 20px; line-height: 1.5; scroll-margin-top: calc(var(--vp-nav-height, 64px) + 20px); }
 .results-heading span { flex: none; color: var(--vp-c-text-3); font-size: 12px; }
-.sponsor-banner { display: block; margin-bottom: 20px; overflow: hidden; border-radius: 10px; }
+.sponsor-banner { display: block; margin-bottom: 16px; overflow: hidden; border-radius: 8px; }
 .sponsor-banner img { display: block; width: 100%; height: auto; aspect-ratio: 96 / 7; object-fit: contain; }
 .load-more { display: block; width: 100%; margin-top: 24px; padding: 14px 20px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); color: var(--vp-c-brand-1); font-size: 14px; font-weight: 600; cursor: pointer; }
 .load-more span { margin-left: 8px; color: var(--vp-c-text-3); font-size: 12px; font-weight: 400; }
@@ -159,11 +159,11 @@ h1 { margin: 0; font-size: 40px; line-height: 1.2; }
 button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
 @media (max-width: 760px) {
   .resources-page { width: calc(100% - 24px); margin-top: 12px; }
-  .resources-hero { align-items: flex-start; flex-direction: column; gap: 18px; }
-  h1 { font-size: 32px; }
-  .summary { font-size: 14px; }
+  .resources-hero { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 4px 0 16px; }
+  .hero-title h1 { font-size: 24px; }
+  .resource-search input { font-size: 16px; }
   .resource-sidebar { display: none; }
-  .resource-workspace { grid-template-columns: minmax(0, 1fr); margin-top: 24px; }
+  .resource-workspace { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
   .mobile-categories { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--vp-c-text-2); font-size: 14px; }
   .mobile-categories select { flex: 1; min-width: 0; min-height: 42px; padding: 8px 12px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); }
 }

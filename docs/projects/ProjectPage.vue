@@ -236,7 +236,7 @@ onMounted(loadStars)
         </div>
       </div>
       <a :href="featuredProject.url" class="featured-image" target="_blank" rel="noopener noreferrer">
-        <img :src="featuredProject.image || defaultImg" :alt="featuredProject.title" @error="onImgErr" />
+        <img class="no-zoom" :src="featuredProject.image || defaultImg" :alt="featuredProject.title" @error="onImgErr" />
       </a>
     </section>
 
@@ -269,6 +269,7 @@ onMounted(loadStars)
       <article v-for="project in filteredItems" :key="project.id" class="card">
         <a :href="project.url" class="image" target="_blank" rel="noopener noreferrer">
           <img
+            class="no-zoom"
             :src="project.image || defaultImg"
             :alt="project.title"
             loading="lazy"

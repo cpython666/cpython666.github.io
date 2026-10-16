@@ -821,6 +821,10 @@ let breakthrough_notes_items = [
     text: "找资源宝典：资源无界，打破信息壁垒-说明",
     link: "/breakthrough-notes/resource-treasure-manual",
   },
+  {
+    text: "找资源宝典：资源无界，打破信息壁垒",
+    link: "/breakthrough-notes/resource-treasure-guide",
+  },
 ];
 let backup_items = [
   { text: "备份", link: "/backup/" },

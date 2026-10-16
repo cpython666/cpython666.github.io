@@ -173,9 +173,10 @@ convert()
 }
 
 .editor-header {
-  height: 52px;
-  padding: 0 14px;
+  min-height: 52px;
+  padding: 10px 14px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -212,6 +213,7 @@ convert()
   color: var(--vp-c-brand-1);
   background: transparent;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .copy-button {
@@ -219,6 +221,7 @@ convert()
   border-radius: 7px;
   color: var(--vp-c-text-2);
   background: var(--vp-c-default-soft);
+  white-space: nowrap;
   font-size: 12px;
 }
 

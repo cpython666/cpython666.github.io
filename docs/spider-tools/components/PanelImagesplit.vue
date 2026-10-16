@@ -11,9 +11,9 @@
 		</div>
 		<button @click="splitAndDownload">分割并且下载</button>
 	  </div>
-	  <div id="preview" ref="preview">
-		<img :src="imageSrc" ref="imgPreview" alt="Preview Image">
-		<canvas ref="overlay"></canvas>
+	  <div v-show="imageSrc" id="preview" ref="preview">
+		<img :src="imageSrc" ref="imgPreview" class="no-zoom" alt="Preview Image">
+		<canvas ref="overlay" class="preview-overlay"></canvas>
 	  </div>
 	  <canvas ref="canvas" style="display: none;"></canvas>
 	</div>
@@ -29,6 +29,17 @@
 		rows: 2,
 		columns: 2
 	  };
+	},
+	mounted() {
+	  this.previewObserver = new ResizeObserver(() => {
+		if (!this.imageSrc) return;
+		this.updateCanvasSize();
+		this.updatePreview();
+	  });
+	  this.previewObserver.observe(this.$refs.imgPreview);
+	},
+	beforeUnmount() {
+	  this.previewObserver.disconnect();
 	},
 	methods: {
 	  onImageChange(event) {
@@ -153,14 +164,16 @@
 	position: relative;
   }
   #preview img {
+	display: block;
 	max-width: 100%;
   }
-  #overlay {
+  .preview-overlay {
 	position: absolute;
 	pointer-events: none;
 	z-index: 10; /* Ensure overlay canvas is above the image */
   }
   input{
+	max-width: 100%;
 	border: 1px solid black;
   }
   button{
@@ -170,4 +183,3 @@
 	color: white;
   }
   </style>
-  

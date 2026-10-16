@@ -497,6 +497,8 @@ watch(selectedSummary, (summary) => {
 
   .x-backup__summary dl {
     width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .x-backup__list {
