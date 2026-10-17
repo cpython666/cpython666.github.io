@@ -1,5 +1,339 @@
 export const navigationData = [
     {
+        title: 'Agent',
+        items: [
+            {
+                "link": "https://www.deepseek.com/harness/",
+                "icon": "/logos/deepseek-harness.svg",
+                "title": "DeepSeek Harness",
+                "desc": "DeepSeek 开源智能体工作台，支持文档、表格、编程与定时任务，可通过插件扩展能力。",
+                "categories": ["AI", "Agent", "开源"]
+            },
+            {
+                "link": "https://openclaw.ai/",
+                "icon": "/logos/openclaw.svg",
+                "title": "OpenClaw（小龙虾）",
+                "desc": "可在本机运行的开源 AI 助手，通过聊天应用处理邮件、日程和自动化任务。",
+                "categories": ["AI", "Agent", "开源"]
+            },
+            {
+                "link": "https://www.workbuddy.cn/",
+                "icon": "/logos/workbuddy.svg",
+                "title": "WorkBuddy",
+                "desc": "腾讯 AI 办公工作台，用自然语言完成文件处理与内容制作，支持多智能体协作。",
+                "categories": ["AI", "Agent", "办公"]
+            },
+            {
+                "link": "https://developers.openai.com/codex",
+                "icon": "/logos/chatgpt.png",
+                "title": "Codex",
+                "desc": "Codex 是 OpenAI 的编码 agent，支持在 CLI、IDE 和应用内执行编码、调试、审查与自动化工作流。",
+                "categories": ["Agent", "Coding", "OpenAI"]
+            },
+        ]
+    },
+    {
+        title: 'AI聊天对话',
+        items: [
+
+            {
+                "link": "https://chat.openai.com/",
+                "icon": "/logos/chatgpt.png",
+                "title": "ChatGPT",
+                "desc": "ChatGPT，是 OpenAI 研发的一款聊天机器人程序，于2022年11月30日发布。ChatGPT 是人工智能技术驱动的自然语言处理工具，它能够基于在预训练阶段所见的模式和统计规律，来生成回答，还能根据聊天的上下文进行互动，真正像人类一样来聊天交流，甚至能完成撰写邮件、视频脚本、文案、翻译、代码，写论文等任务。"
+            },
+            {
+                "link": "https://www.bing.com/new",
+                "icon": "/logos/bing.png",
+                "title": "NewBing",
+                "desc": "Bing 必应推出的 AI 聊天搜索，可以通过聊天方式创作所需图像，一站式提供搜索、聊天和创作等功能。"
+            },
+            {
+                "link": "https://bard.google.com/",
+                "icon": "/logos/bard.png",
+                "title": "Google Bard",
+                "desc": "Bard 是谷歌在一个大型语言模型基础上，推出的聊天机器人。Bard 背后的力量是 Google 的对话应用语言模型，又名 LaMDA，Bard 是基于 LaMDA 的轻量级版本，使用更少的计算能力，使其能够扩展到更多的人，并提供额外的反馈。"
+            },
+            {
+                "link": "https://claude.ai/",
+                "icon": "/logos/claude.png",
+                "title": "Claude",
+                "desc": "Claude 是由 Anthropic 公司开发的人工智能聊天机器人。它性格开朗、个性十足，并且有些唠叨，每次回答都尽可能把来龙去脉和相关的信息一一列出。Anthropic 成立于2021年，由一群来自 Google Brain，OpenAI 和 DeepMind 的人工智能大佬联合创立。"
+            },
+            {
+                "link": "https://you.com/",
+                "icon": "/logos/you.png",
+                "title": "YOU",
+                "desc": "YOU 是由人工智能搜索引擎 you.com 开发的大型语言模型，可实现连续对话，免费使用，问答的同时提供相关视频、图片等资料，帮助用户更轻松地在 you.com 网站上查找信息。"
+            },
+            {
+                "link": "https://qianwen.aliyun.com/",
+                "icon": "/logos/qianwen.png",
+                "title": "通义千问",
+                "desc": "通义千问，是阿里云推出的一个超大规模的语言模型，功能包括多轮对话、文案创作、逻辑推理、多模态理解、多语言支持。能够跟人类进行多轮的交互，也融入了多模态的知识理解，且有文案创作能力，能够续写小说，编写邮件等。"
+            },
+            {
+                "link": "https://yiyan.baidu.com/",
+                "icon": "/logos/yiyan.png",
+                "title": "文心一言",
+                "desc": "文心一言，是百度全新一代知识增强大语言模型，文心大模型家族的新成员，能够与人对话互动，回答问题，协助创作，高效便捷地帮助人们获取信息、知识和灵感。"
+            },
+            {
+                "link": "https://moss.fastnlp.top/",
+                "icon": "/logos/moss.jpg",
+                "title": "MOSS",
+                "desc": "MOSS 是复旦大学团队开发的国内第一个发布的对话式大型语言模型，它可以执行对话生成、编程、事实问答等一系列任务，打通了让生成式语言模型理解人类意图并具有对话能力的全部技术路径。"
+            },
+            {
+                "link": "https://chat.360.cn/",
+                "icon": "/logos/360.png",
+                "title": "360 智脑",
+                "desc": "360 智脑为 360 自研千亿参数大语言模型，已具备生成与创作、多轮对话、代码能力、文本分类、文本改写、阅读理解、逻辑与推理、知识问答、多模态、翻译等十大核心能力，维度涵盖数百项细分功能，可覆盖大模型全部应用场景。"
+            },
+            {
+                "link": "https://d0424.ai55.cc/",
+                "icon": "/logos/ai55.png",
+                "title": "Free ChatGPT Site List",
+                "desc": "Free ChatGPT Site List，众多免费好用的 ChatGPT 国内镜像站点。"
+            },
+        ]
+    },
+    {
+        title: 'AI代码编程',
+        items: [
+            {
+                "link": "https://copilot.github.com/",
+                "icon": "/logos/copilot.png",
+                "title": "Copilot",
+                "desc": "GitHub Copilot 是 GitHub 与 OpenAI 共同推出的一款 AI 编程工具，它基于 GitHub 及其他网站的源代码，可根据上文提示为程序员自动编写下文代码。"
+            },
+            {
+                "link": "https://www.cursor.so/",
+                "icon": "/logos/cursor.png",
+                "title": "Cursor",
+                "desc": "Cursor 是一个可以与用户聊天的代码编辑器，它可以根据用户的输入来生成、修改和优化代码，无论是简单的变量声明，还是复杂的算法实现，Cursor都可以快速地给出合适的代码 。Cursor还可以提供实时的代码分析、错误检测、文档查询等功能，让你在编程过程中更加轻松和愉快 。"
+            },
+            {
+                "link": "https://codegeex.cn/",
+                "icon": "/logos/codegeex.png",
+                "title": "CodeGeeX",
+                "desc": "CodeGeeX 是清华和智谱 AI 联合打造的多语言代码生成模型。"
+            },
+            {
+                "link": "https://aws.amazon.com/cn/codewhisperer/",
+                "icon": "/logos/codewhisperer.png",
+                "title": "CodeWhisperer",
+                "desc": "CodeWhisperer，亚马逊推出的实时AI编程助手，是一项基于机器学习的服务，它可以分析开发者在集成开发环境（IDE）中的注释和代码，并根据其内容生成多种代码建议。"
+            },
+            {
+                "link": "https://codeium.com/",
+                "icon": "/logos/codeium.png",
+                "title": "Codeium",
+                "desc": "Codeium 是一种人工智能驱动的代码完成工具，旨在简化编码过程。"
+            },
+            {
+                "link": "https://www.browse.ai/",
+                "icon": "/logos/browse.png",
+                "title": "Browse AI",
+                "desc": "Browse AI 是一个网页数据抓取和监控爬虫工具，可以让你在几分钟内训练一个机器人，从任何网站提取你需要的数据，并且无需编写任何代码。你可以将抓取到的数据保存为电子表格，或者通过 API，Google Sheets，Zapier 等方式与其他应用程序集成。"
+            },
+        ]
+    },
+    {
+        title: 'Skill',
+        items: [
+            {
+                "link": "https://github.com/DietrichGebert/ponytail",
+                "icon": "/logos/github.png",
+                "title": "Ponytail",
+                "desc": "Ponytail 是一个面向多种 AI 编码助手的跨平台技能库与插件项目，聚焦把可复用的 agent skill、规则和工作流沉淀下来。",
+                "categories": ["Skill", "Agent Skill", "GitHub"]
+            },
+            {
+                "link": "https://github.com/EverettFish/holo-card-studio",
+                "icon": "/logos/github.png",
+                "title": "Holo Card Studio",
+                "desc": "用于创建全息卡片效果的开源 Skill 项目。",
+                "categories": ["Skill", "GitHub"]
+            },
+        ]
+    },
+    {
+        title: 'AI模型检测',
+        items: [
+            {
+                "link": "https://github.com/xqy2006/ModelTrace",
+                "icon": "/icons/github.svg",
+                "title": "ModelTrace",
+                "desc": "通过生成挑战提取输出指纹，辅助识别模型家族与版本；支持手动和 API 测试，结果仅供参考。",
+                "categories": ["AI", "模型归因", "开源"]
+            },
+            {
+                "link": "https://github.com/Ikaleio/lm-detector",
+                "icon": "/icons/github.svg",
+                "title": "lm-detector",
+                "desc": "通过随机整数输出的模型指纹比对参考库，辅助识别 API 背后的模型；支持网页和命令行检测，结果仅供参考。",
+                "categories": ["AI", "模型归因", "开源"]
+            }
+        ]
+    },
+    {
+        title: 'AI图像绘画',
+        items: [
+
+            {
+                "link": "https://www.midjourney.com/",
+                "icon": "/logos/midjourney.png",
+                "title": "Midjourney",
+                "desc": "Midjourney 是一款 AI 制图工具，只要关键字，就能透过 AI 算法生成相对应的图片，只需要不到一分钟。可以选择不同画家的艺术风格，例如安迪华荷、达芬奇、达利和毕加索等，还能识别特定镜头或摄影术语。"
+            },
+            {
+                "link": "https://labs.openai.com/",
+                "icon": "/logos/labs.png",
+                "title": "DALL·E",
+                "desc": "DALL·E 是 OpenAI 公司发布的一个用文本生成图像的模型，它是 GPT-3 的一个版本，经过文本-图像数据集训练，具有 120 亿参数，可以从文本描述生成图像。DALL·E 能够创建拟人化的动物和物体，以合理的方式组合不相关的概念，渲染文本，以及对现有图像进行转换。"
+            },
+            {
+                "link": "https://civitai.com/",
+                "icon": "/logos/civitai.png",
+                "title": "Civitai",
+                "desc": "Civitai 是一个 AI 艺术共享平台！海量 SD 开源模型，海量绘画模型。"
+            },
+            {
+                "link": "https://firefly.adobe.com/",
+                "icon": "/logos/firefly.png",
+                "title": "Adobe Firefly",
+                "desc": "Firefly 是 Adobe 推出的创意生成式 AI，允许内容创作者使用自己的文字来生成图像、音频、插图、视频和3D图像。"
+            },
+            {
+                "link": "https://toonme.com/",
+                "icon": "/logos/toonme.jpg",
+                "title": "Toonme",
+                "desc": "AI 根据真人照片生成卡通动漫头像"
+            },
+            {
+                "link": "https://faceswap.dev/",
+                "icon": "/logos/faceswap.png",
+                "title": "Faceswap",
+                "desc": "FaceSwap 是一个利用深度学习来识别图片和视频中的人脸，并进行变换人脸的工具。"
+            },
+            {
+                "link": "https://makelogo.ai/",
+                "icon": "/logos/makelogo.png",
+                "title": "MakeLogoAI",
+                "desc": "AI logo 生成，为您的项目生成漂亮的徽标。每个标志都是独一无二的，100%由人工智能生成。在几分钟内获得数十个令人惊叹的标志创意。"
+            },
+            {
+                "link": "https://wanxiang.aliyun.com/",
+                "icon": "/logos/qianwen.png",
+                "title": "通义万相",
+                "desc": "通义万相，是阿里云通义系列 AI 绘画创作大模型，该模型可辅助人类进行图片创作，于2023年7月7日正式上线。"
+            },
+            {
+                "link": "https://yige.baidu.com/",
+                "icon": "/logos/yiyan.png",
+                "title": "文心一格",
+                "desc": "文心一格，是百度文心大模型家族的成员，是一个 AI 艺术和创意辅助平台，让你轻松驾驭多种风格的绘画。只需输入文字和选择风格，就能快速生成国风、油画、水彩、动漫等十余种不同风格的高清画作。"
+            },
+            {
+                "link": "https://jpghd.com/",
+                "icon": "/logos/jpghd.png",
+                "title": "jpgHD",
+                "desc": "人工智能老照片无损修复，利用2023年最先进人工智能 AI 将老照片无损高清修复（支持老照片修复、老照片上色和魔法动态照片）"
+            },
+            {
+                "link": "https://qr.mewx.art/?invite_code=RVP98wzb",
+                "icon": "/logos/mewx.png",
+                "title": "AI 艺术二维码",
+                "desc": "使用 MewXAI星月熊 在几秒内创建令人惊叹的下一代艺术二维码和艺术字。 从此告别单调的黑白二维码和文字，留下令人深刻的印象！"
+            },
+        ]
+    },
+    {
+        title: 'AI 3D',
+        items: [
+            {
+                "link": "https://studio.tripo3d.ai/zh/workspace/generate/9db6a788-a786-41a2-8000-124ddb6fc41c",
+                "icon": "/logos/ai55.png",
+                "title": "Tripo 3D",
+                "desc": "AI 3D 创作工作台，可从文字或图片生成 3D 模型。",
+                "categories": ["AI", "3D", "模型生成"]
+            },
+            {
+                "link": "https://www.meshy.ai/zh/workspace",
+                "icon": "/logos/ai55.png",
+                "title": "Meshy",
+                "desc": "AI 3D 模型生成与纹理创作平台。",
+                "categories": ["AI", "3D", "模型生成"]
+            }
+        ]
+    },
+    {
+        title: 'AI文档办公',
+        items: [
+            {
+                "link": "https://chatdoc.com/",
+                "icon": "/logos/chatdoc.png",
+                "title": "ChatDOC",
+                "desc": "ChatDOC 是一款基于 ChatGPT 的文件阅读助手，可以快速从文档（.pdf、.doc、.docx、.md、.epub、扫描文件）中提取、定位和汇总信息。"
+            },
+            {
+                "link": "https://www.chatpdf.com/",
+                "icon": "/logos/chatpdf.png",
+                "title": "ChatPDF",
+                "desc": "AI 识别 PDF 内容并且发起对话"
+            },
+            {
+                "link": "https://www.pandagpt.io/",
+                "icon": "/logos/pandagpt.png",
+                "title": "PandaGPT",
+                "desc": "AI 阅读文档，生成知识图谱，回答问题。"
+            },
+            {
+                "link": "https://ai.wps.cn/",
+                "icon": "/logos/wps.png",
+                "title": "WPS AI",
+                "desc": "WPS 缩写、扩写、续写、风格转变，一键生成完整 PPT，无论是论文、合同，或简历等长文 PDF 文档，都能交给 WPS AI 梳理。发起询问，总结数据，快速概括。"
+            },
+            {
+                "link": "https://www.notion.so/product/ai",
+                "icon": "/logos/notion.png",
+                "title": "Notion AI",
+                "desc": "Notion AI 写作神器，可以根据输入的关键词智能推荐相关的文章素材，提高文章的质量和准确度。"
+            },
+            {
+                "link": "https://typeset.io/",
+                "icon": "/logos/typeset.png",
+                "title": "SciSpace",
+                "desc": "SciSpace，论文阅读神器，基于 ChatGPT 的科研论文辅助阅读理解平台。"
+            },
+            {
+                "link": "https://www.explainpaper.com/",
+                "icon": "/logos/explainpaper.png",
+                "title": "ExplainPaper",
+                "desc": "explainpaper，ai学术论文，文献阅读助手。"
+            },
+            {
+                "link": "https://effidit.qq.com/",
+                "icon": "/logos/effidit.png",
+                "title": "Effidit",
+                "desc": "Effidit 是腾讯人工智能实验室开发的一款写作助手，旨在探索利用人工智能技术提高写作效率和创作体验。"
+            },
+            {
+                "link": "https://www.aigaixie.com/",
+                "icon": "/logos/aigaixie.png",
+                "title": "爱改写",
+                "desc": "基于 NLP 自然语言技术支持为您提供中英文查词解释、释义改写、同义词识别、文本纠错、内容原创度查询一站式服务。"
+            },
+            {
+                "link": "https://www.writingo.net/",
+                "icon": "/logos/writingo.png",
+                "title": "火山写作",
+                "desc": "火山写作是由字节跳动推出的，集成创作、润色、纠错、改写、翻译等能力的中英文 AI 写作助手。"
+            }
+        ]
+    },
+    {
         title: '站长推荐',
         items: [
 
@@ -7,8 +341,8 @@ export const navigationData = [
         ]
     },
     {
-    	title: '认识我',
-    	items: [
+        title: '认识我',
+        items: [
     // {
     // 	icon: '/logo.jpg',
     // 	title: '星梦起航',
@@ -18,48 +352,48 @@ export const navigationData = [
     // 	link: '/站长介绍/',
     // },
     {
-    	icon: '/icons/bilibili.ico',
-    	title: 'Python斗罗',
-    	desc: '视频推送，合集视频。',
-    	link: 'https://space.bilibili.com/1909782963',
-    	categories: ['B站']
+        icon: '/icons/bilibili.ico',
+        title: 'Python斗罗',
+        desc: '视频推送，合集视频。',
+        link: 'https://space.bilibili.com/1909782963',
+        categories: ['B站']
     },
     {
-    	icon: '/logos/douyin.svg',
-    	title: 'Python爸爸',
-    	desc: '视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
-    	link: 'https://v.douyin.com/i2VkxqbT/',
-    	categories: ['抖音'],
-    	status:'a',
-    	type:['网站','视频']
+        icon: '/logos/douyin.svg',
+        title: 'Python爸爸',
+        desc: '视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
+        link: 'https://v.douyin.com/i2VkxqbT/',
+        categories: ['抖音'],
+        status:'a',
+        type:['网站','视频']
 
     },
     {
-    	icon: '/icons/python.png',
-    	title: 'Python斗罗',
-    	desc: 'Python斗罗运营的公众号',
-    	type: 'qrcode',
-    	qrcode: '/qrcode/wxgzh.jpg',
-    	link: '/站长介绍/',
-    	categories: ['公众号']
+        icon: '/icons/python.png',
+        title: 'Python斗罗',
+        desc: 'Python斗罗运营的公众号',
+        type: 'qrcode',
+        qrcode: '/qrcode/wxgzh.jpg',
+        link: '/站长介绍/',
+        categories: ['公众号']
 
     },
     {
-    	icon: '/icons/github.svg',
-    	title: 'cpython666',
-    	desc: 'Python斗罗的代码仓库',
-    	link: 'https://github.com/cpython666',
-    	categories: ['Github']
+        icon: '/icons/github.svg',
+        title: 'cpython666',
+        desc: 'Python斗罗的代码仓库',
+        link: 'https://github.com/cpython666',
+        categories: ['Github']
 
     },
     {
-    	icon: '/icons/csdn.svg',
-    	title: 'Python斗罗',
-    	desc: 'Python斗罗的博客',
-    	link: 'https://codefly.blog.csdn.net/',
-    	categories: ['博客','CSDN']
+        icon: '/icons/csdn.svg',
+        title: 'Python斗罗',
+        desc: 'Python斗罗的博客',
+        link: 'https://codefly.blog.csdn.net/',
+        categories: ['博客','CSDN']
     },
-    	]
+        ]
     },
     // {
     // 	title: '主站推荐',
@@ -1266,6 +1600,13 @@ export const navigationData = [
     {
         title: '其他工具',
         items: [
+            {
+                "link": "https://www.7-zip.org/",
+                "icon": "/logos/7zip.png",
+                "title": "7-Zip",
+                "desc": "免费开源的文件压缩与解压工具，支持 7z、ZIP 等格式的压缩和解压，以及 RAR 等格式的解压。",
+                "categories": ["压缩", "解压", "开源"]
+            },
             {
                 "link": "https://github.com/pppscn/SmsForwarder",
                 "icon": "/logos/smsforwarder.png",
@@ -3425,310 +3766,4 @@ export const navigationData = [
     // 		},
     // 	]
     // },
-    {
-        title: 'AI聊天对话',
-        items: [
-
-            {
-                "link": "https://chat.openai.com/",
-                "icon": "/logos/chatgpt.png",
-                "title": "ChatGPT",
-                "desc": "ChatGPT，是 OpenAI 研发的一款聊天机器人程序，于2022年11月30日发布。ChatGPT 是人工智能技术驱动的自然语言处理工具，它能够基于在预训练阶段所见的模式和统计规律，来生成回答，还能根据聊天的上下文进行互动，真正像人类一样来聊天交流，甚至能完成撰写邮件、视频脚本、文案、翻译、代码，写论文等任务。"
-            },
-            {
-                "link": "https://www.bing.com/new",
-                "icon": "/logos/bing.png",
-                "title": "NewBing",
-                "desc": "Bing 必应推出的 AI 聊天搜索，可以通过聊天方式创作所需图像，一站式提供搜索、聊天和创作等功能。"
-            },
-            {
-                "link": "https://bard.google.com/",
-                "icon": "/logos/bard.png",
-                "title": "Google Bard",
-                "desc": "Bard 是谷歌在一个大型语言模型基础上，推出的聊天机器人。Bard 背后的力量是 Google 的对话应用语言模型，又名 LaMDA，Bard 是基于 LaMDA 的轻量级版本，使用更少的计算能力，使其能够扩展到更多的人，并提供额外的反馈。"
-            },
-            {
-                "link": "https://claude.ai/",
-                "icon": "/logos/claude.png",
-                "title": "Claude",
-                "desc": "Claude 是由 Anthropic 公司开发的人工智能聊天机器人。它性格开朗、个性十足，并且有些唠叨，每次回答都尽可能把来龙去脉和相关的信息一一列出。Anthropic 成立于2021年，由一群来自 Google Brain，OpenAI 和 DeepMind 的人工智能大佬联合创立。"
-            },
-            {
-                "link": "https://you.com/",
-                "icon": "/logos/you.png",
-                "title": "YOU",
-                "desc": "YOU 是由人工智能搜索引擎 you.com 开发的大型语言模型，可实现连续对话，免费使用，问答的同时提供相关视频、图片等资料，帮助用户更轻松地在 you.com 网站上查找信息。"
-            },
-            {
-                "link": "https://qianwen.aliyun.com/",
-                "icon": "/logos/qianwen.png",
-                "title": "通义千问",
-                "desc": "通义千问，是阿里云推出的一个超大规模的语言模型，功能包括多轮对话、文案创作、逻辑推理、多模态理解、多语言支持。能够跟人类进行多轮的交互，也融入了多模态的知识理解，且有文案创作能力，能够续写小说，编写邮件等。"
-            },
-            {
-                "link": "https://yiyan.baidu.com/",
-                "icon": "/logos/yiyan.png",
-                "title": "文心一言",
-                "desc": "文心一言，是百度全新一代知识增强大语言模型，文心大模型家族的新成员，能够与人对话互动，回答问题，协助创作，高效便捷地帮助人们获取信息、知识和灵感。"
-            },
-            {
-                "link": "https://moss.fastnlp.top/",
-                "icon": "/logos/moss.jpg",
-                "title": "MOSS",
-                "desc": "MOSS 是复旦大学团队开发的国内第一个发布的对话式大型语言模型，它可以执行对话生成、编程、事实问答等一系列任务，打通了让生成式语言模型理解人类意图并具有对话能力的全部技术路径。"
-            },
-            {
-                "link": "https://chat.360.cn/",
-                "icon": "/logos/360.png",
-                "title": "360 智脑",
-                "desc": "360 智脑为 360 自研千亿参数大语言模型，已具备生成与创作、多轮对话、代码能力、文本分类、文本改写、阅读理解、逻辑与推理、知识问答、多模态、翻译等十大核心能力，维度涵盖数百项细分功能，可覆盖大模型全部应用场景。"
-            },
-            {
-                "link": "https://d0424.ai55.cc/",
-                "icon": "/logos/ai55.png",
-                "title": "Free ChatGPT Site List",
-                "desc": "Free ChatGPT Site List，众多免费好用的 ChatGPT 国内镜像站点。"
-            },
-        ]
-    },
-    {
-        title: 'AI模型检测',
-        items: [
-            {
-                "link": "https://github.com/xqy2006/ModelTrace",
-                "icon": "/icons/github.svg",
-                "title": "ModelTrace",
-                "desc": "通过生成挑战提取输出指纹，辅助识别模型家族与版本；支持手动和 API 测试，结果仅供参考。",
-                "categories": ["AI", "模型归因", "开源"]
-            }
-        ]
-    },
-    {
-        title: 'AI代码编程',
-        items: [
-            {
-                "link": "https://copilot.github.com/",
-                "icon": "/logos/copilot.png",
-                "title": "Copilot",
-                "desc": "GitHub Copilot 是 GitHub 与 OpenAI 共同推出的一款 AI 编程工具，它基于 GitHub 及其他网站的源代码，可根据上文提示为程序员自动编写下文代码。"
-            },
-            {
-                "link": "https://www.cursor.so/",
-                "icon": "/logos/cursor.png",
-                "title": "Cursor",
-                "desc": "Cursor 是一个可以与用户聊天的代码编辑器，它可以根据用户的输入来生成、修改和优化代码，无论是简单的变量声明，还是复杂的算法实现，Cursor都可以快速地给出合适的代码 。Cursor还可以提供实时的代码分析、错误检测、文档查询等功能，让你在编程过程中更加轻松和愉快 。"
-            },
-            {
-                "link": "https://codegeex.cn/",
-                "icon": "/logos/codegeex.png",
-                "title": "CodeGeeX",
-                "desc": "CodeGeeX 是清华和智谱 AI 联合打造的多语言代码生成模型。"
-            },
-            {
-                "link": "https://aws.amazon.com/cn/codewhisperer/",
-                "icon": "/logos/codewhisperer.png",
-                "title": "CodeWhisperer",
-                "desc": "CodeWhisperer，亚马逊推出的实时AI编程助手，是一项基于机器学习的服务，它可以分析开发者在集成开发环境（IDE）中的注释和代码，并根据其内容生成多种代码建议。"
-            },
-            {
-                "link": "https://codeium.com/",
-                "icon": "/logos/codeium.png",
-                "title": "Codeium",
-                "desc": "Codeium 是一种人工智能驱动的代码完成工具，旨在简化编码过程。"
-            },
-            {
-                "link": "https://www.browse.ai/",
-                "icon": "/logos/browse.png",
-                "title": "Browse AI",
-                "desc": "Browse AI 是一个网页数据抓取和监控爬虫工具，可以让你在几分钟内训练一个机器人，从任何网站提取你需要的数据，并且无需编写任何代码。你可以将抓取到的数据保存为电子表格，或者通过 API，Google Sheets，Zapier 等方式与其他应用程序集成。"
-            },
-        ]
-    },
-    {
-        title: 'Skill',
-        items: [
-            {
-                "link": "https://github.com/DietrichGebert/ponytail",
-                "icon": "/logos/github.png",
-                "title": "Ponytail",
-                "desc": "Ponytail 是一个面向多种 AI 编码助手的跨平台技能库与插件项目，聚焦把可复用的 agent skill、规则和工作流沉淀下来。",
-                "categories": ["Skill", "Agent Skill", "GitHub"]
-            },
-            {
-                "link": "https://github.com/EverettFish/holo-card-studio",
-                "icon": "/logos/github.png",
-                "title": "Holo Card Studio",
-                "desc": "用于创建全息卡片效果的开源 Skill 项目。",
-                "categories": ["Skill", "GitHub"]
-            },
-        ]
-    },
-    {
-        title: 'Agent',
-        items: [
-            {
-                "link": "https://developers.openai.com/codex",
-                "icon": "/logos/chatgpt.png",
-                "title": "Codex",
-                "desc": "Codex 是 OpenAI 的编码 agent，支持在 CLI、IDE 和应用内执行编码、调试、审查与自动化工作流。",
-                "categories": ["Agent", "Coding", "OpenAI"]
-            },
-        ]
-    },
-    {
-        title: 'AI图像绘画',
-        items: [
-
-            {
-                "link": "https://www.midjourney.com/",
-                "icon": "/logos/midjourney.png",
-                "title": "Midjourney",
-                "desc": "Midjourney 是一款 AI 制图工具，只要关键字，就能透过 AI 算法生成相对应的图片，只需要不到一分钟。可以选择不同画家的艺术风格，例如安迪华荷、达芬奇、达利和毕加索等，还能识别特定镜头或摄影术语。"
-            },
-            {
-                "link": "https://labs.openai.com/",
-                "icon": "/logos/labs.png",
-                "title": "DALL·E",
-                "desc": "DALL·E 是 OpenAI 公司发布的一个用文本生成图像的模型，它是 GPT-3 的一个版本，经过文本-图像数据集训练，具有 120 亿参数，可以从文本描述生成图像。DALL·E 能够创建拟人化的动物和物体，以合理的方式组合不相关的概念，渲染文本，以及对现有图像进行转换。"
-            },
-            {
-                "link": "https://civitai.com/",
-                "icon": "/logos/civitai.png",
-                "title": "Civitai",
-                "desc": "Civitai 是一个 AI 艺术共享平台！海量 SD 开源模型，海量绘画模型。"
-            },
-            {
-                "link": "https://firefly.adobe.com/",
-                "icon": "/logos/firefly.png",
-                "title": "Adobe Firefly",
-                "desc": "Firefly 是 Adobe 推出的创意生成式 AI，允许内容创作者使用自己的文字来生成图像、音频、插图、视频和3D图像。"
-            },
-            {
-                "link": "https://toonme.com/",
-                "icon": "/logos/toonme.jpg",
-                "title": "Toonme",
-                "desc": "AI 根据真人照片生成卡通动漫头像"
-            },
-            {
-                "link": "https://faceswap.dev/",
-                "icon": "/logos/faceswap.png",
-                "title": "Faceswap",
-                "desc": "FaceSwap 是一个利用深度学习来识别图片和视频中的人脸，并进行变换人脸的工具。"
-            },
-            {
-                "link": "https://makelogo.ai/",
-                "icon": "/logos/makelogo.png",
-                "title": "MakeLogoAI",
-                "desc": "AI logo 生成，为您的项目生成漂亮的徽标。每个标志都是独一无二的，100%由人工智能生成。在几分钟内获得数十个令人惊叹的标志创意。"
-            },
-            {
-                "link": "https://wanxiang.aliyun.com/",
-                "icon": "/logos/qianwen.png",
-                "title": "通义万相",
-                "desc": "通义万相，是阿里云通义系列 AI 绘画创作大模型，该模型可辅助人类进行图片创作，于2023年7月7日正式上线。"
-            },
-            {
-                "link": "https://yige.baidu.com/",
-                "icon": "/logos/yiyan.png",
-                "title": "文心一格",
-                "desc": "文心一格，是百度文心大模型家族的成员，是一个 AI 艺术和创意辅助平台，让你轻松驾驭多种风格的绘画。只需输入文字和选择风格，就能快速生成国风、油画、水彩、动漫等十余种不同风格的高清画作。"
-            },
-            {
-                "link": "https://jpghd.com/",
-                "icon": "/logos/jpghd.png",
-                "title": "jpgHD",
-                "desc": "人工智能老照片无损修复，利用2023年最先进人工智能 AI 将老照片无损高清修复（支持老照片修复、老照片上色和魔法动态照片）"
-            },
-            {
-                "link": "https://qr.mewx.art/?invite_code=RVP98wzb",
-                "icon": "/logos/mewx.png",
-                "title": "AI 艺术二维码",
-                "desc": "使用 MewXAI星月熊 在几秒内创建令人惊叹的下一代艺术二维码和艺术字。 从此告别单调的黑白二维码和文字，留下令人深刻的印象！"
-            },
-        ]
-    },
-    {
-        title: 'AI 3D',
-        items: [
-            {
-                "link": "https://studio.tripo3d.ai/zh/workspace/generate/9db6a788-a786-41a2-8000-124ddb6fc41c",
-                "icon": "/logos/ai55.png",
-                "title": "Tripo 3D",
-                "desc": "AI 3D 创作工作台，可从文字或图片生成 3D 模型。",
-                "categories": ["AI", "3D", "模型生成"]
-            },
-            {
-                "link": "https://www.meshy.ai/zh/workspace",
-                "icon": "/logos/ai55.png",
-                "title": "Meshy",
-                "desc": "AI 3D 模型生成与纹理创作平台。",
-                "categories": ["AI", "3D", "模型生成"]
-            }
-        ]
-    },
-    {
-        title: 'AI文档办公',
-        items: [
-            {
-                "link": "https://chatdoc.com/",
-                "icon": "/logos/chatdoc.png",
-                "title": "ChatDOC",
-                "desc": "ChatDOC 是一款基于 ChatGPT 的文件阅读助手，可以快速从文档（.pdf、.doc、.docx、.md、.epub、扫描文件）中提取、定位和汇总信息。"
-            },
-            {
-                "link": "https://www.chatpdf.com/",
-                "icon": "/logos/chatpdf.png",
-                "title": "ChatPDF",
-                "desc": "AI 识别 PDF 内容并且发起对话"
-            },
-            {
-                "link": "https://www.pandagpt.io/",
-                "icon": "/logos/pandagpt.png",
-                "title": "PandaGPT",
-                "desc": "AI 阅读文档，生成知识图谱，回答问题。"
-            },
-            {
-                "link": "https://ai.wps.cn/",
-                "icon": "/logos/wps.png",
-                "title": "WPS AI",
-                "desc": "WPS 缩写、扩写、续写、风格转变，一键生成完整 PPT，无论是论文、合同，或简历等长文 PDF 文档，都能交给 WPS AI 梳理。发起询问，总结数据，快速概括。"
-            },
-            {
-                "link": "https://www.notion.so/product/ai",
-                "icon": "/logos/notion.png",
-                "title": "Notion AI",
-                "desc": "Notion AI 写作神器，可以根据输入的关键词智能推荐相关的文章素材，提高文章的质量和准确度。"
-            },
-            {
-                "link": "https://typeset.io/",
-                "icon": "/logos/typeset.png",
-                "title": "SciSpace",
-                "desc": "SciSpace，论文阅读神器，基于 ChatGPT 的科研论文辅助阅读理解平台。"
-            },
-            {
-                "link": "https://www.explainpaper.com/",
-                "icon": "/logos/explainpaper.png",
-                "title": "ExplainPaper",
-                "desc": "explainpaper，ai学术论文，文献阅读助手。"
-            },
-            {
-                "link": "https://effidit.qq.com/",
-                "icon": "/logos/effidit.png",
-                "title": "Effidit",
-                "desc": "Effidit 是腾讯人工智能实验室开发的一款写作助手，旨在探索利用人工智能技术提高写作效率和创作体验。"
-            },
-            {
-                "link": "https://www.aigaixie.com/",
-                "icon": "/logos/aigaixie.png",
-                "title": "爱改写",
-                "desc": "基于 NLP 自然语言技术支持为您提供中英文查词解释、释义改写、同义词识别、文本纠错、内容原创度查询一站式服务。"
-            },
-            {
-                "link": "https://www.writingo.net/",
-                "icon": "/logos/writingo.png",
-                "title": "火山写作",
-                "desc": "火山写作是由字节跳动推出的，集成创作、润色、纠错、改写、翻译等能力的中英文 AI 写作助手。"
-            }
-        ]
-    },
 ];
