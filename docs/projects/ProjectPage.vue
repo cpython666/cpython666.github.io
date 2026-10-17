@@ -202,32 +202,10 @@ onMounted(loadStars)
 
 <template>
   <main class="projects-page">
-    <section class="projects-hero">
-      <div class="hero-copy">
-        <p class="eyebrow">作品集</p>
-        <h1>项目</h1>
-        <p class="summary">整理我做过的开源项目、小工具和学习合集，方便快速查看代码、演示和相关资料。</p>
-      </div>
-
-      <div class="hero-stats" aria-label="项目统计">
-        <div>
-          <strong>{{ viewItems.length }}</strong>
-          <span>项目</span>
-        </div>
-        <div>
-          <strong>{{ githubProjects.length }}</strong>
-          <span>仓库</span>
-        </div>
-        <div>
-          <strong>{{ formatStars(totalStars) }}</strong>
-          <span>Stars</span>
-        </div>
-      </div>
-    </section>
+    <h1 class="sr-only">项目</h1>
 
     <section v-if="featuredProject" class="featured">
       <div class="featured-copy">
-        <p class="eyebrow">精选项目</p>
         <h2>{{ featuredProject.title }}</h2>
         <p>{{ featuredProject.description }}</p>
         <div class="featured-actions">
@@ -261,7 +239,11 @@ onMounted(loadStars)
     </section>
 
     <div class="status-row">
-      <span class="result-count">当前展示 {{ filteredItems.length }} 个项目</span>
+      <div class="project-stats" aria-label="项目统计">
+        <span class="result-count">当前展示 {{ filteredItems.length }} / {{ viewItems.length }} 个项目</span>
+        <span>{{ githubProjects.length }} 个仓库</span>
+        <span>{{ formatStars(totalStars) }} Stars</span>
+      </div>
       <span class="star-status" :class="starStatus">{{ starMessage }}<template v-if="loadedStars">（{{ loadedStars }} 个已显示）</template></span>
     </div>
 
@@ -322,72 +304,29 @@ onMounted(loadStars)
   margin: 20px auto 44px;
 }
 
-.projects-hero {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 28px 0 20px;
-  border-bottom: 1px solid var(--vp-c-divider);
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.eyebrow {
-  margin: 0 0 8px;
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.projects-hero h1,
 .featured h2 {
   margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 22px;
   line-height: 1.15;
 }
 
-.projects-hero h1 {
-  font-size: 40px;
-}
-
-.summary,
 .featured-copy p,
 .sub {
   color: var(--vp-c-text-2);
-}
-
-.summary {
-  max-width: 580px;
-  margin: 12px 0 0;
-  line-height: 1.8;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 92px);
-  gap: 10px;
-}
-
-.hero-stats div {
-  min-height: 74px;
-  padding: 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-}
-
-.hero-stats strong,
-.hero-stats span {
-  display: block;
-}
-
-.hero-stats strong {
-  font-size: 26px;
-  line-height: 1;
-}
-
-.hero-stats span {
-  margin-top: 8px;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
 }
 
 .featured {
@@ -395,7 +334,7 @@ onMounted(loadStars)
   grid-template-columns: minmax(0, 1fr) 360px;
   gap: 22px;
   align-items: stretch;
-  margin-top: 24px;
+  margin: 0;
   padding: 18px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -511,6 +450,12 @@ onMounted(loadStars)
   margin: 16px 0 12px;
   color: var(--vp-c-text-2);
   font-size: 13px;
+}
+
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
 }
 
 .star-status.error {
@@ -697,14 +642,9 @@ onMounted(loadStars)
     width: min(100% - 24px, 1180px);
   }
 
-  .projects-hero,
   .status-row {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .featured {

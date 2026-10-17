@@ -18,19 +18,20 @@ const fixture = await realpath(await mkdtemp(join(tmpdir(), 'resource-pages-chec
 let server
 let browser
 try {
-  for (const path of ['.vitepress/theme', 'index', 'nav', 'projects', 'navigation', 'spider-tools', 'sample', 'backup', 'public/css', 'screenshots']) {
+  for (const path of ['.vitepress/theme', 'index', 'nav', 'projects', 'navigation', 'prompts', 'spider-tools', 'sample', 'backup', 'public/css', 'screenshots']) {
     await mkdir(join(fixture, path), { recursive: true })
   }
   const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
-  const otherComponents = ['navigation/NavIndex.vue', 'utils/copy.js', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', ...['CurlRequests', 'Url', 'Base64', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
+  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', ...['CurlRequests', 'Url', 'Base64', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
   }
-  // Both data modules are plain exports, with no article loaders or imports.
+  // Data modules are plain exports, with no article loaders or imports.
   const loadData = async path => import(`data:text/javascript;base64,${Buffer.from(await readFile(join(fixture, path))).toString('base64')}`)
   const { navigationData } = await loadData('nav/data.js')
   const { projects } = await loadData('projects/data.js')
+  const { prompts } = await loadData('prompts/prompts.js')
   const resources = navigationData.flatMap(group => group.items.map(site => ({ ...site, section: group.title })))
   const assets = new Set(['/icons/github.svg', '/imgs/app/default.svg', '/imgs/ads/qgwl.jpeg'])
   for (const path of homeComponents) {
@@ -39,8 +40,8 @@ try {
       assets.add('/' + asset.replace(/^\//, ''))
     }
   }
-  for (const item of [...resources, ...projects]) {
-    for (const key of ['icon', 'image', 'qrcode']) {
+  for (const item of [...resources, ...projects, ...prompts]) {
+    for (const key of ['icon', 'image', 'qrcode', 'preview']) {
       if (typeof item[key] === 'string' && /^\/(?!\/)/.test(item[key])) assets.add(item[key])
     }
   }
@@ -59,8 +60,9 @@ try {
   await copyFile(join(publicRoot, 'css/index.css'), join(fixture, 'public/css/index.css'))
   await symlink(join(root, 'node_modules'), join(fixture, 'node_modules'), 'dir')
   await writeFile(join(fixture, 'index.md'), '---\nlayout: home\nmarkdownStyles: false\n---\n<script setup>\nimport IndexPage from "./index/IndexPage.vue"\n</script>\n<IndexPage />\n')
-  for (const [folder, component] of [['nav', 'NavPage'], ['projects', 'ProjectPage'], ['navigation', 'NavIndex'], ['spider-tools', 'SpiderTools']]) {
-    await writeFile(join(fixture, folder, 'index.md'), `---\nlayout: home\n---\n<script setup>\nimport ${component} from './${component}.vue'\n</script>\n<${component} />\n`)
+  for (const [folder, component] of [['nav', 'NavPage'], ['projects', 'ProjectPage'], ['navigation', 'NavIndex'], ['prompts', 'PromptPage'], ['spider-tools', 'SpiderTools']]) {
+    const markdownStyles = ['navigation', 'prompts'].includes(folder) ? 'markdownStyles: false\n' : ''
+    await writeFile(join(fixture, folder, 'index.md'), `---\nlayout: home\n${markdownStyles}---\n<script setup>\nimport ${component} from './${component}.vue'\n</script>\n<${component} />\n`)
   }
   await writeFile(join(fixture, 'navigation/member.data.mjs'), 'export default { load: () => [] }\n')
   await writeFile(join(fixture, 'sample/index.md'), '# 人工分类目录\n\n<script setup>\nimport ConfigArticleList from "../components/ConfigArticleList.vue"\n</script>\n<ConfigArticleList prefix="/sample/" />\n')
@@ -87,7 +89,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     title: '首页、资源与项目检查', ignoreDeadLinks: true,
     head: [['link', { rel: 'stylesheet', href: '/css/index.css' }], ['script', {}, fixtureFetch]],
     themeConfig: {
-      nav: [{ text: '测试首页', link: '/' }, { text: '资源导航', link: '/nav/' }, { text: '项目', link: '/projects/' }, { text: '文章导航', link: '/navigation/' }, { text: '工具', link: '/spider-tools/' }, { text: '目录', link: '/sample/' }, { text: '备份', link: '/backup/' }],
+      nav: [{ text: '测试首页', link: '/' }, { text: '资源导航', link: '/nav/' }, { text: '项目', link: '/projects/' }, { text: '文章导航', link: '/navigation/' }, { text: '提示词', link: '/prompts/' }, { text: '工具', link: '/spider-tools/' }, { text: '目录', link: '/sample/' }, { text: '备份', link: '/backup/' }],
       sidebar: { '/sample/': [{ text: '人工分类', items: [{ text: '人工文章', link: '/sample/article' }] }], '/backup/': [{ text: '人工备份', link: '/backup/' }] },
     },
   })}\n`)
@@ -123,6 +125,19 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   page.on('console', message => { if (/hydration/i.test(message.text())) errors.push(message.text()) })
   const countCards = async count => page.waitForFunction(count => document.querySelectorAll('.site').length === count, count)
   const noOverflow = async label => assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), label)
+  const loadNextBatch = async () => {
+    const before = await page.evaluate(() => {
+      document.querySelector('a.site-link')?.focus({ preventScroll: true })
+      const trigger = document.querySelector('.load-trigger')
+      window.scrollTo({ top: scrollY + trigger.getBoundingClientRect().top - innerHeight - 200, behavior: 'instant' })
+      return { count: document.querySelectorAll('.site').length, scrollY }
+    })
+    await countCards(Math.min(before.count + 36, resources.length))
+    await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))))
+    const after = await page.evaluate(() => ({ scrollY, sameFocus: document.activeElement === document.querySelector('a.site-link') }))
+    assert.ok(after.sameFocus, 'automatic loading does not steal keyboard focus')
+    assert.ok(Math.abs(after.scrollY - before.scrollY) <= 1, 'automatic loading does not move the scroll position')
+  }
   // Match the real theme's selector without loading its unrelated services.
   const markZoomImages = () => page.evaluate(() => document.querySelectorAll('.vp-doc img:not(.no-zoom):not(.site-icon), .x-backup__media img').forEach(img => img.classList.add('is-zoomable')))
   await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
@@ -135,10 +150,8 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   console.log(`${baselineIndex < 0 ? 'Current' : 'Baseline'} initial resource DOM: ${JSON.stringify(initial)}; data: ${resources.length} resources / ${navigationData.length} categories; copied ${copiedAssets} referenced images.`)
   if (baselineIndex < 0) {
     assert.equal(initial.cards, Math.min(36, resources.length))
-    await page.locator('.load-more').focus()
-    await page.keyboard.press('Enter')
-    await countCards(Math.min(72, resources.length))
-    await page.waitForFunction(() => document.activeElement === document.querySelectorAll('a.site-link')[36])
+    assert.equal(await page.locator('.load-more').count(), 0, 'supported browsers load without a button')
+    await loadNextBatch()
     const search = page.getByRole('searchbox', { name: '搜索资源' })
     // Each query exercises a distinct supported field using real public resource metadata.
     for (const query of ['ModelTrace', '生成挑战提取输出指纹', '模型归因', 'github.com/xqy2006/ModelTrace', 'PYTHON']) {
@@ -167,11 +180,9 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     }
     await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
     for (let count = 36; count < resources.length; count += 36) {
-      await page.locator('.load-more').click()
-      await countCards(Math.min(count + 36, resources.length))
-      await page.waitForFunction(index => document.activeElement === document.querySelectorAll('a.site-link')[index], count)
+      await loadNextBatch()
     }
-    assert.equal(await page.locator('.load-more').count(), 0, 'last batch exhausts all resources')
+    assert.equal(await page.locator('.load-trigger').count(), 0, 'last batch exhausts all resources')
     await search.fill('ModelTrace')
     await page.getByRole('button', { name: '清除搜索', exact: true }).click()
     await countCards(Math.min(36, resources.length))
@@ -180,6 +191,16 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       const img = document.querySelector('.site-icon')
       return img?.getAttribute('src') === '/icons/github.svg' && img.naturalWidth > 0
     })
+    const fallback = await context.newPage()
+    fallback.on('pageerror', error => errors.push(error.message))
+    await fallback.addInitScript(() => { window.IntersectionObserver = undefined })
+    await fallback.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
+    assert.equal(await fallback.locator('.site').count(), Math.min(36, resources.length))
+    await fallback.locator('.load-more').focus()
+    await fallback.keyboard.press('Enter')
+    await fallback.waitForFunction(() => document.activeElement === document.querySelectorAll('a.site-link')[36])
+    assert.equal(await fallback.locator('.site').count(), Math.min(72, resources.length), 'manual keyboard fallback works without IntersectionObserver')
+    await fallback.close()
     await page.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
     await page.locator('.star-status.ready').waitFor()
     assert.equal(await page.locator('.cards .card').count(), projects.length)
@@ -197,6 +218,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         if (route === 'nav') {
           await countCards(Math.min(36, resources.length))
           if (width < 760) {
+            await loadNextBatch()
             await page.getByRole('combobox', { name: '资源分类' }).selectOption('AI模型检测')
             await countCards(detection.items.length)
             await page.getByRole('combobox', { name: '资源分类' }).selectOption('')
@@ -242,7 +264,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       }
     }
     assert.deepEqual(errors, [])
-    console.log('PASS: isolated build; 36-card batches with keyboard focus on new content; title/description/tag/URL search; category, empty/reset, hash/refresh; all resources reachable; artificial GitHub data; icon/image fallback; 16:9 contained project images; 320/390/1440 layouts; no hydration errors. Counts describe this local fixture, not live-site performance.')
+    console.log('PASS: isolated build; automatic 36-card batches without focus/scroll jumps; keyboard fallback without IntersectionObserver; title/description/tag/URL search; category, empty/reset, hash/refresh; all resources reachable; artificial GitHub data; icon/image fallback; 16:9 contained project images; 320/390/1440 layouts; no hydration errors. Counts describe this local fixture, not live-site performance.')
   }
   const screenshot = async name => {
     if (!process.argv.includes('--preview')) return
@@ -310,9 +332,29 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await checkHome(width)
   }
   if (baselineIndex < 0) {
-    for (const width of [320, 390, 768, 1024, 1440, 1920, 2560, 3840]) {
+    await page.setViewportSize({ width: 768, height: 1000 })
+    await page.goto(base + '/nav/', { waitUntil: 'networkidle' })
+    const hamburger = page.getByRole('button', { name: 'mobile navigation', exact: true })
+    await hamburger.click()
+    await page.locator('.VPNavScreen').waitFor({ state: 'visible' })
+    await noOverflow('tablet navigation menu fits')
+    await page.locator('.VPNavScreen').getByRole('link', { name: '提示词', exact: true }).click()
+    await page.locator('.prompts-page').waitFor()
+    await page.locator('.VPNavScreen').waitFor({ state: 'detached' })
+    assert.equal(new URL(page.url()).pathname, '/prompts/', 'tablet menu reaches independent prompts')
+    await hamburger.click()
+    await page.waitForFunction(() => getComputedStyle(document.body).overflow === 'hidden')
+    await page.setViewportSize({ width: 1280, height: 1000 })
+    await page.locator('.VPNavScreen').waitFor({ state: 'detached' })
+    await page.waitForFunction(() => getComputedStyle(document.body).overflow !== 'hidden')
+    assert.equal(await hamburger.isVisible(), false, 'desktop navigation replaces the tablet hamburger')
+    assert.equal(await page.locator('.VPNavBarMenu').isVisible(), true)
+    await page.mouse.wheel(0, 200)
+    await page.waitForFunction(() => scrollY > 0)
+    await noOverflow('desktop navigation fits after closing the tablet menu')
+    for (const width of [320, 390, 768, 1024, 1279, 1280, 1440, 1920, 2560, 3840]) {
       await page.setViewportSize({ width, height: 1000 })
-      for (const [path, selector] of [['/nav/', '.resources-page'], ['/navigation/', '.nav-page'], ['/spider-tools/', '.tools-layout'], ['/sample/', '.VPDoc > .container'], ['/sample/article.html', '.VPDoc > .container'], ['/backup/', '.VPDoc > .container']]) {
+      for (const [path, selector] of [['/nav/', '.resources-page'], ['/navigation/', '.nav-page'], ['/prompts/', '.prompts-page'], ['/spider-tools/', '.tools-layout'], ['/sample/', '.VPDoc > .container'], ['/sample/article.html', '.VPDoc > .container'], ['/backup/', '.VPDoc > .container']]) {
         await page.goto(base + path, { waitUntil: 'networkidle' })
         await page.locator(selector).waitFor()
         const layout = await page.locator(selector).evaluate(element => {
@@ -327,8 +369,10 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         assert.ok(layout.scrollWidth <= width, `${path} fits at ${width}px`)
         assert.ok(Math.abs(layout.offset) < 1, `${path} is centered in available space at ${width}px`)
         if (path === '/navigation/') {
-          await page.getByRole('tab', { name: /提示词/ }).click()
-          await noOverflow(`prompt cards fit at ${width}px`)
+          assert.equal(await page.locator('.prompt-card, [role=tab]').count(), 0, 'article navigation has no prompt tab or cards')
+        }
+        if (path === '/prompts/') {
+          assert.equal(await page.locator('.prompt-card').count(), prompts.length, 'independent prompt page renders all public templates')
         }
         if (path === '/backup/') {
           const details = await page.evaluate(() => {
@@ -384,7 +428,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       })
       await noOverflow(`image split preview and overlay fit at ${width}px`)
     }
-    console.log('PASS: resource/article navigation, prompt cards, six tool panels, category index, ordinary article and synthetic backup layouts at 320–3840px; reading mode cleanup; uploaded image/grid alignment on resize.')
+    console.log('PASS: resource/article navigation, prompt cards, six tool panels, category index, ordinary article and synthetic backup layouts at 320–3840px; tablet menu navigation and desktop scroll restoration; reading mode cleanup; uploaded image/grid alignment on resize.')
   }
   if (baselineIndex < 0) {
     assert.deepEqual(errors, [])
@@ -393,7 +437,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   if (process.argv.includes('--preview')) {
     await browser.close()
     browser = undefined
-    console.log(`Preview: ${base}/ (home, resources, projects, article navigation, tools, synthetic articles/backups; artificial GitHub Stars; third-party requests blocked)`)
+    console.log(`Internal preview: ${base}/ (home, resources, projects, article navigation, prompts, tools, synthetic articles/backups; use the complete local site for user review)`)
     console.log('Press Ctrl+C to stop the preview and remove the temporary fixture.')
     await new Promise(done => { process.once('SIGINT', done); process.once('SIGTERM', done) })
   }

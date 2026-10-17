@@ -18,6 +18,23 @@
 }
 /* alertify的弹窗样式  结束*/
 
+/* 平板宽度沿用主题折叠菜单，避免完整导航与搜索挤出视口。 */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .VPNav .VPNavBar .VPNavBarMenu,
+  .VPNav .VPNavBar .VPNavBarTranslations,
+  .VPNav .VPNavBar .VPNavBarAppearance,
+  .VPNav .VPNavBar .VPNavBarSocialLinks,
+  .VPNav .VPNavBar .VPNavBarExtra {
+    display: none;
+  }
+  .VPNav .VPNavBar .VPNavBarHamburger {
+    display: flex;
+  }
+  .Layout .VPNav .VPNavScreen {
+    display: block;
+  }
+}
+
 .vp-doc p {
   text-indent: 2em;
 }

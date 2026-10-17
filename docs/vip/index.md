@@ -135,6 +135,7 @@ const activateVip = async () => {
 
 <style scoped>
 .vip-page { max-width: 1120px; margin: 16px auto; padding: 0 12px; }
+.vip-page-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 18px; align-items: stretch; }
 .plan-card { position: relative; display: flex; flex-direction: column; min-height: 410px; padding: 24px 22px 20px; text-align: center; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 14px; box-shadow: var(--vp-shadow-1); transition: transform .2s, box-shadow .2s; }
 .plan-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, .1); }
@@ -165,7 +166,7 @@ const activateVip = async () => {
 </style>
 
 <div class="vip-page">
-  <h1>博客会员</h1>
+  <h1 class="vip-page-title">博客会员</h1>
   <p>目前的开通方式是加我微信并备注开通 VIP，我会手动开通。【之前网站购买过vip的无需再次开通，找我要激活码即可】</p>
   <div class="vip-tools">
     <div class="vip-alert" :class="isVip ? 'is-ok' : 'is-warn'">会员状态：{{ isVip ? '已解锁' : '未解锁' }}</div>

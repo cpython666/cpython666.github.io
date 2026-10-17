@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onMounted, watch } from 'vue'
+import { computed } from 'vue'
 import { useData, useRoute } from 'vitepress'
 
 const { frontmatter, page } = useData()
@@ -13,14 +13,13 @@ const hitsLogo = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5v
 
 const showHits = computed(() => {
   const path = route.path
-  return path !== '/'
-    && !page.value.isNotFound
+  return !page.value.isNotFound
     && frontmatter.value.hits !== false
     && !noHitsPrefixes.some((prefix) => path.startsWith(prefix))
 })
 
 const hitsUrl = computed(() => {
-  const path = route.path.replace(/\.html$/, '').replace(/\/$/, '') || '/'
+  const path = route.path.replace(/\.html$/, '').replace(/\/$/, '')
   const params = new URLSearchParams({
     view: 'today-total',
     label: 'today / total',
@@ -30,29 +29,11 @@ const hitsUrl = computed(() => {
   return `https://hits.sh/cpython666.github.io${encodeURI(path)}.svg?${params}`
 })
 
-const syncHomeFooterHits = () => {
-  if (import.meta.env.SSR) return
-  nextTick(() => {
-    const wrap = document.querySelector('[data-home-hits-wrap]')
-    const img = document.querySelector('[data-home-hits]')
-    if (!wrap || !img) return
-    if (route.path === '/') {
-      wrap.style.display = 'inline-flex'
-      img.src = img.dataset.src
-    } else {
-      wrap.style.display = 'none'
-      img.removeAttribute('src')
-    }
-  })
-}
-
-onMounted(syncHomeFooterHits)
-watch(() => route.path, syncHomeFooterHits)
 </script>
 
 <template>
   <p v-if="showHits" class="article-hits">
-    <img :src="hitsUrl" alt="今日和总访问量" loading="lazy">
+    <img :key="hitsUrl" :src="hitsUrl" alt="今日和总访问量" loading="eager">
   </p>
 </template>
 
@@ -60,8 +41,10 @@ watch(() => route.path, syncHomeFooterHits)
 .article-hits {
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: 20px;
-  margin: 0 0 18px;
+  margin: 0;
+  padding: 16px 24px;
 }
 
 .article-hits img {

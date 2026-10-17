@@ -17,10 +17,8 @@ export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'aside-outline-before': () => h(ArticleOutlineToggle),
-    'doc-before': () => h(ArticleHits),
     'doc-after': () => h(WalineComment),
-    'home-features-after': () => h(ArticleHits),
-    'layout-bottom': () => h(ArticleTools),
+    'layout-bottom': () => [h(ArticleHits), h(ArticleTools)],
   }),
   enhanceApp({ app }) {
     app.component('VipBtn', VipBtn);

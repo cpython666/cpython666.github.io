@@ -1,13 +1,6 @@
 <template>
   <div class="tools-page">
-    <header class="tools-hero">
-      <div>
-        <span class="eyebrow">SPIDER TOOLBOX</span>
-        <h1>在线开发工具箱</h1>
-        <p>为爬虫与日常开发准备的轻量工具，所有处理均在浏览器本地完成。</p>
-      </div>
-      <div class="hero-mark" aria-hidden="true">&lt;/&gt;</div>
-    </header>
+    <h1 class="sr-only">在线开发工具箱</h1>
 
     <div class="tools-layout">
       <aside class="navbar">
@@ -123,61 +116,22 @@ function selectPanel(item, event) {
   box-sizing: border-box;
   width: 100%;
   min-height: calc(100vh - 64px);
-  padding: 52px 24px 72px;
+  padding: 20px 24px 72px;
   background:
     radial-gradient(circle at 15% 0%, color-mix(in srgb, var(--vp-c-brand-1) 10%, transparent), transparent 28rem),
     var(--vp-c-bg);
 }
 
-.tools-hero {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-
-.eyebrow {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--vp-c-brand-1);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .16em;
-}
-
-.tools-hero h1 {
-  margin: 0;
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   border: 0;
-  color: var(--vp-c-text-1);
-  font-size: clamp(30px, 4vw, 42px);
-  line-height: 1.15;
-  letter-spacing: -.035em;
-}
-
-.tools-hero p {
-  margin: 12px 0 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.7;
-}
-
-.hero-mark {
-  flex: none;
-  display: grid;
-  width: 76px;
-  height: 76px;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 20%, transparent);
-  border-radius: 22px;
-  color: var(--vp-c-brand-1);
-  background: color-mix(in srgb, var(--vp-c-brand-soft) 70%, transparent);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 22px;
-  font-weight: 700;
-  transform: rotate(3deg);
 }
 
 .tools-layout {
@@ -335,11 +289,7 @@ function selectPanel(item, event) {
 
 @media (max-width: 768px) {
   .tools-page {
-    padding: 32px 16px 50px;
-  }
-
-  .hero-mark {
-    display: none;
+    padding: 16px 16px 50px;
   }
 
   .tools-layout {
