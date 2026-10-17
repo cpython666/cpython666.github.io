@@ -1,142 +1,34 @@
 <script setup>
 import { useData, useRouter } from 'vitepress'
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { data as memberArticlePaths } from './member.data.mjs'
-import copyText from '../utils/copy.js'
 
 const { theme } = useData()
 const router = useRouter()
-
-const tabs = [
-  { id: 'articles', text: '文章' },
-  { id: 'prompts', text: '提示词' },
-]
-const activeTab = ref('articles')
-const prompts = [
-  {
-    id: 'video-cover',
-    title: '生成视频封面（网页对话版）',
-    text: '以上面图片为素材，给出视频封面\n封面比例4:3\n视频标题是：{{视频标题}}\n封面上只需要有重点的几个字\n不需要有很多小文字，适当加点插画就可以\n风格：使用手写体或仿手写字体。大量使用简笔画、小图标、箭头、对话框、分隔线等手绘元素来辅助表达。色彩丰富活泼，常用荧光笔、彩铅效果。布局自由随性，充满个性和趣味性。',
-  },
-  {
-    id: 'video-cover-codex',
-    title: '生成视频封面（Codex 版）',
-    text: '以上面图片为素材，给出三种比例视频封面，16:9，4:3，3:4\n视频标题是：我已经彻底扔掉方向盘了：降智和封号，这是最坏的时代！\n封面上只需要有重点的几个字\n不需要有很多小文字，适当加点插画就可以\n风格：使用手写体或仿手写字体。大量使用简笔画、小图标、箭头、对话框、分隔线等手绘元素来辅助表达。色彩丰富活泼，常用荧光笔、彩铅效果。布局自由随性，充满个性和趣味性。\n\n下面是视频文案，可以当参考：',
-  },
-  {
-    id: 'subtitle-correction',
-    title: '矫正视频字幕的',
-    text: '修复下这个字幕：\n里面可能提到了gpt-5.6-sol\nblender\ngodot，gdscript\n这些术语\n【可选】可参考视频文案是：',
-  },
-  {
-    id: 'subtitle-from-script',
-    title: '修复字幕（文案参考）',
-    text: '修复字幕\n\n是记录视频的时候文案可能会有点自由发挥，下面是文案参考：',
-  },
-  { id: 'training-cutoff', title: '训练数据截止时间', text: '你的训练时间截止什么日期？' },
-  { id: 'cycling-pelican-svg', title: '骑自行车的鹈鹕', text: '生成一个动态的骑自行车的鹈鹕的svg' },
-  { id: 'cycling-girl-svg', title: '骑自行车的小姑娘', text: '生成一个动态的骑自行车的穿渔网袜的小姑娘的svg' },
-  {
-    id: 'project-knowledge-skill',
-    title: '建立并自动维护项目知识库',
-    text: '为本项目建立一个项目级 skill，作为之后所有 AI 对话共享的项目知识库，并让它自动维护。\n\n【建立】\n- 先了解项目，在 `.agents/skills/<项目名>/SKILL.md` 创建（已有就沿用完善）。SKILL.md 只放项目概览、关键约定和资料索引，细节按主题拆到 `references/`。\n- 在根目录 AGENTS.md 写入规则：处理本项目任务前先读这个 skill；完成一段有结论的工作后，按下面的规则更新它。\n\n【维护规则】\n- 不用等我提醒：有新的已确认决策、已核实的实现、踩坑或待办，就顺手更新；没有就不动。\n- 只写事实。讨论中的方案、未验证的猜测标“待定”，不能写成已完成。\n- 就地修改旧内容，不堆叠追加；过时的直接改掉。不复制大段代码，写文件路径即可。\n- 不写密钥和隐私信息；更新文档不代表可以提交、推送或做其他操作。\n- 更新后在回复末尾用一句话说明记了什么。\n\n【手动触发】\n- 我说“更新skill”时，表示对当前整个对话执行一遍上面的维护流程：从头回顾本次对话，提取所有值得保留的要点，和 skill 现有内容对比，补上遗漏、改掉过时的，已经记过的不要重复写。完成后列出这次新增和修改了哪些内容。\n\n现在开始：检查项目，建好结构，把以上规则（包括“更新skill”这个触发词的含义）精简地写进 AGENTS.md。',
-  },
-]
-const videoTitle = ref('')
-const promptText = (prompt) => prompt.text.replaceAll('{{视频标题}}', videoTitle.value || '{{视频标题}}')
-const selectedPrompt = ref(null)
-const promptDialog = ref(null)
-const openPrompt = async (prompt) => {
-  selectedPrompt.value = prompt
-  await nextTick()
-  promptDialog.value?.showModal()
-}
-const copyNotice = ref('')
-let copyTimer
-
-const copyWithNotice = async (text, success, failure) => {
-  clearTimeout(copyTimer)
-  copyNotice.value = ''
-  try {
-    await copyText(text)
-    copyNotice.value = success
-  } catch {
-    copyNotice.value = failure
-  } finally {
-    clearTimeout(copyTimer)
-    copyTimer = setTimeout(() => { copyNotice.value = '' }, 3000)
-  }
-}
-
-const copyPrompt = (prompt) => copyWithNotice(promptText(prompt), '复制成功！', '复制失败，请选中提示词手动复制。')
-const sharePrompt = (prompt) => copyWithNotice(
-  `${prompt.title}\nhttps://cpython666.github.io/navigation/#prompt-${prompt.id}`,
-  '分享链接已复制！',
-  '分享链接复制失败，请重试。',
-)
-
-const linkedPrompt = ref('')
-let locateFrame
 let previousRouteHook
 let routeHook
-
-const syncPromptLocation = async () => {
-  promptDialog.value?.close()
-  cancelAnimationFrame(locateFrame)
-  const hash = window.location.hash
-  const prompt = prompts.find(item => hash === `#prompt-${item.id}`)
-  linkedPrompt.value = prompt?.id || ''
-  activeTab.value = prompt || hash === '#prompts' ? 'prompts' : 'articles'
-  if (!prompt) return
-  await nextTick()
-  locateFrame = requestAnimationFrame(() => {
-    const card = document.getElementById(`prompt-${prompt.id}`)
-    card?.scrollIntoView({ block: 'start', behavior: 'instant' })
-    card?.focus({ preventScroll: true })
-  })
-}
-
-const selectTab = (id) => {
-  cancelAnimationFrame(locateFrame)
-  activeTab.value = id
-  linkedPrompt.value = ''
+const redirectLegacyPrompts = () => {
   const url = new URL(window.location.href)
-  url.hash = id === 'prompts' ? 'prompts' : ''
-  window.history.replaceState(window.history.state, '', url)
+  if (url.hash !== '#prompts' && !url.hash.startsWith('#prompt-')) return
+  url.pathname = '/prompts/'
+  if (url.hash === '#prompts') url.hash = ''
+  window.location.replace(url.href)
 }
-
 onMounted(() => {
-  syncPromptLocation()
-  window.addEventListener('hashchange', syncPromptLocation)
+  redirectLegacyPrompts()
+  window.addEventListener('hashchange', redirectLegacyPrompts)
   previousRouteHook = router.onAfterRouteChange
   const previous = previousRouteHook ?? router.onAfterRouteChanged
   routeHook = async (href) => {
     await previous?.(href)
-    await syncPromptLocation()
+    redirectLegacyPrompts()
   }
   router.onAfterRouteChange = routeHook
 })
-
 onBeforeUnmount(() => {
-  promptDialog.value?.close()
-  clearTimeout(copyTimer)
-  cancelAnimationFrame(locateFrame)
-  window.removeEventListener('hashchange', syncPromptLocation)
-  if (routeHook && router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
+  window.removeEventListener('hashchange', redirectLegacyPrompts)
+  if (router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
 })
-
-const handleTabKeydown = (event, index) => {
-  let nextIndex
-  if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length
-  else if (event.key === 'ArrowLeft') nextIndex = (index + tabs.length - 1) % tabs.length
-  else if (event.key === 'Home') nextIndex = 0
-  else if (event.key === 'End') nextIndex = tabs.length - 1
-  else return
-
-  event.preventDefault()
-  selectTab(tabs[nextIndex].id)
-  document.getElementById(`nav-tab-${activeTab.value}`)?.focus()
-}
 
 const query = ref('')
 const activePath = ref('')
@@ -265,7 +157,6 @@ const totalArticles = computed(() => allArticles.value.length)
 const activeGroup = computed(() => navGroups.value.find(group => group.path === activePath.value) || navGroups.value[0])
 const activeGroupPath = computed(() => activeGroup.value?.path || '')
 const activeGroupText = computed(() => activeGroup.value?.text || '全部文章')
-const activeGroupArticleCount = computed(() => activeGroup.value?.articles.length || 0)
 const normalizedQuery = computed(() => query.value.trim().toLowerCase())
 
 const visibleArticles = computed(() => {
@@ -295,622 +186,87 @@ const selectGroup = (path) => {
 
 <template>
   <main class="nav-page">
-    <section class="nav-hero">
-      <div class="hero-copy">
-        <p class="eyebrow">站内索引</p>
-        <h1>文章导航</h1>
-        <p class="summary">按分类浏览站内文章，或切换到提示词，一键复制使用。</p>
-      </div>
-      <div class="hero-stats" aria-label="内容统计">
-        <div>
-          <strong>{{ totalArticles }}</strong>
-          <span>文章</span>
-        </div>
-        <div>
-          <strong>{{ prompts.length }}</strong>
-          <span>提示词</span>
-        </div>
-      </div>
-    </section>
+    <h1 class="page-title-sr">文章导航</h1>
+    <div v-if="navGroups.length" class="nav-workspace">
+      <aside class="category-panel" aria-label="文章分类">
+        <button
+          v-for="group in navGroups"
+          :key="group.path"
+          class="category-button"
+          :class="{ active: activeGroupPath === group.path && !normalizedQuery }"
+          type="button"
+          @click="selectGroup(group.path)"
+        >
+          <span class="category-name">{{ group.text }}</span>
+          <span class="category-meta">{{ group.articles.length }}</span>
+        </button>
+      </aside>
 
-    <div class="content-tabs" role="tablist" aria-label="导航内容">
-      <button
-        v-for="(tab, index) in tabs"
-        :id="`nav-tab-${tab.id}`"
-        :key="tab.id"
-        class="content-tab"
-        type="button"
-        role="tab"
-        :aria-selected="activeTab === tab.id"
-        :aria-controls="`nav-panel-${tab.id}`"
-        :tabindex="activeTab === tab.id ? 0 : -1"
-        @click="selectTab(tab.id)"
-        @keydown="handleTabKeydown($event, index)"
-      >
-        {{ tab.text }}
-        <span class="tab-count">{{ tab.id === 'articles' ? totalArticles : prompts.length }}</span>
-      </button>
+      <section class="article-panel">
+        <div class="toolbar">
+          <div class="toolbar-summary">
+            <h2>{{ normalizedQuery ? '搜索结果' : activeGroupText }}</h2>
+            <span>{{ visibleArticles.length }} / {{ totalArticles }} 篇文章</span>
+          </div>
+          <label class="search-box">
+            <span>搜索</span>
+            <input v-model="query" type="search" placeholder="输入标题、分类或路径" />
+          </label>
+        </div>
+
+        <div v-if="groupedVisibleArticles.length" class="article-sections">
+          <section v-for="section in groupedVisibleArticles" :key="section.text" class="article-section">
+            <div class="section-heading">
+              <h3>{{ section.text }}</h3>
+              <span>{{ section.articles.length }}</span>
+            </div>
+            <div class="article-list">
+              <a
+                v-for="article in section.articles"
+                :key="article.link"
+                class="article-link"
+                :class="{ member: article.memberOnly }"
+                :href="article.link"
+              >
+                <span v-if="article.memberOnly" class="member-badge" aria-label="会员文章">VIP</span>
+                <span class="article-title">{{ article.text }}</span>
+                <span class="article-path">{{ article.link }}</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <div v-else class="empty-state">
+          <h3>没有匹配的文章</h3>
+          <p>换个关键词试试看。</p>
+        </div>
+      </section>
     </div>
 
-    <section
-      v-show="activeTab === 'articles'"
-      id="nav-panel-articles"
-      role="tabpanel"
-      aria-labelledby="nav-tab-articles"
-      tabindex="0"
-    >
-      <div v-if="navGroups.length" class="nav-workspace">
-        <aside class="category-panel" aria-label="文章分类">
-          <button
-            v-for="group in navGroups"
-            :key="group.path"
-            class="category-button"
-            :class="{ active: activeGroupPath === group.path && !normalizedQuery }"
-            type="button"
-            @click="selectGroup(group.path)"
-          >
-            <span class="category-name">{{ group.text }}</span>
-            <span class="category-meta">{{ group.articles.length }}</span>
-          </button>
-        </aside>
-
-        <section class="article-panel">
-          <div class="toolbar">
-            <div>
-              <p class="panel-kicker">{{ normalizedQuery ? '搜索结果' : activeGroupText }}</p>
-              <h2>{{ normalizedQuery ? `找到 ${visibleArticles.length} 篇文章` : `${activeGroupArticleCount} 篇文章` }}</h2>
-            </div>
-            <label class="search-box">
-              <span>搜索</span>
-              <input v-model="query" type="search" placeholder="输入标题、分类或路径" />
-            </label>
-          </div>
-
-          <div v-if="groupedVisibleArticles.length" class="article-sections">
-            <section v-for="section in groupedVisibleArticles" :key="section.text" class="article-section">
-              <div class="section-heading">
-                <h3>{{ section.text }}</h3>
-                <span>{{ section.articles.length }}</span>
-              </div>
-              <div class="article-list">
-                <a
-                  v-for="article in section.articles"
-                  :key="article.link"
-                  class="article-link"
-                  :class="{ member: article.memberOnly }"
-                  :href="article.link"
-                >
-                  <span v-if="article.memberOnly" class="member-badge" aria-label="会员文章">VIP</span>
-                  <span class="article-title">{{ article.text }}</span>
-                  <span class="article-path">{{ article.link }}</span>
-                </a>
-              </div>
-            </section>
-          </div>
-
-          <div v-else class="empty-state">
-            <h3>没有匹配的文章</h3>
-            <p>换个关键词试试看。</p>
-          </div>
-        </section>
-      </div>
-
-      <div v-else class="empty-state tab-empty-state">
-        <h3>暂无文章配置</h3>
-        <p>请先在 VitePress 配置里添加 sidebar 项。</p>
-      </div>
-    </section>
-
-    <section
-      v-show="activeTab === 'prompts'"
-      id="nav-panel-prompts"
-      class="prompt-panel"
-      role="tabpanel"
-      aria-labelledby="nav-tab-prompts"
-      tabindex="0"
-    >
-      <div class="toolbar prompt-toolbar">
-        <h2>提示词收藏 <span>{{ prompts.length }}</span></h2>
-        <p>找到灵感，复制即用。</p>
-      </div>
-      <div class="prompt-list">
-        <article
-          v-for="prompt in prompts"
-          :id="`prompt-${prompt.id}`"
-          :key="prompt.id"
-          class="prompt-card"
-          :class="{ 'is-linked': linkedPrompt === prompt.id }"
-          tabindex="-1"
-          :aria-labelledby="`prompt-title-${prompt.id}`"
-        >
-          <div class="prompt-heading">
-            <h3 :id="`prompt-title-${prompt.id}`">{{ prompt.title }}</h3>
-            <div class="prompt-actions">
-              <button
-                class="copy-prompt"
-                type="button"
-                :aria-label="`复制提示词：${prompt.title}`"
-                title="复制完整提示词"
-                @click="copyPrompt(prompt)"
-              >
-                <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>
-              </button>
-              <button
-                class="copy-prompt"
-                type="button"
-                :aria-label="`分享提示词：${prompt.title}`"
-                title="复制标题和分享链接"
-                @click="sharePrompt(prompt)"
-              >
-                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 .1l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7-.1l-3 3a5 5 0 0 0 7 7l2-2"/></svg>
-              </button>
-            </div>
-          </div>
-          <div class="prompt-meta">
-            <span>{{ promptText(prompt).length }} 字</span>
-            <span v-if="prompt.text.includes('{{视频标题}}')">可填写标题</span>
-          </div>
-          <p class="prompt-text">{{ promptText(prompt) }}</p>
-          <button class="view-prompt" type="button" :aria-label="`查看完整提示词：${prompt.title}`" @click="openPrompt(prompt)">
-            查看完整内容 <span aria-hidden="true">↗</span>
-          </button>
-        </article>
-      </div>
-    </section>
-    <dialog
-      ref="promptDialog"
-      class="prompt-dialog"
-      aria-labelledby="prompt-dialog-title"
-      @close="selectedPrompt = null"
-      @click.self="promptDialog.close()"
-    >
-      <template v-if="selectedPrompt">
-        <header class="prompt-dialog-header">
-          <div>
-            <p class="eyebrow">完整提示词</p>
-            <h2 id="prompt-dialog-title">{{ selectedPrompt.title }}</h2>
-          </div>
-          <button class="close-prompt" type="button" aria-label="关闭完整提示词" @click="promptDialog.close()">×</button>
-        </header>
-        <div class="prompt-dialog-actions">
-          <button class="copy-prompt" type="button" :aria-label="`复制提示词：${selectedPrompt.title}`" @click="copyPrompt(selectedPrompt)">复制全文</button>
-          <button class="copy-prompt" type="button" :aria-label="`分享提示词：${selectedPrompt.title}`" @click="sharePrompt(selectedPrompt)">分享</button>
-          <span>{{ promptText(selectedPrompt).length }} 字</span>
-        </div>
-        <div class="prompt-dialog-body">
-          <label v-if="selectedPrompt.text.includes('{{视频标题}}')" class="prompt-variable">
-            视频标题
-            <input v-model="videoTitle" type="text" placeholder="输入视频标题" />
-          </label>
-          <p class="prompt-full-text">{{ promptText(selectedPrompt) }}</p>
-        </div>
-        <div role="status" aria-live="polite">
-          <p v-if="copyNotice" class="copy-toast">{{ copyNotice }}</p>
-        </div>
-      </template>
-    </dialog>
-    <div v-if="!selectedPrompt" role="status" aria-live="polite">
-      <p v-if="copyNotice" class="copy-toast">{{ copyNotice }}</p>
+    <div v-else class="empty-state">
+      <h3>暂无文章配置</h3>
+      <p>请先在 VitePress 配置里添加 sidebar 项。</p>
     </div>
   </main>
 </template>
 
 <style scoped>
-.nav-page {
-  width: min(1180px, calc(100% - 32px));
-  margin: 20px auto 40px;
-}
-
-.nav-hero {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 28px 0 20px;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.eyebrow,
-.panel-kicker {
-  margin: 0 0 8px;
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.nav-hero h1 {
-  margin: 0;
-  font-size: 40px;
-  line-height: 1.15;
-}
-
-.summary {
-  max-width: 560px;
-  margin: 12px 0 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.8;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 96px);
-  gap: 10px;
-}
-
-.hero-stats div {
-  min-height: 74px;
-  padding: 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-}
-
-.hero-stats strong,
-.hero-stats span {
-  display: block;
-}
-
-.hero-stats strong {
-  font-size: 26px;
-  line-height: 1;
-}
-
-.hero-stats span {
-  margin-top: 8px;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
-}
-
-.nav-workspace {
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 24px;
-  align-items: start;
-}
-
-.content-tabs {
-  display: flex;
-  gap: 24px;
-  margin-top: 20px;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.content-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 4px;
-  border-bottom: 2px solid transparent;
-  color: var(--vp-c-text-2);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.content-tab:hover,
-.content-tab[aria-selected='true'] {
-  color: var(--vp-c-brand-1);
-}
-
-.content-tab[aria-selected='true'] {
-  border-bottom-color: var(--vp-c-brand-1);
-}
-
-.tab-count {
-  padding: 0 7px;
-  border-radius: 999px;
-  background: var(--vp-c-default-soft);
-  font-size: 12px;
-}
-
-.content-tab:focus-visible,
-.prompt-variable input:focus-visible,
-.copy-prompt:focus-visible,
-.view-prompt:focus-visible,
-.close-prompt:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-}
-
-.prompt-panel,
-.tab-empty-state {
-  margin-top: 24px;
-}
-
-.prompt-panel p,
-.prompt-dialog p {
-  text-indent: 0;
-}
-
-.prompt-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 20px;
-}
-
-.prompt-toolbar h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.prompt-toolbar h2 span {
-  padding: 2px 9px;
-  border-radius: 8px;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.prompt-toolbar p {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  font-size: 14px;
-}
-
-.prompt-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  padding: 22px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 16px;
-  background: var(--vp-c-bg-soft);
-  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 16px);
-}
-
-.prompt-card:hover {
-  border-color: var(--vp-c-brand-2);
-}
-
-.prompt-card.is-linked {
-  border-color: var(--vp-c-brand-1);
-  box-shadow: 0 0 0 2px var(--vp-c-brand-soft);
-}
-
-.prompt-card h3 {
-  min-width: 0;
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.prompt-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 12px;
-  width: 100%;
-  min-height: 52px;
-}
-
-.prompt-actions {
-  display: flex;
-  gap: 6px;
-}
-
-.prompt-actions .copy-prompt {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  min-height: 34px;
-  padding: 7px;
-  border-color: var(--vp-c-divider);
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-2);
-}
-
-.prompt-actions .copy-prompt:hover {
-  border-color: var(--vp-c-brand-2);
-  color: var(--vp-c-brand-1);
-  background: var(--vp-c-brand-soft);
-}
-
-.prompt-actions svg {
-  width: 17px;
-  height: 17px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.prompt-meta {
-  display: flex;
-  gap: 12px;
-  margin: 8px 0 14px;
-  color: var(--vp-c-text-3);
-  font-size: 12px;
-}
-
-.prompt-variable {
-  display: block;
-  width: 100%;
-  margin-bottom: 20px;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
-}
-
-.prompt-variable input {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  min-height: 40px;
-  margin-top: 6px;
-  padding: 6px 10px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-}
-
-.prompt-text {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  width: 100%;
-  height: 7.2em;
-  margin: 0 0 20px;
-  font-size: 14px;
-}
-
-.prompt-text,
-.prompt-full-text {
-  color: var(--vp-c-text-2);
-  line-height: 1.8;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-  user-select: text;
-}
-
-.view-prompt {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--vp-c-divider);
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.view-prompt:hover {
-  color: var(--vp-c-brand-2);
-}
-
-.view-prompt span {
-  font-size: 20px;
-}
-
-.prompt-dialog {
-  width: min(760px, calc(100% - 32px));
-  max-height: calc(100dvh - 48px);
-  margin: auto;
+.nav-page { width: min(1180px, calc(100% - 32px)); margin: 16px auto 40px; }
+.nav-workspace { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; }
+.toolbar-summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; }
+.toolbar-summary span { color: var(--vp-c-text-2); font-size: 13px; }
+.category-button:focus-visible, .search-box:focus-within { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+.page-title-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 18px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  box-shadow: var(--vp-shadow-3);
+  margin: -1px;
   overflow: hidden;
-}
-
-.prompt-dialog[open] {
-  display: flex;
-  flex-direction: column;
-}
-
-.prompt-dialog::backdrop {
-  background: rgb(0 0 0 / 55%);
-}
-
-:global(html:has(.prompt-dialog[open])) {
-  overflow: hidden;
-}
-
-.prompt-dialog-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 24px 24px 16px;
-}
-
-.prompt-dialog-header h2 {
-  margin: 0;
-  padding: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
   border: 0;
-  font-size: 22px;
-  line-height: 1.4;
 }
-
-.close-prompt {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: var(--vp-c-default-soft);
-  color: var(--vp-c-text-2);
-  font-size: 26px;
-  cursor: pointer;
-}
-
-.close-prompt:hover {
-  color: var(--vp-c-text-1);
-}
-
-.prompt-dialog-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0 24px 20px;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.prompt-dialog-actions span {
-  margin-left: auto;
-  color: var(--vp-c-text-3);
-  font-size: 12px;
-}
-
-.prompt-dialog-body {
-  min-height: 0;
-  padding: 24px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.prompt-full-text {
-  margin: 0;
-  font-size: 15px;
-}
-
-.copy-prompt {
-  flex-shrink: 0;
-  min-height: 40px;
-  padding: 6px 12px;
-  border: 1px solid var(--vp-c-brand-2);
-  border-radius: 6px;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.copy-prompt:hover {
-  background: var(--vp-c-brand-1);
-  color: var(--vp-c-bg);
-}
-
-.copy-toast {
-  position: fixed;
-  bottom: 32px;
-  left: 50%;
-  z-index: 200;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: calc(100vw - 32px);
-  margin: 0;
-  padding: 12px 20px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  box-shadow: var(--vp-shadow-2);
-  font-size: 14px;
-  pointer-events: none;
-}
-
 .category-panel {
   position: sticky;
   top: 88px;
@@ -973,7 +329,8 @@ const selectGroup = (path) => {
 
 .toolbar h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .search-box {
@@ -1027,6 +384,7 @@ const selectGroup = (path) => {
 .section-heading h3 {
   margin: 0;
   font-size: 17px;
+  font-weight: 600;
 }
 
 .section-heading span {
@@ -1120,33 +478,12 @@ const selectGroup = (path) => {
   margin: 0;
 }
 
+
 @media (max-width: 860px) {
-  .nav-page {
-    width: min(100% - 24px, 1180px);
-  }
-
-  .nav-hero,
-  .toolbar {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .nav-workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .category-panel {
-    position: static;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  }
-
-  .search-box {
-    width: 100%;
-  }
+  .nav-page { width: calc(100% - 24px); }
+  .toolbar { align-items: stretch; flex-direction: column; }
+  .nav-workspace { grid-template-columns: minmax(0, 1fr); }
+  .category-panel { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .search-box { width: 100%; min-width: 0; }
 }
 </style>

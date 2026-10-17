@@ -470,11 +470,6 @@ let web3_items = [
     items: web3_basics_items,
   },
   {
-    text: "区块漫步🚶",
-    collapsed: false,
-    items: block_walk_items,
-  },
-  {
     text: "聪明钱追踪",
     collapsed: false,
     items: smart_money_tracking_items,
@@ -875,10 +870,23 @@ let nav_config = [
     items: web_intro_items,
   },
 ];
+// 顶部导航单独精简，默认侧栏仍保留完整入口。
+const top_nav_config = nav_config.flatMap((item) => {
+  if (["/breakthrough-notes/", "/backup/", "/web3/block-walk/"].includes(item.link)) {
+    return [];
+  }
+  if (item.link === "/navigation/") {
+    return [item, { text: "提示词", link: "/prompts/" }];
+  }
+  return [item];
+});
 let sidebar_config = {
   "/": nav_config,
   "/spider-tools/": [],
   "/web3/": web3_items,
+  "/web3/block-walk/": [
+    { text: "区块漫步", collapsed: false, items: block_walk_items },
+  ],
   "/python/": [
     {
       text: "Python之旅",
@@ -1486,7 +1494,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo_super.svg",
-    nav: nav_config,
+    nav: top_nav_config,
     sidebar: sidebar_config,
     outline: [2, 3, 4],
     socialLinks: [
@@ -1583,6 +1591,7 @@ export default defineConfig({
       "/web/": "前端",
       "/web-intro/": "网站相关",
       "/web3/": "币圈入圈指南",
+      "/web3/block-walk/": "区块漫步",
       "/好文推荐/": "好文推荐",
       "/算法/": "算法",
     },
