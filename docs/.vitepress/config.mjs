@@ -786,6 +786,10 @@ let life_ai_items = [
     text: "CC Switch 是干嘛的？怎么用？中转站一键导入、一键切换 API 供应商",
     link: "/life/cc-switch-guide",
   },
+  {
+    text: "把火箭装进跑车：特斯拉是怎么“飞”起来的？离钢铁侠还差多远",
+    link: "/life/tesla-roadster-flying",
+  },
 ];
 let life_geo_items = [
   { text: "星探计划：AI搜索时代的GEO探索", link: "/life/geo/" },
