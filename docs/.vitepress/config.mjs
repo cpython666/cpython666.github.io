@@ -790,6 +790,10 @@ let life_ai_items = [
     text: "把火箭装进跑车：特斯拉是怎么“飞”起来的？离钢铁侠还差多远",
     link: "/life/tesla-roadster-flying",
   },
+  {
+    text: "中转站给你的到底是不是真 GPT？两个开源项目帮你验一验",
+    link: "/life/model-fingerprint-detection",
+  },
 ];
 let life_geo_items = [
   { text: "星探计划：AI搜索时代的GEO探索", link: "/life/geo/" },
