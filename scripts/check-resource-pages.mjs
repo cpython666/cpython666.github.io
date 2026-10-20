@@ -1,5 +1,5 @@
 // Isolated public-page checks: no article files or real content loaders are read.
-// Run: node scripts/check-resource-pages.mjs [--preview]
+// Run: node scripts/check-resource-pages.mjs [--preview] [--tools-only | --projects-only]
 // Compare a saved code-only snapshot: --baseline /path/to/snapshot
 import assert from 'node:assert/strict'
 import { execFile } from 'node:child_process'
@@ -11,8 +11,12 @@ import { promisify } from 'node:util'
 import { chromium } from 'playwright'
 
 const root = resolve(import.meta.dirname, '..')
+const toolsOnly = process.argv.includes('--tools-only')
+const projectsOnly = process.argv.includes('--projects-only')
 const baselineIndex = process.argv.indexOf('--baseline')
 if (baselineIndex >= 0) assert.ok(process.argv[baselineIndex + 1], '--baseline needs a code snapshot directory')
+assert.ok(!toolsOnly || baselineIndex < 0, '--tools-only cannot be combined with --baseline')
+assert.ok(!projectsOnly || (!toolsOnly && baselineIndex < 0), '--projects-only cannot be combined with --tools-only or --baseline')
 const source = baselineIndex < 0 ? join(root, 'docs') : resolve(process.argv[baselineIndex + 1])
 const fixture = await realpath(await mkdtemp(join(tmpdir(), 'resource-pages-check-')))
 let server
@@ -22,7 +26,7 @@ try {
     await mkdir(join(fixture, path), { recursive: true })
   }
   const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
-  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', ...['CurlRequests', 'Url', 'Base64', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
+  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', 'spider-tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
@@ -94,8 +98,10 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     },
   })}\n`)
   await promisify(execFile)(process.execPath, [join(root, 'node_modules/vitepress/bin/vitepress.js'), 'build', fixture], { cwd: root })
+  // Keep the duplicate Spider-Project entries near the top to exercise repository deduplication.
+  const fixtureStars = { CoolBgs: 900, 'Spider-Project': 800, 'scrapy-drissionpage': 700, HandwritingGenerator: 600, LearnSpider: 500 }
   const repos = [...new Set(projects.map(project => project.url.match(/^https:\/\/(?:www\.)?github\.com\/([^/]+\/[^/#?]+)/)?.[1]).filter(Boolean))]
-    .map((full_name, index) => ({ full_name, stargazers_count: 100 + index }))
+    .map((full_name, index) => ({ full_name, stargazers_count: fixtureStars[full_name.split('/')[1]] ?? 20 + index }))
   const output = join(fixture, '.vitepress/dist')
   server = createServer(async (req, res) => {
     res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'")
@@ -140,70 +146,345 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   }
   // Match the real theme's selector without loading its unrelated services.
   const markZoomImages = () => page.evaluate(() => document.querySelectorAll('.vp-doc img:not(.no-zoom):not(.site-icon), .x-backup__media img').forEach(img => img.classList.add('is-zoomable')))
-  await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
-  const initial = await page.evaluate(() => ({
+  const toolIds = []
+  if (baselineIndex < 0 && !projectsOnly) {
+    const toolPage = await context.newPage()
+    toolPage.setDefaultTimeout(10000)
+    toolPage.on('pageerror', error => errors.push(error.message))
+    toolPage.on('console', message => { if (/hydration/i.test(message.text())) errors.push(message.text()) })
+    await toolPage.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: {
+        writeText: async text => {
+          if (window.__failCopy) throw new Error('fixture clipboard failure')
+          window.__copiedText = text
+        },
+      } })
+    })
+    await toolPage.goto(base + '/spider-tools/', { waitUntil: 'networkidle' })
+    const tools = await toolPage.locator('.nav-list a').evaluateAll(links => links.map(link => ({
+      id: link.hash.slice(1), name: link.querySelectorAll('span')[1].textContent.trim(),
+    })))
+    toolIds.push(...tools.map(tool => tool.id))
+    assert.equal(new Set(toolIds).size, toolIds.length, 'tool hashes are unique')
+    for (const id of ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit']) {
+      assert.ok(toolIds.includes(id), `${id} remains available`)
+    }
+    const expectTool = async (id, focused = true) => {
+      await toolPage.waitForFunction(({ id, focused }) => {
+        const panel = document.querySelector('.panel-card')
+        return panel?.id === id && document.querySelector('.nav-list li.active a')?.hash === `#${id}`
+          && (!focused || document.activeElement === panel)
+      }, { id, focused })
+      assert.equal(await toolPage.locator('.panel-card').count(), 1, 'one panel owns the shared hash')
+      await toolPage.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))))
+      const bounds = await toolPage.locator('.panel-card').boundingBox()
+      const navBottom = await toolPage.locator('.VPNav').evaluate(nav => getComputedStyle(nav).position === 'fixed' ? nav.getBoundingClientRect().bottom : 0)
+      assert.ok(bounds?.width > 0 && bounds.y >= navBottom - 1 && bounds.y < toolPage.viewportSize().height, `${id} is visible below navigation: ${JSON.stringify({ bounds, navBottom, viewport: toolPage.viewportSize() })}`)
+    }
+    const followToolLink = href => toolPage.evaluate(href => {
+      const link = document.createElement('a')
+      link.href = href
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    }, href)
+    for (const tool of tools) {
+      await toolPage.locator(`.nav-list a[href="#${tool.id}"]`).click()
+      await expectTool(tool.id)
+      const description = (await toolPage.locator('.tool-description').textContent()).trim()
+      assert.ok(description, `${tool.id} has a share description`)
+      tool.description = description
+      if (tool.id === 'url') await toolPage.locator('.panel-card textarea:visible').first().fill('private-fixture-input')
+      const share = `${tool.name}\n${description}\nhttps://cpython666.github.io/spider-tools/#${tool.id}`
+      await toolPage.getByRole('button', { name: `分享工具：${tool.name}`, exact: true }).click()
+      await toolPage.waitForFunction(text => window.__copiedText === text, share)
+      await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '工具简介和直达链接已复制！')
+      assert.equal(share.split('\n').length, 3, 'sharing contains only name, description and canonical URL')
+      await toolPage.goto('about:blank')
+      await toolPage.goto(`${base}/spider-tools/#${tool.id}`, { waitUntil: 'networkidle' })
+      await expectTool(tool.id)
+      await toolPage.reload({ waitUntil: 'networkidle' })
+      await expectTool(tool.id)
+    }
+    await toolPage.evaluate(() => { window.__failCopy = true })
+    await toolPage.locator('.share-tool').click()
+    await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '复制失败，请重试。')
+    await toolPage.evaluate(() => { window.__failCopy = false })
+    const fallbackCopy = await context.newPage()
+    fallbackCopy.on('pageerror', error => errors.push(error.message))
+    await fallbackCopy.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', { configurable: true, value: undefined })
+      document.execCommand = command => {
+        if (command !== 'copy') return false
+        window.__copiedText = document.activeElement.value
+        return true
+      }
+    })
+    await fallbackCopy.goto(`${base}/spider-tools/#${tools[0].id}`, { waitUntil: 'networkidle' })
+    await fallbackCopy.locator('.share-tool').click()
+    assert.equal(await fallbackCopy.evaluate(() => window.__copiedText), `${tools[0].name}\n${tools[0].description}\nhttps://cpython666.github.io/spider-tools/#${tools[0].id}`, 'legacy clipboard fallback preserves all three lines')
+    await fallbackCopy.close()
+    await toolPage.goto(`${base}/spider-tools/#${toolIds[0]}`, { waitUntil: 'networkidle' })
+    for (const id of toolIds.slice(1, 3)) {
+      await toolPage.locator(`.nav-list a[href="#${id}"]`).click()
+      await expectTool(id)
+    }
+    await toolPage.goBack()
+    await expectTool(toolIds[1])
+    await toolPage.goForward()
+    await expectTool(toolIds[2])
+    await toolPage.goto(base + '/spider-tools/#unknown-tool', { waitUntil: 'networkidle' })
+    await expectTool(toolIds[0], false)
+    await toolPage.goto(`${base}/spider-tools/#${toolIds.at(-1)}`, { waitUntil: 'networkidle' })
+    await expectTool(toolIds.at(-1))
+    const timeOrigin = await toolPage.evaluate(() => performance.timeOrigin)
+    await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).fill('no-matching-tool')
+    await followToolLink(`/spider-tools/?source=fixture#${toolIds.at(-1)}`)
+    await expectTool(toolIds.at(-1))
+    assert.equal(await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).inputValue(), '', 'shared links clear tool search')
+    assert.equal(await toolPage.locator('.nav-list a').count(), tools.length)
+    assert.equal(await toolPage.evaluate(() => performance.timeOrigin), timeOrigin, 'query/hash links use same-component SPA navigation')
+    await toolPage.locator('.share-tool').click()
+    await toolPage.waitForFunction(text => window.__copiedText === text, `${tools.at(-1).name}\n${tools.at(-1).description}\nhttps://cpython666.github.io/spider-tools/#${toolIds.at(-1)}`)
+    await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).fill(tools.at(-1).name)
+    await toolPage.locator(`.nav-list a[href="#${toolIds.at(-1)}"]`).click()
+    await expectTool(toolIds.at(-1))
+    assert.equal(await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).inputValue(), '', 'reselecting the current hash clears search')
+    await toolPage.locator('.nav-list a[href="#o10"]').click()
+    await expectTool('o10')
+    const o10 = toolPage.locator('.o10-tool')
+    for (const [mode, encoded, separator] of [['standard', '1000001O1000010', 'O'], ['pro', 'IlllllI1IllllIl', '1']]) {
+      await o10.locator('#o10-mode').selectOption(mode)
+      await o10.locator('#o10-input').fill('AB')
+      await o10.getByRole('button', { name: '编码', exact: true }).click()
+      assert.equal(await o10.locator('#o10-output').inputValue(), encoded, `${mode} UI encodes AB`)
+      await o10.getByRole('button', { name: '复制结果', exact: true }).click()
+      await toolPage.waitForFunction(text => window.__copiedText === text, encoded)
+      await o10.getByRole('button', { name: '结果用作输入', exact: true }).click()
+      assert.equal(await o10.locator('#o10-input').inputValue(), encoded)
+      assert.equal(await o10.locator('#o10-output').inputValue(), '')
+      await o10.getByRole('button', { name: '解码', exact: true }).click()
+      assert.equal(await o10.locator('#o10-output').inputValue(), 'AB', `${mode} UI decodes reused output`)
+      await o10.locator('#o10-input').fill(encoded + separator)
+      await o10.getByRole('button', { name: '解码', exact: true }).click()
+      assert.equal(await o10.locator('#o10-output').inputValue(), '', 'invalid input cannot leave a stale result')
+      assert.match(await o10.locator('.notice').textContent(), /不能有空分段/)
+      assert.equal(await o10.getByRole('button', { name: '复制结果', exact: true }).isDisabled(), true)
+    }
+    for (const width of [320, 390]) {
+      await toolPage.setViewportSize({ width, height: 844 })
+      for (const tool of tools) {
+        await toolPage.locator(`.nav-list a[href="#${tool.id}"]`).click()
+        await expectTool(tool.id)
+        const layout = await toolPage.locator('.tool-sharebar').evaluate(bar => {
+          const bounds = bar.getBoundingClientRect()
+          return {
+            scrollWidth: document.documentElement.scrollWidth,
+            clipped: [...bar.children].some(child => {
+              const box = child.getBoundingClientRect()
+              return box.left < bounds.left - 1 || box.right > bounds.right + 1
+                || box.top < bounds.top - 1 || box.bottom > bounds.bottom + 1 || child.scrollWidth > child.clientWidth + 1
+            }),
+          }
+        })
+        assert.ok(layout.scrollWidth <= width && !layout.clipped, `${tool.id} share bar fits at ${width}px`)
+        if (tool.id === 'o10') {
+          assert.equal(await o10.evaluate(element => {
+            const panel = element.getBoundingClientRect()
+            return [...element.querySelectorAll('select, textarea, button')].some(control => {
+              const bounds = control.getBoundingClientRect()
+              return bounds.left < panel.left - 1 || bounds.right > panel.right + 1
+            })
+          }), false, `O10 controls fit at ${width}px`)
+        }
+      }
+      await toolPage.locator('.share-tool').click()
+      await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '工具简介和直达链接已复制！')
+      const notice = await toolPage.locator('.share-notice').boundingBox()
+      assert.ok(notice?.x >= 0 && notice.x + notice.width <= width, `share feedback fits at ${width}px`)
+    }
+    await toolPage.close()
+    assert.deepEqual(errors, [])
+    console.log(`PASS: ${tools.length} tools; three-line canonical sharing without user input; clipboard success/failure/legacy fallback; direct links and reload; hash history and unknown fallback; same-hash query navigation/search reset; O10 standard/Pro encoding, copying, output reuse/decoding and invalid-input feedback; 320/390px controls, share bars and feedback.`)
+  }
+  if (!toolsOnly && !projectsOnly) await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
+  const initial = toolsOnly || projectsOnly ? null : await page.evaluate(() => ({
     cards: document.querySelectorAll('.site').length,
     elements: document.querySelectorAll('*').length,
     cardCheckboxes: document.querySelectorAll('.site input[type="checkbox"]').length,
     tooltips: document.querySelectorAll('.tooltip').length,
   }))
-  console.log(`${baselineIndex < 0 ? 'Current' : 'Baseline'} initial resource DOM: ${JSON.stringify(initial)}; data: ${resources.length} resources / ${navigationData.length} categories; copied ${copiedAssets} referenced images.`)
-  if (baselineIndex < 0) {
-    assert.equal(initial.cards, Math.min(36, resources.length))
-    assert.equal(await page.locator('.load-more').count(), 0, 'supported browsers load without a button')
-    await loadNextBatch()
-    const search = page.getByRole('searchbox', { name: '搜索资源' })
-    // Each query exercises a distinct supported field using real public resource metadata.
-    for (const query of ['ModelTrace', '生成挑战提取输出指纹', '模型归因', 'github.com/xqy2006/ModelTrace', 'PYTHON']) {
-      const matches = resources.filter(site => [site.section, site.title, site.desc, site.link, ...(site.categories || [])].join(' ').toLowerCase().includes(query.toLowerCase()))
-      assert.ok(matches.length > 0, `query has a fixture match: ${query}`)
-      await search.fill(query)
-      await countCards(Math.min(36, matches.length))
-      assert.deepEqual(await page.locator('a.site-link').evaluateAll(links => links.map(link => link.getAttribute('href'))), matches.slice(0, 36).map(site => site.link))
-    }
-    await search.fill('resource-that-does-not-exist-319c')
-    await countCards(0)
-    await page.getByRole('button', { name: '清除筛选' }).click()
-    await countCards(Math.min(36, resources.length))
+  if (!toolsOnly && !projectsOnly) console.log(`${baselineIndex < 0 ? 'Current' : 'Baseline'} initial resource DOM: ${JSON.stringify(initial)}; data: ${resources.length} resources / ${navigationData.length} categories; copied ${copiedAssets} referenced images.`)
+  if (baselineIndex < 0 && !toolsOnly) {
     const detection = navigationData.find(group => group.title === 'AI模型检测')
-    await page.locator('.resource-sidebar .category-button').filter({ hasText: 'AI模型检测' }).click()
-    await countCards(detection.items.length)
-    assert.equal(decodeURIComponent(new URL(page.url()).hash), '#AI模型检测')
-    await search.fill('Python')
-    assert.equal(new URL(page.url()).hash, '', 'typing searches all categories')
-    for (const hash of ['AI模型检测', '站长推荐', 'unknown-category']) {
-      await page.goto(`${base}/nav/#${encodeURIComponent(hash)}`, { waitUntil: 'networkidle' })
-      await countCards(hash === 'AI模型检测' ? detection.items.length : hash === '站长推荐' ? 0 : Math.min(36, resources.length))
-      if (hash === '站长推荐') assert.equal(await page.locator('.sponsor-banner').count(), 1)
-      await page.reload({ waitUntil: 'networkidle' })
-      await countCards(hash === 'AI模型检测' ? detection.items.length : hash === '站长推荐' ? 0 : Math.min(36, resources.length))
-    }
-    await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
-    for (let count = 36; count < resources.length; count += 36) {
+    if (!projectsOnly) {
+      assert.equal(initial.cards, Math.min(36, resources.length))
+      assert.equal(await page.locator('.load-more').count(), 0, 'supported browsers load without a button')
       await loadNextBatch()
+      const search = page.getByRole('searchbox', { name: '搜索资源' })
+      // Each query exercises a distinct supported field using real public resource metadata.
+      for (const query of ['ModelTrace', '生成挑战提取输出指纹', '模型归因', 'github.com/xqy2006/ModelTrace', 'PYTHON']) {
+        const matches = resources.filter(site => [site.section, site.title, site.desc, site.link, ...(site.categories || [])].join(' ').toLowerCase().includes(query.toLowerCase()))
+        assert.ok(matches.length > 0, `query has a fixture match: ${query}`)
+        await search.fill(query)
+        await countCards(Math.min(36, matches.length))
+        assert.deepEqual(await page.locator('a.site-link').evaluateAll(links => links.map(link => link.getAttribute('href'))), matches.slice(0, 36).map(site => site.link))
+      }
+      await search.fill('resource-that-does-not-exist-319c')
+      await countCards(0)
+      await page.getByRole('button', { name: '清除筛选' }).click()
+      await countCards(Math.min(36, resources.length))
+      await page.locator('.resource-sidebar .category-button').filter({ hasText: 'AI模型检测' }).click()
+      await countCards(detection.items.length)
+      assert.equal(decodeURIComponent(new URL(page.url()).hash), '#AI模型检测')
+      await search.fill('Python')
+      assert.equal(new URL(page.url()).hash, '', 'typing searches all categories')
+      for (const hash of ['AI模型检测', '站长推荐', 'unknown-category']) {
+        await page.goto(`${base}/nav/#${encodeURIComponent(hash)}`, { waitUntil: 'networkidle' })
+        await countCards(hash === 'AI模型检测' ? detection.items.length : hash === '站长推荐' ? 0 : Math.min(36, resources.length))
+        if (hash === '站长推荐') assert.equal(await page.locator('.sponsor-banner').count(), 1)
+        await page.reload({ waitUntil: 'networkidle' })
+        await countCards(hash === 'AI模型检测' ? detection.items.length : hash === '站长推荐' ? 0 : Math.min(36, resources.length))
+      }
+      await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
+      for (let count = 36; count < resources.length; count += 36) {
+        await loadNextBatch()
+      }
+      assert.equal(await page.locator('.load-trigger').count(), 0, 'last batch exhausts all resources')
+      await search.fill('ModelTrace')
+      await page.getByRole('button', { name: '清除搜索', exact: true }).click()
+      await countCards(Math.min(36, resources.length))
+      await page.locator('.site-icon').first().evaluate(img => { img.src = '/__fixture/broken-icon.png' })
+      await page.waitForFunction(() => {
+        const img = document.querySelector('.site-icon')
+        return img?.getAttribute('src') === '/icons/github.svg' && img.naturalWidth > 0
+      })
+      const fallback = await context.newPage()
+      fallback.on('pageerror', error => errors.push(error.message))
+      await fallback.addInitScript(() => { window.IntersectionObserver = undefined })
+      await fallback.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
+      assert.equal(await fallback.locator('.site').count(), Math.min(36, resources.length))
+      await fallback.locator('.load-more').focus()
+      await fallback.keyboard.press('Enter')
+      await fallback.waitForFunction(() => document.activeElement === document.querySelectorAll('a.site-link')[36])
+      assert.equal(await fallback.locator('.site').count(), Math.min(72, resources.length), 'manual keyboard fallback works without IntersectionObserver')
+      await fallback.close()
     }
-    assert.equal(await page.locator('.load-trigger').count(), 0, 'last batch exhausts all resources')
-    await search.fill('ModelTrace')
-    await page.getByRole('button', { name: '清除搜索', exact: true }).click()
-    await countCards(Math.min(36, resources.length))
-    await page.locator('.site-icon').first().evaluate(img => { img.src = '/__fixture/broken-icon.png' })
-    await page.waitForFunction(() => {
-      const img = document.querySelector('.site-icon')
-      return img?.getAttribute('src') === '/icons/github.svg' && img.naturalWidth > 0
-    })
-    const fallback = await context.newPage()
-    fallback.on('pageerror', error => errors.push(error.message))
-    await fallback.addInitScript(() => { window.IntersectionObserver = undefined })
-    await fallback.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
-    assert.equal(await fallback.locator('.site').count(), Math.min(36, resources.length))
-    await fallback.locator('.load-more').focus()
-    await fallback.keyboard.press('Enter')
-    await fallback.waitForFunction(() => document.activeElement === document.querySelectorAll('a.site-link')[36])
-    assert.equal(await fallback.locator('.site').count(), Math.min(72, resources.length), 'manual keyboard fallback works without IntersectionObserver')
-    await fallback.close()
     await page.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
     await page.locator('.star-status.ready').waitFor()
     assert.equal(await page.locator('.cards .card').count(), projects.length)
+    const topProjects = ['CoolBgs', 'IPProxyPool', 'scrapy-drissionpage', 'HandwritingGenerator', 'LearnSpider']
+      .map(title => projects.find(project => project.title === title))
+    assert.ok(topProjects.every(Boolean), 'ranked fixtures refer to existing public project metadata')
+    const checkSlide = async (target, project) => {
+      assert.equal(await target.locator('.featured h2').textContent(), project.title)
+      assert.equal(await target.locator('.featured-actions .btn.primary').getAttribute('href'), project.url)
+      assert.equal(await target.locator('.featured-image').getAttribute('href'), project.url)
+      assert.equal(await target.locator('.featured-image img').getAttribute('src'), project.image)
+      assert.equal(await target.locator('.featured-image img').getAttribute('alt'), project.title)
+    }
+    // page.clock affects its entire context; keep timed checks separate from layout checks.
+    const carousel = await browser.newPage({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark' })
+    await carousel.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+    carousel.on('pageerror', error => errors.push(error.message))
+    await carousel.clock.install()
+    await carousel.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await carousel.locator('.star-status.cached, .star-status.ready').waitFor()
+    assert.deepEqual(await carousel.getByRole('button', { name: /^查看项目：/ }).evaluateAll(buttons => buttons.map(button => button.getAttribute('aria-label'))),
+      topProjects.map(project => `查看项目：${project.title}`), 'carousel shows the five highest-star distinct repositories')
+    await checkSlide(carousel, topProjects[0])
+    const next = carousel.getByRole('button', { name: '下一个项目', exact: true })
+    const previous = carousel.getByRole('button', { name: '上一个项目', exact: true })
+    for (let index = 1; index <= topProjects.length; index += 1) {
+      await next.focus()
+      await carousel.keyboard.press('Enter')
+      await checkSlide(carousel, topProjects[index % topProjects.length])
+    }
+    await previous.focus()
+    await carousel.keyboard.press('Enter')
+    await checkSlide(carousel, topProjects.at(-1))
+    const selectFirstSlide = async () => {
+      await carousel.getByRole('button', { name: `查看项目：${topProjects[0].title}`, exact: true }).focus()
+      await carousel.keyboard.press('Enter')
+    }
+    const leaveCarousel = async () => {
+      await carousel.locator('.search-box input').focus()
+      await carousel.mouse.move(0, 0)
+    }
+    await selectFirstSlide()
+    await checkSlide(carousel, topProjects[0])
+    await carousel.clock.pauseAt(new Date(Date.now() + 60000))
+    await leaveCarousel()
+    await carousel.clock.runFor(5999)
+    await checkSlide(carousel, topProjects[0])
+    await carousel.clock.runFor(1)
+    await checkSlide(carousel, topProjects[1])
+    for (const reason of ['hover', 'focus', 'hidden']) {
+      await selectFirstSlide()
+      await leaveCarousel()
+      if (reason === 'hover') {
+        const bounds = await carousel.locator('.featured').boundingBox()
+        await carousel.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2)
+      } else if (reason === 'focus') {
+        await carousel.locator('.featured-actions .btn.primary').focus()
+      } else {
+        await carousel.evaluate(() => {
+          Object.defineProperty(document, 'hidden', { configurable: true, get: () => true })
+          Object.defineProperty(document, 'visibilityState', { configurable: true, get: () => 'hidden' })
+          document.dispatchEvent(new Event('visibilitychange'))
+        })
+      }
+      await carousel.clock.runFor(12000)
+      await checkSlide(carousel, topProjects[0])
+      await leaveCarousel()
+      if (reason === 'hidden') {
+        await carousel.evaluate(() => {
+          delete document.hidden
+          delete document.visibilityState
+          document.dispatchEvent(new Event('visibilitychange'))
+        })
+      }
+      await carousel.clock.runFor(6000)
+      await checkSlide(carousel, topProjects[1])
+    }
+    await carousel.getByRole('button', { name: '暂停自动轮播', exact: true }).focus()
+    await carousel.keyboard.press('Enter')
+    await leaveCarousel()
+    await carousel.clock.runFor(12000)
+    await checkSlide(carousel, topProjects[1])
+    await carousel.getByRole('button', { name: '开启自动轮播', exact: true }).focus()
+    await carousel.keyboard.press('Enter')
+    await leaveCarousel()
+    await carousel.clock.runFor(6000)
+    await checkSlide(carousel, topProjects[2])
+    await carousel.close()
+    const reducedCarousel = await browser.newPage({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark' })
+    await reducedCarousel.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+    reducedCarousel.on('pageerror', error => errors.push(error.message))
+    await reducedCarousel.emulateMedia({ reducedMotion: 'reduce' })
+    await reducedCarousel.clock.install()
+    await reducedCarousel.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await reducedCarousel.locator('.star-status.cached, .star-status.ready').waitFor()
+    await reducedCarousel.clock.pauseAt(new Date(Date.now() + 60000))
+    await checkSlide(reducedCarousel, topProjects[0])
+    await reducedCarousel.clock.runFor(12000)
+    await checkSlide(reducedCarousel, topProjects[0])
+    await reducedCarousel.getByRole('button', { name: '下一个项目', exact: true }).focus()
+    await reducedCarousel.keyboard.press('Enter')
+    await checkSlide(reducedCarousel, topProjects[1])
+    await reducedCarousel.close()
+    const noStars = await context.newPage()
+    noStars.on('pageerror', error => errors.push(error.message))
+    await noStars.emulateMedia({ reducedMotion: 'reduce' })
+    await noStars.addInitScript(() => localStorage.removeItem('stardream:github-stars:v1'))
+    await noStars.route('**/__fixture/github/**', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{}' }))
+    await noStars.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await noStars.locator('.star-status.error').waitFor()
+    const fallbackTitle = await noStars.locator('.featured h2').textContent()
+    const fallbackProject = projects.find(project => project.title === fallbackTitle)
+    assert.ok(fallbackProject, 'failed Stars requests retain a usable featured project')
+    await checkSlide(noStars, fallbackProject)
+    await noStars.close()
     await page.locator('.image img').first().evaluate(img => { img.src = '/__fixture/broken-project.png' })
     await page.waitForFunction(() => {
       const img = document.querySelector('.image img')
@@ -211,7 +492,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     })
     for (const width of [1440, 390, 320]) {
       await page.setViewportSize({ width, height: width > 1000 ? 1000 : 844 })
-      for (const route of ['nav', 'projects']) {
+      for (const route of projectsOnly ? ['projects'] : ['nav', 'projects']) {
         await page.goto(`${base}/${route}/`, { waitUntil: 'networkidle' })
         await markZoomImages()
         await noOverflow(`${route} has no horizontal overflow at ${width}px`)
@@ -226,6 +507,15 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
             await noOverflow(`selected categories fit ${width}px`)
           }
         } else {
+          await page.locator('.star-status.cached, .star-status.ready').waitFor()
+          const carouselControls = page.locator('.featured button')
+          for (const control of await carouselControls.all()) {
+            const bounds = await control.boundingBox()
+            assert.ok(bounds && bounds.width >= 24 && bounds.height >= 24 && bounds.x >= 0 && bounds.x + bounds.width <= width,
+              `carousel controls remain visible and usable at ${width}px`)
+          }
+          await page.getByRole('button', { name: `查看项目：${topProjects[2].title}`, exact: true }).click()
+          await checkSlide(page, topProjects[2])
           const dimensions = await page.locator('.image, .featured-image').evaluateAll(images => images.map(image => {
             const bounds = image.getBoundingClientRect()
             const img = image.querySelector('img')
@@ -264,7 +554,8 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       }
     }
     assert.deepEqual(errors, [])
-    console.log('PASS: isolated build; automatic 36-card batches without focus/scroll jumps; keyboard fallback without IntersectionObserver; title/description/tag/URL search; category, empty/reset, hash/refresh; all resources reachable; artificial GitHub data; icon/image fallback; 16:9 contained project images; 320/390/1440 layouts; no hydration errors. Counts describe this local fixture, not live-site performance.')
+    if (!projectsOnly) console.log('PASS: automatic 36-card resource batches without focus/scroll jumps; keyboard fallback without IntersectionObserver; title/description/tag/URL search; category, empty/reset, hash/refresh; all resources reachable; icon fallback.')
+    console.log('PASS: isolated build; artificial GitHub Stars; top-five carousel sorting/deduplication, manual wraparound, synchronized links/covers, 6-second playback, hover/focus/hidden/manual pause, reduced motion and unavailable-Stars fallback; project image fallback; 16:9 contained project images; 320/390/1440 layouts; no hydration errors. Counts describe this local fixture, not live-site performance.')
   }
   const screenshot = async name => {
     if (!process.argv.includes('--preview')) return
@@ -315,7 +606,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await page.evaluate(() => scrollTo(0, 0))
     await screenshot(`home-${width}`)
   }
-  for (const width of [1440, 1920, 2560, 3840]) {
+  for (const width of toolsOnly || projectsOnly ? [] : [1440, 1920, 2560, 3840]) {
     await page.setViewportSize({ width, height: 1000 })
     await page.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
     await checkProjectCenter(width, 'direct')
@@ -326,12 +617,12 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await checkProjectCenter(width, 'via-home')
     assert.equal(await page.evaluate(() => performance.timeOrigin), timeOrigin, 'home → projects uses SPA navigation')
   }
-  for (const width of [390, 320]) {
+  for (const width of toolsOnly || projectsOnly ? [] : [390, 320]) {
     await page.setViewportSize({ width, height: 844 })
     await page.goto(base, { waitUntil: 'networkidle' })
     await checkHome(width)
   }
-  if (baselineIndex < 0) {
+  if (baselineIndex < 0 && !toolsOnly && !projectsOnly) {
     await page.setViewportSize({ width: 768, height: 1000 })
     await page.goto(base + '/nav/', { waitUntil: 'networkidle' })
     const hamburger = page.getByRole('button', { name: 'mobile navigation', exact: true })
@@ -386,7 +677,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
           assert.ok(details.statsOverhang <= 0 && details.textOverflow <= 1, `backup contents fit their cards at ${width}px`)
         }
         if (path === '/spider-tools/') {
-          for (const panel of ['curl-requests', 'url', 'base64', 'aaencode', 'jjencode', 'imagesplit']) {
+          for (const panel of toolIds) {
             await page.locator(`.nav-list a[href="#${panel}"]`).click()
             await noOverflow(`${panel} fits at ${width}px`)
             const clipped = await page.locator(`#${panel} input, #${panel} .editor-header button`).evaluateAll(controls => controls.some(control => {
@@ -428,9 +719,9 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       })
       await noOverflow(`image split preview and overlay fit at ${width}px`)
     }
-    console.log('PASS: resource/article navigation, prompt cards, six tool panels, category index, ordinary article and synthetic backup layouts at 320–3840px; tablet menu navigation and desktop scroll restoration; reading mode cleanup; uploaded image/grid alignment on resize.')
+    console.log(`PASS: resource/article navigation, prompt cards, ${toolIds.length} tool panels, category index, ordinary article and synthetic backup layouts at 320–3840px; tablet menu navigation and desktop scroll restoration; reading mode cleanup; uploaded image/grid alignment on resize.`)
   }
-  if (baselineIndex < 0) {
+  if (baselineIndex < 0 && !toolsOnly && !projectsOnly) {
     assert.deepEqual(errors, [])
     console.log('PASS: real home components; loaded home logo/sponsors; mobile rotating background stays contained; centered project/nav containers at 1440/1920/2560/3840px on direct loads and after home → projects SPA navigation.')
   }

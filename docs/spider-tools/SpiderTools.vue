@@ -30,84 +30,111 @@
       </aside>
 
       <main class="panel">
-        <div class="panel-card" id="curl-requests" v-show="curPageId === 'curl-requests'">
-          <PanelCurlRequests />
-        </div>
-        <div class="panel-card" id="url" v-show="curPageId === 'url'">
-          <PanelUrl />
-        </div>
-        <div class="panel-card" id="base64" v-show="curPageId === 'base64'">
-          <PanelBase64 />
-        </div>
-        <div class="panel-card" id="aaencode" v-show="curPageId === 'aaencode'">
-          <PanelAaencode />
-        </div>
-        <div class="panel-card" id="jjencode" v-show="curPageId === 'jjencode'">
-          <PanelJjencode />
-        </div>
-        <div class="panel-card" id="imagesplit" v-show="curPageId === 'imagesplit'">
-          <PanelImagesplit />
+        <div class="panel-card" :id="curPageId" tabindex="-1">
+          <div class="tool-sharebar">
+            <p class="tool-description">{{ activeTool.description }}</p>
+            <button type="button" class="share-tool" :aria-label="`分享工具：${activeTool.name}`" @click="shareTool">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 .1l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7-.1l-3 3a5 5 0 0 0 7 7l2-2"/></svg>
+              分享工具
+            </button>
+          </div>
+          <PanelCurlRequests v-show="curPageId === 'curl-requests'" />
+          <PanelUrl v-show="curPageId === 'url'" />
+          <PanelBase64 v-show="curPageId === 'base64'" />
+          <PanelO10 v-show="curPageId === 'o10'" />
+          <PanelAaencode v-show="curPageId === 'aaencode'" />
+          <PanelJjencode v-show="curPageId === 'jjencode'" />
+          <PanelImagesplit v-show="curPageId === 'imagesplit'" />
         </div>
       </main>
     </div>
+    <div v-if="shareNotice" class="share-notice" role="status">{{ shareNotice }}</div>
   </div>
 </template>
 
 <script setup>
 import PanelBase64 from './components/PanelBase64.vue'
+import PanelO10 from './components/PanelO10.vue'
 import PanelUrl from './components/PanelUrl.vue'
 import PanelAaencode from './components/PanelAaencode.vue'
 import PanelJjencode from './components/PanelJjencode.vue'
 import PanelImagesplit from './components/PanelImagesplit.vue'
 import PanelCurlRequests from './components/PanelCurlRequests.vue'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { useRouter } from 'vitepress'
+import copyText from '../utils/copy.js'
 
+const router = useRouter()
 const curPageId = ref('curl-requests')
 const q = ref('')
+const shareNotice = ref('')
+let shareTimer
+let previousRouteHook
+let routeHook
 
 const toolList = ref([
-  { name: 'cURL 转 Requests', pageId: 'curl-requests', icon: '↗', badge: 'NEW' },
-  { name: 'URL 编码解码', pageId: 'url', icon: '%' },
-  { name: 'Base64 编码解码', pageId: 'base64', icon: '64' },
-  { name: 'AAencode 编码解码', pageId: 'aaencode', icon: 'AA' },
-  { name: 'JJencode 编码解码', pageId: 'jjencode', icon: 'JJ' },
-  { name: '图片分割', pageId: 'imagesplit', icon: '▦' },
+  { name: 'cURL 转 Requests', pageId: 'curl-requests', icon: '↗', badge: 'NEW', description: '将 cURL 命令转换为 Python Requests 代码，支持请求头、Cookie、JSON 和表单。' },
+  { name: 'URL 编码解码', pageId: 'url', icon: '%', description: '在线转换 URL 百分号编码，处理中文、空格与特殊字符。' },
+  { name: 'Base64 编码解码', pageId: 'base64', icon: '64', description: '将文本转换为 Base64，或将 Base64 还原为文本，支持中文。' },
+  { name: 'O10 编码解码', pageId: 'o10', icon: 'O10', badge: 'NEW', description: '将文本转为 O、1、0 组合，支持标准与 Pro 模式及反向解码，兼容 Python 原版。' },
+  { name: 'AAencode 编码解码', pageId: 'aaencode', icon: 'AA', description: '将 JavaScript 转换为颜文字形式的 AAencode 编码，并提供解码。' },
+  { name: 'JJencode 编码解码', pageId: 'jjencode', icon: 'JJ', description: '将 JavaScript 转换为符号形式的 JJencode 编码，并提供解码。' },
+  { name: '图片分割', pageId: 'imagesplit', icon: '▦', description: '按行列切分图片，在浏览器内预览并下载切片。' },
 ])
 
+const activeTool = computed(() => toolList.value.find(tool => tool.pageId === curPageId.value))
 const visibleTools = computed(() => {
   const kw = q.value.trim().toLowerCase()
   if (!kw) return toolList.value
-  return toolList.value.filter(t => t.name.toLowerCase().includes(kw))
+  return toolList.value.filter(t => `${t.name} ${t.description}`.toLowerCase().includes(kw))
 })
 
-function applyHash() {
-  if (typeof window !== 'undefined') {
-    const hash = window.location.hash.replace('#', '')
-    if (toolList.value.some((item) => item.pageId === hash)) {
-      curPageId.value = hash
-    }
+async function shareTool() {
+  const tool = activeTool.value
+  clearTimeout(shareTimer)
+  try {
+    await copyText(`${tool.name}\n${tool.description}\nhttps://cpython666.github.io/spider-tools/#${tool.pageId}`)
+    shareNotice.value = '工具简介和直达链接已复制！'
+  } catch {
+    shareNotice.value = '复制失败，请重试。'
   }
+  shareTimer = setTimeout(() => { shareNotice.value = '' }, 3000)
+}
+
+async function applyHash() {
+  const hash = window.location.hash.slice(1)
+  const target = toolList.value.find(item => item.pageId === hash)
+  curPageId.value = target?.pageId || toolList.value[0].pageId
+  if (!target) return
+  q.value = ''
+  await nextTick()
+  const panel = document.getElementById(target.pageId)
+  panel?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  panel?.focus({ preventScroll: true })
 }
 
 onMounted(() => {
   applyHash()
-  if (typeof window !== 'undefined') {
-    window.addEventListener('hashchange', applyHash)
+  window.addEventListener('hashchange', applyHash)
+  previousRouteHook = router.onAfterRouteChange
+  const previous = previousRouteHook ?? router.onAfterRouteChanged
+  routeHook = async href => {
+    await previous?.(href)
+    await applyHash()
   }
+  router.onAfterRouteChange = routeHook
 })
 
 onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('hashchange', applyHash)
-  }
+  clearTimeout(shareTimer)
+  window.removeEventListener('hashchange', applyHash)
+  if (router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
 })
 
 function selectPanel(item, event) {
   event?.preventDefault()
-  curPageId.value = item.pageId
-  if (typeof window !== 'undefined') {
-    window.location.hash = item.pageId
-  }
+  if (window.location.hash === `#${item.pageId}`) applyHash()
+  else window.location.hash = item.pageId
 }
 </script>
 
@@ -279,12 +306,69 @@ function selectPanel(item, event) {
 }
 
 .panel-card {
+  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 16px);
   min-height: 560px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 18px;
   padding: 28px;
   background: var(--vp-c-bg);
   box-shadow: 0 20px 60px rgba(0, 0, 0, .055);
+}
+
+.tool-sharebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.tool-description {
+  flex: 1 1 240px;
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.share-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  color: var(--vp-c-brand-1);
+  background: var(--vp-c-bg-soft);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.share-tool svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.share-notice {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: max-content;
+  max-width: calc(100vw - 32px);
+  padding: 10px 16px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, .12);
 }
 
 @media (max-width: 768px) {
