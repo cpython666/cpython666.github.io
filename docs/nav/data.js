@@ -361,12 +361,20 @@ export const navigationData = [
     {
         icon: '/logos/douyin.svg',
         title: 'Python爸爸',
-        desc: '视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
+        desc: '旧账号已封禁，保留此卡片作记录。视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
         link: 'https://v.douyin.com/i2VkxqbT/',
-        categories: ['抖音'],
+        categories: ['抖音', '旧账号'],
         status:'a',
         type:['网站','视频']
 
+    },
+    {
+        icon: '/logos/douyin.svg',
+        title: '抖音（新账号）',
+        desc: '我的新抖音账号，欢迎关注。',
+        link: 'https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU',
+        categories: ['抖音', '新账号'],
+        type: ['网站', '视频']
     },
     {
         icon: '/icons/python.png',
