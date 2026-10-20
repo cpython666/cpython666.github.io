@@ -36,78 +36,6 @@ export const prompts = [
     "text": "根据下面的视频文案，给出【数量】个有吸引力的标题供我选择。\n分别尝试观点鲜明、反差、故事感和提问等表达方式；标题要短、有重点，与文案实际内容一致。不要捏造事实、夸大结果或加入文案没有承诺的内容。\n为每个标题简要说明适合的受众或强调的看点。\n【视频文案】"
   },
   {
-    "id": "cycling-pelican-svg",
-    "category": "图像与设计",
-    "title": "骑自行车的鹈鹕",
-    "text": "生成一个动态的骑自行车的鹈鹕的svg",
-    "preview": "/prompt-examples/cycling-pelican-svg.svg",
-    "previewStatus": "降智",
-    "previewNote": "成品为静态 SVG，没有连续蹬车动作。"
-  },
-  {
-    "id": "cycling-girl-svg",
-    "category": "图像与设计",
-    "title": "骑自行车的小姑娘",
-    "text": "生成一个动态的骑自行车的穿渔网袜的小姑娘的svg",
-    "preview": "/prompt-examples/cycling-girl-svg.svg",
-    "previewStatus": "降智",
-    "previewNote": "成品为静态 SVG，没有连续蹬车动作。"
-  },
-  {
-    "id": "cycling-peppa-svg",
-    "title": "骑自行车的小猪佩奇",
-    "category": "图像与设计",
-    "text": "生成一个动态的骑自行车的小猪佩奇的svg",
-    "preview": "/prompt-examples/cycling-peppa-svg.svg",
-    "previewStatus": "正常",
-    "previewNote": "双脚交替沿踏板圆周运动，腿部、鞋子和踏板同步完成循环。"
-  },
-  {
-    "id": "cycling-briar-svg",
-    "title": "骑自行车的熊大",
-    "category": "图像与设计",
-    "text": "生成一个动态的骑自行车的熊大的svg",
-    "preview": "/prompt-examples/cycling-briar-svg.svg",
-    "previewStatus": "正常",
-    "previewNote": "双脚相位相反，脚掌与踏板同步，双腿随蹬踏自然弯曲。"
-  },
-  {
-    "id": "cycling-erlang-svg",
-    "title": "二郎神骑自行车牵啸天犬",
-    "category": "图像与设计",
-    "text": "生成一个动态的骑自行车的二郎神牵着啸天犬的svg",
-    "preview": "/prompt-examples/cycling-erlang-svg.svg",
-    "previewStatus": "正常",
-    "previewNote": "双腿交替弯曲，靴子与脚踝、曲柄端点同步完成整圈蹬踏。"
-  },
-  {
-    "id": "cycling-nezha-svg",
-    "title": "骑自行车的小哪吒",
-    "category": "图像与设计",
-    "text": "生成一个动态的骑自行车的小哪吒的svg",
-    "preview": "/prompt-examples/cycling-nezha-svg.svg",
-    "previewStatus": "正常",
-    "previewNote": "双脚交替沿踏板圆周运动，鞋子、踏板和腿部末端同步。"
-  },
-  {
-    "id": "cycling-guangtouqiang-svg",
-    "title": "骑自行车的光头强",
-    "category": "图像与设计",
-    "text": "生成动态的一个骑自行车的光头强的svg",
-    "preview": "/prompt-examples/cycling-guangtouqiang-svg.svg",
-    "previewStatus": "降智",
-    "previewNote": "双腿只是前后摆动，脚没有随踏板完成圆周蹬踏，存在脱离。"
-  },
-  {
-    "id": "cycling-tutu-svg",
-    "title": "骑自行车的大耳朵图图",
-    "category": "图像与设计",
-    "text": "生成一个动态的骑自行车的大耳朵图图的svg",
-    "preview": "/prompt-examples/cycling-tutu-svg.svg",
-    "previewStatus": "降智",
-    "previewNote": "车轮和曲柄在转，双腿保持固定姿势，只随身体上下浮动。"
-  },
-  {
     "id": "project-knowledge-skill",
     "category": "编程与项目",
     "title": "建立并自动维护项目知识库",
@@ -172,6 +100,78 @@ export const prompts = [
     "title": "筛选英文思维模型与成长书单",
     "category": "学习与阅读",
     "text": "我想读关于【主题，例如思维模型或个人成长】的英文书，我的英语阅读水平是【水平】，希望解决【具体问题】。\n先缩小到少量值得读的书，列出英文书名、作者、核心内容、阅读难度和推荐顺序。说明各书适合什么需求、内容是否重复，并给出可执行的阅读方式。\n核实书名和作者，避免编造书籍，也不要只罗列畅销榜。"
+  },
+  {
+    "id": "cycling-pelican-svg",
+    "category": "模型测试",
+    "title": "骑自行车的鹈鹕",
+    "text": "生成一个动态的骑自行车的鹈鹕的svg",
+    "preview": "/prompt-examples/cycling-pelican-svg.svg",
+    "previewStatus": "降智",
+    "previewNote": "成品为静态 SVG，没有连续蹬车动作。"
+  },
+  {
+    "id": "cycling-girl-svg",
+    "category": "模型测试",
+    "title": "骑自行车的小姑娘",
+    "text": "生成一个动态的骑自行车的穿渔网袜的小姑娘的svg",
+    "preview": "/prompt-examples/cycling-girl-svg.svg",
+    "previewStatus": "降智",
+    "previewNote": "成品为静态 SVG，没有连续蹬车动作。"
+  },
+  {
+    "id": "cycling-peppa-svg",
+    "title": "骑自行车的小猪佩奇",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的小猪佩奇的svg",
+    "preview": "/prompt-examples/cycling-peppa-svg.svg",
+    "previewStatus": "正常",
+    "previewNote": "双脚交替沿踏板圆周运动，腿部、鞋子和踏板同步完成循环。"
+  },
+  {
+    "id": "cycling-briar-svg",
+    "title": "骑自行车的熊大",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的熊大的svg",
+    "preview": "/prompt-examples/cycling-briar-svg.svg",
+    "previewStatus": "正常",
+    "previewNote": "双脚相位相反，脚掌与踏板同步，双腿随蹬踏自然弯曲。"
+  },
+  {
+    "id": "cycling-erlang-svg",
+    "title": "二郎神骑自行车牵啸天犬",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的二郎神牵着啸天犬的svg",
+    "preview": "/prompt-examples/cycling-erlang-svg.svg",
+    "previewStatus": "正常",
+    "previewNote": "双腿交替弯曲，靴子与脚踝、曲柄端点同步完成整圈蹬踏。"
+  },
+  {
+    "id": "cycling-nezha-svg",
+    "title": "骑自行车的小哪吒",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的小哪吒的svg",
+    "preview": "/prompt-examples/cycling-nezha-svg.svg",
+    "previewStatus": "正常",
+    "previewNote": "双脚交替沿踏板圆周运动，鞋子、踏板和腿部末端同步。"
+  },
+  {
+    "id": "cycling-guangtouqiang-svg",
+    "title": "骑自行车的光头强",
+    "category": "模型测试",
+    "text": "生成动态的一个骑自行车的光头强的svg",
+    "preview": "/prompt-examples/cycling-guangtouqiang-svg.svg",
+    "previewStatus": "降智",
+    "previewNote": "双腿只是前后摆动，脚没有随踏板完成圆周蹬踏，存在脱离。"
+  },
+  {
+    "id": "cycling-tutu-svg",
+    "title": "骑自行车的大耳朵图图",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的大耳朵图图的svg",
+    "preview": "/prompt-examples/cycling-tutu-svg.svg",
+    "previewStatus": "降智",
+    "previewNote": "车轮和曲柄在转，双腿保持固定姿势，只随身体上下浮动。"
   },
   {
     "id": "training-cutoff",
