@@ -1,7 +1,9 @@
 import { defineConfig } from "vitepress";
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { join, relative, sep } from "node:path";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
+import { fileURLToPath } from "node:url";
+import { buildLlmsFullTxt, buildLlmsTxt, buildRobotsTxt, buildRssFeed, stripMarkdownSource } from "./seo-files.mjs";
 
 const SITE_URL = "https://cpython666.github.io";
 const SITE_NAME = "星梦启航";
@@ -10,7 +12,72 @@ const SITE_DESCRIPTION =
   "Python斗罗的个人代码笔记，分享 Python、爬虫、自动化数据采集、Web3、AI 工具、程序员成长和自媒体复盘。";
 const SITE_KEYWORDS = "Python,爬虫,自动化数据采集,DrissionPage,Web3,AI工具,程序员成长,自媒体";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
-const NO_INDEX_PREFIXES = ["草稿箱/", "视频待办列表/"];
+const NO_INDEX_PREFIXES = ["草稿箱/", "视频待办列表/", "backup/"];
+const SITE_ALIASES = ["IT.Python斗罗", "cpython666", "python666", "codefly", "stardreamfly"];
+const PERSON_ID = `${SITE_URL}/web-intro/#person`;
+// 全站共用的作者实体，告诉搜索引擎和 AI 各平台的这些账号是同一个人
+const AUTHOR_PERSON = {
+  "@type": "Person",
+  "@id": PERSON_ID,
+  name: SITE_AUTHOR,
+  alternateName: SITE_ALIASES,
+  url: `${SITE_URL}/web-intro/`,
+  image: `${SITE_URL}/logo.jpg`,
+  description: "Python 全栈开发者，专注 Python 爬虫、自动化数据采集、DrissionPage 与 AI 工具实践。",
+  knowsAbout: ["Python", "网络爬虫", "自动化数据采集", "DrissionPage", "JS 逆向", "Web3", "AI 工具"],
+  sameAs: [
+    "https://github.com/cpython666",
+    "https://space.bilibili.com/1909782963",
+    "https://codefly.blog.csdn.net/",
+    "https://www.yuque.com/python666",
+  ],
+};
+// 侧边栏分组名：文章导航和面包屑共用
+const BLOG_NAV_TITLES = {
+  "/backend/": "后端",
+  "/backup/": "备份",
+  "/breakthrough-notes/": "普通人的破局笔记",
+  "/life/": "人生感悟",
+  "/life/geo/": "星探计划",
+  "/life/follower-milestones/": "粉丝里程碑",
+  "/life/graduation-milestones/": "毕业节点复盘",
+  "/life/yearly-flags/": "年度总结与Flag",
+  "/python/": "Python",
+  "/python/collection/23-design/": "23种设计模式-Python",
+  "/spider/": "爬虫",
+  "/web/": "前端",
+  "/web-intro/": "网站相关",
+  "/web3/": "币圈入圈指南",
+  "/web3/block-walk/": "区块漫步",
+  "/好文推荐/": "好文推荐",
+  "/算法/": "算法",
+};
+// 只有这些目录下的文章进 RSS，导航、工具、关于等功能页不算文章
+const FEED_PREFIXES = ["python/", "spider/", "web3/", "life/", "backend/", "web/", "算法/", "好文推荐/", "breakthrough-notes/"];
+const PUBLIC_DIR = join(dirname(fileURLToPath(import.meta.url)), "../public");
+const DOCS_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+// 首页 → 各级分组 → 当前页；只收有目录页的分组，避免面包屑指向不存在的地址
+function buildBreadcrumb(page, title, url) {
+  const routePath = pageToPath(page);
+  const crumbs = [{ name: SITE_NAME, url: `${SITE_URL}/` }];
+  Object.keys(BLOG_NAV_TITLES)
+    .filter((prefix) => routePath.startsWith(prefix) && routePath !== prefix)
+    .sort((a, b) => a.length - b.length)
+    .filter((prefix) => existsSync(join(DOCS_DIR, prefix, "index.md")))
+    .forEach((prefix) => crumbs.push({ name: BLOG_NAV_TITLES[prefix], url: `${SITE_URL}${encodeURI(prefix)}` }));
+  crumbs.push({ name: title, url });
+
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  };
+}
 
 function tokenizeSearchText(text) {
   if (typeof Intl === "undefined" || typeof Intl.Segmenter !== "function") {
@@ -46,7 +113,7 @@ function isNoIndexPage(page, frontmatter = {}) {
   );
 }
 
-// transformHead 阶段收集，buildEnd 生成 sitemap 时用：路由 -> { noIndex, lastmod }
+// transformHead 阶段收集，buildEnd 生成 sitemap / robots / RSS 时用：路由 -> { noIndex, member, lastmod, feed }
 const PAGE_INDEX_META = new Map();
 
 function pageToPath(page) {
@@ -1253,6 +1320,8 @@ export default defineConfig({
   description: SITE_DESCRIPTION,
   lang: "zh-CN",
   base: "/",
+  // 站内链接去掉 .html，与 canonical、sitemap 保持同一个地址
+  cleanUrls: true,
   buildConcurrency: 8,
   markdown: {
     lineNumbers: true,
@@ -1297,7 +1366,18 @@ export default defineConfig({
       publishedAt;
     const isHome = page === "index.md";
 
-    PAGE_INDEX_META.set(pageToPath(page), { noIndex, lastmod: updatedAt });
+    const normalizedPage = page.replace(/\\/g, "/");
+    const isFeedItem =
+      !noIndex &&
+      !normalizedPage.endsWith("index.md") &&
+      FEED_PREFIXES.some((prefix) => normalizedPage.startsWith(prefix));
+
+    PAGE_INDEX_META.set(pageToPath(page), {
+      noIndex,
+      member: isMemberOnlyPage(frontmatter),
+      lastmod: updatedAt,
+      feed: isFeedItem ? { title, description, url, publishedAt, page: normalizedPage } : undefined,
+    });
 
     const head = [
       ["link", { rel: "canonical", href: url }],
@@ -1321,22 +1401,17 @@ export default defineConfig({
       return head;
     }
 
-    const structuredData = isHome
+    const pageEntity = isHome
       ? {
-          "@context": "https://schema.org",
           "@type": "WebSite",
           name: SITE_NAME,
           url: SITE_URL,
           description,
           inLanguage: "zh-CN",
-          publisher: {
-            "@type": "Person",
-            name: SITE_AUTHOR,
-            url: `${SITE_URL}/web-intro/`,
-          },
+          author: { "@id": PERSON_ID },
+          publisher: { "@id": PERSON_ID },
         }
       : {
-          "@context": "https://schema.org",
           "@type": "BlogPosting",
           headline: title,
           description,
@@ -1344,19 +1419,15 @@ export default defineConfig({
           mainEntityOfPage: url,
           image: String(frontmatter.image || DEFAULT_OG_IMAGE),
           inLanguage: "zh-CN",
-          author: {
-            "@type": "Person",
-            name: SITE_AUTHOR,
-            url: `${SITE_URL}/web-intro/`,
-          },
-          publisher: {
-            "@type": "Person",
-            name: SITE_AUTHOR,
-            url: `${SITE_URL}/web-intro/`,
-          },
+          author: { "@id": PERSON_ID },
+          publisher: { "@id": PERSON_ID },
           ...(publishedAt ? { datePublished: publishedAt } : {}),
           ...(updatedAt ? { dateModified: updatedAt } : {}),
         };
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@graph": [AUTHOR_PERSON, pageEntity, ...(isHome ? [] : [buildBreadcrumb(page, title, url)])],
+    };
 
     head.push(["script", { type: "application/ld+json" }, JSON.stringify(structuredData)]);
     return head;
@@ -1381,6 +1452,44 @@ export default defineConfig({
       .join("\n")}\n</urlset>\n`;
 
     writeFileSync(join(siteConfig.outDir, "sitemap.xml"), sitemap, "utf-8");
+
+    const pageMetas = [...PAGE_INDEX_META.entries()];
+    const memberPaths = pageMetas.filter(([, meta]) => meta.member).map(([routePath]) => routePath);
+    const baseRobots = readFileSync(join(PUBLIC_DIR, "robots.txt"), "utf-8");
+    writeFileSync(join(siteConfig.outDir, "robots.txt"), buildRobotsTxt(baseRobots, memberPaths), "utf-8");
+
+    const feed = buildRssFeed({
+      siteUrl: SITE_URL,
+      title: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      author: SITE_AUTHOR,
+      items: pageMetas.map(([, meta]) => meta.feed).filter(Boolean),
+    });
+    writeFileSync(join(siteConfig.outDir, "feed.xml"), feed, "utf-8");
+
+    // llms 文件按路由排序；按顶级目录分组，会员和 noindex 页面在 feed 阶段已排除
+    const articles = pageMetas
+      .filter(([, meta]) => meta.feed && !meta.member && !meta.noIndex)
+      .sort(([a], [b]) => a.localeCompare(b, "zh-CN"))
+      .map(([, meta]) => meta.feed);
+    const groups = new Map();
+    for (const article of articles) {
+      const prefix = `/${article.page.split("/")[0]}/`;
+      if (!groups.has(prefix)) groups.set(prefix, { title: BLOG_NAV_TITLES[prefix] || prefix, items: [] });
+      groups.get(prefix).items.push(article);
+    }
+    const baseLlms = readFileSync(join(PUBLIC_DIR, "llms.txt"), "utf-8");
+    writeFileSync(join(siteConfig.outDir, "llms.txt"), buildLlmsTxt(baseLlms, [...groups.values()]), "utf-8");
+
+    const fullItems = articles.map((article) => ({
+      ...article,
+      content: stripMarkdownSource(readFileSync(join(siteConfig.srcDir, article.page), "utf-8")),
+    }));
+    writeFileSync(
+      join(siteConfig.outDir, "llms-full.txt"),
+      buildLlmsFullTxt({ title: SITE_NAME, siteUrl: SITE_URL, items: fullItems }),
+      "utf-8"
+    );
   },
   head: [
     // 我的logo
@@ -1405,6 +1514,7 @@ export default defineConfig({
     // ["script", { src: "/js/alertify.min.js" }], // 引入自定义的 JavaScript 文件，前端反爬js文件
     // ['script', { src: '/js/fuckspider.js' }],
     ["link", { rel: "icon", href: "/logo.svg" }], // 点击彩虹
+    ["link", { rel: "alternate", type: "application/rss+xml", title: `${SITE_NAME} RSS`, href: `${SITE_URL}/feed.xml` }],
     ["meta", { name: "author", content: SITE_AUTHOR }],
     ["meta", { name: "theme-color", content: "#20B0E3" }],
     ["meta", { name: "format-detection", content: "telephone=no" }],
@@ -1580,24 +1690,6 @@ export default defineConfig({
     // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
     vipActivationHashes: ["8873ecdec2da162100e9bd7789ecb8bd7b0ea671d784853b7dde966bf05e510e"],
     blogNavExclude: ["/nav/","/spider-tools/"],
-    blogNavTitles: {
-      "/backend/": "后端",
-      "/backup/": "备份",
-      "/breakthrough-notes/": "普通人的破局笔记",
-      "/life/": "人生感悟",
-      "/life/geo/": "星探计划",
-      "/life/follower-milestones/": "粉丝里程碑",
-      "/life/graduation-milestones/": "毕业节点复盘",
-      "/life/yearly-flags/": "年度总结与Flag",
-      "/python/": "Python",
-      "/python/collection/23-design/": "23种设计模式-Python",
-      "/spider/": "爬虫",
-      "/web/": "前端",
-      "/web-intro/": "网站相关",
-      "/web3/": "币圈入圈指南",
-      "/web3/block-walk/": "区块漫步",
-      "/好文推荐/": "好文推荐",
-      "/算法/": "算法",
-    },
+    blogNavTitles: BLOG_NAV_TITLES,
   },
 });

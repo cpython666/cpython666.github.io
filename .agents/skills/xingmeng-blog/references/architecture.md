@@ -36,6 +36,9 @@
 - 访问量统一由 `ArticleHits.vue` 在主题 `layout-bottom` 插槽挂载一次，位于页脚之后、正常文档流底部居中；首页也使用该组件，沿用根路径统计，其余页面按各自路径统计。图片立即请求，不能因放到底部就懒加载而漏掉未触底的访问；保留 `hits: false`、404 和草稿路径排除。不要再在 `doc-before`、`home-features-after` 或 `footer.message` 中另挂访问量标签。
 - 站内搜索采用 VitePress local search，中文分词逻辑在配置内。
 - SEO 已有 canonical、description、Open Graph、Twitter 卡片、JSON-LD 与 sitemap 生成逻辑；按缺陷修订，不重复接入一套方案。
+- 已开启 `cleanUrls`，站内链接、canonical、sitemap 都是无 `.html` 地址。Waline 评论按旧的 `/xxx.html` 键存储，`WalineComment.vue` 的 `commentPath()` 把路径补回 `.html`，不要去掉；giscus 用 pathname 映射，本身会去扩展名。
+- JSON-LD 为 `@graph`：全站共用 `AUTHOR_PERSON`（`alternateName` 列出 IT.Python斗罗、cpython666、python666、codefly、stardreamfly，`sameAs` 列各平台）+ 页面实体 + 非首页的 `BreadcrumbList`（取 `BLOG_NAV_TITLES` 中有 `index.md` 的分组）。关于页“这些名字都是我”表格与之对应，新增平台账号时两处一起改。
+- `buildEnd` 经 `docs/.vitepress/seo-files.mjs` 生成：`robots.txt`（以 `public/robots.txt` 为模板，所有爬虫含 AI 爬虫共用一组规则，自动追加会员文章 Disallow；单独给某个爬虫开分组会让它忽略这些 Disallow）、`feed.xml`（`FEED_PREFIXES` 目录下最近 50 篇，仅 frontmatter 摘要）、`llms.txt`（public 手写介绍 + 按栏目的全部公开文章）、`llms-full.txt`（公开文章 Markdown 去 frontmatter 和 script/style）。会员、noindex、草稿和 `/backup/`（他人帖子，已 noindex）均不进入这些文件。
 - `themeConfig.lastUpdated` 在当前 VitePress 版本仍有兼容处理，不能仅凭位置断言更新时间失效。
 - 项目页五个教程合集（DrissionPage、Pygame、Django、Scrapy、PyQt6）的独立封面位于 `docs/public/imgs/app/<小写技术名>-tutorial.webp`，由 `docs/projects/data.js` 引用；统一为 1280×720（16:9）WebP，约 46–66 KiB，使用深色等距插画、英文技术名与中文主题。更换封面时保持图片比例，并检查“合集”筛选下五张图片实际加载及手机端标题完整性。
 - 资源导航广告图、项目精选/卡片封面和图片分割预览使用 `no-zoom`；否则主题会将其加入 PhotoSwipe，并受到 `.vp-doc img.is-zoomable` 的 520px 最大宽度及上下 16px 外边距影响，外链点击也会被图片查看器拦截。
