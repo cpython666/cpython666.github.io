@@ -828,6 +828,14 @@ let breakthrough_notes_items = [
 let backup_items = [
   { text: "备份", link: "/backup/" },
 ];
+const tech_daily_items = [
+  { text: "专栏目录", link: "/tech-daily/" },
+  { text: "005 · MiniMax降价，安卓应用跑上Mac", link: "/tech-daily/2026-10-20" },
+  { text: "004 · 马斯克看重机器人，AI代码也要“答辩”", link: "/tech-daily/2026-10-19" },
+  { text: "003 · DeepSeek更新，AI开始分头干活", link: "/tech-daily/2026-10-18" },
+  { text: "002 · 特斯拉FSD再进一国，AI走进实验室", link: "/tech-daily/2026-10-17" },
+  { text: "001 · Roadster亮相，AI向本地走", link: "/tech-daily/2026-10-16" },
+];
 let nav_config = [
   // {
   //   text: "主站",
@@ -840,6 +848,10 @@ let nav_config = [
   {
     text: "文章导航",
     link: "/navigation/",
+  },
+  {
+    text: "科技日报",
+    link: "/tech-daily/",
   },
   {
     text: "项目",
@@ -876,7 +888,7 @@ let nav_config = [
 ];
 // 顶部导航单独精简，默认侧栏仍保留完整入口。
 const top_nav_config = nav_config.flatMap((item) => {
-  if (["/breakthrough-notes/", "/backup/", "/web3/block-walk/"].includes(item.link)) {
+  if (["/breakthrough-notes/", "/backup/", "/web3/block-walk/", "/tech-daily/"].includes(item.link)) {
     return [];
   }
   if (item.link === "/navigation/") {
@@ -886,6 +898,9 @@ const top_nav_config = nav_config.flatMap((item) => {
 });
 let sidebar_config = {
   "/": nav_config,
+  "/tech-daily/": [
+    { text: "科技日报", collapsed: false, items: tech_daily_items },
+  ],
   "/spider-tools/": [],
   "/web3/": web3_items,
   "/web3/block-walk/": [
@@ -1612,6 +1627,7 @@ export default defineConfig({
     vipActivationHashes: ["8873ecdec2da162100e9bd7789ecb8bd7b0ea671d784853b7dde966bf05e510e"],
     blogNavExclude: ["/nav/","/spider-tools/"],
     blogNavTitles: {
+      "/tech-daily/": "科技日报",
       "/backend/": "后端",
       "/backup/": "备份",
       "/breakthrough-notes/": "普通人的破局笔记",
