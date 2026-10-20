@@ -1,0 +1,78 @@
+{
+  "index": 0,
+  "id": "2111399271962689730",
+  "url": "https://x.com/wufantouzi/status/2111399271962689730",
+  "author": {
+    "name": "wu fan",
+    "handle": "wufantouzi",
+    "profileUrl": "https://x.com/wufantouzi"
+  },
+  "text": "忽然反应过来一件事\n可以把赚钱的路径分为\n赌场策略和赌狗策略\n赌场就是长期稳赢偶尔输\n赌狗就是长期稳输偶尔赢\n\n我之前特别反感别人给我买土狗山寨赚钱\n就是对这种赌狗策略的厌恶\n我们自己的任何一笔交易\n其实也都可以拆分成赌场策略和赌狗策略\n\n当赌狗策略赚钱了\n不要沾沾自喜\n当赌场策略亏钱了\n也不要怀疑自己\n\n远离那些天天晒赌狗策略的人\n多和赌场策略的人做朋友\n18:09 · 2026年10月17日\n浏览量",
+  "translated": false,
+  "createdAt": "",
+  "visibleTime": "",
+  "metrics": {},
+  "images": [],
+  "links": [],
+  "schemaVersion": 3,
+  "source": "x",
+  "capturedAt": "2026-10-17T18:48:46.842Z",
+  "capturedFromUrl": "https://x.com/wufantouzi/status/2111399271962689730",
+  "blockedCommentCount": 0,
+  "comments": [
+    {
+      "index": 1,
+      "id": "2111401444767334909",
+      "url": "https://x.com/chang_jun_001/status/2111401444767334909",
+      "author": {
+        "name": "长君",
+        "handle": "chang_jun_001",
+        "profileUrl": "https://x.com/chang_jun_001"
+      },
+      "text": "8小时\n唯一的难点就是，交易不像赌场游戏那样，可以用数学准准确确的算出胜率和期望值。哪怕是用历史数据回测出来的统计参数、算术的期望，也只是过去的一种可能，却不代表未来依然能够维持住正的期望。",
+      "translated": false,
+      "createdAt": "",
+      "visibleTime": "",
+      "metrics": {},
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 2,
+      "id": "2111403107058098240",
+      "url": "https://x.com/hua_sui_feng/status/2111403107058098240",
+      "author": {
+        "name": "化随风",
+        "handle": "hua_sui_feng",
+        "profileUrl": "https://x.com/hua_sui_feng"
+      },
+      "text": "8小时\n补一个反面，最容易装成赌场的，是卖期权、做空波动这类长期小赚的玩法，曲线能漂亮好几年，一次黑天鹅全吐回去。真赌场不怕输，是因为每张桌子都有限红。所以判断是不是赌场，别看胜率，看单笔最大亏损有没有封顶",
+      "translated": false,
+      "createdAt": "",
+      "visibleTime": "",
+      "metrics": {},
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    },
+    {
+      "index": 3,
+      "id": "2111408581866357247",
+      "url": "https://x.com/QinRan_Poppy/status/2111408581866357247",
+      "author": {
+        "name": "秦冉Poppy🦋",
+        "handle": "QinRan_Poppy",
+        "profileUrl": "https://x.com/QinRan_Poppy"
+      },
+      "text": "8小时\n赌狗策略赚了容易上头，把运气当能力，后面往往加倍还回去；赌场策略亏几笔时最考验心态只晒高光的人，看多了真容易被带偏",
+      "translated": false,
+      "createdAt": "",
+      "visibleTime": "",
+      "metrics": {},
+      "images": [],
+      "links": [],
+      "relation": "visible-reply"
+    }
+  ]
+}
