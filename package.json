@@ -8,7 +8,9 @@
     "backup:x": "node scripts/x-backup.mjs",
     "docs:dev": "vitepress dev docs --port 8080",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --port 80"
+    "docs:preview": "vitepress preview docs --port 80",
+    "skill:build": "node scripts/build-skill.mjs",
+    "skill:check": "node scripts/build-skill.mjs --check"
   },
   "dependencies": {
     "@waline/client": "~3.13.0",
