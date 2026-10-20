@@ -27,6 +27,7 @@
 | 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
 | 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
 | 发布流程 | `.github/workflows/static.yml` | 构建产物目录为 `docs/.vitepress/dist` |
+| 对外知识库 Skill | `skills/xingmeng-knowledge/`、`scripts/build-skill.mjs` | `SKILL.md` 和两个 CLI 脚本手写；`references/` 与 `scripts/lib/` 由 `npm run skill:build` 从资源导航、提示词、项目数据、工具箱函数和文章 frontmatter 生成，不手改。文章只读 frontmatter，跳过会员、草稿、`/backup/`、noindex 和首页布局页；改动上述数据源后需重新生成，`npm run skill:check` 检查是否过期 |
 
 ## 配置关系
 

@@ -1,6 +1,27 @@
 # StarDream-VitePress
 星梦启航，Python斗罗的博客
 
+## 星梦启航知识库 Skill
+
+`skills/xingmeng-knowledge/` 是给 AI 用的公开 Agent Skill：资源导航、提示词、开源项目、公开文章目录，加上可直接运行的 cURL 转 Requests 和 O10 编解码脚本。会员文章和草稿不会进入 Skill。
+
+安装（任选其一）：
+
+```bash
+# 支持 skills CLI 的 Agent（Claude Code、Codex 等）
+npx skills add cpython666/cpython666.github.io --skill xingmeng-knowledge
+
+# 或手动复制目录
+cp -r skills/xingmeng-knowledge ~/.claude/skills/
+```
+
+修改资源导航、提示词、项目、工具函数或文章 frontmatter 后重新生成：
+
+```bash
+npm run skill:build   # 重新生成 references/ 和 scripts/lib/
+npm run skill:check   # 只检查生成文件是否过期
+```
+
 ## X 备份采集
 
 备份 X 博主帖子到博客的命令：
