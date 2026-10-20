@@ -8,6 +8,7 @@
 - 基础栈：VitePress 1.6 系列、Vue 单文件组件、npm；依赖版本以 `package.json` 和锁文件为准。
 - 默认主题扩展位于 `docs/.vitepress/theme/`，没有独立业务后端。
 - GitHub Pages 工作流在 `master` 推送或手动触发后安装依赖、构建并部署；流程定义不等于 AI 获得执行全站构建或推送的授权。
+- 发展目标：用户希望把博客发展为垂直领域有影响力的网站，并适应 AI 时代的内容发现和使用方式。已确认同时服务两类读者：用 AI 做项目的开发者、独立创作者，以及用 AI 提升工作效率的非技术用户。最终垂直主线仍待定；“AI 工作流与实用工具”、围绕共同场景提供直接使用与开发改造两层内容，均为待定建议。“AI × Python 自动化实战”可作为技术深度方向，不再假定全站读者都有技术基础；受众确认不构成首页、栏目或商业模式改版授权。
 
 ## 代码地图
 
@@ -29,6 +30,7 @@
 
 ## 配置关系
 
+- 顶部社交入口保留原 Bilibili、GitHub、CSDN、语雀，之后依次增加 X、YouTube、抖音，共七项，维护于 `docs/.vitepress/config.mjs` 的 `themeConfig.socialLinks`。X 使用用户确认的 `https://x.com/stardreamfly`，YouTube 使用 `https://www.youtube.com/@stardream666`；抖音使用本轮用户提供的新账号完整链接，与 `docs/nav/data.js`“认识我”中的“抖音（新账号）”一致，旧“Python爸爸”卡片及原链接继续保留，并标注旧账号已封禁。各顶栏入口使用内联 SVG 和明确的 `ariaLabel`；GitHub、X、YouTube、抖音图标取自已安装的 `@iconify-json/simple-icons`，沿用主题 20px 尺寸与 `currentColor`。不要恢复字符串图标：VitePress 开发模式可能回退到 `api.iconify.design` 远程蒙版，请求失败会让图标空白；CSDN、语雀继续使用原有内联 SVG。
 - 资源收录位置：7-Zip 在 `docs/nav/data.js` 的“其他工具”分类，官网图标存为 `docs/public/logos/7zip.png`；吾爱破解主站已分别收录于“资源”和“交流论坛”，新增时先检查已有链接，避免重复追加。
 - 资源分类直接按 `navigationData` 数组排序：Agent、AI聊天对话、AI代码编程、Skill、AI模型检测、AI图像绘画、AI 3D、AI文档办公优先，其余分类保持原相对顺序；桌面分类栏、手机下拉框和全部资源卡片共用此顺序。Agent 收录 DeepSeek Harness、OpenClaw（小龙虾）、WorkBuddy，官网图标存为 `docs/public/logos/` 下的 `deepseek-harness.svg`、`openclaw.svg`、`workbuddy.svg`。
 - 文章导航遍历 `theme.sidebar`，结合 `blogNavInclude`、`blogNavExclude` 和 `blogNavTitles` 生成分组与标题；不要再维护第二份文章目录。“区块漫步”作为 `/web3/block-walk/` 的独立分类，放在“币圈入圈指南”之后，复用 `block_walk_items`；其十篇文章从 `/web3/` 父分组移出，避免重复计数，顶部仍不显示该入口。
@@ -37,15 +39,22 @@
 - 站内搜索采用 VitePress local search，中文分词逻辑在配置内。
 - SEO 已有 canonical、description、Open Graph、Twitter 卡片、JSON-LD 与 sitemap 生成逻辑；按缺陷修订，不重复接入一套方案。
 - `themeConfig.lastUpdated` 在当前 VitePress 版本仍有兼容处理，不能仅凭位置断言更新时间失效。
+- 项目页顶部在 `ProjectPage.vue` 内展示最多 5 个高 Stars GitHub 仓库轮播，按已有 Stars 数据降序、按仓库地址去重，复用现有 API 与 6 小时缓存；未知 Stars 不当作零参与排名，没有任何已知值时回退为“精选项目”。轮播独立于下方搜索/分类，支持前后、指示点和键盘左右键，每 6 秒自动切换；悬停、焦点进入、隐藏页签或减少动态效果时暂停，提供手动播放开关，卸载清理计时器和监听。封面继续使用 16:9 完整展示，不新增轮播依赖。
 - 项目页五个教程合集（DrissionPage、Pygame、Django、Scrapy、PyQt6）的独立封面位于 `docs/public/imgs/app/<小写技术名>-tutorial.webp`，由 `docs/projects/data.js` 引用；统一为 1280×720（16:9）WebP，约 46–66 KiB，使用深色等距插画、英文技术名与中文主题。更换封面时保持图片比例，并检查“合集”筛选下五张图片实际加载及手机端标题完整性。
 - 资源导航广告图、项目精选/卡片封面和图片分割预览使用 `no-zoom`；否则主题会将其加入 PhotoSwipe，并受到 `.vp-doc img.is-zoomable` 的 520px 最大宽度及上下 16px 外边距影响，外链点击也会被图片查看器拦截。
+- 工具页 `docs/spider-tools/SpiderTools.vue` 共 7 个工具，元数据内维护名称、简介和稳定 `pageId`；统一分享按钮复制三行「名称／简介／https://cpython666.github.io/spider-tools/#<pageId>」，不包含用户输入或当前 query。已有 hash 保持不变，直达、刷新、前后退及同组件 SPA 路由均选中并定位目标，未知 hash 回退首项；定位会清空工具搜索。工具内容用 v-show 保留输入，统一面板承载动态 id 与分享栏。
+- O10 工具位于 `docs/spider-tools/components/PanelO10.vue`，算法在 `utils/o10.js`，来源为相邻 `Python-Project/O10加解密/O10encode.py`。标准版按 Unicode 码点转二进制、以大写 O 分隔；Pro 版以 I/l 表示 1/0、数字 1 分隔，须保持原版输出兼容，不能按 UTF-16 码元拆开 emoji。网页只接受对应模式的规范编码字符及非空分段，超出 Unicode 范围报错；空输入清空结果并提示，不沿用原 Python 空串解码异常。输入或模式改变时清空旧结果，支持复制结果及结果复用。
+- 公用复制函数 `docs/utils/copy.js` 的旧浏览器回退使用 textarea 保留换行，不能用单行 input，否则工具、提示词的多行分享文本会连成一行。
 - 完整顶栏在 768–1279px 使用 VitePress 原生折叠菜单（`docs/public/css/index.css`），1280px 以上恢复桌面导航；菜单、主题切换和社交链接仍来自同一主题配置，不复制菜单数据。默认 768px 即展开桌面菜单会被当前八个入口和搜索框撑宽，相关验证需包含开菜单、路由跳转及缩放后的滚动解锁。
+- 当前首页由 `docs/index.md` 引入 `IndexPage.vue`，主展示为随机背景、品牌图标、挂载后显示的打字标语和赞助链接；组件内尚无固定的受众/任务说明、学习路线或代表案例入口。若后续调整定位，先确认主线与首页内容，再修改展示；现状不等于已确认改版方案。
 - 不在首页组件中使用全局 `.container`、`.content`、`*` 或 `.VPNavBarMenu` 覆盖。原 `.container { margin: 0 !important; padding: 0 !important; }` 曾同时破坏导航和项目页的大屏居中；构建后的首页 CSS 也可能影响直接访问其他页面。依赖 VitePress 原有容器居中规则，验证时包含真实首页组件及首页到项目页的 SPA 跳转。
 - 普通文章/分类目录页以侧栏之外的可用内容区为居中基准，不能强行按整个视口平移正文。检查文章阅读模式退出和路由切换时的 body 类清理。
 - 工具面板窄屏约束：JJencode 输入框限制最大宽度；cURL 编辑头用最小高度并允许换行，按钮文字不折行。图片分割的覆盖画布使用实际匹配的 `.preview-overlay`，空态隐藏预览，`ResizeObserver` 随图片尺寸同步网格并在卸载时断开，不能只在上传时计算一次。
 
 ## 文章写作约定
 
+- 科技日报专栏（2026-10-20用户确认）：将WechatPilot的公众号内容分期同步到 `docs/tech-daily/YYYY-MM-DD.md`，索引为 `docs/tech-daily/index.md`，封面为 `docs/public/imgs/tech-daily/YYYY-MM-DD/cover.jpg`。001期始于2026-10-16，本批共五期至005；日期是各期消息窗口日期。博客可完整放官方公告、仓库、报道直链，并在文末列来源索引；公众号维持原有风格，不向其反向增加博客引流或来源索引。普通作者为Python斗罗，frontmatter除既有SEO字段外写 `date / author / image / column / issue`。侧栏 `tech_daily_items` 按期号倒序，`/tech-daily/` 和 `blogNavTitles` 自动提供文章导航分类；顶部仍沿用原八个入口。后续同时更新本期页、索引摘要、侧栏；发布状态以 GitHub Pages 部署结果与线上核验为准，不能把 Git 提交或推送等同于线上生效。公众号来源与发布状态在相邻WechatPilot仓库的同日期 `articles/<日期>_tech-daily/` 和项目 Skill 的 `references/blog-column.md` 维护。
+- 上述博客适配中，中文句末标点紧接后文时Markdown的 `**...**` 可能显示为裸星号；局部使用 `<strong>...</strong>`，定向渲染检查。不要为此更改全站Markdown规则或公众号母稿。
 - 修改文章前核对 frontmatter 标题和页面用途，不能仅凭文件名定位。`docs/breakthrough-notes/resource-treasure-manual.md` 是《找资源宝典》的公开说明页，不设会员限制、不列入 `vipPosts`，套餐权益保留“查看说明”链接。正式正文是 `docs/breakthrough-notes/resource-treasure-guide.md`，保留 `memberOnly: true`；说明页、侧边栏与 VIP 文章列表均链接到它，资源条目应加在正式正文。
 - 宝典原始数据在本机 SQL 备份的 `sd_blog` 表中：`id=103` / `bNExJ` 为公开说明，`id=104` / `xiYpj` 才是会员正文。`stardream-2024-10-19.sql` 与 `stardream-2025-05-12.sql` 的正式正文一致，2026-10-16 已按用户授权恢复并追加吾爱破解条目。旧 VIP 权益里的 `/blog/bNExJ` 本来也是说明入口，不能把它当作正文旧地址。仓库历史查不到文章时，应按用户授权继续检查原 SQL/迁移输入；备份文件名日期可能不反映内容更新时间，应核对记录时间及多份备份。
 - 新文章放在对应目录的 Markdown 文件，frontmatter 写 `title`、`description`、`keywords`，并在 `config.mjs` 对应侧边栏数组登记；图片放 `docs/public/imgs/<目录>/<文章>/`。
