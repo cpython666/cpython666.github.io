@@ -29,6 +29,8 @@
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。完整开发服务曾因 `@waline/client` 尚未安装而失败，按锁文件执行 `npm ci --no-audit --no-fund` 后恢复，`package.json` / `package-lock.json` 不变。Skill 格式检查需要 PyYAML，可用 `uv run --with pyyaml python <quick_validate.py> .agents/skills/xingmeng-blog`，无需为此修改项目依赖。
 - 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；未加载完整主题服务或 `ArticleHits`，绝对纵向位置不包含线上访问量栏。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
+- 验证构建产物（robots/feed/llms/sitemap/JSON-LD）时用“替身文章”整站构建：复制 `docs/` 到临时目录，Markdown 只按 frontmatter 识别会员并全部换成占位正文（会员页只写 `memberOnly: true` 和占位标记），再链接 `node_modules` 运行 `vitepress build`；检查产物中会员占位标记出现 0 次。2026-10-20 用此法验证 307 篇（16 篇会员）通过，约 15 秒。
+- 云端环境 `npm ci` 卡住时，锁文件 resolved 指向被拦截的 `registry.npmmirror.com`；用 `npm ci --registry=https://registry.npmjs.org/ --replace-registry-host=always`，不改锁文件。
 - 文档改动检查链接是否可解析，并使用 skill-creator 自带 `scripts/quick_validate.py` 检查 Skill 格式；格式通过不等同于产品测试通过。
 
 ## 已发现、尚未处理的待办

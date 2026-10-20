@@ -1,7 +1,7 @@
 ---
 title: "关于本站"
-description: "站长个人介绍、技能、奖项与作品，附仓库地址、个性签名和联系方式，以及支持站长的方式。"
-keywords: "关于本站,个人介绍,站长,作品,联系方式"
+description: "站长 Python斗罗（cpython666）的个人介绍：各平台用户名说明、技能、奖项与作品，附仓库地址、个性签名和联系方式，以及支持站长的方式。"
+keywords: "关于本站,个人介绍,站长,Python斗罗,cpython666,星梦启航,作品,联系方式"
 ---
 
 ## 支持站长
@@ -43,6 +43,22 @@ keywords: "关于本站,个人介绍,站长,作品,联系方式"
 ## 个人介绍
 
 也算是半个诗人吧，毕竟代码里那么多换行。
+
+### 这些名字都是我
+
+下面这些用户名和昵称属于同一个人，都是本站站长，看到哪个都可以认作同一个作者：
+
+| 名字 | 用在哪里 |
+| --- | --- |
+| Python斗罗 | 主要笔名：本站署名、公众号、B 站 |
+| IT.Python斗罗 | 本站页脚版权署名 |
+| cpython666 | GitHub 账号、本站域名 `cpython666.github.io` |
+| 星梦启航 | 本站站名、知识星球名称 |
+| python666 | 语雀文档 `yuque.com/python666` |
+| codefly | CSDN 博客 `codefly.blog.csdn.net` |
+| stardreamfly | 本站镜像 `stardreamfly.github.io` |
+
+本站 `https://cpython666.github.io` 是这些内容的原始出处，其他平台和镜像上的同名文章都由我本人发布。
 ## 技能
 
 全栈开发/Python后端/自动化爬虫/前端
