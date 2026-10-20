@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { projects, sortProjects } from './data.js'
 
 const GH_USER = 'cpython666'
@@ -51,7 +51,40 @@ const filteredItems = computed(() => {
   })
 })
 
-const featuredProject = computed(() => viewItems.value.find(project => project.title === 'cpython666.github.io') || viewItems.value[0])
+const featuredIndex = ref(0)
+const autoplay = ref(true)
+const hovered = ref(false)
+const focused = ref(false)
+const pageHidden = ref(true)
+const reducedMotion = ref(true)
+let carouselTimer
+let motionPreference
+
+const featuredProjects = computed(() => {
+  const seen = new Set()
+  const unique = githubProjects.value.filter(project => {
+    const key = parseRepoFromUrl(project.url).key
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+  const ranked = unique.filter(project => Number.isFinite(project.stars))
+  // ponytail: reuse the existing Stars cache; no separate ranking request.
+  return (ranked.length ? ranked.sort((a, b) => b.stars - a.stars) : unique).slice(0, 5)
+})
+const featuredProject = computed(() => featuredProjects.value[featuredIndex.value])
+const rotationRunning = computed(() => autoplay.value && !hovered.value && !focused.value &&
+  !pageHidden.value && !reducedMotion.value && featuredProjects.value.length > 1)
+
+const selectFeatured = (index) => {
+  const count = featuredProjects.value.length
+  if (count) featuredIndex.value = (index + count) % count
+}
+const updateVisibility = () => { pageHidden.value = document.hidden }
+const updateMotionPreference = () => { reducedMotion.value = motionPreference.matches }
+const onFeaturedFocusOut = (event) => {
+  focused.value = event.currentTarget.contains(event.relatedTarget)
+}
 
 const githubUrl = (project) => parseRepoFromUrl(project.url)?.url
 
@@ -76,6 +109,14 @@ const parseRepoFromUrl = (url) => {
     return null
   }
 }
+
+watch(featuredProjects, () => { featuredIndex.value = 0 })
+watch([rotationRunning, featuredIndex], () => {
+  clearInterval(carouselTimer)
+  if (rotationRunning.value) {
+    carouselTimer = setInterval(() => selectFeatured(featuredIndex.value + 1), 6000)
+  }
+})
 
 const formatStars = (value) => {
   if (!Number.isFinite(value)) return '—'
@@ -197,15 +238,42 @@ const onImgErr = (event) => {
   if (img.getAttribute('src') !== defaultImg) img.src = defaultImg
 }
 
-onMounted(loadStars)
+onMounted(() => {
+  motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+  updateMotionPreference()
+  updateVisibility()
+  motionPreference.addEventListener('change', updateMotionPreference)
+  document.addEventListener('visibilitychange', updateVisibility)
+  loadStars()
+})
+onBeforeUnmount(() => {
+  clearInterval(carouselTimer)
+  motionPreference?.removeEventListener('change', updateMotionPreference)
+  document.removeEventListener('visibilitychange', updateVisibility)
+})
 </script>
 
 <template>
   <main class="projects-page">
     <h1 class="sr-only">项目</h1>
 
-    <section v-if="featuredProject" class="featured">
-      <div class="featured-copy">
+    <section
+      v-if="featuredProject"
+      class="featured"
+      aria-label="热门项目轮播"
+      aria-roledescription="轮播"
+      @mouseenter="hovered = true"
+      @mouseleave="hovered = false"
+      @focusin="focused = true"
+      @focusout="onFeaturedFocusOut"
+      @keydown.left.prevent="selectFeatured(featuredIndex - 1)"
+      @keydown.right.prevent="selectFeatured(featuredIndex + 1)"
+    >
+      <div class="featured-copy" :aria-live="rotationRunning ? 'off' : 'polite'" aria-atomic="true">
+        <div class="featured-label">
+          <span>{{ loadedStars ? '热门项目 · 按 Stars 排序' : '精选项目' }}</span>
+          <span>{{ featuredIndex + 1 }} / {{ featuredProjects.length }}</span>
+        </div>
         <h2>{{ featuredProject.title }}</h2>
         <p>{{ featuredProject.description }}</p>
         <div class="featured-actions">
@@ -214,8 +282,40 @@ onMounted(loadStars)
         </div>
       </div>
       <a :href="featuredProject.url" class="featured-image" target="_blank" rel="noopener noreferrer">
-        <img class="no-zoom" :src="featuredProject.image || defaultImg" :alt="featuredProject.title" @error="onImgErr" />
+        <img :key="featuredProject.id" class="no-zoom" :src="featuredProject.image || defaultImg" :alt="featuredProject.title" @error="onImgErr" />
       </a>
+      <div v-if="featuredProjects.length > 1" class="carousel-controls">
+        <div class="carousel-dots" aria-label="选择展示项目">
+          <button
+            v-for="(project, index) in featuredProjects"
+            :key="project.id"
+            type="button"
+            class="carousel-dot"
+            :class="{ active: index === featuredIndex }"
+            :aria-label="`查看项目：${project.title}`"
+            :aria-current="index === featuredIndex ? 'true' : undefined"
+            @click="selectFeatured(index)"
+          ><span /></button>
+        </div>
+        <div class="carousel-actions">
+          <button type="button" class="carousel-button" aria-label="上一个项目" @click="selectFeatured(featuredIndex - 1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
+          </button>
+          <button
+            v-if="!reducedMotion"
+            type="button"
+            class="carousel-button"
+            :aria-label="autoplay ? '暂停自动轮播' : '开启自动轮播'"
+            @click="autoplay = !autoplay"
+          >
+            <svg v-if="autoplay" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14M15 5v14" /></svg>
+            <svg v-else viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z" /></svg>
+          </button>
+          <button type="button" class="carousel-button" aria-label="下一个项目" @click="selectFeatured(featuredIndex + 1)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
+          </button>
+        </div>
+      </div>
     </section>
 
     <section class="controls" aria-label="项目筛选">
@@ -322,6 +422,11 @@ onMounted(loadStars)
   border: 0;
   font-size: 22px;
   line-height: 1.15;
+  min-height: 2.3em;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .featured-copy p,
@@ -352,6 +457,101 @@ onMounted(loadStars)
 .featured-copy p {
   margin: 12px 0 0;
   line-height: 1.8;
+  min-height: 5.4em;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.featured-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+}
+
+.featured-label span:first-child {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+
+.carousel-controls,
+.carousel-dots,
+.carousel-actions {
+  display: flex;
+  align-items: center;
+}
+
+.carousel-controls {
+  grid-column: 1 / -1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.carousel-actions {
+  gap: 4px;
+}
+
+.carousel-button,
+.carousel-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  height: 36px;
+  cursor: pointer;
+}
+
+.carousel-button {
+  width: 36px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-2);
+}
+
+.carousel-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-dot {
+  width: 24px;
+}
+
+.carousel-dot span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--vp-c-text-3);
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.carousel-dot.active span {
+  width: 18px;
+  background: var(--vp-c-brand-1);
+}
+
+.carousel-button:hover {
+  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-1);
+}
+
+.carousel-button:focus-visible,
+.carousel-dot:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 2px;
 }
 
 .featured-actions {
@@ -653,6 +853,12 @@ onMounted(loadStars)
 
   .controls {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-dot span {
+    transition: none;
   }
 }
 </style>
