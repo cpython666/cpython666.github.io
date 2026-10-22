@@ -32,9 +32,13 @@ Windows 和 macOS 流程操作都是一样的。
 
 上面就是我们本期视频的内容，大家可以使用我的邀请链接支持一下，也可以把视频教程分享给需要的朋友。我们下期视频再见 👋
 
+## 中转站推荐
+
+- [XFastAPI 推荐入口](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
+- [HeyRoute 推荐入口](https://heyroute.ai/stardream)：一个 API Key 接入 Codex、Claude Code 和 OpenAI 兼容客户端，替换 Base URL 即可使用。[控制台管理入口](https://heyroute.ai/console)。
+
 ## 参考链接
 
-- [中转站邀请链接](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
 - [Windows + macOS 会话同步帖子](https://linux.do/t/topic/2072220)
 - [Windows + macOS 会话同步软件：codex-provider-sync](https://github.com/Dailin521/codex-provider-sync)
 - [macOS 版本会话同步帖子](https://linux.do/t/topic/2120343)

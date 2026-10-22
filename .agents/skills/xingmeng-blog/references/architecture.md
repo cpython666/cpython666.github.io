@@ -20,6 +20,7 @@
 | 主题插槽、评论、图片查看、会员遮罩、Live2D | `docs/.vitepress/theme/index.js` | 按本次功能限定修改范围 |
 | 评论（giscus + Waline 并存） | `docs/.vitepress/theme/comment.js`、`components/WalineComment.vue` | 两者共用 `useCommentEnabled` 显示规则；Waline 在 `doc-after` 插槽、位于 giscus 之上，服务端 `https://cpython666-waline.vercel.app`（Vercel + Neon，图片默认 base64 存库），`walineServerURL` 留空时不渲染；`@waline/client` 锁在 3.13（3.14 起要求 Node 22，CI 仍是 Node 20） |
 | 首页展示与打字效果 | `docs/index.md`、`docs/index/IndexPage.vue` | 首页设 `markdownStyles: false` 保留全宽展示；组件样式必须 scoped，旋转背景在首页容器内裁切；Typed 与 resize 监听需随组件卸载清理 |
+| 首页赞助商与中转站推荐 | `docs/index/SponsorsLinks.vue`、`docs/life/codex-relay-provider-history-sync.md` | HeyRoute 首页卡片与文章推荐均跳转 `https://heyroute.ai/stardream`，`/console` 仅作为文章中的管理入口；官网图标本地保存于 `docs/public/imgs/sponsors/heyroute_logo.png`。HeyRoute 卡片使用官网主标语及单 API Key 接入 Codex / Claude Code 的特色说明，文章补充 OpenAI 兼容客户端与 Base URL；卡片文案可换行且窄屏不裁切。图片使用 `no-zoom`，链接保留 `sponsored noopener noreferrer` |
 | 文章工具、目录开关、阅读量 | `docs/.vitepress/theme/components/` | 优先复用现有组件 |
 | 复制文本 | `docs/utils/copy.js` | 提示词等调用此工具，调用方处理成功/失败反馈 |
 | 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/WebLink.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面；`navigationData` 按 `title` / `items` 分组，“AI模型检测”收录 ModelTrace 与 lm-detector；NavPage 负责搜索、分类和分批展示，WebLink 接收筛选后的 `items` 渲染卡片；顶部只保留搜索和统计，760px 及以下上下排列，不重复显示页面名和介绍 |

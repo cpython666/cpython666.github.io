@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- HeyRoute 推荐已在完整本地首页与公开中转站文章核对；赞助卡片组件编译通过，桌面和390px下官网图标、主标语与接入特色完整显示，实际点击 `/stardream` 跳到带推荐标记的官网首页。推荐文章保留单独的 `/console` 管理入口；未运行全站构建。
+
 - 顶栏七个社交入口已在实际本地 `/nav/` 验证：1280/1440px 无挤压截断，390px 折叠菜单全部显示 20px 内联 SVG，菜单关闭后滚动解锁，深浅色正常；阻断第三方请求时图标仍可见。认识我中新旧抖音各一张，新账号与顶栏链接一致，旧账号明确标注已封禁。截图须等待菜单淡入完成，避免把过渡中的半透明状态误判为背景缺失。
 - 工具检查：`node scripts/check-o10.mjs` 覆盖 O10/Pro 固定 Python 样例、Unicode 往返与非法输入；2026-10-20 曾单独执行原 Python 函数核对 7 组中文、emoji、控制字符样例。2026-10-21 `node scripts/check-resource-pages.mjs --tools-only` 通过 7 个独立页的 SSR 标题/说明/示例/可爬链接/唯一 h1、单工具渲染、分享三行与复制回退、直接刷新及 SPA 历史、旧 hash replace/query 保留、同页面 query+hash 跳转、指南锚点不误跳转、cURL/O10 交互及320/390px定位/边界；只复制明确的公开工具 Markdown 和组件。`node scripts/check-tool-seo.mjs` 用生产 SEO hooks 和人工 HTML 验证7页canonical、description、社交元数据、WebApplication及sitemap，不运行全站构建。实际完整开发站核对O10编码、桌面cURL切换与390px定位/无横溢；知识库skill:check通过。生成器另用人工数据确认LF/CRLF两种frontmatter均在结束行停止读取；本轮未发布。
 - 2026-10-20科技日报专栏：定向渲染 `docs/tech-daily/` 下六个公开Markdown页面，检查每页唯一h1、五张本地封面、49条来源地址（按篇去重）与WechatPilot原稿一致、目录目标存在及无裸加粗星号；配置语法检查通过。在实际开发站1280×720视口核对专栏页、最新一期和文章导航：科技日报分类含专栏入口与五期，目录能跳转，最新一期封面加载、正文无横向溢出。WechatPilot五期的正文/HTML/草稿回执共15文件哈希未变。此轮未做全站构建、移动端矩阵或线上部署；未重新核实历史新闻。

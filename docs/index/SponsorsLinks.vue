@@ -7,11 +7,16 @@
           :key="'sponsor-' + index"
           :href="sponsor.link"
           class="card"
-          rel="noopener noreferrer"
+          rel="sponsored noopener noreferrer"
           target="_blank"
       >
-        <div class="card-inner">
-          <img :alt="sponsor.name" :src="sponsor.logo" loading="lazy" decoding="async"/>
+        <div class="card-inner" :class="{ 'card-brand': sponsor.description }">
+          <img class="no-zoom" :alt="sponsor.description ? '' : sponsor.name" :src="sponsor.logo" loading="lazy" decoding="async"/>
+          <div v-if="sponsor.description" class="brand-copy">
+            <strong>{{ sponsor.name }}</strong>
+            <span>{{ sponsor.description }}</span>
+            <small v-if="sponsor.features">{{ sponsor.features }}</small>
+          </div>
         </div>
       </a>
     </div>
@@ -50,6 +55,13 @@ const sponsors = [
     name: '青果网络',
     logo: '/imgs/sponsors/qgwl_logo.png',
     link: 'https://www.qg.net/product/proxyip.html?source=star',
+  },
+  {
+    name: 'HeyRoute',
+    logo: '/imgs/sponsors/heyroute_logo.png',
+    description: '稳定、快速、低价的 AI 模型入口',
+    features: '一个 API Key，接入 Codex、Claude Code',
+    link: 'https://heyroute.ai/stardream',
   },
 ]
 
@@ -117,5 +129,47 @@ const friends = [
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
+}
+
+.card-brand {
+  display: grid;
+  grid-template-columns: 32px auto;
+  align-content: center;
+  gap: 6px 10px;
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 132px;
+  padding: 12px;
+  text-align: center;
+  color: #1f2937;
+}
+
+.card-brand img {
+  width: 32px;
+  border-radius: 8px;
+}
+
+.brand-copy {
+  display: contents;
+}
+
+.brand-copy strong {
+  justify-self: start;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: 1.2;
+}
+
+.brand-copy span {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #334155;
+}
+
+.brand-copy small {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  line-height: 1.4;
+  color: #64748b;
 }
 </style>
