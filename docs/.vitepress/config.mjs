@@ -1315,6 +1315,7 @@ export default defineConfig({
       toIsoDate(frontmatter.created_at || frontmatter.date) ||
       publishedAt;
     const isHome = page === "index.md";
+    const isTool = frontmatter.tool === true;
 
     PAGE_INDEX_META.set(pageToPath(page), { noIndex, lastmod: updatedAt });
 
@@ -1324,7 +1325,7 @@ export default defineConfig({
       ["meta", { name: "keywords", content: String(frontmatter.keywords || SITE_KEYWORDS) }],
       ["meta", { property: "og:locale", content: "zh_CN" }],
       ["meta", { property: "og:site_name", content: SITE_NAME }],
-      ["meta", { property: "og:type", content: isHome ? "website" : "article" }],
+      ["meta", { property: "og:type", content: isHome || isTool ? "website" : "article" }],
       ["meta", { property: "og:title", content: title }],
       ["meta", { property: "og:description", content: description }],
       ["meta", { property: "og:url", content: url }],
@@ -1353,6 +1354,17 @@ export default defineConfig({
             name: SITE_AUTHOR,
             url: `${SITE_URL}/web-intro/`,
           },
+        }
+      : isTool ? {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: title,
+          description,
+          url,
+          applicationCategory: "DeveloperApplication",
+          operatingSystem: "Any",
+          inLanguage: "zh-CN",
+          isAccessibleForFree: true,
         }
       : {
           "@context": "https://schema.org",

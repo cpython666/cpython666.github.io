@@ -1,10 +1,10 @@
 <template>
   <div class="tools-page">
-    <h1 class="sr-only">在线开发工具箱</h1>
+    <h1 class="sr-only">{{ toolId ? activeTool.name : '在线开发工具箱' }}</h1>
 
     <div class="tools-layout">
       <aside class="navbar">
-        <div class="nav-label">工具列表</div>
+        <a class="nav-label" href="/spider-tools/">全部工具</a>
         <input
           v-model="q"
           class="search"
@@ -18,7 +18,7 @@
             :key="item.pageId"
             :class="{ active: curPageId === item.pageId }"
           >
-            <a :href="'#' + item.pageId" @click="selectPanel(item, $event)">
+            <a :href="toolPath(item.pageId)" :aria-current="curPageId === item.pageId ? 'page' : undefined">
               <span class="tool-icon">{{ item.icon }}</span>
               <span>{{ item.name }}</span>
               <small v-if="item.badge">{{ item.badge }}</small>
@@ -38,14 +38,9 @@
               分享工具
             </button>
           </div>
-          <PanelCurlRequests v-show="curPageId === 'curl-requests'" />
-          <PanelUrl v-show="curPageId === 'url'" />
-          <PanelBase64 v-show="curPageId === 'base64'" />
-          <PanelO10 v-show="curPageId === 'o10'" />
-          <PanelAaencode v-show="curPageId === 'aaencode'" />
-          <PanelJjencode v-show="curPageId === 'jjencode'" />
-          <PanelImagesplit v-show="curPageId === 'imagesplit'" />
+          <component :is="panels[curPageId]" />
         </div>
+        <div v-if="$slots.default" class="tool-guide vp-doc"><slot /></div>
       </main>
     </div>
     <div v-if="shareNotice" class="share-notice" role="status">{{ shareNotice }}</div>
@@ -64,13 +59,24 @@ import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { useRouter } from 'vitepress'
 import copyText from '../utils/copy.js'
 
+const props = defineProps({ toolId: { type: String, default: '' } })
 const router = useRouter()
-const curPageId = ref('curl-requests')
+const curPageId = computed(() => toolList.value.some(tool => tool.pageId === props.toolId) ? props.toolId : 'curl-requests')
 const q = ref('')
 const shareNotice = ref('')
 let shareTimer
 let previousRouteHook
 let routeHook
+const panels = {
+  'curl-requests': PanelCurlRequests,
+  url: PanelUrl,
+  base64: PanelBase64,
+  o10: PanelO10,
+  aaencode: PanelAaencode,
+  jjencode: PanelJjencode,
+  imagesplit: PanelImagesplit,
+}
+const toolPath = id => `/spider-tools/${id}/`
 
 const toolList = ref([
   { name: 'cURL 转 Requests', pageId: 'curl-requests', icon: '↗', badge: 'NEW', description: '将 cURL 命令转换为 Python Requests 代码，支持请求头、Cookie、JSON 和表单。' },
@@ -93,7 +99,7 @@ async function shareTool() {
   const tool = activeTool.value
   clearTimeout(shareTimer)
   try {
-    await copyText(`${tool.name}\n${tool.description}\nhttps://cpython666.github.io/spider-tools/#${tool.pageId}`)
+    await copyText(`${tool.name}\n${tool.description}\nhttps://cpython666.github.io${toolPath(tool.pageId)}`)
     shareNotice.value = '工具简介和直达链接已复制！'
   } catch {
     shareNotice.value = '复制失败，请重试。'
@@ -101,41 +107,38 @@ async function shareTool() {
   shareTimer = setTimeout(() => { shareNotice.value = '' }, 3000)
 }
 
-async function applyHash() {
+function redirectLegacyLink() {
+  if (props.toolId) return
+  if (!['/spider-tools/', '/spider-tools', '/spider-tools/index.html'].includes(window.location.pathname)) return
   const hash = window.location.hash.slice(1)
   const target = toolList.value.find(item => item.pageId === hash)
-  curPageId.value = target?.pageId || toolList.value[0].pageId
   if (!target) return
-  q.value = ''
-  await nextTick()
-  const panel = document.getElementById(target.pageId)
-  panel?.scrollIntoView({ block: 'start', behavior: 'instant' })
-  panel?.focus({ preventScroll: true })
+  window.location.replace(toolPath(target.pageId) + window.location.search)
 }
 
-onMounted(() => {
-  applyHash()
-  window.addEventListener('hashchange', applyHash)
+onMounted(async () => {
+  redirectLegacyLink()
+  window.addEventListener('hashchange', redirectLegacyLink)
   previousRouteHook = router.onAfterRouteChange
   const previous = previousRouteHook ?? router.onAfterRouteChanged
   routeHook = async href => {
     await previous?.(href)
-    await applyHash()
+    redirectLegacyLink()
   }
   router.onAfterRouteChange = routeHook
+  if (props.toolId && !window.location.hash && window.matchMedia('(max-width: 768px)').matches) {
+    await nextTick()
+    const panel = document.getElementById(curPageId.value)
+    panel?.scrollIntoView({ block: 'start', behavior: 'instant' })
+    panel?.focus({ preventScroll: true })
+  }
 })
 
 onUnmounted(() => {
   clearTimeout(shareTimer)
-  window.removeEventListener('hashchange', applyHash)
+  window.removeEventListener('hashchange', redirectLegacyLink)
   if (router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
 })
-
-function selectPanel(item, event) {
-  event?.preventDefault()
-  if (window.location.hash === `#${item.pageId}`) applyHash()
-  else window.location.hash = item.pageId
-}
 </script>
 
 <style scoped>
@@ -184,6 +187,7 @@ function selectPanel(item, event) {
 }
 
 .nav-label {
+  display: block;
   margin: 2px 4px 10px;
   color: var(--vp-c-text-3);
   font-size: 11px;
@@ -315,6 +319,21 @@ function selectPanel(item, event) {
   box-shadow: 0 20px 60px rgba(0, 0, 0, .055);
 }
 
+.tool-guide {
+  margin-top: 24px;
+  padding: 4px 28px 28px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: var(--vp-c-bg);
+  overflow-wrap: anywhere;
+}
+
+.tool-guide :deep(h2:first-child) {
+  margin-top: 24px;
+  border-top: 0;
+  padding-top: 0;
+}
+
 .tool-sharebar {
   display: flex;
   align-items: center;
@@ -393,6 +412,8 @@ function selectPanel(item, event) {
     min-height: 0;
     padding: 20px;
   }
+
+  .tool-guide { padding: 0 20px 20px; }
 }
 
 @media (max-width: 460px) {

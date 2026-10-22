@@ -1,7 +1,7 @@
 <template>
 	<div>
 	  <div id="controls">
-		<h1>图像分割-动画帧分割</h1>
+		<h2>图像分割-动画帧分割</h2>
 		<input type="file" @change="onImageChange" accept="image/*" ref="imageInput">
 		<div>
 		  <label for="rows">Rows:</label>
