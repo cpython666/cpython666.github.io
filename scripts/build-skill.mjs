@@ -36,10 +36,23 @@ async function importData(file) {
 // 只读取文件开头的 frontmatter 块，读到结束分隔线就停，不碰正文
 function readFrontmatter(file) {
   const fd = openSync(file, 'r')
-  const buffer = Buffer.alloc(16 * 1024)
-  const length = readSync(fd, buffer, 0, buffer.length, 0)
-  closeSync(fd)
-  const head = buffer.subarray(0, length).toString('utf-8')
+  const byte = Buffer.alloc(1)
+  const bytes = []
+  let lineStart = 0
+  try {
+    // 按行停在 frontmatter 结束处，不能预读包含会员正文的大块缓冲区。
+    while (bytes.length < 64 * 1024 && readSync(fd, byte, 0, 1, null)) {
+      bytes.push(byte[0])
+      if (byte[0] !== 10) continue
+      const line = Buffer.from(bytes.slice(lineStart)).toString('utf-8').trim()
+      if (lineStart === 0 && line !== '---') return null
+      if (lineStart > 0 && line === '---') break
+      lineStart = bytes.length
+    }
+  } finally {
+    closeSync(fd)
+  }
+  const head = Buffer.from(bytes).toString('utf-8')
   const match = head.match(/^﻿?---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)
   if (!match) return null
 
@@ -172,7 +185,7 @@ function renderTools() {
     'curl-requests': '`node scripts/curl-to-requests.mjs`',
     'o10': '`node scripts/o10.mjs`',
   }
-  const lines = tools.map((tool) => `| ${tool.name} | ${tool.description} | ${SITE_URL}/spider-tools/#${tool.pageId} | ${scripts[tool.pageId] || '用 Python 标准库或打开网页'} |`)
+  const lines = tools.map((tool) => `| ${tool.name} | ${tool.description} | ${SITE_URL}/spider-tools/${tool.pageId}/ | ${scripts[tool.pageId] || '用 Python 标准库或打开网页'} |`)
   return `# 在线开发工具箱
 
 来自 ${SITE_URL}/spider-tools/ ，共 ${tools.length} 个工具，全部在浏览器本地运行。

@@ -16,7 +16,7 @@
 ## 已有检查
 
 - 顶栏七个社交入口已在实际本地 `/nav/` 验证：1280/1440px 无挤压截断，390px 折叠菜单全部显示 20px 内联 SVG，菜单关闭后滚动解锁，深浅色正常；阻断第三方请求时图标仍可见。认识我中新旧抖音各一张，新账号与顶栏链接一致，旧账号明确标注已封禁。截图须等待菜单淡入完成，避免把过渡中的半透明状态误判为背景缺失。
-- 2026-10-20 工具页：`node scripts/check-o10.mjs` 覆盖 O10/Pro 固定 Python 样例、Unicode 往返与非法输入，并单独执行原 Python 函数核对 7 组中文、emoji、控制字符样例。`node scripts/check-resource-pages.mjs --tools-only` 在隔离 fixture 内通过 7 工具分享内容、复制成功/失败/多行回退、直达与刷新、hash 前后退/未知回退、同 hash query 路由、O10 双模式交互及 320/390px 控件边界；后退定位断言需等待两帧布局稳定。实际完整开发站已核对 O10 中文编码、工具切换与分享入口；未执行全站构建或发布。
+- 工具检查：`node scripts/check-o10.mjs` 覆盖 O10/Pro 固定 Python 样例、Unicode 往返与非法输入；2026-10-20 曾单独执行原 Python 函数核对 7 组中文、emoji、控制字符样例。2026-10-21 `node scripts/check-resource-pages.mjs --tools-only` 通过 7 个独立页的 SSR 标题/说明/示例/可爬链接/唯一 h1、单工具渲染、分享三行与复制回退、直接刷新及 SPA 历史、旧 hash replace/query 保留、同页面 query+hash 跳转、指南锚点不误跳转、cURL/O10 交互及320/390px定位/边界；只复制明确的公开工具 Markdown 和组件。`node scripts/check-tool-seo.mjs` 用生产 SEO hooks 和人工 HTML 验证7页canonical、description、社交元数据、WebApplication及sitemap，不运行全站构建。实际完整开发站核对O10编码、桌面cURL切换与390px定位/无横溢；知识库skill:check通过。生成器另用人工数据确认LF/CRLF两种frontmatter均在结束行停止读取；本轮未发布。
 - 2026-10-20科技日报专栏：定向渲染 `docs/tech-daily/` 下六个公开Markdown页面，检查每页唯一h1、五张本地封面、49条来源地址（按篇去重）与WechatPilot原稿一致、目录目标存在及无裸加粗星号；配置语法检查通过。在实际开发站1280×720视口核对专栏页、最新一期和文章导航：科技日报分类含专栏入口与五期，目录能跳转，最新一期封面加载、正文无横向溢出。WechatPilot五期的正文/HTML/草稿回执共15文件哈希未变。此轮未做全站构建、移动端矩阵或线上部署；未重新核实历史新闻。
 - `node scripts/check-effects.mjs`：Playwright 隔离页面只提供特效脚本，不读取文章；覆盖空闲停绘、鼠标轨迹、重叠烟花、开关恢复、resize、减少动态效果、隐藏页签及浏览器错误。
 - 此检查测量的是 canvas 绘制和存储读取，不是所有动画帧，也不是线上 Core Web Vitals；飞鸟仍可以持续飞行。
@@ -43,7 +43,8 @@
 | --- | --- | --- |
 | 会员判断统一与保护方式复查 | SEO 判断识别 `privacy` 与 `memberOnly`，主题门禁和导航 loader 只识别 `memberOnly`；门禁为客户端遮罩 | 待定：统一判断方式与真正的鉴权/内容分发方案，禁止用读取会员正文的方式验证 |
 | 搜索与会员内容隔离 | 站内使用 local search，目前配置未明确按会员标记过滤正文 | 待办：只检查代码和人工 fixture，补齐明确的排除规则，不读取实际搜索索引来验证 |
-| 非文章页面结构化数据 | SEO 仅按首页 / 非首页区分，其他可索引页统一标 `BlogPosting` | 待办：导航、项目、工具等按类型改为合适的页面 schema |
+| 工具检查脚本读取边界 | `check-tool-seo.mjs` 先整文件读取后检查标记，`check-resource-pages.mjs` 的 readLines 有缓冲预读；当前仅处理7个已确认公开的工具说明页 | 待办：让两脚本在读取正文前严格检查 frontmatter；修复前运行须先独立确认这7页均公开，遇会员标记停止 |
+| 非文章页面结构化数据 | 独立工具页已按 `tool: true` 输出 `WebApplication`；其余非首页页面仍默认 `BlogPosting` | 待办：导航、项目、工具总入口等按类型改为合适的页面 schema |
 | 构建环境维护 | `.github/workflows/static.yml` 仍使用 Node 20，只有 master 推送及手动运行入口 | 待定：迁移受支持的 LTS 并补 PR 检查；升级前重新确认依赖兼容性 |
 | 统计请求精简 | 目前同时接入 Clarity、百度、51.LA 与 hits.sh | 待定：按实际使用的统计报表决定保留项 |
 | X 备份增量与字段完整性 | 2026-10-18 运行 `backup:x --handle wufantouzi`：新增 4 条（均为 10-17 当天，各 3 条可见评论），正文与评论已落盘，但这 4 条的 `createdAt`/`visibleTime`/`metrics` 为空，时间戳被并入正文末尾（如「19:42 · 2026年10月17日」）；归档原覆盖 2026-02-12 至 07-03（6 月单月 92 条），07-04 至 10-16 无任何记录 | 待核对：主页该时段是否确无帖子；若确有，需针对性重采（不得用 `--reset`），并排查时间/互动字段的解析 |
