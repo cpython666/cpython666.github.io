@@ -4,7 +4,7 @@ markdownStyles: false
 sidebar: false
 tool: true
 title: O10 编码解码在线工具（标准版与 Pro 版）
-description: 将文本转换为 O、1、0 组合并反向解码，支持中文、emoji 与 Pro 模式，兼容原 Python O10 编码函数，附两种模式示例。
+description: 支持标准 O10（数字 0、1 与大写 O）和 Pro（大写 I、小写 l 与数字 1）双模式文本编码解码，支持中文与 emoji，兼容 Python 原版，附两种模式示例。
 keywords: O10编码,O10解码,O10Encode,01编码,Pro编码,Python文本编码
 ---
 

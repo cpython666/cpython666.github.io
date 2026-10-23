@@ -95,7 +95,7 @@ const toolList = ref([
   { name: 'cURL 转 Requests', pageId: 'curl-requests', icon: '↗', badge: 'NEW', description: '将 cURL 命令转换为 Python Requests 代码，支持请求头、Cookie、JSON 和表单。' },
   { name: 'URL 编码解码', pageId: 'url', icon: '%', description: '在线转换 URL 百分号编码，处理中文、空格与特殊字符。' },
   { name: 'Base64 编码解码', pageId: 'base64', icon: '64', description: '将文本转换为 Base64，或将 Base64 还原为文本，支持中文。' },
-  { name: 'O10 编码解码', pageId: 'o10', icon: 'O10', badge: 'NEW', description: '将文本转为 O、1、0 组合，支持标准与 Pro 模式及反向解码，兼容 Python 原版。' },
+  { name: 'O10 编码解码', pageId: 'o10', icon: 'O10', badge: 'NEW', description: '支持标准 O10（数字 0、1 与大写 O）和 Pro（大写 I、小写 l 与数字 1）双模式文本编码解码，兼容 Python 原版。' },
   { name: 'AAencode 编码解码', pageId: 'aaencode', icon: 'AA', description: '将 JavaScript 转换为颜文字形式的 AAencode 编码，并提供解码。' },
   { name: 'JJencode 编码解码', pageId: 'jjencode', icon: 'JJ', description: '将 JavaScript 转换为符号形式的 JJencode 编码，并提供解码。' },
   { name: '图片分割', pageId: 'imagesplit', icon: '▦', description: '按行列切分图片，在浏览器内预览并下载切片。' },
