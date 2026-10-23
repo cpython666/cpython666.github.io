@@ -56,8 +56,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { curlToRequests } from '../utils/curlToRequests.js'
+import copyText from '../../utils/copy.js'
 
 const example = `curl 'https://httpbin.org/anything?page=1' \\
   -X POST \\
@@ -70,8 +71,11 @@ const curlInput = ref(example)
 const pythonOutput = ref('')
 const errorMessage = ref('')
 const copied = ref(false)
+const emit = defineEmits(['feedback'])
+let copyTimer
 
 function convert() {
+  clearTimeout(copyTimer)
   copied.value = false
   errorMessage.value = ''
   try {
@@ -88,6 +92,7 @@ function loadExample() {
 }
 
 function clearAll() {
+  clearTimeout(copyTimer)
   curlInput.value = ''
   pythonOutput.value = ''
   errorMessage.value = ''
@@ -96,14 +101,18 @@ function clearAll() {
 
 async function copyCode() {
   if (!pythonOutput.value) return
+  clearTimeout(copyTimer)
   try {
-    await navigator.clipboard.writeText(pythonOutput.value)
+    await copyText(pythonOutput.value)
     copied.value = true
-    window.setTimeout(() => { copied.value = false }, 1600)
+    emit('feedback', { message: 'Python 代码已复制到剪贴板', kind: 'success' })
+    copyTimer = setTimeout(() => { copied.value = false }, 4000)
   } catch {
-    errorMessage.value = '复制失败，请手动选择代码复制'
+    copied.value = false
+    emit('feedback', { message: '复制失败，请手动选择代码复制', kind: 'error' })
   }
 }
+onBeforeUnmount(() => clearTimeout(copyTimer))
 
 convert()
 </script>

@@ -1,16 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
 import { o10Encode, o10Decode } from '../utils/o10.js'
 import copyText from '../../utils/copy.js'
+import SiteSelect from '../../components/SiteSelect.vue'
 
 const mode = ref('standard')
 const inputText = ref('你好，世界😄')
 const outputText = ref('')
 const notice = ref('')
+const copyState = ref('')
+const emit = defineEmits(['feedback'])
+let copyTimer
 
 function resetOutput() {
   outputText.value = ''
   notice.value = ''
+  copyState.value = ''
+  clearTimeout(copyTimer)
 }
 
 function convert(decode = false) {
@@ -29,13 +35,18 @@ function reuseOutput() {
 }
 
 async function copyOutput() {
+  clearTimeout(copyTimer)
   try {
     await copyText(outputText.value)
-    notice.value = '结果已复制！'
+    copyState.value = 'success'
+    emit('feedback', { message: '处理结果已复制到剪贴板', kind: 'success' })
   } catch {
-    notice.value = '复制失败，请选中结果手动复制。'
+    copyState.value = 'error'
+    emit('feedback', { message: '复制失败，请选中结果手动复制。', kind: 'error' })
   }
+  copyTimer = setTimeout(() => { copyState.value = '' }, 4000)
 }
+onBeforeUnmount(() => clearTimeout(copyTimer))
 </script>
 
 <template>
@@ -43,10 +54,10 @@ async function copyOutput() {
     <h3>O10 编码解码</h3>
     <div class="mode-row">
       <label for="o10-mode">编码模式</label>
-      <select id="o10-mode" v-model="mode" @change="resetOutput">
-        <option value="standard">标准 O10（数字 0、1 / 大写 O）</option>
-        <option value="pro">Pro（大写 I / 小写 l / 数字 1）</option>
-      </select>
+      <SiteSelect id="o10-mode" v-model="mode" label="编码模式" :options="[
+        { value: 'standard', label: '标准 O10（数字 0、1 / 大写 O）' },
+        { value: 'pro', label: 'Pro（大写 I / 小写 l / 数字 1）' },
+      ]" @change="resetOutput" />
     </div>
     <p class="mode-hint">
       {{ mode === 'pro' ? '每个字符用 I 和 l 表示，字符之间用数字 1 分隔。' : '每个字符转为二进制，字符之间用大写字母 O 分隔。' }}
@@ -61,7 +72,7 @@ async function copyOutput() {
     </div>
     <div class="output-label">
       <label for="o10-output">处理结果</label>
-      <button type="button" :disabled="!outputText" @click="copyOutput">复制结果</button>
+      <button type="button" aria-label="复制结果" :class="{ 'copy-success': copyState === 'success', 'copy-error': copyState === 'error' }" :disabled="!outputText" @click="copyOutput">{{ copyState === 'success' ? '已复制 ✓' : copyState === 'error' ? '复制失败' : '复制结果' }}</button>
     </div>
     <textarea id="o10-output" :value="outputText" rows="6" readonly spellcheck="false" placeholder="编码或解码的结果会显示在这里"></textarea>
     <p class="notice" role="status">{{ notice }}</p>
@@ -72,15 +83,7 @@ async function copyOutput() {
 .o10-tool { min-width: 0; }
 .o10-tool h3 { margin: 0 0 20px; }
 .mode-row, .actions, .output-label { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.mode-row select {
-  max-width: 100%;
-  min-width: 0;
-  padding: 8px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-soft);
-}
+.mode-row .site-select { width: 340px; }
 .mode-hint, .notice { color: var(--vp-c-text-2); font-size: 13px; line-height: 1.7; margin: 12px 0; }
 .o10-tool textarea {
   display: block;
@@ -106,6 +109,8 @@ async function copyOutput() {
   cursor: pointer;
 }
 .o10-tool .primary { background: var(--vp-c-brand-1); color: white; }
+.o10-tool .copy-success { color: var(--vp-c-green-1); border-color: currentColor; background: var(--vp-c-green-soft); }
+.o10-tool .copy-error { color: var(--vp-c-red-1); border-color: currentColor; background: var(--vp-c-red-soft); }
 .o10-tool button:disabled { opacity: .5; cursor: default; }
 .notice { min-height: 22px; margin-bottom: 0; }
 </style>

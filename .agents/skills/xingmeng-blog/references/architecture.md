@@ -23,6 +23,7 @@
 | 首页赞助商与中转站推荐 | `docs/index/SponsorsLinks.vue`、`docs/life/codex-relay-provider-history-sync.md` | HeyRoute 首页卡片与文章推荐均跳转 `https://heyroute.ai/stardream`，`/console` 仅作为文章中的管理入口；官网图标本地保存于 `docs/public/imgs/sponsors/heyroute_logo.png`。HeyRoute 卡片使用官网主标语及单 API Key 接入 Codex / Claude Code 的特色说明，文章补充 OpenAI 兼容客户端与 Base URL；卡片文案可换行且窄屏不裁切。图片使用 `no-zoom`，链接保留 `sponsored noopener noreferrer` |
 | 文章工具、目录开关、阅读量 | `docs/.vitepress/theme/components/` | 优先复用现有组件 |
 | 复制文本 | `docs/utils/copy.js` | 提示词等调用此工具，调用方处理成功/失败反馈 |
+| 自绘选择控件 | `docs/components/SiteSelect.vue` | O10 模式与手机资源分类共用；`id`、`label`、`modelValue`、`options` 入参，`update:modelValue` / `change` 仅在选项变化时触发；不使用隐藏原生 select |
 | 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/WebLink.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面；`navigationData` 按 `title` / `items` 分组，“AI模型检测”收录 ModelTrace 与 lm-detector；NavPage 负责搜索、分类和分批展示，WebLink 接收筛选后的 `items` 渲染卡片；顶部只保留搜索和统计，760px 及以下上下排列，不重复显示页面名和介绍 |
 | 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/spider-tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
 | 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
@@ -49,6 +50,8 @@
 - `SpiderTools.vue` 元数据维护名称、简介和稳定 `pageId`；分享复制三行「名称／简介／https://cpython666.github.io/spider-tools/<pageId>/」，不包含用户输入或 query。旧总入口 `#<pageId>` 用 replace 跳到独立页并保留 query，未知 hash 保持总入口；兼容需同时监听 hashchange 和链式 onAfterRouteChange（卸载恢复），因为同页面 query 导航的 pushState 不触发 hashchange。独立页的指南 hash 不参与旧入口跳转。
 - 独立工具页 frontmatter 为 `layout: home`、`markdownStyles: false`、`tool: true`，各自维护 title/description；沿用现有 canonical、社交元数据与 sitemap，`tool: true` 输出 WebApplication 和 og:type=website。知识库工具链接同步为独立网址；生成器必须在 frontmatter 结束行停止读取，不能用固定大小缓冲区预读会员正文。
 - O10 工具位于 `docs/spider-tools/components/PanelO10.vue`，算法在 `utils/o10.js`，来源为相邻 `Python-Project/O10加解密/O10encode.py`。标准版按 Unicode 码点转二进制、以大写 O 分隔；Pro 版以 I/l 表示 1/0、数字 1 分隔，须保持原版输出兼容，不能按 UTF-16 码元拆开 emoji。网页只接受对应模式的规范编码字符及非空分段，超出 Unicode 范围报错；空输入清空结果并提示，不沿用原 Python 空串解码异常。输入或模式改变时清空旧结果，支持复制结果及结果复用。
+- `SiteSelect.vue` 用按钮 combobox 和自绘 listbox 展示选项，沿用主题颜色；支持方向/Home/End/Enter/Space/Escape/Tab、字母前缀定位、外部点击关闭、选中项标记和菜单内部滚动。展开空间不足时向上打开，resize 关闭；页面选择行为仍由调用方处理，不能破坏资源分类 hash、搜索清空与分批重置。
+- 工具分享、O10 结果复制和 cURL 代码复制统一由 `SpiderTools.vue` 的 `feedback` 事件呈现视口顶部提示，使用图标、成功/失败颜色、实色卡片与阴影，成功 4 秒、失败 6 秒并支持手动关闭；连续操作重置计时，提示内获得键盘焦点时暂停倒计时、离开后恢复，关闭时仅在焦点仍位于提示内才还给触发按钮，路由切换/卸载清理。分享和结果复制按钮同步显示已复制状态，O10 输入或模式改变后重置；不要只在结果框下方放提示，避免反馈落到视口外。cURL 复制也调用公共复制函数，保留旧浏览器回退。
 - 公用复制函数 `docs/utils/copy.js` 的旧浏览器回退使用 textarea 保留换行，不能用单行 input，否则工具、提示词的多行分享文本会连成一行。
 - 完整顶栏在 768–1279px 使用 VitePress 原生折叠菜单（`docs/public/css/index.css`），1280px 以上恢复桌面导航；菜单、主题切换和社交链接仍来自同一主题配置，不复制菜单数据。默认 768px 即展开桌面菜单会被当前八个入口和搜索框撑宽，相关验证需包含开菜单、路由跳转及缩放后的滚动解锁。
 - 当前首页由 `docs/index.md` 引入 `IndexPage.vue`，主展示为随机背景、品牌图标、挂载后显示的打字标语和赞助链接；组件内尚无固定的受众/任务说明、学习路线或代表案例入口。若后续调整定位，先确认主线与首页内容，再修改展示；现状不等于已确认改版方案。

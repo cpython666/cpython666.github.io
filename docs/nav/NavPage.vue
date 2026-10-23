@@ -2,6 +2,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { navigationData } from './data.js'
 import WebLink from './WebLink.vue'
+import SiteSelect from '../components/SiteSelect.vue'
 
 const PAGE_SIZE = 36
 const searchText = ref('')
@@ -17,6 +18,10 @@ const resources = navigationData.flatMap(group => group.items.map((site, index) 
   key: `${group.title}:${index}:${site.link}`,
   search: [group.title, site.title, site.desc, site.link, ...(site.categories || [])].join(' ').toLowerCase(),
 })))
+const categoryOptions = [
+  { value: '', label: `全部资源 · ${resources.length}` },
+  ...groups.map(group => ({ value: group.title, label: `${group.title} · ${group.count}` })),
+]
 const normalizedQuery = computed(() => searchText.value.trim().toLowerCase())
 const filteredItems = computed(() => resources.filter(site =>
   (!activeCategory.value || site.section === activeCategory.value)
@@ -94,13 +99,10 @@ onBeforeUnmount(() => {
       </div>
       <span class="resource-stats">{{ resources.length }} 个资源 · {{ groups.length }} 个分类</span>
     </header>
-    <label class="mobile-categories">
-      <span>分类</span>
-      <select aria-label="资源分类" :value="activeCategory" @change="selectCategory($event.target.value)">
-        <option value="">全部资源 · {{ resources.length }}</option>
-        <option v-for="group in groups" :key="group.title" :value="group.title">{{ group.title }} · {{ group.count }}</option>
-      </select>
-    </label>
+    <div class="mobile-categories">
+      <label for="resource-category">分类</label>
+      <SiteSelect id="resource-category" label="资源分类" :model-value="activeCategory" :options="categoryOptions" @update:model-value="selectCategory" />
+    </div>
     <div class="resource-workspace">
       <aside class="resource-sidebar" aria-label="资源分类">
         <p class="sidebar-heading">浏览分类</p>
@@ -174,7 +176,7 @@ onBeforeUnmount(() => {
 .empty-state p { color: var(--vp-c-text-2); }
 .empty-state button { margin-top: 16px; color: var(--vp-c-brand-1); cursor: pointer; }
 .mobile-categories { display: none; }
-button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
 @media (max-width: 760px) {
   .resources-page { width: calc(100% - 24px); margin-top: 12px; }
   .resource-toolbar { align-items: stretch; flex-direction: column; gap: 8px; }
@@ -182,6 +184,6 @@ button:focus-visible, a:focus-visible, select:focus-visible { outline: 2px solid
   .resource-sidebar { display: none; }
   .resource-workspace { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
   .mobile-categories { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--vp-c-text-2); font-size: 14px; }
-  .mobile-categories select { flex: 1; min-width: 0; min-height: 42px; padding: 8px 12px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); }
+  .mobile-categories .site-select { flex: 1; }
 }
 </style>

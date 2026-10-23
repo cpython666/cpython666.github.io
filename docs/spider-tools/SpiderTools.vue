@@ -35,15 +35,24 @@
             <p class="tool-description">{{ activeTool.description }}</p>
             <button type="button" class="share-tool" :aria-label="`分享工具：${activeTool.name}`" @click="shareTool">
               <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 .1l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7-.1l-3 3a5 5 0 0 0 7 7l2-2"/></svg>
-              分享工具
+              {{ shareCopied ? '已复制分享 ✓' : '分享工具' }}
             </button>
           </div>
-          <component :is="panels[curPageId]" />
+          <component :is="panels[curPageId]" @feedback="showFeedback" />
         </div>
         <div v-if="$slots.default" class="tool-guide vp-doc"><slot /></div>
       </main>
     </div>
-    <div v-if="shareNotice" class="share-notice" role="status">{{ shareNotice }}</div>
+    <div ref="feedbackRegion" class="tool-feedback" role="status" aria-live="polite" aria-atomic="true" @focusin="pauseFeedback" @focusout="scheduleFeedback">
+      <div v-if="feedback" :key="feedbackId" class="feedback-card" :class="`kind-${feedback.kind}`">
+        <span class="feedback-icon" aria-hidden="true">{{ feedback.kind === 'error' ? '!' : '✓' }}</span>
+        <div>
+          <strong>{{ feedback.kind === 'error' ? '复制未完成' : '复制成功' }}</strong>
+          <p class="feedback-message">{{ feedback.message }}</p>
+        </div>
+        <button type="button" aria-label="关闭提示" @click="clearFeedback">×</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +64,7 @@ import PanelAaencode from './components/PanelAaencode.vue'
 import PanelJjencode from './components/PanelJjencode.vue'
 import PanelImagesplit from './components/PanelImagesplit.vue'
 import PanelCurlRequests from './components/PanelCurlRequests.vue'
-import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue'
 import { useRouter } from 'vitepress'
 import copyText from '../utils/copy.js'
 
@@ -63,8 +72,12 @@ const props = defineProps({ toolId: { type: String, default: '' } })
 const router = useRouter()
 const curPageId = computed(() => toolList.value.some(tool => tool.pageId === props.toolId) ? props.toolId : 'curl-requests')
 const q = ref('')
-const shareNotice = ref('')
-let shareTimer
+const feedback = ref(null)
+const feedbackRegion = ref(null)
+const feedbackId = ref(0)
+const shareCopied = ref(false)
+let feedbackTimer
+let feedbackTrigger
 let previousRouteHook
 let routeHook
 const panels = {
@@ -95,16 +108,44 @@ const visibleTools = computed(() => {
   return toolList.value.filter(t => `${t.name} ${t.description}`.toLowerCase().includes(kw))
 })
 
+function clearFeedback() {
+  clearTimeout(feedbackTimer)
+  const restoreFocus = feedbackRegion.value?.contains(document.activeElement)
+  feedback.value = null
+  shareCopied.value = false
+  if (restoreFocus && feedbackTrigger?.isConnected) feedbackTrigger.focus({ preventScroll: true })
+  feedbackTrigger = null
+}
+
+function pauseFeedback() {
+  clearTimeout(feedbackTimer)
+}
+
+function scheduleFeedback(event) {
+  clearTimeout(feedbackTimer)
+  if (!feedback.value || feedbackRegion.value?.contains(event?.relatedTarget)) return
+  feedbackTimer = setTimeout(clearFeedback, feedback.value.kind === 'error' ? 6000 : 4000)
+}
+
+function showFeedback(value) {
+  clearFeedback()
+  feedbackTrigger = document.activeElement
+  feedback.value = value
+  feedbackId.value += 1
+  scheduleFeedback()
+}
+
+watch(curPageId, clearFeedback)
+
 async function shareTool() {
   const tool = activeTool.value
-  clearTimeout(shareTimer)
   try {
     await copyText(`${tool.name}\n${tool.description}\nhttps://cpython666.github.io${toolPath(tool.pageId)}`)
-    shareNotice.value = '工具简介和直达链接已复制！'
+    showFeedback({ message: '工具简介和直达链接已复制！', kind: 'success' })
+    shareCopied.value = true
   } catch {
-    shareNotice.value = '复制失败，请重试。'
+    showFeedback({ message: '复制失败，请重试。', kind: 'error' })
   }
-  shareTimer = setTimeout(() => { shareNotice.value = '' }, 3000)
 }
 
 function redirectLegacyLink() {
@@ -135,7 +176,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  clearTimeout(shareTimer)
+  clearFeedback()
   window.removeEventListener('hashchange', redirectLegacyLink)
   if (router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
 })
@@ -374,21 +415,41 @@ onUnmounted(() => {
   stroke-width: 1.8;
 }
 
-.share-notice {
+.tool-feedback {
   position: fixed;
-  bottom: 24px;
+  top: calc(var(--vp-nav-height, 64px) + 16px + env(safe-area-inset-top, 0px));
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
-  width: max-content;
-  max-width: calc(100vw - 32px);
-  padding: 10px 16px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, .12);
+  z-index: 1100;
+  width: min(420px, calc(100vw - 32px));
+  pointer-events: none;
 }
+
+.feedback-card {
+  --feedback-color: var(--vp-c-green-1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--feedback-color);
+  border-left-width: 4px;
+  border-radius: 12px;
+  background: var(--vp-c-bg-elv, var(--vp-c-bg));
+  color: var(--vp-c-text-1);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .25), 0 0 0 4px color-mix(in srgb, var(--feedback-color) 12%, transparent);
+  pointer-events: auto;
+  animation: feedback-in .18s ease-out;
+}
+.feedback-card.kind-error { --feedback-color: var(--vp-c-red-1); }
+.feedback-icon { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 50%; color: var(--vp-c-bg); background: var(--feedback-color); font-size: 19px; font-weight: 800; }
+.feedback-card > div { flex: 1; min-width: 0; }
+.feedback-card strong { color: var(--feedback-color); font-size: 15px; }
+.feedback-message { margin: 3px 0 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.feedback-card button { flex: none; width: 28px; height: 28px; border-radius: 6px; color: var(--vp-c-text-2); font-size: 24px; cursor: pointer; }
+.feedback-card button:hover { background: var(--vp-c-bg-soft); }
+.feedback-card button:focus-visible { outline: 2px solid var(--feedback-color); outline-offset: 2px; }
+@keyframes feedback-in { from { opacity: 0; translate: 0 -8px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .feedback-card { animation: none; } }
 
 @media (max-width: 768px) {
   .tools-page {

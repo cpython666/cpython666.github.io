@@ -10,6 +10,36 @@ import { dirname, extname, join, resolve } from 'node:path'
 import { promisify } from 'node:util'
 import { chromium } from 'playwright'
 
+// Read one byte at a time so no member body can enter a read buffer.
+async function readFrontmatter(file) {
+  const byte = Buffer.alloc(1)
+  const lines = []
+  let line = []
+  for (let offset = 0; offset < 65536; offset++) {
+    const { bytesRead } = await file.read(byte, 0, 1, null)
+    assert.ok(bytesRead, 'frontmatter must have a closing delimiter')
+    if (byte[0] !== 10) { line.push(byte[0]); continue }
+    const value = Buffer.from(line).toString('utf8').replace(/\r$/, '')
+    line = []
+    if (!lines.length) assert.equal(value, '---', 'page has frontmatter')
+    else if (value === '---') return lines.slice(1).join('\n')
+    lines.push(value)
+  }
+  throw new Error('frontmatter exceeds safety limit')
+}
+for (const newline of ['\n', '\r\n']) {
+  const header = ['---', 'memberOnly: true', '---', ''].join(newline)
+  const data = Buffer.from(header + 'BODY MUST NOT BE READ')
+  let offset = 0
+  const frontmatter = await readFrontmatter({ read: async buffer => {
+    assert.ok(offset < Buffer.byteLength(header), 'frontmatter reader stops before body')
+    buffer[0] = data[offset++]
+    return { bytesRead: 1 }
+  } })
+  assert.equal(frontmatter, 'memberOnly: true')
+  assert.equal(offset, Buffer.byteLength(header))
+}
+
 const root = resolve(import.meta.dirname, '..')
 const toolsOnly = process.argv.includes('--tools-only')
 const toolPageIds = ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit']
@@ -27,7 +57,7 @@ try {
     await mkdir(join(fixture, path), { recursive: true })
   }
   const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
-  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', 'spider-tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
+  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', 'spider-tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
@@ -73,16 +103,9 @@ try {
   for (const id of toolPageIds) {
     const path = join(root, 'docs/spider-tools', id, 'index.md')
     const file = await open(path, 'r')
-    const frontmatter = []
-    try {
-      let started = false
-      for await (const line of file.readLines({ autoClose: false })) {
-        if (!started) { assert.equal(line, '---', `${id} has frontmatter`); started = true; continue }
-        if (line === '---') break
-        frontmatter.push(line)
-      }
-    } finally { await file.close() }
-    assert.ok(!/memberOnly:\s*['"]?true|privacy:[^\n]*会员可见/.test(frontmatter.join('\n')), `${id} is public`)
+    let frontmatter
+    try { frontmatter = await readFrontmatter(file) } finally { await file.close() }
+    assert.ok(!/memberOnly:\s*['"]?true|privacy:[^\n]*会员可见/.test(frontmatter), `${id} is public`)
     await mkdir(join(fixture, 'spider-tools', id), { recursive: true })
     await copyFile(path, join(fixture, 'spider-tools', id, 'index.md'))
   }
@@ -186,6 +209,55 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   }
   // Match the real theme's selector without loading its unrelated services.
   const markZoomImages = () => page.evaluate(() => document.querySelectorAll('.vp-doc img:not(.no-zoom):not(.site-icon), .x-backup__media img').forEach(img => img.classList.add('is-zoomable')))
+  const expectFeedback = async (target, message, kind = 'success') => {
+    await target.waitForFunction(message => document.querySelector('.feedback-message')?.textContent === message, message)
+    assert.equal(await target.locator(`.feedback-card.kind-${kind}`).count(), 1, 'feedback distinguishes success and failure')
+    assert.equal(await target.locator('.tool-feedback').getAttribute('role'), 'status', 'feedback is announced without moving focus')
+    const box = await target.locator('.feedback-card').boundingBox()
+    const { width, height } = target.viewportSize()
+    assert.ok(box && box.x >= 0 && box.x + box.width <= width && box.y >= 0 && box.y + box.height < height / 2,
+      `feedback is fully visible near the top of the viewport: ${JSON.stringify(box)}`)
+  }
+  const checkSelectKeyboard = async (target, label, outside) => {
+    const trigger = target.getByRole('combobox', { name: label, exact: true })
+    const list = target.getByRole('listbox', { name: label, exact: true })
+    assert.equal(await target.locator('select, datalist').count(), 0, 'no browser-native dropdown remains')
+    await trigger.focus()
+    const original = await trigger.textContent()
+    await trigger.press('Space')
+    await list.waitFor()
+    const options = list.getByRole('option')
+    const count = await options.count()
+    assert.ok(count > 1)
+    const active = async index => assert.equal(await trigger.getAttribute('aria-activedescendant'), await options.nth(index).getAttribute('id'))
+    await trigger.press('End'); await active(count - 1)
+    await trigger.press('ArrowUp'); await active(count - 2)
+    await trigger.press('Home'); await active(0)
+    await trigger.press('ArrowDown'); await active(1)
+    await trigger.press('Escape')
+    assert.equal(await list.count(), 0, 'Escape dismisses the menu')
+    assert.equal(await trigger.textContent(), original, 'Escape does not select the highlighted option')
+    assert.ok(await trigger.evaluate(element => document.activeElement === element), 'Escape keeps the trigger focused')
+    await trigger.press('Enter')
+    await trigger.press('Home')
+    await trigger.press('ArrowDown')
+    const chosen = (await options.nth(1).textContent()).trim()
+    await trigger.press('Enter')
+    assert.equal((await trigger.textContent()).trim(), chosen, 'Enter selects the highlighted option')
+    assert.equal(await list.count(), 0)
+    assert.ok(await trigger.evaluate(element => document.activeElement === element), 'selection returns focus to the trigger')
+    await trigger.press('ArrowUp')
+    await list.waitFor()
+    await trigger.press('Tab')
+    assert.equal(await list.count(), 0, 'Tab dismisses without trapping focus')
+    assert.ok(await trigger.evaluate(element => document.activeElement !== element))
+    await trigger.click()
+    await outside.click()
+    assert.equal(await list.count(), 0, 'outside click dismisses')
+    await trigger.click()
+    await options.first().click()
+    assert.ok(await trigger.evaluate(element => document.activeElement === element), 'pointer selection returns focus')
+  }
   const toolIds = []
   if (baselineIndex < 0 && !projectsOnly) {
     const toolPage = await context.newPage()
@@ -216,6 +288,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
           && (!standalone || location.pathname === `/spider-tools/${id}/`)
       }, { id, standalone })
       assert.equal(await toolPage.locator('.panel-card').count(), 1, 'one active tool panel is rendered')
+      assert.equal(await toolPage.locator('select, datalist').count(), 0, `${id} has no native dropdown`)
       assert.equal(await toolPage.locator('.tools-page h1').count(), 1, 'tool pages have one accessible h1')
       await toolPage.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))))
       if (standalone) assert.ok(await toolPage.locator('.tool-guide').textContent(), `${id} has a rendered guide`)
@@ -248,7 +321,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       const share = `${tool.name}\n${description}\nhttps://cpython666.github.io/spider-tools/${tool.id}/`
       await toolPage.getByRole('button', { name: `分享工具：${tool.name}`, exact: true }).click()
       await toolPage.waitForFunction(text => window.__copiedText === text, share)
-      await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '工具简介和直达链接已复制！')
+      await expectFeedback(toolPage, '工具简介和直达链接已复制！')
       assert.equal(share.split('\n').length, 3, 'sharing contains only name, description and canonical URL')
       await toolPage.goto('about:blank')
       await toolPage.goto(`${base}/spider-tools/${tool.id}/`, { waitUntil: 'networkidle' })
@@ -262,7 +335,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     }
     await toolPage.evaluate(() => { window.__failCopy = true })
     await toolPage.locator('.share-tool').click()
-    await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '复制失败，请重试。')
+    await expectFeedback(toolPage, '复制失败，请重试。', 'error')
     await toolPage.evaluate(() => { window.__failCopy = false })
     const fallbackCopy = await context.newPage()
     fallbackCopy.on('pageerror', error => errors.push(error.message))
@@ -336,16 +409,21 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await toolPage.locator('.nav-list a[href="/spider-tools/o10/"]').click()
     await expectTool('o10')
     const o10 = toolPage.locator('.o10-tool')
+    await checkSelectKeyboard(toolPage, '编码模式', toolPage.locator('.tool-description'))
     for (const [mode, encoded, separator] of [['standard', '1000001O1000010', 'O'], ['pro', 'IlllllI1IllllIl', '1']]) {
-      await o10.locator('#o10-mode').selectOption(mode)
+      await o10.getByRole('combobox', { name: '编码模式' }).click()
+      await o10.getByRole('option', { name: mode === 'pro' ? /^Pro/ : /^标准 O10/ }).click()
       await o10.locator('#o10-input').fill('AB')
       await o10.getByRole('button', { name: '编码', exact: true }).click()
       assert.equal(await o10.locator('#o10-output').inputValue(), encoded, `${mode} UI encodes AB`)
       await o10.getByRole('button', { name: '复制结果', exact: true }).click()
       await toolPage.waitForFunction(text => window.__copiedText === text, encoded)
+      await expectFeedback(toolPage, '处理结果已复制到剪贴板')
+      assert.equal(await o10.getByRole('button', { name: '复制结果', exact: true }).textContent(), '已复制 ✓')
       await o10.getByRole('button', { name: '结果用作输入', exact: true }).click()
       assert.equal(await o10.locator('#o10-input').inputValue(), encoded)
       assert.equal(await o10.locator('#o10-output').inputValue(), '')
+      assert.equal(await o10.getByRole('button', { name: '复制结果', exact: true }).textContent(), '复制结果', 'editing/reusing resets the button')
       await o10.getByRole('button', { name: '解码', exact: true }).click()
       assert.equal(await o10.locator('#o10-output').inputValue(), 'AB', `${mode} UI decodes reused output`)
       await o10.locator('#o10-input').fill(encoded + separator)
@@ -354,6 +432,50 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       assert.match(await o10.locator('.notice').textContent(), /不能有空分段/)
       assert.equal(await o10.getByRole('button', { name: '复制结果', exact: true }).isDisabled(), true)
     }
+    await o10.locator('#o10-input').fill('failure-check')
+    await o10.getByRole('button', { name: '编码', exact: true }).click()
+    await toolPage.evaluate(() => { window.__failCopy = true })
+    await o10.getByRole('button', { name: '复制结果', exact: true }).click()
+    await expectFeedback(toolPage, '复制失败，请选中结果手动复制。', 'error')
+    assert.equal(await o10.getByRole('button', { name: '复制结果', exact: true }).textContent(), '复制失败')
+    await toolPage.evaluate(() => { window.__failCopy = false })
+    await toolPage.getByRole('button', { name: '关闭提示' }).click()
+    assert.equal(await toolPage.locator('.feedback-card').count(), 0, 'feedback can be dismissed')
+    // Timers are isolated from all other page clocks and layout checks.
+    const timingContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
+    await timingContext.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+    const timed = await timingContext.newPage()
+    timed.on('pageerror', error => errors.push(error.message))
+    await timed.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => {} } }))
+    await timed.goto(`${base}/spider-tools/o10/`, { waitUntil: 'networkidle' })
+    await timed.clock.install()
+    await timed.locator('.share-tool').click()
+    await expectFeedback(timed, '工具简介和直达链接已复制！')
+    await timed.clock.runFor(3000)
+    await timed.locator('.share-tool').click()
+    await timed.clock.runFor(1500)
+    assert.equal(await timed.locator('.feedback-card').count(), 1, 'repeated clicks restart the notice timer without stacking')
+    await timed.clock.runFor(2501)
+    assert.equal(await timed.locator('.feedback-card').count(), 0, 'success feedback expires after four seconds')
+    await timed.locator('.share-tool').click()
+    const closeFeedback = timed.getByRole('button', { name: '关闭提示' })
+    await closeFeedback.focus()
+    await timed.clock.runFor(5000)
+    assert.equal(await timed.locator('.feedback-card').count(), 1, 'focused feedback stays available beyond its expiry')
+    await closeFeedback.press('Enter')
+    assert.equal(await timed.locator('.feedback-card').count(), 0, 'keyboard activation dismisses feedback')
+    assert.ok(await timed.locator('.share-tool').evaluate(element => document.activeElement === element), 'keyboard dismissal restores the triggering button')
+    await timed.locator('.share-tool').click()
+    await closeFeedback.focus()
+    await closeFeedback.press('Tab')
+    assert.ok(await timed.locator('.tool-feedback').evaluate(element => !element.contains(document.activeElement)), 'Tab leaves feedback without trapping focus')
+    await timed.clock.runFor(4001)
+    assert.equal(await timed.locator('.feedback-card').count(), 0, 'feedback expires after focus leaves')
+    await timed.locator('.nav-list a[href="/spider-tools/curl-requests/"]').click()
+    await timed.locator('.copy-button').click()
+    await expectFeedback(timed, 'Python 代码已复制到剪贴板')
+    assert.match(await timed.locator('.copy-button').textContent(), /已复制/)
+    await timingContext.close()
     for (const width of [320, 390]) {
       await toolPage.setViewportSize({ width, height: 844 })
       await toolPage.goto(`${base}/spider-tools/o10/`, { waitUntil: 'networkidle' })
@@ -374,6 +496,17 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         })
         assert.ok(layout.scrollWidth <= width && !layout.clipped, `${tool.id} share bar fits at ${width}px`)
         if (tool.id === 'o10') {
+          for (const dark of [false, true]) {
+            await toolPage.evaluate(dark => document.documentElement.classList.toggle('dark', dark), dark)
+            await o10.getByRole('combobox', { name: '编码模式' }).click()
+            const menu = await o10.getByRole('listbox').boundingBox()
+            assert.ok(menu && menu.x >= 0 && menu.x + menu.width <= width && menu.y >= 0 && menu.y + menu.height <= 844,
+              `O10 ${dark ? 'dark' : 'light'} menu fits the ${width}px viewport`)
+            await o10.getByRole('option', { name: /^Pro/ }).click()
+          }
+          await o10.getByRole('button', { name: '编码', exact: true }).click()
+          await o10.getByRole('button', { name: '复制结果', exact: true }).click()
+          await expectFeedback(toolPage, '处理结果已复制到剪贴板')
           assert.equal(await o10.evaluate(element => {
             const panel = element.getBoundingClientRect()
             return [...element.querySelectorAll('select, textarea, button')].some(control => {
@@ -384,13 +517,32 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         }
       }
       await toolPage.locator('.share-tool').click()
-      await toolPage.waitForFunction(() => document.querySelector('.share-notice')?.textContent === '工具简介和直达链接已复制！')
-      const notice = await toolPage.locator('.share-notice').boundingBox()
+      await expectFeedback(toolPage, '工具简介和直达链接已复制！')
+      const notice = await toolPage.locator('.feedback-card').boundingBox()
       assert.ok(notice?.x >= 0 && notice.x + notice.width <= width, `share feedback fits at ${width}px`)
+    }
+    await toolPage.setViewportSize({ width: 320, height: 844 })
+    await toolPage.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
+    await checkSelectKeyboard(toolPage, '资源分类', toolPage.locator('.resource-stats'))
+    for (const dark of [false, true]) {
+      await toolPage.evaluate(dark => document.documentElement.classList.toggle('dark', dark), dark)
+      const trigger = toolPage.getByRole('combobox', { name: '资源分类' })
+      await trigger.click()
+      await trigger.press('End')
+      const menu = toolPage.getByRole('listbox', { name: '资源分类' })
+      const bounds = await menu.boundingBox()
+      assert.ok(bounds && bounds.x >= 0 && bounds.x + bounds.width <= 320 && bounds.y >= 0 && bounds.y + bounds.height <= 844, 'long category menu fits mobile viewport')
+      const scroll = await menu.evaluate(element => ({ top: element.scrollTop, height: element.clientHeight, total: element.scrollHeight }))
+      assert.ok(scroll.top > 0 && scroll.total > scroll.height, 'End scrolls long menu to the last option')
+      const last = await menu.getByRole('option').last().boundingBox()
+      assert.ok(last && last.y >= bounds.y - 1 && last.y + last.height <= bounds.y + bounds.height + 1, 'last category is visible')
+      await trigger.press('Home')
+      await trigger.press('Space')
+      assert.equal(await menu.count(), 0)
     }
     await toolPage.close()
     assert.deepEqual(errors, [])
-    console.log(`PASS: ${tools.length} tools; three-line canonical sharing without user input; clipboard success/failure/legacy fallback; independent direct links and reload; SPA navigation/history; legacy hash replacement/query preservation, same-component query/hash navigation, guide anchor preservation and unknown fallback; O10 standard/Pro encoding, copying, output reuse/decoding and invalid-input feedback; 320/390px controls, share bars and feedback.`)
+    console.log(`PASS: ${tools.length} tools; three-line canonical sharing without user input; clipboard success/failure/legacy fallback; independent direct links and reload; SPA navigation/history; legacy hash replacement/query preservation, same-component query/hash navigation, guide anchor preservation and unknown fallback; O10 standard/Pro encoding, copying, output reuse/decoding and invalid-input feedback; custom selection keyboard/focus/outside-click and long-list controls; light/dark 320/390px controls, share bars and visible feedback; copy errors, repeat/dismiss/expiry and safe frontmatter-only reads.`)
   }
   if (!toolsOnly && !projectsOnly) await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
   const initial = toolsOnly || projectsOnly ? null : await page.evaluate(() => ({
@@ -585,9 +737,11 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
           await countCards(Math.min(36, resources.length))
           if (width < 760) {
             await loadNextBatch()
-            await page.getByRole('combobox', { name: '资源分类' }).selectOption('AI模型检测')
+            await page.getByRole('combobox', { name: '资源分类' }).click()
+            await page.getByRole('option', { name: /^AI模型检测 ·/ }).click()
             await countCards(detection.items.length)
-            await page.getByRole('combobox', { name: '资源分类' }).selectOption('')
+            await page.getByRole('combobox', { name: '资源分类' }).click()
+            await page.getByRole('option', { name: /^全部资源 ·/ }).click()
             await countCards(Math.min(36, resources.length))
             await noOverflow(`selected categories fit ${width}px`)
           }
