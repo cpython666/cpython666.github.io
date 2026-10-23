@@ -645,6 +645,7 @@ let algorithm_items = [
 ];
 let web_intro_items = [
   { text: "站长介绍", link: "/web-intro/" },
+  { text: "昵称与签名历史", link: "/web-intro/profile-history" },
   {
     text: "团队介绍",
     link: "/web-intro/team-intro",

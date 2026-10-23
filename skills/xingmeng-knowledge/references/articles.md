@@ -1,6 +1,6 @@
 # 星梦启航公开文章目录
 
-共 275 篇，按栏目分组，每条是“标题（日期）：摘要”。只收公开文章，会员文章和草稿不在其中。需要全文时打开链接阅读。
+共 276 篇，按栏目分组，每条是“标题（日期）：摘要”。只收公开文章，会员文章和草稿不在其中。需要全文时打开链接阅读。
 
 ## Python
 
@@ -292,7 +292,8 @@
 - [开发日记](https://cpython666.github.io/web-intro/development-diary)：本站的开发日记，按时间记录踩过的坑与实现过程。曾经想做最炫酷的网站写最花哨的样式，现在写代码能跑就行。
 - [开发历程](https://cpython666.github.io/web-intro/development-origins)：为什么搭建这个网站：自己淋过雨，才更想为别人撑伞。记录从 2024.03.28 开始的技术选型、待办规划与建站开端。
 - [页面特效设置](https://cpython666.github.io/web-intro/effects-settings)：控制网站飞翔的小鸟和点击爆炸特效是否关闭
-- [关于本站](https://cpython666.github.io/web-intro/)：站长个人介绍、技能、奖项与作品，附仓库地址、个性签名和联系方式，以及支持站长的方式。
+- [关于本站](https://cpython666.github.io/web-intro/)：站长个人介绍、技能、奖项与作品，附仓库地址、个性签名、昵称与签名历史和联系方式，以及支持站长的方式。
+- [昵称与签名历史](https://cpython666.github.io/web-intro/profile-history)：记录用过的昵称、公众号简介和博客个性签名，留住不同阶段的自我介绍。
 - [支持作者](https://cpython666.github.io/web-intro/support)：支持本站的几种方式，以及一个高性价比服务器厂商的推荐与推广链接。
 - [团队介绍](https://cpython666.github.io/web-intro/team-intro)：本站团队成员介绍，含头像、职能与 GitHub 等社交主页链接。
 

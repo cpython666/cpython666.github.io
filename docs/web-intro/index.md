@@ -1,6 +1,6 @@
 ---
 title: "关于本站"
-description: "站长个人介绍、技能、奖项与作品，附仓库地址、个性签名和联系方式，以及支持站长的方式。"
+description: "站长个人介绍、技能、奖项与作品，附仓库地址、个性签名、昵称与签名历史和联系方式，以及支持站长的方式。"
 keywords: "关于本站,个人介绍,站长,作品,联系方式"
 ---
 
@@ -43,6 +43,9 @@ keywords: "关于本站,个人介绍,站长,作品,联系方式"
 ## 个人介绍
 
 也算是半个诗人吧，毕竟代码里那么多换行。
+
+用过的名字和写过的简介，收在[昵称与签名历史](/web-intro/profile-history)里。
+
 ## 技能
 
 全栈开发/Python后端/自动化爬虫/前端
@@ -77,7 +80,7 @@ Github主页：https://cpython666.github.io/
 
 语雀文档：https://www.yuque.com/python666
 
-公众号：Python斗罗
+公众号：SI斗罗（曾用名：Python斗罗）
 
 ## 仓库地址
 
@@ -93,6 +96,8 @@ https://stardreamfly.github.io
 ## 个性签名
 
 凭着兴趣做一些事情，很累但也很酷。编程也可以很有趣。授人以鱼不如授人以渔。
+
+[查看昵称与签名历史](/web-intro/profile-history)
 
 
 

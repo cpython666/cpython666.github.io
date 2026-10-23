@@ -15,6 +15,7 @@
 | 任务 | 源码入口 | 约束或关系 |
 | --- | --- | --- |
 | 站点、顶部导航、侧边栏、SEO、搜索 | `docs/.vitepress/config.mjs` | 顶栏使用 `top_nav_config`，文章导航后提供独立的 `/prompts/` 入口，不显示破局笔记、备份、区块漫步；默认侧栏仍使用完整的 `nav_config`，已有侧边栏目标路径存在性检查 |
+| 个人介绍与昵称签名历史 | `docs/web-intro/index.md`、`docs/web-intro/profile-history.md` | 2026-10-23用户要求归档；个人介绍、个性签名及 `web_intro_items` 提供入口。历史页按平台保留实际用过的文字，区分启用日期与留档日期，不把候选文案记成使用历史 |
 | 文章导航与提示词 | `docs/navigation/NavIndex.vue`、`docs/prompts/PromptPage.vue`、`docs/prompts/prompts.js` | `/navigation/` 只展示文章目录，`/prompts/` 独立展示提示词并支持分类、搜索、复制与分享；原 `/navigation/` 提示词 hash 入口 replace 跳转，旧 ID 保持兼容 |
 | 导航会员标记数据 | `docs/navigation/member.data.mjs` | 使用全站内容加载器，AI 不直接执行；隔离测试替换为人工 fixture |
 | 主题插槽、评论、图片查看、会员遮罩、Live2D | `docs/.vitepress/theme/index.js` | 按本次功能限定修改范围 |
