@@ -353,13 +353,13 @@ export const navigationData = [
     // },
     {
         icon: '/icons/bilibili.ico',
-        title: 'Python斗罗',
+        title: 'SI斗罗',
         desc: '视频推送，合集视频。',
         link: 'https://space.bilibili.com/1909782963',
         categories: ['B站']
     },
     {
-        icon: '/logos/douyin.svg',
+        icon: '/logos/tiktok.svg',
         title: 'Python爸爸',
         desc: '旧账号已封禁，保留此卡片作记录。视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb',
         link: 'https://v.douyin.com/i2VkxqbT/',
@@ -369,22 +369,43 @@ export const navigationData = [
 
     },
     {
-        icon: '/logos/douyin.svg',
-        title: '抖音（新账号）',
+        icon: '/logos/tiktok.svg',
+        title: 'SI斗罗',
         desc: '我的新抖音账号，欢迎关注。',
         link: 'https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU',
         categories: ['抖音', '新账号'],
         type: ['网站', '视频']
     },
     {
-        icon: '/icons/python.png',
-        title: 'Python斗罗',
-        desc: 'Python斗罗运营的公众号',
+        icon: '/logos/wechat.svg',
+        title: 'SI斗罗',
+        desc: 'SI斗罗运营的公众号',
         type: 'qrcode',
         qrcode: '/qrcode/wxgzh.jpg',
         link: '/站长介绍/',
         categories: ['公众号']
 
+    },
+    {
+        icon: '/logos/xiaohongshu.svg',
+        title: 'SI斗罗',
+        desc: '我的小红书主页，欢迎关注。',
+        link: 'https://www.xiaohongshu.com/user/profile/63e21026000000002600652d',
+        categories: ['小红书']
+    },
+    {
+        icon: '/logos/x.svg',
+        title: 'SI斗罗',
+        desc: '我的 X 主页，欢迎关注。',
+        link: 'https://x.com/stardreamfly',
+        categories: ['X']
+    },
+    {
+        icon: '/logos/youtube.svg',
+        title: 'SI斗罗',
+        desc: '我的 YouTube 频道，欢迎订阅。',
+        link: 'https://www.youtube.com/@stardream666',
+        categories: ['YouTube']
     },
     {
         icon: '/icons/github.svg',

@@ -1,6 +1,6 @@
 # 资源导航
 
-站长整理的 537 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
+站长整理的 540 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
 
 ## 分类目录
 
@@ -12,7 +12,7 @@
 - AI图像绘画（11）
 - AI 3D（2）
 - AI文档办公（10）
-- 认识我（6）
+- 认识我（9）
 - 网站导航（9）
 - 编程（14）
 - 比赛（3）
@@ -130,10 +130,13 @@
 
 ## 认识我
 
-- [Python斗罗](https://space.bilibili.com/1909782963)：视频推送，合集视频。 `B站`
+- [SI斗罗](https://space.bilibili.com/1909782963)：视频推送，合集视频。 `B站`
 - [Python爸爸](https://v.douyin.com/i2VkxqbT/)：旧账号已封禁，保留此卡片作记录。视频推送，合集视频。为什么叫Python爸爸，因为在进直播间的时候，主播会说：欢迎。。。bb `抖音 / 旧账号`
-- [抖音（新账号）](https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU)：我的新抖音账号，欢迎关注。 `抖音 / 新账号`
-- [Python斗罗](/站长介绍/)：Python斗罗运营的公众号 `公众号`
+- [SI斗罗](https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU)：我的新抖音账号，欢迎关注。 `抖音 / 新账号`
+- [SI斗罗](/站长介绍/)：SI斗罗运营的公众号 `公众号`
+- [SI斗罗](https://www.xiaohongshu.com/user/profile/63e21026000000002600652d)：我的小红书主页，欢迎关注。 `小红书`
+- [SI斗罗](https://x.com/stardreamfly)：我的 X 主页，欢迎关注。 `X`
+- [SI斗罗](https://www.youtube.com/@stardream666)：我的 YouTube 频道，欢迎订阅。 `YouTube`
 - [cpython666](https://github.com/cpython666)：Python斗罗的代码仓库 `Github`
 - [Python斗罗](https://codefly.blog.csdn.net/)：Python斗罗的博客 `博客 / CSDN`
 
