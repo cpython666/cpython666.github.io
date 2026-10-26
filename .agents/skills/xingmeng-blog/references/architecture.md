@@ -47,6 +47,7 @@
 - Google 接入：`config.mjs` 的 head 已启用一个 `google-site-verification` 标签，2026-10-21 在线首页也确认存在；`robots.txt` 已声明可访问的 `/sitemap.xml`。标签存在只证明网站端已配置，Search Console 账号的所有权验证、站点地图提交与处理结果须在后台核实；代码内旧「未成功」注释不能代替当前状态。Google Analytics/gtag 目前仅保留被注释的 TAG_ID 示例，没有启用；不把它与 Search Console 混淆，也不记录验证码。
 - `themeConfig.lastUpdated` 在当前 VitePress 版本仍有兼容处理，不能仅凭位置断言更新时间失效。
 - 项目页顶部在 `ProjectPage.vue` 内展示最多 5 个高 Stars GitHub 仓库轮播，按已有 Stars 数据降序、按仓库地址去重，复用现有 API 与 6 小时缓存；未知 Stars 不当作零参与排名，没有任何已知值时回退为“精选项目”。轮播独立于下方搜索/分类，支持前后、指示点和键盘左右键，每 6 秒自动切换；悬停、焦点进入、隐藏页签或减少动态效果时暂停，提供手动播放开关，卸载清理计时器和监听。封面继续使用 16:9 完整展示，不新增轮播依赖。
+- 项目页搜索与分类共用 `.controls` 吸顶栏，≥960px 停在导航下方（`--vp-nav-height`），≤959px 顶部为0；沿用主题实色背景、底边框和低于导航的层级。不能只让内部分类列表 sticky，否则会被短父容器限制。切分类后等 DOM 更新，按筛选栏实际高度定位结果起点，首项不被遮挡且焦点留在按钮；点击已选分类不跳滚动。
 - 项目页五个教程合集（DrissionPage、Pygame、Django、Scrapy、PyQt6）的独立封面位于 `docs/public/imgs/app/<小写技术名>-tutorial.webp`，由 `docs/projects/data.js` 引用；统一为 1280×720（16:9）WebP，约 46–66 KiB，使用深色等距插画、英文技术名与中文主题。更换封面时保持图片比例，并检查“合集”筛选下五张图片实际加载及手机端标题完整性。
 - 资源导航广告图、项目精选/卡片封面和图片分割预览使用 `no-zoom`；否则主题会将其加入 PhotoSwipe，并受到 `.vp-doc img.is-zoomable` 的 520px 最大宽度及上下 16px 外边距影响，外链点击也会被图片查看器拦截。
 - 工具总入口 `/spider-tools/` 保留，7 个工具各有 `/spider-tools/<pageId>/index.md` 对应的独立网址 `/spider-tools/<pageId>/`；页面用 `SpiderTools tool-id` 复用布局，只渲染当前工具，默认 slot 放静态 Markdown 使用说明、示例和相关工具链接。标题用 sr-only h1，不增加顶部大标题；手机直接打开时定位操作面板，已有指南锚点优先。工具间导航切换页面，输入不跨页面保存。

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { projects, sortProjects } from './data.js'
 
 const GH_USER = 'cpython666'
@@ -10,6 +10,8 @@ const REQUEST_TIMEOUT = 8000
 const defaultImg = '/imgs/app/default.svg'
 const query = ref('')
 const activeCategory = ref('全部')
+const controls = ref(null)
+const resultsStart = ref(null)
 const starStatus = ref('idle')
 const starMessage = ref('Stars 等待加载')
 
@@ -50,6 +52,17 @@ const filteredItems = computed(() => {
     return text.includes(normalizedQuery.value)
   })
 })
+
+const selectCategory = async (category) => {
+  if (activeCategory.value === category) return
+  activeCategory.value = category
+  await nextTick()
+  const offset = parseFloat(getComputedStyle(controls.value).top) + controls.value.offsetHeight + 16
+  window.scrollTo({
+    top: window.scrollY + resultsStart.value.getBoundingClientRect().top - offset,
+    behavior: 'instant',
+  })
+}
 
 const featuredIndex = ref(0)
 const autoplay = ref(true)
@@ -124,13 +137,18 @@ const formatStars = (value) => {
   return String(value)
 }
 
+const isStarCount = (value) => Number.isSafeInteger(value) && value >= 0
+
 const readStarCache = () => {
   try {
     const raw = localStorage.getItem(CACHE_KEY)
     if (!raw) return null
     const cache = JSON.parse(raw)
-    if (!cache || Date.now() - cache.time > CACHE_TTL) return null
-    return cache.stars || null
+    if (!cache?.stars || typeof cache.stars !== 'object' || Array.isArray(cache.stars)) return null
+    const stars = Object.fromEntries(Object.entries(cache.stars).filter(([, value]) => isStarCount(value)))
+    if (!Object.keys(stars).length) return null
+    const time = Number.isFinite(cache.time) && cache.time > 0 && cache.time <= Date.now() ? cache.time : 0
+    return { time, stars }
   } catch (_) {
     return null
   }
@@ -177,10 +195,13 @@ const fetchUserRepoStars = async () => {
     if (!res.ok) throw new Error(`GitHub API ${res.status}`)
 
     const data = await res.json()
-    if (!Array.isArray(data) || !data.length) break
+    if (!Array.isArray(data)) throw new Error('GitHub API 返回格式异常')
+    if (!data.length) break
 
     data.forEach(repo => {
-      if (repo?.full_name) map[repo.full_name.toLowerCase()] = repo.stargazers_count || 0
+      if (typeof repo?.full_name === 'string' && isStarCount(repo.stargazers_count)) {
+        map[repo.full_name.toLowerCase()] = repo.stargazers_count
+      }
     })
     if (data.length < perPage) break
     page += 1
@@ -195,12 +216,13 @@ const fetchOtherRepoStars = async (knownMap) => {
     .map(project => parseRepoFromUrl(project.url))
     .filter(repo => repo && !Object.prototype.hasOwnProperty.call(map, repo.key))
 
-  await Promise.all(repos.map(async repo => {
+  const uniqueRepos = [...new Map(repos.map(repo => [repo.key, repo])).values()]
+  await Promise.all(uniqueRepos.map(async repo => {
     try {
       const res = await fetchWithTimeout(`https://api.github.com/repos/${repo.owner}/${repo.repo}`)
       if (!res.ok) return
       const data = await res.json()
-      map[repo.key] = data.stargazers_count || 0
+      if (isStarCount(data?.stargazers_count)) map[repo.key] = data.stargazers_count
     } catch (_) {}
   }))
 
@@ -209,26 +231,31 @@ const fetchOtherRepoStars = async (knownMap) => {
 
 const loadStars = async () => {
   const cached = readStarCache()
-  if (cached) {
-    const count = applyStars(cached)
+  const cachedCount = applyStars(cached?.stars)
+  if (cachedCount) {
     starStatus.value = 'cached'
-    starMessage.value = `Stars 来自缓存，已匹配 ${count}/${githubProjects.value.length} 个仓库`
-    return
+    starMessage.value = `Stars 来自缓存，已匹配 ${cachedCount}/${githubProjects.value.length} 个仓库`
+    if (Date.now() - cached.time < CACHE_TTL) return
+    starMessage.value = 'Stars 已显示缓存，正在后台更新'
+  } else {
+    starStatus.value = 'loading'
+    starMessage.value = '正在从 GitHub API 获取 Stars'
   }
-
-  starStatus.value = 'loading'
-  starMessage.value = '正在从 GitHub API 获取 Stars'
 
   try {
     const userMap = await fetchUserRepoStars()
-    const fullMap = await fetchOtherRepoStars(userMap)
+    const fetchedMap = await fetchOtherRepoStars(userMap)
+    if (!Object.keys(fetchedMap).length) throw new Error('GitHub API 未返回有效 Stars')
+    const fullMap = { ...cached?.stars, ...fetchedMap }
     const count = applyStars(fullMap)
     writeStarCache(fullMap)
     starStatus.value = 'ready'
     starMessage.value = `Stars 已更新，匹配 ${count}/${githubProjects.value.length} 个仓库`
   } catch (error) {
-    starStatus.value = 'error'
-    starMessage.value = `Stars 获取失败：${error?.message || 'GitHub API 暂不可用'}`
+    starStatus.value = cachedCount ? 'cached' : 'error'
+    starMessage.value = cachedCount
+      ? 'Stars 暂未更新，继续显示缓存，稍后访问时重试'
+      : `Stars 获取失败：${error?.message || 'GitHub API 暂不可用'}`
   }
 }
 
@@ -318,7 +345,7 @@ onBeforeUnmount(() => {
       </div>
     </section>
 
-    <section class="controls" aria-label="项目筛选">
+    <section ref="controls" class="controls" aria-label="项目筛选">
       <label class="search-box">
         <span>搜索</span>
         <input v-model="query" type="search" placeholder="项目名、描述或分类" />
@@ -330,15 +357,16 @@ onBeforeUnmount(() => {
           :key="category"
           class="category-button"
           :class="{ active: activeCategory === category }"
+          :aria-pressed="activeCategory === category"
           type="button"
-          @click="activeCategory = category"
+          @click="selectCategory(category)"
         >
           {{ category }}
         </button>
       </div>
     </section>
 
-    <div class="status-row">
+    <div ref="resultsStart" class="status-row">
       <div class="project-stats" aria-label="项目统计">
         <span class="result-count">当前展示 {{ filteredItems.length }} / {{ viewItems.length }} 个项目</span>
         <span>{{ githubProjects.length }} 个仓库</span>
@@ -583,11 +611,17 @@ onBeforeUnmount(() => {
 }
 
 .controls {
+  position: sticky;
+  top: var(--vp-nav-height, 64px);
+  z-index: 20;
   display: grid;
   grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
   gap: 14px;
   align-items: start;
   margin-top: 24px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
 }
 
 .search-box {
@@ -835,6 +869,12 @@ onBeforeUnmount(() => {
 
 .empty-state p {
   margin: 0;
+}
+
+@media (max-width: 959px) {
+  .controls {
+    top: 0;
+  }
 }
 
 @media (max-width: 860px) {

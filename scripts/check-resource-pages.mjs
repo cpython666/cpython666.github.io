@@ -620,6 +620,130 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       assert.equal(await target.locator('.featured-image img').getAttribute('src'), project.image)
       assert.equal(await target.locator('.featured-image img').getAttribute('alt'), project.title)
     }
+    const cacheKey = 'stardream:github-stars:v1'
+    const cachedStars = Object.fromEntries(repos.map(repo => [repo.full_name.toLowerCase(), repo.stargazers_count]))
+    cachedStars['cpython666/coolbgs'] = 950
+    const staleCache = { time: Date.now() - 7 * 60 * 60 * 1000, stars: cachedStars }
+    const cachePage = async (cache, storageFailure) => {
+      const target = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' })
+      target.setDefaultTimeout(10000)
+      target.on('pageerror', error => errors.push(error.message))
+      await target.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+      await target.goto(`${base}/sample/`, { waitUntil: 'networkidle' })
+      if (cache !== undefined) await target.evaluate(({ key, value }) => localStorage.setItem(key, value), {
+        key: cacheKey, value: typeof cache === 'string' ? cache : JSON.stringify(cache),
+      })
+      if (storageFailure) await target.addInitScript(({ key, method }) => {
+        const original = Storage.prototype[method]
+        Storage.prototype[method] = function (name, ...args) {
+          if (name === key) throw new DOMException('Storage disabled for this check', 'SecurityError')
+          return original.call(this, name, ...args)
+        }
+      }, { key: cacheKey, method: storageFailure })
+      return target
+    }
+    const readCache = target => target.evaluate(key => localStorage.getItem(key), cacheKey)
+    const cardStars = (target, title) => target.locator('.cards .card')
+      .filter({ has: target.getByRole('heading', { name: title, exact: true }) }).locator('.star-pill').textContent()
+
+    const freshCache = { ...staleCache, time: Date.now() }
+    const fresh = await cachePage(freshCache)
+    let freshRequests = 0
+    await fresh.route('**/__fixture/github/**', route => { freshRequests += 1; return route.continue() })
+    await fresh.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await fresh.locator('.star-status.cached').waitFor()
+    assert.equal(await cardStars(fresh, 'CoolBgs'), '★ 950', 'fresh cache renders without requesting GitHub')
+    await fresh.reload({ waitUntil: 'networkidle' })
+    await fresh.locator('.star-status.cached').waitFor()
+    const freshOrigin = await fresh.evaluate(() => performance.timeOrigin)
+    await fresh.locator('.VPNavBar').getByRole('link', { name: '目录', exact: true }).click()
+    await fresh.waitForURL(`${base}/sample/`)
+    await fresh.locator('.VPNavBar').getByRole('link', { name: '项目', exact: true }).click()
+    await fresh.locator('.star-status.cached').waitFor()
+    assert.equal(await fresh.evaluate(() => performance.timeOrigin), freshOrigin, 'cache also works after SPA remount')
+    assert.equal(freshRequests, 0, 'fresh cache suppresses all Stars API requests across reload and SPA navigation')
+    assert.deepEqual(JSON.parse(await readCache(fresh)), freshCache, 'cache reads do not extend its lifetime')
+    await fresh.close()
+
+    const stale = await cachePage(staleCache)
+    let releaseRefresh
+    const refreshGate = new Promise(resolve => { releaseRefresh = resolve })
+    await stale.route('**/__fixture/github/**', async route => { await refreshGate; await route.continue() })
+    const refreshRequest = stale.waitForRequest('**/__fixture/github/**')
+    await stale.goto(`${base}/projects/`, { waitUntil: 'domcontentloaded' })
+    await refreshRequest
+    await stale.locator('.star-status.cached').waitFor()
+    assert.equal(await cardStars(stale, 'CoolBgs'), '★ 950', 'expired count remains visible while refresh is pending')
+    await checkSlide(stale, topProjects[0])
+    assert.deepEqual(await stale.getByRole('button', { name: /^查看项目：/ }).evaluateAll(buttons => buttons.map(button => button.getAttribute('aria-label'))),
+      topProjects.map(project => `查看项目：${project.title}`), 'expired cache still supplies the carousel ranking')
+    assert.deepEqual(JSON.parse(await readCache(stale)), staleCache, 'pending refresh does not extend cache time')
+    releaseRefresh()
+    await stale.locator('.star-status.ready').waitFor()
+    assert.equal(await cardStars(stale, 'CoolBgs'), '★ 900', 'successful background refresh updates the visible count')
+    const refreshedCache = JSON.parse(await readCache(stale))
+    assert.equal(refreshedCache.stars['cpython666/coolbgs'], 900)
+    assert.ok(refreshedCache.time > staleCache.time, 'successful refresh persists a new timestamp')
+    await stale.reload({ waitUntil: 'networkidle' })
+    await stale.locator('.star-status.cached').waitFor()
+    assert.equal(await cardStars(stale, 'CoolBgs'), '★ 900', 'refreshed data survives reload')
+    await stale.close()
+
+    for (const failure of ['http', 'schema', 'counts']) {
+      const failed = await cachePage(staleCache)
+      await failed.route('**/__fixture/github/**', route => route.fulfill({
+        status: failure === 'http' ? 503 : 200, contentType: 'application/json',
+        body: JSON.stringify(failure === 'counts' && new URL(route.request().url()).pathname.includes('/users/')
+          ? repos.map(repo => ({ full_name: repo.full_name, stargazers_count: -1 }))
+          : { message: 'Invalid repository response' }),
+      }))
+      await failed.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+      await failed.locator('.star-status.cached').waitFor()
+      assert.equal(await cardStars(failed, 'CoolBgs'), '★ 950', 'failed or invalid refresh preserves visible cached values')
+      assert.deepEqual(JSON.parse(await readCache(failed)), staleCache, 'failed or invalid refresh preserves cache and timestamp')
+      await failed.close()
+    }
+
+    const partial = await cachePage(staleCache)
+    let missingRepoRequests = 0
+    await partial.route('**/__fixture/github/**', route => {
+      if (new URL(route.request().url()).pathname.includes('/users/')) return route.fulfill({
+        contentType: 'application/json', body: JSON.stringify(repos.filter(repo => !repo.full_name.endsWith('/Spider-Project'))),
+      })
+      missingRepoRequests += 1
+      return route.fulfill({ status: 503, contentType: 'application/json', body: '{}' })
+    })
+    await partial.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await partial.locator('.star-status.ready').waitFor()
+    assert.equal(missingRepoRequests, 1, 'duplicate project entries share one missing-repository request')
+    assert.equal(await cardStars(partial, 'CoolBgs'), '★ 900')
+    assert.equal(await cardStars(partial, 'IPProxyPool'), '★ 800', 'failed repository keeps its previous count')
+    assert.equal(JSON.parse(await readCache(partial)).stars['cpython666/spider-project'], 800, 'partial refresh keeps failed repository in persistent cache')
+    await partial.close()
+
+    for (const [cache, storageFailure] of [
+      ['{broken json'],
+      [{ time: 'invalid', stars: cachedStars }],
+      [undefined, 'getItem'],
+      [undefined, 'setItem'],
+    ]) {
+      const recovered = await cachePage(cache, storageFailure)
+      await recovered.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+      await recovered.locator('.star-status.ready').waitFor()
+      assert.equal(await cardStars(recovered, 'CoolBgs'), '★ 900', 'corrupt cache or unavailable storage does not block API data')
+      await recovered.close()
+    }
+    const invalidCounts = await cachePage({ ...freshCache, stars: {
+      ...cachedStars, 'cpython666/coolbgs': -1, 'cpython666/learnspider': 1.5, 'cpython666/handwritinggenerator': '600', 'cpython666/fuckspider': 0,
+    } })
+    await invalidCounts.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
+    await invalidCounts.locator('.star-status.cached').waitFor()
+    for (const title of ['CoolBgs', 'LearnSpider', 'HandwritingGenerator']) {
+      assert.equal(await cardStars(invalidCounts, title), '★ —', 'invalid cached counts are not displayed as Stars')
+    }
+    assert.equal(await cardStars(invalidCounts, 'FuckSpider'), '★ 0', 'zero is a valid cached Stars count')
+    await invalidCounts.close()
+    console.log('PASS: Stars cache across reload/SPA without API requests; stale values/ranking during delayed refresh; persistent updates; failure/invalid response preserves old values and timestamp; partial refresh with repository deduplication; corrupt cache and storage errors; invalid count filtering.')
     // page.clock affects its entire context; keep timed checks separate from layout checks.
     const carousel = await browser.newPage({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark' })
     await carousel.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
@@ -768,6 +892,24 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
             assert.equal(image.position, 'absolute')
           }
           assert.equal(await page.locator('.image img.is-zoomable, .featured-image img.is-zoomable').count(), 0, 'project covers stay outside article image zoom')
+          await page.evaluate(() => scrollTo({
+            top: scrollY + document.querySelector('.controls').getBoundingClientRect().top + 600, behavior: 'instant',
+          }))
+          await page.waitForFunction(top => Math.abs(document.querySelector('.controls').getBoundingClientRect().top - top) < 1,
+            width >= 960 ? 64 : 0)
+          const stickyBounds = await page.locator('.controls').boundingBox()
+          assert.ok(stickyBounds.x >= 0 && stickyBounds.x + stickyBounds.width <= width, `sticky filters fit ${width}px`)
+          await page.locator('.controls').getByRole('button', { name: '爬虫', exact: true }).click()
+          await page.waitForFunction(() => {
+            const filters = document.querySelector('.controls').getBoundingClientRect()
+            const card = document.querySelector('.cards .card').getBoundingClientRect()
+            return card.top >= filters.bottom && card.top < innerHeight
+          })
+          assert.equal(await page.locator('.cards .card').count(), projects.filter(project => project.category.includes('爬虫')).length,
+            `sticky category selection updates results at ${width}px`)
+          await noOverflow(`sticky category results have no overflow at ${width}px`)
+          await page.locator('.controls').getByRole('button', { name: '全部', exact: true }).click()
+          await page.waitForFunction(count => document.querySelectorAll('.cards .card').length === count, projects.length)
         }
         await page.evaluate(() => scrollTo(0, 0))
         if (process.argv.includes('--preview')) {
