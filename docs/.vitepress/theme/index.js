@@ -3,13 +3,14 @@ import giscusTalk from 'vitepress-plugin-comment-with-giscus';
 import { useData, useRoute } from 'vitepress';
 import 'alertifyjs/build/css/alertify.min.css'
 import 'photoswipe/style.css';
-import { computed, h, onBeforeUnmount, onMounted, watch, nextTick } from 'vue';
+import { computed, h, onMounted, watch, nextTick } from 'vue';
 
 import ArticleTools from './components/ArticleTools.vue'
 import ArticleHits from './components/ArticleHits.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 import VipBtn from './components/VipBtn.vue'
 import WalineComment from './components/WalineComment.vue'
+import StarFishMascotLoader from './components/StarFishMascotLoader.vue'
 import { useCommentEnabled } from './comment.js'
 
 /** @type {import('vitepress').Theme} */
@@ -18,7 +19,7 @@ export default {
   Layout: () => h(DefaultTheme.Layout, null, {
     'aside-outline-before': () => h(ArticleOutlineToggle),
     'doc-after': () => h(WalineComment),
-    'layout-bottom': () => [h(ArticleHits), h(ArticleTools)],
+    'layout-bottom': () => [h(ArticleHits), h(ArticleTools), h(StarFishMascotLoader)],
   }),
   enhanceApp({ app }) {
     app.component('VipBtn', VipBtn);
@@ -26,40 +27,6 @@ export default {
   setup() {
     const { frontmatter, theme } = useData();
     const route = useRoute();
-    let live2dLoaded = false;
-    let stopLive2d;
-    onMounted(() => {
-      stopLive2d = watch(() => route.path, (path, _, onCleanup) => {
-        const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (path !== '/' || live2dLoaded || reducedMotion()) return;
-        let cancelled = false;
-        const load = async () => {
-          if (cancelled || reducedMotion()) return;
-          try {
-            const { loadOml2d } = await import('oh-my-live2d');
-            if (cancelled || reducedMotion()) return;
-            loadOml2d({
-              models: [{
-                path: 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json'
-              }]
-            });
-            live2dLoaded = true;
-          } catch {
-            // 装饰加载失败不影响页面使用。
-          }
-        };
-        const useIdleCallback = typeof window.requestIdleCallback === 'function';
-        const task = useIdleCallback
-          ? window.requestIdleCallback(load, { timeout: 2000 })
-          : window.setTimeout(load, 1000);
-        onCleanup(() => {
-          cancelled = true;
-          if (useIdleCallback) window.cancelIdleCallback(task);
-          else window.clearTimeout(task);
-        });
-      }, { immediate: true });
-    });
-    onBeforeUnmount(() => stopLive2d?.());
     const commentEnabled = useCommentEnabled();
     const commentFrontmatter = computed(() => ({
       ...frontmatter.value,

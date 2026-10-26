@@ -5,6 +5,7 @@ cache
 .DS_Store
 imgs/bg/big/
 docs/.vitepress/dist
+/.local-assets/mascot/
 # /docs/index
 # /docs/public
 # /docs/资源导航
