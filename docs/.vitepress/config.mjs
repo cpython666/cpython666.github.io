@@ -835,6 +835,12 @@ let backup_items = [
 ];
 const tech_daily_items = [
   { text: "专栏目录", link: "/tech-daily/" },
+  { text: "011 · Cloudflare开源漏洞审计Skill，南北阁发布33B模型", link: "/tech-daily/2026-10-26" },
+  { text: "010 · Java更新证书信任库，LiteLLM恢复发版", link: "/tech-daily/2026-10-25" },
+  { text: "009 · Kimi新模型上线，PHP又披露特殊配置漏洞", link: "/tech-daily/2026-10-24" },
+  { text: "008 · AI开始给代码写证明，PHP漏洞披露前已遭试探", link: "/tech-daily/2026-10-23" },
+  { text: "007 · PHP紧急修复漏洞，SpaceX与特斯拉评估合并", link: "/tech-daily/2026-10-22" },
+  { text: "006 · DeepSeek开源推理框架，Grok接工单", link: "/tech-daily/2026-10-21" },
   { text: "005 · MiniMax降价，安卓应用跑上Mac", link: "/tech-daily/2026-10-20" },
   { text: "004 · 马斯克看重机器人，AI代码也要“答辩”", link: "/tech-daily/2026-10-19" },
   { text: "003 · DeepSeek更新，AI开始分头干活", link: "/tech-daily/2026-10-18" },
