@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 把 cURL 命令转成 Python Requests 代码，与 https://cpython666.github.io/spider-tools/#curl-requests 同一份函数。
+// 把 cURL 命令转成 Python Requests 代码，与 https://cpython666.github.io/tools/#curl-requests 同一份函数。
 // 用法：node scripts/curl-to-requests.mjs "<curl 命令>"，或通过标准输入传入。
 import { readFileSync } from 'node:fs'
 import { curlToRequests } from './lib/curl-to-requests.mjs'

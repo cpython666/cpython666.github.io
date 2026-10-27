@@ -14,7 +14,7 @@ const hiddenPrefixes = [
   '/nav/',
   '/navigation/',
   '/projects/',
-  '/spider-tools/',
+  '/tools/',
   '/vip/',
   '/web-intro/',
   '/index/',

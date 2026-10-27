@@ -5,12 +5,12 @@ let initialized = false
 let previousPage = ''
 
 export function useGoogleAnalytics() {
-  const { theme, title } = useData()
+  const { theme, title, frontmatter } = useData()
   const route = useRoute()
 
   function trackPage() {
     const id = theme.value.googleAnalyticsId
-    if (!import.meta.env.PROD || typeof window === 'undefined'
+    if (frontmatter.value.redirect || !import.meta.env.PROD || typeof window === 'undefined'
       || location.origin !== 'https://cpython666.github.io' || !/^G-[A-Z0-9]+$/.test(id || '')) return
 
     // Only page metadata is sent; query strings, hashes and page content stay local.

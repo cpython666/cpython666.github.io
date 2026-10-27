@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- `/tools/` 迁移：`check-tool-seo.mjs` 验证8个新地址 canonical/sitemap、7工具 WebApplication、8旧壳同步head脚本/0秒refresh/新canonical及排除旧sitemap；`check-resource-pages.mjs --tools-only` 验证旧8页直达/SPA/index.html别名、返回历史、旧根全部工具hash、query/指南/未知hash及无JS跳转，并通过原交互和手机明暗回归。真实 ArticleHits 由人工SVG拦截，确认新7工具沿用旧计数键、旧壳无计数节点；GA专项检查确认旧壳直达/SPA均不初始化或增加PV。完整8080开发站已核对旧hash和独立index.html带参数/中文锚点跳到新页，工具导航、唯一h1与页面宽度正常。工具SEO脚本已改为逐字节frontmatter前置检查，LF/CRLF人工受限样本确认不预读正文；未运行本地全站构建。
+
 - `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。2026-10-27 正式站已验证单脚本、URL 工具→O10 各一次 PV，后台实时报告显示两页浏览及 `page_view`，确认端到端收数；验收流量属于真实生产统计，不当作自然增长。
 
 - Node 24 升级（2026-10-27）：官方发布页确认最新 LTS 为 `24.22.1`、26 当时仍为 Current；该版本包含 10 月安全修复。工作流仅调整 `setup-node@v7` 与 `node-version: '24.22.1'`，发布步骤不变。下载官方 Darwin arm64 包并核对发布页 SHA-256 后，在临时目录以 Node 24.22.1 / npm 11.19.1 执行 `npm ci --engine-strict --no-audit --no-fund`，成功安装且 manifest/lock 哈希不变；锁定 VitePress 1.6.4、Vite 5.4.21、Playwright 1.61.1、Waline 3.13.0。7 个公开工具和人工提示词页面的隔离生产构建/Playwright、O10、实际 SEO hooks 和 GEO `skill:check` 均通过。未运行全站构建、Linux CI 或部署，不能据此声称线上已升级。
@@ -56,7 +58,7 @@
 - 会员介绍页另用仅含公开 `docs/vip/index.md`、VipBtn 和全局 CSS 的隔离 fixture 验证：320/390/760/761/1024/1440/2560px 页面与激活区正常，表格长链接换行后320px内容宽从303px降至248px，与表格可视宽一致。未提供真实激活配置，未打开文章链接。
 - 2026-10-16 宝典恢复检查：两份 SQL 的正式正文反转义后均为326字符/682字节，恢复后的原文哈希一致，吾爱破解条目另行追加；仅用 VitePress Markdown 渲染器处理目标两页，确认说明公开、正文会员可见、原书籍链接与新增软件链接存在、侧边栏及 VIP 列表指向正确，未运行全站构建或真实 loader。
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。完整开发服务曾因 `@waline/client` 尚未安装而失败，按锁文件执行 `npm ci --no-audit --no-fund` 后恢复，`package.json` / `package-lock.json` 不变。Skill 格式检查需要 PyYAML，可用 `uv run --with pyyaml python <quick_validate.py> .agents/skills/xingmeng-blog`，无需为此修改项目依赖。
-- 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；未加载完整主题服务或 `ArticleHits`，绝对纵向位置不包含线上访问量栏。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
+- 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
 - 文档改动检查链接是否可解析，并使用 skill-creator 自带 `scripts/quick_validate.py` 检查 Skill 格式；格式通过不等同于产品测试通过。
 
@@ -68,7 +70,6 @@
 | --- | --- | --- |
 | 会员判断统一与保护方式复查 | SEO 判断识别 `privacy` 与 `memberOnly`，主题门禁和导航 loader 只识别 `memberOnly`；门禁为客户端遮罩 | 待定：统一判断方式与真正的鉴权/内容分发方案，禁止用读取会员正文的方式验证 |
 | 搜索与会员内容隔离 | 站内使用 local search，目前配置未明确按会员标记过滤正文 | 待办：只检查代码和人工 fixture，补齐明确的排除规则，不读取实际搜索索引来验证 |
-| SEO工具检查脚本读取边界 | `check-tool-seo.mjs` 仍先整文件读取后检查标记；`check-resource-pages.mjs` 已改为逐字节 frontmatter 前置检查 | 待办：让 SEO 检查脚本在读取正文前严格检查 frontmatter；修复前运行须先独立确认7个目标工具说明页均公开，遇会员标记停止 |
 | 非文章页面结构化数据 | 独立工具页已按 `tool: true` 输出 `WebApplication`；其余非首页页面仍默认 `BlogPosting` | 待办：导航、项目、工具总入口等按类型改为合适的页面 schema |
 | 构建环境维护 | 工作流使用 Node 24.22.1 / setup-node v7，隔离兼容检查通过；2026-10-27 master 的 GitHub Pages 工作流已完成安装、VitePress 构建和部署；只有 master 推送及手动运行入口 | PR 检查方案待定，不自动触发发布 |
 | 既有依赖安全告警 | 2026-10-27 官方 npm registry audit 报 8 个受影响包项（6 high、2 moderate，包含传递依赖及上游传播项），涉及 Vue SSR、Vite/esbuild、PostCSS/nanoid/source-map-js；不等于 8 个独立漏洞或线上已可利用 | 待定：另行核对实际可达性与最小依赖修复；本轮仅升级 Node，禁止为清除告警直接运行 `npm audit fix --force` |

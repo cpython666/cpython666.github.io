@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 
-const source = await readFile(new URL('../docs/spider-tools/utils/o10.js', import.meta.url), 'utf8')
+const source = await readFile(new URL('../docs/tools/utils/o10.js', import.meta.url), 'utf8')
 const { o10Encode, o10Decode } = await import(`data:text/javascript;base64,${Buffer.from(source).toString('base64')}`)
 
 // 固定样例来自 Python-Project 的 O10encode.py，防止 JS 的 UTF-16 遍历改变编码。

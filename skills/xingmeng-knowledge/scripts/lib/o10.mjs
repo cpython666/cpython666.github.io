@@ -1,4 +1,4 @@
-// 由 scripts/build-skill.mjs 从 docs/spider-tools/utils/o10.js 复制，请修改源文件后重新生成
+// 由 scripts/build-skill.mjs 从 docs/tools/utils/o10.js 复制，请修改源文件后重新生成
 // 兼容 Python-Project/O10加解密/O10encode.py 的 Unicode 码点编码。
 export function o10Encode(text, pro = false) {
   const encoded = Array.from(text, char => char.codePointAt(0).toString(2)).join('O')

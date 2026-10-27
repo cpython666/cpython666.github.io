@@ -19,7 +19,8 @@ const showHits = computed(() => {
 })
 
 const hitsUrl = computed(() => {
-  const path = route.path.replace(/\.html$/, '').replace(/\/$/, '')
+  // Keep the existing counter when the public tool URLs move to /tools/.
+  const path = route.path.replace(/^\/tools(?=\/|$)/, '/spider-tools').replace(/\.html$/, '').replace(/\/$/, '')
   const params = new URLSearchParams({
     view: 'today-total',
     label: 'today / total',

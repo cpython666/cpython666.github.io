@@ -1,4 +1,4 @@
-// 由 scripts/build-skill.mjs 从 docs/spider-tools/utils/curlToRequests.js 复制，请修改源文件后重新生成
+// 由 scripts/build-skill.mjs 从 docs/tools/utils/curlToRequests.js 复制，请修改源文件后重新生成
 function tokenize(command) {
   const normalized = command.replace(/\\\r?\n/g, ' ').trim()
   const tokens = []

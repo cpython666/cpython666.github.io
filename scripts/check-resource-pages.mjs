@@ -8,6 +8,7 @@ import { copyFile, mkdir, mkdtemp, open, readFile, realpath, rm, symlink, writeF
 import { tmpdir } from 'node:os'
 import { dirname, extname, join, resolve } from 'node:path'
 import { promisify } from 'node:util'
+import { pathToFileURL } from 'node:url'
 import { chromium } from 'playwright'
 
 // Read one byte at a time so no member body can enter a read buffer.
@@ -53,11 +54,11 @@ const fixture = await realpath(await mkdtemp(join(tmpdir(), 'resource-pages-chec
 let server
 let browser
 try {
-  for (const path of ['.vitepress/theme', 'index', 'nav', 'projects', 'navigation', 'prompts', 'spider-tools', 'sample', 'backup', 'public/css', 'screenshots']) {
+  for (const path of ['.vitepress/theme', 'index', 'nav', 'projects', 'navigation', 'prompts', 'tools', 'sample', 'backup', 'public/css', 'screenshots']) {
     await mkdir(join(fixture, path), { recursive: true })
   }
   const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
-  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'spider-tools/SpiderTools.vue', 'spider-tools/utils/curlToRequests.js', 'spider-tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `spider-tools/components/Panel${panel}.vue`)]
+  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleHits.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'tools/SpiderTools.vue', 'tools/LegacyToolRedirect.vue', 'tools/legacyRedirect.mjs', 'tools/utils/curlToRequests.js', 'tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
@@ -95,17 +96,28 @@ try {
   await copyFile(join(publicRoot, 'css/index.css'), join(fixture, 'public/css/index.css'))
   await symlink(join(root, 'node_modules'), join(fixture, 'node_modules'), 'dir')
   await writeFile(join(fixture, 'index.md'), '---\nlayout: home\nmarkdownStyles: false\n---\n<script setup>\nimport IndexPage from "./index/IndexPage.vue"\n</script>\n<IndexPage />\n')
-  for (const [folder, component] of [['nav', 'NavPage'], ['projects', 'ProjectPage'], ['navigation', 'NavIndex'], ['prompts', 'PromptPage'], ['spider-tools', 'SpiderTools']]) {
+  for (const [folder, component] of [['nav', 'NavPage'], ['projects', 'ProjectPage'], ['navigation', 'NavIndex'], ['prompts', 'PromptPage'], ['tools', 'SpiderTools']]) {
     const markdownStyles = ['navigation', 'prompts'].includes(folder) ? 'markdownStyles: false\n' : ''
     await writeFile(join(fixture, folder, 'index.md'), `---\nlayout: home\n${markdownStyles}---\n<script setup>\nimport ${component} from './${component}.vue'\n</script>\n<${component} />\n`)
   }
   // Only these explicitly selected public tool pages enter the fixture.
   for (const id of toolPageIds) {
-    const path = join(root, 'docs/spider-tools', id, 'index.md')
+    const path = join(root, 'docs/tools', id, 'index.md')
     const file = await open(path, 'r')
     let frontmatter
     try { frontmatter = await readFrontmatter(file) } finally { await file.close() }
     assert.ok(!/memberOnly:\s*['"]?true|privacy:[^\n]*会员可见/.test(frontmatter), `${id} is public`)
+    await mkdir(join(fixture, 'tools', id), { recursive: true })
+    await copyFile(path, join(fixture, 'tools', id, 'index.md'))
+  }
+  // Copy only the eight public redirect shells, after the same frontmatter guard.
+  for (const id of ['', ...toolPageIds]) {
+    const path = join(root, 'docs/spider-tools', id, 'index.md')
+    const file = await open(path, 'r')
+    let frontmatter
+    try { frontmatter = await readFrontmatter(file) } finally { await file.close() }
+    assert.ok(!/memberOnly:\s*['"]?true|privacy:[^\n]*会员可见/.test(frontmatter), `legacy ${id || 'root'} is public`)
+    assert.match(frontmatter, /^redirect: /m, 'legacy pages declare their redirect')
     await mkdir(join(fixture, 'spider-tools', id), { recursive: true })
     await copyFile(path, join(fixture, 'spider-tools', id, 'index.md'))
   }
@@ -119,9 +131,10 @@ try {
   await writeFile(join(fixture, '.vitepress/theme/index.js'), `import DefaultTheme from 'vitepress/theme'
 import { h } from 'vue'
 import ArticleTools from './components/ArticleTools.vue'
+import ArticleHits from './components/ArticleHits.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, null, {
-  'layout-bottom': () => h(ArticleTools),
+  'layout-bottom': () => [h(ArticleHits), h(ArticleTools)],
   'aside-outline-before': () => h(ArticleOutlineToggle),
 }) }
 `)
@@ -130,14 +143,18 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     const url = new URL(typeof input === 'string' ? input : input.url, location.href);
     return fetchOriginal(url.hostname === 'api.github.com' ? '/__fixture/github' + url.pathname + url.search : input, init);
   };`
-  await writeFile(join(fixture, '.vitepress/config.mjs'), `export default ${JSON.stringify({
+  await writeFile(join(fixture, '.vitepress/config.mjs'), `import productionConfig from ${JSON.stringify(pathToFileURL(join(root, 'docs/.vitepress/config.mjs')).href)}\nconst config = ${JSON.stringify({
     title: '首页、资源与项目检查', ignoreDeadLinks: true,
     head: [['link', { rel: 'stylesheet', href: '/css/index.css' }], ['script', {}, fixtureFetch]],
     themeConfig: {
-      nav: [{ text: '测试首页', link: '/' }, { text: '资源导航', link: '/nav/' }, { text: '项目', link: '/projects/' }, { text: '文章导航', link: '/navigation/' }, { text: '提示词', link: '/prompts/' }, { text: '工具', link: '/spider-tools/' }, { text: '目录', link: '/sample/' }, { text: '备份', link: '/backup/' }],
+      nav: [{ text: '测试首页', link: '/' }, { text: '资源导航', link: '/nav/' }, { text: '项目', link: '/projects/' }, { text: '文章导航', link: '/navigation/' }, { text: '提示词', link: '/prompts/' }, { text: '工具', link: '/tools/' }, { text: '目录', link: '/sample/' }, { text: '备份', link: '/backup/' }],
       sidebar: { '/sample/': [{ text: '人工分类', items: [{ text: '人工文章', link: '/sample/article' }] }], '/backup/': [{ text: '人工备份', link: '/backup/' }] },
     },
-  })}\n`)
+  })}
+config.transformHead = context => context.pageData.frontmatter.redirect
+  ? productionConfig.transformHead({ ...context, pageData: { ...context.pageData, frontmatter: { ...context.pageData.frontmatter, date: '2026-10-27' } } })
+  : []
+export default config\n`)
   await promisify(execFile)(process.execPath, [join(root, 'node_modules/vitepress/bin/vitepress.js'), 'build', fixture], { cwd: root })
   // Keep the duplicate Spider-Project entries near the top to exercise repository deduplication.
   const fixtureStars = { CoolBgs: 900, 'Spider-Project': 800, 'scrapy-drissionpage': 700, HandwritingGenerator: 600, LearnSpider: 500 }
@@ -148,7 +165,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     const titles = new Set()
     const descriptions = new Set()
     for (const id of toolPageIds) {
-      const html = await readFile(join(output, 'spider-tools', id, 'index.html'), 'utf8')
+      const html = await readFile(join(output, 'tools', id, 'index.html'), 'utf8')
       const title = html.match(/<title>([^<]+)<\/title>/)?.[1]
       const description = html.match(/<meta name="description" content="([^"]+)"/)?.[1]
       assert.ok(title && description, `${id} has static title and description`)
@@ -158,12 +175,16 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       assert.match(html, /使用|操作/, `${id} includes static usage instructions`)
       assert.match(html, /示例/, `${id} includes a static example`)
       assert.equal([...html.matchAll(/<h1[ >]/g)].length, 1, `${id} has one server-rendered h1`)
-      for (const target of toolPageIds) assert.ok(html.includes(`href="/spider-tools/${target}/"`), `${id} exposes a crawlable link to ${target}`)
+      for (const target of toolPageIds) assert.ok(html.includes(`href="/tools/${target}/"`), `${id} exposes a crawlable link to ${target}`)
       if (id !== 'o10') assert.ok(!html.includes('id="o10-input"'), `${id} does not render the unrelated O10 form`)
       if (id !== 'curl-requests') assert.ok(!html.includes('class="curl-converter"'), `${id} does not render the unrelated cURL form`)
     }
     assert.equal(titles.size, toolPageIds.length, 'tool pages have distinct static titles')
     assert.equal(descriptions.size, toolPageIds.length, 'tool pages have distinct static descriptions')
+    for (const id of ['', ...toolPageIds]) {
+      const html = await readFile(join(output, 'spider-tools', id, 'index.html'), 'utf8')
+      assert.ok(!html.includes('class="article-hits"'), 'old redirect shells never render a hits counter')
+    }
     console.log(`PASS: ${toolPageIds.length} static tool pages contain unique metadata, their own tool, crawlable links, usage instructions and examples.`)
   }
   server = createServer(async (req, res) => {
@@ -185,8 +206,13 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
   await new Promise(done => server.listen(0, '127.0.0.1', done))
   const base = `http://127.0.0.1:${server.address().port}`
   browser = await chromium.launch({ headless: true })
-  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark' })
-  await context.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, colorScheme: 'dark', bypassCSP: true })
+  await context.route('**/*', route => {
+    const url = new URL(route.request().url())
+    if (url.origin === base) return route.continue()
+    if (url.origin === 'https://hits.sh') return route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="20"/>' })
+    return route.abort()
+  })
   const page = await context.newPage()
   page.setDefaultTimeout(10000)
   const errors = []
@@ -272,7 +298,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         },
       } })
     })
-    await toolPage.goto(base + '/spider-tools/', { waitUntil: 'networkidle' })
+    await toolPage.goto(base + '/tools/', { waitUntil: 'networkidle' })
     const tools = await toolPage.locator('.nav-list a').evaluateAll(links => links.map(link => ({
       id: link.pathname.split('/').filter(Boolean).at(-1), name: link.querySelectorAll('span')[1].textContent.trim(),
     })))
@@ -284,8 +310,8 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     const expectTool = async (id, standalone = true) => {
       await toolPage.waitForFunction(({ id, standalone }) => {
         const panel = document.querySelector('.panel-card')
-        return panel?.id === id && document.querySelector('.nav-list li.active a')?.pathname === `/spider-tools/${id}/`
-          && (!standalone || location.pathname === `/spider-tools/${id}/`)
+        return panel?.id === id && document.querySelector('.nav-list li.active a')?.pathname === `/tools/${id}/`
+          && (!standalone || location.pathname === `/tools/${id}/`)
       }, { id, standalone })
       assert.equal(await toolPage.locator('.panel-card').count(), 1, 'one active tool panel is rendered')
       assert.equal(await toolPage.locator('select, datalist').count(), 0, `${id} has no native dropdown`)
@@ -306,7 +332,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       link.remove()
     }, href)
     for (const tool of tools) {
-      await toolPage.locator(`.nav-list a[href="/spider-tools/${tool.id}/"]`).click()
+      await toolPage.locator(`.nav-list a[href="/tools/${tool.id}/"]`).click()
       await expectTool(tool.id)
       const description = (await toolPage.locator('.tool-description').textContent()).trim()
       assert.ok(description, `${tool.id} has a share description`)
@@ -317,22 +343,63 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         assert.match(await toolPage.locator('.code-output').textContent(), /https:\/\/example\.com\/tool-route-check/)
         assert.match(await toolPage.locator('.code-output').textContent(), /import requests/)
       }
+      assert.equal(new URL(await toolPage.locator('.article-hits img').getAttribute('src')).pathname,
+        `/cpython666.github.io/spider-tools/${tool.id}.svg`, 'new URL keeps its historical hits counter')
       if (tool.id === 'url') await toolPage.locator('.panel-card textarea:visible').first().fill('private-fixture-input')
-      const share = `${tool.name}\n${description}\nhttps://cpython666.github.io/spider-tools/${tool.id}/`
+      const share = `${tool.name}\n${description}\nhttps://cpython666.github.io/tools/${tool.id}/`
       await toolPage.getByRole('button', { name: `分享工具：${tool.name}`, exact: true }).click()
       await toolPage.waitForFunction(text => window.__copiedText === text, share)
       await expectFeedback(toolPage, '工具简介和直达链接已复制！')
       assert.equal(share.split('\n').length, 3, 'sharing contains only name, description and canonical URL')
       await toolPage.goto('about:blank')
-      await toolPage.goto(`${base}/spider-tools/${tool.id}/`, { waitUntil: 'networkidle' })
+      await toolPage.goto(`${base}/tools/${tool.id}/`, { waitUntil: 'networkidle' })
       await expectTool(tool.id)
-      await toolPage.goto(`${base}/spider-tools/?source=legacy#${tool.id}`, { waitUntil: 'networkidle' })
+      await toolPage.goto(`${base}/tools/?source=legacy#${tool.id}`, { waitUntil: 'networkidle' })
       await expectTool(tool.id)
       assert.equal(new URL(toolPage.url()).search, '?source=legacy', 'legacy link preserves the query')
       assert.equal(new URL(toolPage.url()).hash, '', 'legacy tool hash is removed')
       await toolPage.reload({ waitUntil: 'networkidle' })
       await expectTool(tool.id)
     }
+    // Old physical URLs must work both before hydration and through VitePress navigation.
+    for (const id of ['', ...toolPageIds]) {
+      const suffix = id ? `${id}/` : ''
+      const target = `/tools/${suffix}`
+      const expectedId = id || toolPageIds[0]
+      const hash = id ? '#usage-guide' : '#unknown-tool'
+      await toolPage.goto(`${base}/spider-tools/${suffix}?source=old-direct${hash}`, { waitUntil: 'networkidle' })
+      await toolPage.waitForURL(`${base}${target}?source=old-direct${hash}`)
+      await expectTool(expectedId, !!id)
+      await toolPage.goto(`${base}/sample/article.html`, { waitUntil: 'networkidle' })
+      await followToolLink(`/spider-tools/${suffix}?source=old-spa${hash}`)
+      await toolPage.waitForURL(`${base}${target}?source=old-spa${hash}`)
+      await expectTool(expectedId, !!id)
+      await toolPage.goBack()
+      await toolPage.waitForURL(`${base}/sample/article.html`)
+      await toolPage.goto(`${base}/spider-tools/${suffix}index.html?source=old-alias${hash}`, { waitUntil: 'networkidle' })
+      await toolPage.waitForURL(`${base}${target}?source=old-alias${hash}`)
+      await expectTool(expectedId, !!id)
+    }
+    for (const id of toolPageIds) {
+      await toolPage.goto(`${base}/spider-tools/?source=old-hash#${id}`, { waitUntil: 'networkidle' })
+      await toolPage.waitForURL(`${base}/tools/${id}/?source=old-hash`)
+      await expectTool(id)
+    }
+    await toolPage.goto(`${base}/sample/article.html`, { waitUntil: 'networkidle' })
+    await followToolLink('/spider-tools/index.html?source=old-spa-hash#url')
+    await toolPage.waitForURL(`${base}/tools/url/?source=old-spa-hash`)
+    await expectTool('url')
+    // The static meta refresh remains usable when JavaScript is disabled.
+    const noJs = await browser.newContext({ javaScriptEnabled: false })
+    await noJs.route('**/*', route => new URL(route.request().url()).origin === base ? route.continue() : route.abort())
+    const noJsPage = await noJs.newPage()
+    for (const id of ['', toolPageIds[0]]) {
+      const suffix = id ? `${id}/` : ''
+      await noJsPage.goto(`${base}/spider-tools/${suffix}`, { waitUntil: 'domcontentloaded' })
+      await noJsPage.waitForURL(`${base}/tools/${suffix}`)
+      await noJsPage.locator('.tools-page').waitFor()
+    }
+    await noJs.close()
     await toolPage.evaluate(() => { window.__failCopy = true })
     await toolPage.locator('.share-tool').click()
     await expectFeedback(toolPage, '复制失败，请重试。', 'error')
@@ -347,35 +414,35 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
         return true
       }
     })
-    await fallbackCopy.goto(`${base}/spider-tools/#${tools[0].id}`, { waitUntil: 'networkidle' })
+    await fallbackCopy.goto(`${base}/tools/#${tools[0].id}`, { waitUntil: 'networkidle' })
     await fallbackCopy.locator('.share-tool').click()
-    assert.equal(await fallbackCopy.evaluate(() => window.__copiedText), `${tools[0].name}\n${tools[0].description}\nhttps://cpython666.github.io/spider-tools/${tools[0].id}/`, 'legacy clipboard fallback preserves all three lines')
+    assert.equal(await fallbackCopy.evaluate(() => window.__copiedText), `${tools[0].name}\n${tools[0].description}\nhttps://cpython666.github.io/tools/${tools[0].id}/`, 'legacy clipboard fallback preserves all three lines')
     await fallbackCopy.close()
-    await toolPage.goto(`${base}/spider-tools/#${toolIds[0]}`, { waitUntil: 'networkidle' })
+    await toolPage.goto(`${base}/tools/#${toolIds[0]}`, { waitUntil: 'networkidle' })
     for (const id of toolIds.slice(1, 3)) {
-      await toolPage.locator(`.nav-list a[href="/spider-tools/${id}/"]`).click()
+      await toolPage.locator(`.nav-list a[href="/tools/${id}/"]`).click()
       await expectTool(id)
     }
     await toolPage.goBack()
     await expectTool(toolIds[1])
     await toolPage.goForward()
     await expectTool(toolIds[2])
-    await toolPage.goto(base + '/spider-tools/#unknown-tool', { waitUntil: 'networkidle' })
+    await toolPage.goto(base + '/tools/#unknown-tool', { waitUntil: 'networkidle' })
     await expectTool(toolIds[0], false)
     // Same-component query navigation uses pushState and emits no native hashchange.
-    await toolPage.goto(`${base}/spider-tools/`, { waitUntil: 'networkidle' })
-    await followToolLink('/spider-tools/?source=same-page#o10')
+    await toolPage.goto(`${base}/tools/`, { waitUntil: 'networkidle' })
+    await followToolLink('/tools/?source=same-page#o10')
     await expectTool('o10')
     assert.equal(new URL(toolPage.url()).search, '?source=same-page', 'same-component legacy navigation preserves query')
     assert.equal(new URL(toolPage.url()).hash, '', 'same-component legacy navigation replaces the old hash')
     await toolPage.goBack()
-    await toolPage.waitForURL(`${base}/spider-tools/`)
+    await toolPage.waitForURL(`${base}/tools/`)
     // Independent page heading anchors remain local, including after a SPA query update.
-    await toolPage.goto(`${base}/spider-tools/o10/`, { waitUntil: 'networkidle' })
+    await toolPage.goto(`${base}/tools/o10/`, { waitUntil: 'networkidle' })
     await expectTool('o10')
     const guideId = await toolPage.locator('.tool-guide h2').nth(1).getAttribute('id')
     assert.ok(guideId, 'guide headings expose linkable anchors')
-    const guideURL = `${base}/spider-tools/o10/?source=guide#${encodeURIComponent(guideId)}`
+    const guideURL = `${base}/tools/o10/?source=guide#${encodeURIComponent(guideId)}`
     const guideTimeOrigin = await toolPage.evaluate(() => performance.timeOrigin)
     await followToolLink(guideURL)
     await toolPage.waitForURL(guideURL)
@@ -384,13 +451,16 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await toolPage.reload({ waitUntil: 'networkidle' })
     await expectTool('o10')
     assert.equal(decodeURIComponent(new URL(toolPage.url()).hash.slice(1)), guideId, 'guide anchor survives a direct reload')
+    await toolPage.goto(`${base}/spider-tools/o10/?source=old-guide#${encodeURIComponent(guideId)}`, { waitUntil: 'networkidle' })
+    await toolPage.waitForURL(`${base}/tools/o10/?source=old-guide#${encodeURIComponent(guideId)}`)
+    await expectTool('o10')
     // A recognized legacy tool ID must not redirect away from an independent tool page.
-    await followToolLink('/spider-tools/o10/?source=guide#base64')
-    await toolPage.waitForURL(`${base}/spider-tools/o10/?source=guide#base64`)
+    await followToolLink('/tools/o10/?source=guide#base64')
+    await toolPage.waitForURL(`${base}/tools/o10/?source=guide#base64`)
     await expectTool('o10')
     // An old bookmarked hash is replaced, so Back returns to the previous real page.
     await toolPage.goto(`${base}/sample/article.html`, { waitUntil: 'networkidle' })
-    await followToolLink(`/spider-tools/?source=fixture#${toolIds.at(-1)}`)
+    await followToolLink(`/tools/?source=fixture#${toolIds.at(-1)}`)
     await expectTool(toolIds.at(-1))
     await toolPage.goBack()
     await toolPage.waitForURL(`${base}/sample/article.html`)
@@ -398,14 +468,14 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await expectTool(toolIds.at(-1))
     const timeOrigin = await toolPage.evaluate(() => performance.timeOrigin)
     await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).fill('no-matching-tool')
-    await followToolLink('/spider-tools/url/?source=fixture')
+    await followToolLink('/tools/url/?source=fixture')
     await expectTool('url')
     assert.equal(await toolPage.getByRole('textbox', { name: '搜索工具', exact: true }).inputValue(), '', 'opening another tool clears the old search')
     assert.equal(await toolPage.locator('.nav-list a').count(), tools.length)
     assert.equal(await toolPage.evaluate(() => performance.timeOrigin), timeOrigin, 'tool links use SPA navigation')
     await toolPage.locator('.share-tool').click()
     const sharedTool = tools.find(tool => tool.id === 'url')
-    await toolPage.waitForFunction(text => window.__copiedText === text, `${sharedTool.name}\n${sharedTool.description}\nhttps://cpython666.github.io/spider-tools/url/`)
+    await toolPage.waitForFunction(text => window.__copiedText === text, `${sharedTool.name}\n${sharedTool.description}\nhttps://cpython666.github.io/tools/url/`)
     const urlInput = toolPage.locator('#url-input')
     const urlEncoded = toolPage.locator('#url-encoded')
     const urlDecoded = toolPage.locator('#url-decoded')
@@ -462,7 +532,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     assert.equal(await copyEncoded.isDisabled(), true)
     assert.equal(await copyDecoded.isDisabled(), true)
     assert.equal(await toolPage.locator('#url-encode-error, #url-decode-error').count(), 0, 'empty URL input clears errors')
-    await toolPage.locator('.nav-list a[href="/spider-tools/o10/"]').click()
+    await toolPage.locator('.nav-list a[href="/tools/o10/"]').click()
     await expectTool('o10')
     const o10 = toolPage.locator('.o10-tool')
     await checkSelectKeyboard(toolPage, '编码模式', toolPage.locator('.tool-description'))
@@ -503,7 +573,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     const timed = await timingContext.newPage()
     timed.on('pageerror', error => errors.push(error.message))
     await timed.addInitScript(() => Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => {} } }))
-    await timed.goto(`${base}/spider-tools/o10/`, { waitUntil: 'networkidle' })
+    await timed.goto(`${base}/tools/o10/`, { waitUntil: 'networkidle' })
     await timed.clock.install()
     await timed.locator('.share-tool').click()
     await expectFeedback(timed, '工具简介和直达链接已复制！')
@@ -527,17 +597,17 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     assert.ok(await timed.locator('.tool-feedback').evaluate(element => !element.contains(document.activeElement)), 'Tab leaves feedback without trapping focus')
     await timed.clock.runFor(4001)
     assert.equal(await timed.locator('.feedback-card').count(), 0, 'feedback expires after focus leaves')
-    await timed.locator('.nav-list a[href="/spider-tools/curl-requests/"]').click()
+    await timed.locator('.nav-list a[href="/tools/curl-requests/"]').click()
     await timed.locator('.copy-button').click()
     await expectFeedback(timed, 'Python 代码已复制到剪贴板')
     assert.match(await timed.locator('.copy-button').textContent(), /已复制/)
     await timingContext.close()
     for (const width of [320, 390]) {
       await toolPage.setViewportSize({ width, height: 844 })
-      await toolPage.goto(`${base}/spider-tools/o10/`, { waitUntil: 'networkidle' })
+      await toolPage.goto(`${base}/tools/o10/`, { waitUntil: 'networkidle' })
       await expectTool('o10')
       for (const tool of tools) {
-        await toolPage.locator(`.nav-list a[href="/spider-tools/${tool.id}/"]`).click()
+        await toolPage.locator(`.nav-list a[href="/tools/${tool.id}/"]`).click()
         await expectTool(tool.id)
         const layout = await toolPage.locator('.tool-sharebar').evaluate(bar => {
           const bounds = bar.getBoundingClientRect()
@@ -598,7 +668,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     }
     await toolPage.close()
     assert.deepEqual(errors, [])
-    console.log(`PASS: ${tools.length} tools; three-line canonical sharing without user input; clipboard success/failure/legacy fallback; independent direct links and reload; SPA navigation/history; legacy hash replacement/query preservation, same-component query/hash navigation, guide anchor preservation and unknown fallback; O10 standard/Pro encoding, copying, output reuse/decoding and invalid-input feedback; custom selection keyboard/focus/outside-click and long-list controls; light/dark 320/390px controls, share bars and visible feedback; copy errors, repeat/dismiss/expiry and safe frontmatter-only reads.`)
+    console.log(`PASS: ${tools.length} tools; three-line canonical sharing without user input; clipboard success/failure/legacy fallback; independent direct links and reload; old namespace direct/SPA/index aliases, preserved query/hash and no-JS redirects; SPA navigation/history; legacy hash replacement/query preservation, same-component query/hash navigation, guide anchor preservation and unknown fallback; O10 standard/Pro encoding, copying, output reuse/decoding and invalid-input feedback; custom selection keyboard/focus/outside-click and long-list controls; light/dark 320/390px controls, share bars and visible feedback; copy errors, repeat/dismiss/expiry and safe frontmatter-only reads.`)
   }
   if (!toolsOnly && !projectsOnly) await page.goto(`${base}/nav/`, { waitUntil: 'networkidle' })
   const initial = toolsOnly || projectsOnly ? null : await page.evaluate(() => ({
@@ -1082,7 +1152,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
     await noOverflow('desktop navigation fits after closing the tablet menu')
     for (const width of [320, 390, 768, 1024, 1279, 1280, 1440, 1920, 2560, 3840]) {
       await page.setViewportSize({ width, height: 1000 })
-      for (const [path, selector] of [['/nav/', '.resources-page'], ['/navigation/', '.nav-page'], ['/prompts/', '.prompts-page'], ['/spider-tools/', '.tools-layout'], ['/sample/', '.VPDoc > .container'], ['/sample/article.html', '.VPDoc > .container'], ['/backup/', '.VPDoc > .container']]) {
+      for (const [path, selector] of [['/nav/', '.resources-page'], ['/navigation/', '.nav-page'], ['/prompts/', '.prompts-page'], ['/tools/', '.tools-layout'], ['/sample/', '.VPDoc > .container'], ['/sample/article.html', '.VPDoc > .container'], ['/backup/', '.VPDoc > .container']]) {
         await page.goto(base + path, { waitUntil: 'networkidle' })
         await page.locator(selector).waitFor()
         const layout = await page.locator(selector).evaluate(element => {
@@ -1113,9 +1183,9 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
           console.log(`Backup contents ${width}px: ${JSON.stringify(details)}`)
           assert.ok(details.statsOverhang <= 0 && details.textOverflow <= 1, `backup contents fit their cards at ${width}px`)
         }
-        if (path === '/spider-tools/') {
+        if (path === '/tools/') {
           for (const panel of toolIds) {
-            await page.locator(`.nav-list a[href="/spider-tools/${panel}/"]`).click()
+            await page.locator(`.nav-list a[href="/tools/${panel}/"]`).click()
             await noOverflow(`${panel} fits at ${width}px`)
             const clipped = await page.locator(`#${panel} input, #${panel} .editor-header button`).evaluateAll(controls => controls.some(control => {
               const bounds = control.getBoundingClientRect()
@@ -1142,7 +1212,7 @@ export default { extends: DefaultTheme, Layout: () => h(DefaultTheme.Layout, nul
       await page.locator('.VPNavBar').getByRole('link', { name, exact: true }).click()
       await noOverflow(`${name} after SPA navigation fits`)
     }
-    await page.locator('.nav-list a[href="/spider-tools/imagesplit/"]').click()
+    await page.locator('.nav-list a[href="/tools/imagesplit/"]').click()
     await page.locator('#controls input[type="file"]').setInputFiles({ name: 'fixture.svg', mimeType: 'image/svg+xml', buffer: Buffer.from('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="1200" height="800" fill="#88aaff"/></svg>') })
     await page.waitForFunction(() => document.querySelector('#preview img')?.naturalWidth === 1200)
     await markZoomImages()

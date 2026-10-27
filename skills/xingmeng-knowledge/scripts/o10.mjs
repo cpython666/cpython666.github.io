@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// O10 编码解码，与 https://cpython666.github.io/spider-tools/#o10 同一份函数。
+// O10 编码解码，与 https://cpython666.github.io/tools/#o10 同一份函数。
 // 用法：node scripts/o10.mjs encode|decode [--pro] <文本>，文本也可从标准输入传入。
 import { readFileSync } from 'node:fs'
 import { o10Decode, o10Encode } from './lib/o10.mjs'

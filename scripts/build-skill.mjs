@@ -178,17 +178,17 @@ function renderProjects(projects) {
 
 // 工具列表直接取自工具箱页面，保证名称、简介、直达链接与网站一致
 function renderTools() {
-  const source = readFileSync(join(DOCS, 'spider-tools/SpiderTools.vue'), 'utf-8')
+  const source = readFileSync(join(DOCS, 'tools/SpiderTools.vue'), 'utf-8')
   const tools = [...source.matchAll(/\{ name: '([^']+)', pageId: '([^']+)'[^}]*description: '([^']+)' \}/g)]
     .map(([, name, pageId, description]) => ({ name, pageId, description }))
   const scripts = {
     'curl-requests': '`node scripts/curl-to-requests.mjs`',
     'o10': '`node scripts/o10.mjs`',
   }
-  const lines = tools.map((tool) => `| ${tool.name} | ${tool.description} | ${SITE_URL}/spider-tools/${tool.pageId}/ | ${scripts[tool.pageId] || '用 Python 标准库或打开网页'} |`)
+  const lines = tools.map((tool) => `| ${tool.name} | ${tool.description} | ${SITE_URL}/tools/${tool.pageId}/ | ${scripts[tool.pageId] || '用 Python 标准库或打开网页'} |`)
   return `# 在线开发工具箱
 
-来自 ${SITE_URL}/spider-tools/ ，共 ${tools.length} 个工具，全部在浏览器本地运行。
+来自 ${SITE_URL}/tools/ ，共 ${tools.length} 个工具，全部在浏览器本地运行。
 
 | 工具 | 作用 | 网页直达 | 在本 Skill 中怎么用 |
 | --- | --- | --- | --- |
@@ -221,8 +221,8 @@ O10 按 Unicode 码点转二进制，与站长的 Python 原版兼容。
 }
 
 const STATIC_FILES = {
-  'scripts/lib/curl-to-requests.mjs': 'spider-tools/utils/curlToRequests.js',
-  'scripts/lib/o10.mjs': 'spider-tools/utils/o10.js',
+  'scripts/lib/curl-to-requests.mjs': 'tools/utils/curlToRequests.js',
+  'scripts/lib/o10.mjs': 'tools/utils/o10.js',
 }
 
 async function build() {

@@ -32,6 +32,8 @@ export default { extends: DefaultTheme, setup() { useGoogleAnalytics() } }
   for (const [path, title] of [['index', 'Home'], ['a', 'Alpha'], ['b', 'Beta']]) {
     await writeFile(join(fixture, `${path}.md`), `# ${title}\n\nArtificial content, never collected.\n`)
   }
+  // Deliberately stay on an artificial redirect shell to observe the GA guard.
+  await writeFile(join(fixture, 'redirect.md'), '---\nredirect: /tools/\n---\n# Redirect fixture\n')
   const theme = await readFile(join(root, 'docs/.vitepress/theme/index.js'), 'utf8')
   assert.match(theme, /import \{ useGoogleAnalytics \} from '\.\/googleAnalytics\.js'/)
   assert.match(theme, /setup\(\) \{\s*useGoogleAnalytics\(\)/, 'the production theme installs the tested hook')
@@ -110,6 +112,17 @@ export default { extends: DefaultTheme, setup() { useGoogleAnalytics() } }
   assert.equal(await page.evaluate(() => performance.timeOrigin), navigation, 'route checks use SPA navigation')
   assert.equal(test.googleScripts(), 1)
   assert.ok(!JSON.stringify(await commands()).match(/private|password|token|Artificial content/), 'no input, query, hash or body reaches gtag')
+  await page.evaluate(() => {
+    const link = document.createElement('a')
+    link.href = '/redirect.html'
+    document.body.append(link); link.click(); link.remove()
+  })
+  await page.waitForURL('**/redirect.html')
+  await page.waitForLoadState('networkidle')
+  assert.equal((await pageViews()).length, 4, 'SPA redirect shells do not add page views')
+  await page.goto(productionOrigin + '/redirect.html', { waitUntil: 'networkidle' })
+  assert.equal(await page.evaluate(() => typeof window.dataLayer), 'undefined', 'direct redirect shells do not initialize GA')
+  assert.equal(test.googleScripts(), 1, 'redirect shells do not request a new Google script')
   assert.deepEqual(test.forbiddenRequests, [])
   await test.context.close()
   const local = await openPage(localOrigin, localOrigin)
@@ -124,7 +137,7 @@ export default { extends: DefaultTheme, setup() { useGoogleAnalytics() } }
   assert.equal(dev.googleScripts(), 0)
   await dev.context.close()
   assert.deepEqual(errors, [])
-  console.log('PASS: SSR build; single initial/SPA/back page views and script; correct titles/referrers; query/hash/body exclusion; localhost and dev disabled; no real Google requests or browser errors.')
+  console.log('PASS: SSR build; single initial/SPA/back page views and script; correct titles/referrers; query/hash/body exclusion; redirect shells, localhost and dev disabled; no real Google requests or browser errors.')
 } finally {
   await browser?.close()
   await devServer?.close()

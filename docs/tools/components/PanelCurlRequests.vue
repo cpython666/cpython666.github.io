@@ -64,7 +64,7 @@ const example = `curl 'https://httpbin.org/anything?page=1' \\
   -X POST \\
   -H 'Accept: application/json' \\
   -H 'Content-Type: application/json' \\
-  -H 'X-Client: spider-tools' \\
+  -H 'X-Client: tools' \\
   --data-raw '{"keyword":"Python 爬虫","limit":10}'`
 
 const curlInput = ref(example)

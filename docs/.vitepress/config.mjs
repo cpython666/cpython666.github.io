@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress";
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
+import { redirectLegacyTool } from "../tools/legacyRedirect.mjs";
 
 const SITE_URL = "https://cpython666.github.io";
 const SITE_NAME = "星梦启航";
@@ -870,7 +871,7 @@ let nav_config = [
   },
   {
     text: "工具",
-    link: "/spider-tools/",
+    link: "/tools/",
   },
   {
     text: "博客会员",
@@ -912,7 +913,7 @@ let sidebar_config = {
   "/tech-daily/": [
     { text: "科技日报", collapsed: false, items: tech_daily_items },
   ],
-  "/spider-tools/": [],
+  "/tools/": [],
   "/web3/": web3_items,
   "/web3/block-walk/": [
     { text: "区块漫步", collapsed: false, items: block_walk_items },
@@ -1308,6 +1309,15 @@ export default defineConfig({
   },
   transformHead({ page, pageData }) {
     const frontmatter = pageData.frontmatter || {};
+    const redirect = frontmatter.redirect;
+    if (typeof redirect === "string" && /^\/tools\/(?:[a-z0-9-]+\/)?$/.test(redirect)) {
+      PAGE_INDEX_META.set(pageToPath(page), { redirect: true });
+      return [
+        ["link", { rel: "canonical", href: `${SITE_URL}${redirect}` }],
+        ["script", {}, `(${redirectLegacyTool.toString()})(${JSON.stringify(redirect)})`],
+        ["meta", { "http-equiv": "refresh", content: `0;url=${redirect}` }],
+      ];
+    }
     const title = resolvePageTitle(pageData);
     const description = resolvePageDescription(pageData);
     const url = pageToUrl(page);
@@ -1405,6 +1415,7 @@ export default defineConfig({
       .filter(Boolean)
       // 会员文章、noindex 页面不进 sitemap，避免和 robots meta 自相矛盾
       .filter((routePath) => !PAGE_INDEX_META.get(routePath)?.noIndex)
+      .filter((routePath) => !PAGE_INDEX_META.get(routePath)?.redirect)
       .sort()
       .map((routePath) => ({
         url: `${SITE_URL}${encodeURI(routePath)}`,
@@ -1636,7 +1647,7 @@ export default defineConfig({
     // }
     // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
     vipActivationHashes: ["8873ecdec2da162100e9bd7789ecb8bd7b0ea671d784853b7dde966bf05e510e"],
-    blogNavExclude: ["/nav/","/spider-tools/"],
+    blogNavExclude: ["/nav/","/tools/"],
     blogNavTitles: {
       "/tech-daily/": "科技日报",
       "/backend/": "后端",

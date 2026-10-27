@@ -4,7 +4,7 @@
 
     <div class="tools-layout">
       <aside class="navbar">
-        <a class="nav-label" href="/spider-tools/">全部工具</a>
+        <a class="nav-label" href="/tools/">全部工具</a>
         <input
           v-model="q"
           class="search"
@@ -89,7 +89,7 @@ const panels = {
   jjencode: PanelJjencode,
   imagesplit: PanelImagesplit,
 }
-const toolPath = id => `/spider-tools/${id}/`
+const toolPath = id => `/tools/${id}/`
 
 const toolList = ref([
   { name: 'cURL 转 Requests', pageId: 'curl-requests', icon: '↗', badge: 'NEW', description: '将 cURL 命令转换为 Python Requests 代码，支持请求头、Cookie、JSON 和表单。' },
@@ -150,7 +150,7 @@ async function shareTool() {
 
 function redirectLegacyLink() {
   if (props.toolId) return
-  if (!['/spider-tools/', '/spider-tools', '/spider-tools/index.html'].includes(window.location.pathname)) return
+  if (!['/tools/', '/tools', '/tools/index.html'].includes(window.location.pathname)) return
   const hash = window.location.hash.slice(1)
   const target = toolList.value.find(item => item.pageId === hash)
   if (!target) return
