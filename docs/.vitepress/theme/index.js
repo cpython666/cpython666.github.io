@@ -12,6 +12,7 @@ import VipBtn from './components/VipBtn.vue'
 import WalineComment from './components/WalineComment.vue'
 import StarFishMascotLoader from './components/StarFishMascotLoader.vue'
 import { useCommentEnabled } from './comment.js'
+import { useGoogleAnalytics } from './googleAnalytics.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -25,6 +26,7 @@ export default {
     app.component('VipBtn', VipBtn);
   },
   setup() {
+    useGoogleAnalytics();
     const { frontmatter, theme } = useData();
     const route = useRoute();
     const commentEnabled = useCommentEnabled();

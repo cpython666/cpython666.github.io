@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。
+
 - Node 24 升级（2026-10-27）：官方发布页确认最新 LTS 为 `24.22.1`、26 当时仍为 Current；该版本包含 10 月安全修复。工作流仅调整 `setup-node@v7` 与 `node-version: '24.22.1'`，发布步骤不变。下载官方 Darwin arm64 包并核对发布页 SHA-256 后，在临时目录以 Node 24.22.1 / npm 11.19.1 执行 `npm ci --engine-strict --no-audit --no-fund`，成功安装且 manifest/lock 哈希不变；锁定 VitePress 1.6.4、Vite 5.4.21、Playwright 1.61.1、Waline 3.13.0。7 个公开工具和人工提示词页面的隔离生产构建/Playwright、O10、实际 SEO hooks 和 GEO `skill:check` 均通过。未运行全站构建、Linux CI 或部署，不能据此声称线上已升级。
 - `node scripts/check-waline.mjs`：只复制真实 `WalineComment.vue` 与评论显示规则，使用 4 个人工 Markdown 页面和隔离 VitePress 生产构建。Node 24.22.1 下真实 Waline 动态 JS/CSS、编辑框输入、SPA 路径更新及单实例、`comment: false`/首页隐藏通过，无浏览器或 hydration 错误。所有外部请求拦截并返回人工数据，不发送评论，不代表真实 Vercel 后端的登录或提交验收。
 - 复验 Node 升级时先切换到 `24.22.1`，执行 `npm ci --engine-strict --no-audit --no-fund`、`npx playwright install chromium`（Linux 缺系统依赖时使用 `--with-deps`），再依次执行 `node scripts/check-resource-pages.mjs --tools-only`、`node scripts/check-prompt-sharing.mjs`、`node scripts/check-waline.mjs`、`node scripts/check-tool-seo.mjs`、`node scripts/check-o10.mjs`、`npm run skill:check`。预期各命令退出 0、检查输出 PASS 或索引最新，package/lock 无变化；SEO 脚本运行前仍须独立确认 7 个工具页公开。本轮 npm 提示安装脚本审批警告，但实际隔离构建通过，未更改依赖或 allowScripts 配置。

@@ -1469,7 +1469,6 @@ export default defineConfig({
 
     // <meta name="google-site-verification" content="0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU" />
     // 谷歌搜索站点验证头标签
-    // 未成功。。。
     [
       "meta",
       {
@@ -1477,19 +1476,7 @@ export default defineConfig({
         content: "0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU",
       },
     ],
-    ["meta", { name: "referrer", content: "no-referrer" }], // 谷歌统计
-    // [
-    //   'script',
-    //   { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }
-    // ],
-    // [
-    //   'script',
-    //   {},
-    //   `window.dataLayer = window.dataLayer || [];
-    //   function gtag(){dataLayer.push(arguments);}
-    //   gtag('js', new Date());
-    //   gtag('config', 'TAG_ID');`
-    // ],
+    ["meta", { name: "referrer", content: "no-referrer" }],
     // 百度统计
     [
       "script",
@@ -1534,6 +1521,7 @@ export default defineConfig({
     ],
   ],
   themeConfig: {
+    googleAnalyticsId: "G-SELHD8TNN7",
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo_super.svg",
     nav: top_nav_config,
