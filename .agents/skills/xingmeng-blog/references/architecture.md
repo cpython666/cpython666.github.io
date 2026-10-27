@@ -21,7 +21,7 @@
 | 导航会员标记数据 | `docs/navigation/member.data.mjs` | 使用全站内容加载器，AI 不直接执行；隔离测试替换为人工 fixture |
 | 主题插槽、评论、图片查看、会员遮罩 | `docs/.vitepress/theme/index.js` | 按本次功能限定修改范围 |
 | 吉祥物小星鱼 | `docs/.vitepress/theme/components/StarFishMascotLoader.vue`、`StarFishMascot.vue` | load 后空闲导入图片帧主体；展开加载 `docs/public/mascot/xiaoxingyu/sprites.webp`，弹跳复用原待机图，首次打招呼加载 `wave.webp`，开心/小憩共用按需 `moods.webp`；原画及停用的 Live2D 工程在被 Git 忽略的 `.local-assets/mascot/xiaoxingyu/` |
-| 评论（giscus + Waline 并存） | `docs/.vitepress/theme/comment.js`、`components/WalineComment.vue` | 两者共用 `useCommentEnabled` 显示规则；Waline 在 `doc-after` 插槽、位于 giscus 之上，服务端 `https://cpython666-waline.vercel.app`（Vercel + Neon，图片默认 base64 存库），`walineServerURL` 留空时不渲染；`@waline/client` 锁在 3.13（3.14 起要求 Node 22，CI 仍是 Node 20） |
+| 评论（giscus + Waline 并存） | `docs/.vitepress/theme/comment.js`、`components/WalineComment.vue` | 两者共用 `useCommentEnabled` 显示规则；Waline 在 `doc-after` 插槽、位于 giscus 之上，服务端 `https://cpython666-waline.vercel.app`（Vercel + Neon，图片默认 base64 存库），`walineServerURL` 留空时不渲染；`@waline/client` 保留 `~3.13.0`、锁文件为 3.13.0，Node 构建环境升级不顺带升级评论依赖 |
 | 首页展示与打字效果 | `docs/index.md`、`docs/index/IndexPage.vue` | 首页设 `markdownStyles: false` 保留全宽展示；组件样式必须 scoped，旋转背景在首页容器内裁切；Typed 与 resize 监听需随组件卸载清理 |
 | 首页赞助商与中转站推荐 | `docs/index/SponsorsLinks.vue`、`docs/life/codex-relay-provider-history-sync.md` | HeyRoute 首页卡片与文章推荐均跳转 `https://heyroute.ai/stardream`，`/console` 仅作为文章中的管理入口；官网图标本地保存于 `docs/public/imgs/sponsors/heyroute_logo.png`。HeyRoute 卡片使用官网主标语及单 API Key 接入 Codex / Claude Code 的特色说明，文章补充 OpenAI 兼容客户端与 Base URL；卡片文案可换行且窄屏不裁切。图片使用 `no-zoom`，链接保留 `sponsored noopener noreferrer` |
 | 文章工具、目录开关、阅读量 | `docs/.vitepress/theme/components/` | 优先复用现有组件 |
@@ -31,7 +31,7 @@
 | 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/spider-tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
 | 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
 | 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
-| 发布流程 | `.github/workflows/static.yml` | 构建产物目录为 `docs/.vitepress/dist` |
+| 发布流程 | `.github/workflows/static.yml` | `actions/setup-node@v7` 配置 Node `24.22.1`，沿用 `npm ci` 和现有锁文件；这是 2026-10-27 核实的最新 LTS 安全版本（当时 26 仍为 Current），固定版本以保证复现，后续安全补丁需重新核实；构建产物目录为 `docs/.vitepress/dist`，源码配置不代表已部署 |
 | 对外知识库 Skill | `skills/xingmeng-knowledge/`、`scripts/build-skill.mjs` | `SKILL.md` 和两个 CLI 脚本手写；`references/` 与 `scripts/lib/` 由 `npm run skill:build` 从资源导航、提示词、项目数据、工具箱函数和文章 frontmatter 生成，不手改。文章只读 frontmatter，跳过会员、草稿、`/backup/`、noindex 和首页布局页；改动上述数据源后需重新生成，`npm run skill:check` 检查是否过期 |
 
 ## 配置关系

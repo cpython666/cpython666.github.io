@@ -15,6 +15,10 @@
 
 ## 已有检查
 
+- Node 24 升级（2026-10-27）：官方发布页确认最新 LTS 为 `24.22.1`、26 当时仍为 Current；该版本包含 10 月安全修复。工作流仅调整 `setup-node@v7` 与 `node-version: '24.22.1'`，发布步骤不变。下载官方 Darwin arm64 包并核对发布页 SHA-256 后，在临时目录以 Node 24.22.1 / npm 11.19.1 执行 `npm ci --engine-strict --no-audit --no-fund`，成功安装且 manifest/lock 哈希不变；锁定 VitePress 1.6.4、Vite 5.4.21、Playwright 1.61.1、Waline 3.13.0。7 个公开工具和人工提示词页面的隔离生产构建/Playwright、O10、实际 SEO hooks 和 GEO `skill:check` 均通过。未运行全站构建、Linux CI 或部署，不能据此声称线上已升级。
+- `node scripts/check-waline.mjs`：只复制真实 `WalineComment.vue` 与评论显示规则，使用 4 个人工 Markdown 页面和隔离 VitePress 生产构建。Node 24.22.1 下真实 Waline 动态 JS/CSS、编辑框输入、SPA 路径更新及单实例、`comment: false`/首页隐藏通过，无浏览器或 hydration 错误。所有外部请求拦截并返回人工数据，不发送评论，不代表真实 Vercel 后端的登录或提交验收。
+- 复验 Node 升级时先切换到 `24.22.1`，执行 `npm ci --engine-strict --no-audit --no-fund`、`npx playwright install chromium`（Linux 缺系统依赖时使用 `--with-deps`），再依次执行 `node scripts/check-resource-pages.mjs --tools-only`、`node scripts/check-prompt-sharing.mjs`、`node scripts/check-waline.mjs`、`node scripts/check-tool-seo.mjs`、`node scripts/check-o10.mjs`、`npm run skill:check`。预期各命令退出 0、检查输出 PASS 或索引最新，package/lock 无变化；SEO 脚本运行前仍须独立确认 7 个工具页公开。本轮 npm 提示安装脚本审批警告，但实际隔离构建通过，未更改依赖或 allowScripts 配置。
+
 - 2026-10-26提交前定向检查：科技日报006–011及目录均先逐字节检查frontmatter后独立渲染，日期/期数连续、每页唯一h1、无裸加粗星号，本地链接与六张1200px封面有效；侧栏、目录与公开知识索引同步至011。五个平台SVG解析通过，配置/主题/导航/吉祥物检查脚本语法与 `skill:check` 通过。现有 `check-mascot.mjs` 再次全通过且无浏览器错误，生产三图各帧鞋底中心99–100.5px、基线189px；原始素材忽略有效。未重新核实新闻事实，未运行全站构建。
 
 - 2026-10-23昵称与签名历史页：实际工作区8080开发站检查唯一h1、公众号简介原文、两段博客原文与昵称变更日期；个人介绍至历史页往返链接通过，1280px/390px文档与正文无横溢，桌面及手机视口截图已核对。配置语法与 `skill:check` 通过，生成目录已同步；只检查两个公开页面，未运行全站构建。检查脚本需按实际DOM选择元素：VitePress标题带零宽锚点字符，正文链接会补 `.html`，不能据精确字符串定位超时判断页面跳转失效。
@@ -64,8 +68,9 @@
 | 搜索与会员内容隔离 | 站内使用 local search，目前配置未明确按会员标记过滤正文 | 待办：只检查代码和人工 fixture，补齐明确的排除规则，不读取实际搜索索引来验证 |
 | SEO工具检查脚本读取边界 | `check-tool-seo.mjs` 仍先整文件读取后检查标记；`check-resource-pages.mjs` 已改为逐字节 frontmatter 前置检查 | 待办：让 SEO 检查脚本在读取正文前严格检查 frontmatter；修复前运行须先独立确认7个目标工具说明页均公开，遇会员标记停止 |
 | 非文章页面结构化数据 | 独立工具页已按 `tool: true` 输出 `WebApplication`；其余非首页页面仍默认 `BlogPosting` | 待办：导航、项目、工具总入口等按类型改为合适的页面 schema |
-| 构建环境维护 | `.github/workflows/static.yml` 仍使用 Node 20，只有 master 推送及手动运行入口 | 待定：迁移受支持的 LTS 并补 PR 检查；升级前重新确认依赖兼容性 |
+| 构建环境维护 | 本地工作流已改为 Node 24.22.1 / setup-node v7，隔离兼容检查通过；只有 master 推送及手动运行入口 | 待验证：后续发布时确认 Linux 完整构建和部署；PR 检查方案待定，不自动触发发布 |
+| 既有依赖安全告警 | 2026-10-27 官方 npm registry audit 报 8 个受影响包项（6 high、2 moderate，包含传递依赖及上游传播项），涉及 Vue SSR、Vite/esbuild、PostCSS/nanoid/source-map-js；不等于 8 个独立漏洞或线上已可利用 | 待定：另行核对实际可达性与最小依赖修复；本轮仅升级 Node，禁止为清除告警直接运行 `npm audit fix --force` |
 | 统计请求精简 | 目前同时接入 Clarity、百度、51.LA 与 hits.sh | 待定：按实际使用的统计报表决定保留项 |
 | X 备份增量与字段完整性 | 2026-10-18 运行 `backup:x --handle wufantouzi`：新增 4 条（均为 10-17 当天，各 3 条可见评论），正文与评论已落盘，但这 4 条的 `createdAt`/`visibleTime`/`metrics` 为空，时间戳被并入正文末尾（如「19:42 · 2026年10月17日」）；归档原覆盖 2026-02-12 至 07-03（6 月单月 92 条），07-04 至 10-16 无任何记录 | 待核对：主页该时段是否确无帖子；若确有，需针对性重采（不得用 `--reset`），并排查时间/互动字段的解析 |
 
-依赖漏洞检查曾因注册源审计端点与网络问题未完成；这不能作为“依赖安全”或“存在已确认漏洞”的结论。
+默认 npmmirror 未实现安全审计端点（404）；依赖审计改用 `npm audit --registry=https://registry.npmjs.org`，不修改全局 registry。2026-10-27 已取得上表结果；审计告警与实际可利用性分开判断。
