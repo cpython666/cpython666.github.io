@@ -15,7 +15,7 @@
 
 ## 已有检查
 
-- `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。
+- `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。2026-10-27 正式站已验证单脚本、URL 工具→O10 各一次 PV，后台实时报告显示两页浏览及 `page_view`，确认端到端收数；验收流量属于真实生产统计，不当作自然增长。
 
 - Node 24 升级（2026-10-27）：官方发布页确认最新 LTS 为 `24.22.1`、26 当时仍为 Current；该版本包含 10 月安全修复。工作流仅调整 `setup-node@v7` 与 `node-version: '24.22.1'`，发布步骤不变。下载官方 Darwin arm64 包并核对发布页 SHA-256 后，在临时目录以 Node 24.22.1 / npm 11.19.1 执行 `npm ci --engine-strict --no-audit --no-fund`，成功安装且 manifest/lock 哈希不变；锁定 VitePress 1.6.4、Vite 5.4.21、Playwright 1.61.1、Waline 3.13.0。7 个公开工具和人工提示词页面的隔离生产构建/Playwright、O10、实际 SEO hooks 和 GEO `skill:check` 均通过。未运行全站构建、Linux CI 或部署，不能据此声称线上已升级。
 - `node scripts/check-waline.mjs`：只复制真实 `WalineComment.vue` 与评论显示规则，使用 4 个人工 Markdown 页面和隔离 VitePress 生产构建。Node 24.22.1 下真实 Waline 动态 JS/CSS、编辑框输入、SPA 路径更新及单实例、`comment: false`/首页隐藏通过，无浏览器或 hydration 错误。所有外部请求拦截并返回人工数据，不发送评论，不代表真实 Vercel 后端的登录或提交验收。
@@ -70,9 +70,9 @@
 | 搜索与会员内容隔离 | 站内使用 local search，目前配置未明确按会员标记过滤正文 | 待办：只检查代码和人工 fixture，补齐明确的排除规则，不读取实际搜索索引来验证 |
 | SEO工具检查脚本读取边界 | `check-tool-seo.mjs` 仍先整文件读取后检查标记；`check-resource-pages.mjs` 已改为逐字节 frontmatter 前置检查 | 待办：让 SEO 检查脚本在读取正文前严格检查 frontmatter；修复前运行须先独立确认7个目标工具说明页均公开，遇会员标记停止 |
 | 非文章页面结构化数据 | 独立工具页已按 `tool: true` 输出 `WebApplication`；其余非首页页面仍默认 `BlogPosting` | 待办：导航、项目、工具总入口等按类型改为合适的页面 schema |
-| 构建环境维护 | 本地工作流已改为 Node 24.22.1 / setup-node v7，隔离兼容检查通过；只有 master 推送及手动运行入口 | 待验证：后续发布时确认 Linux 完整构建和部署；PR 检查方案待定，不自动触发发布 |
+| 构建环境维护 | 工作流使用 Node 24.22.1 / setup-node v7，隔离兼容检查通过；2026-10-27 master 的 GitHub Pages 工作流已完成安装、VitePress 构建和部署；只有 master 推送及手动运行入口 | PR 检查方案待定，不自动触发发布 |
 | 既有依赖安全告警 | 2026-10-27 官方 npm registry audit 报 8 个受影响包项（6 high、2 moderate，包含传递依赖及上游传播项），涉及 Vue SSR、Vite/esbuild、PostCSS/nanoid/source-map-js；不等于 8 个独立漏洞或线上已可利用 | 待定：另行核对实际可达性与最小依赖修复；本轮仅升级 Node，禁止为清除告警直接运行 `npm audit fix --force` |
-| 统计请求精简 | 目前同时接入 Clarity、百度、51.LA 与 hits.sh | 待定：按实际使用的统计报表决定保留项 |
+| 统计请求精简 | 目前同时接入 GA4、Clarity、百度、51.LA 与 hits.sh | 待定：按实际使用的统计报表决定保留项 |
 | X 备份增量与字段完整性 | 2026-10-18 运行 `backup:x --handle wufantouzi`：新增 4 条（均为 10-17 当天，各 3 条可见评论），正文与评论已落盘，但这 4 条的 `createdAt`/`visibleTime`/`metrics` 为空，时间戳被并入正文末尾（如「19:42 · 2026年10月17日」）；归档原覆盖 2026-02-12 至 07-03（6 月单月 92 条），07-04 至 10-16 无任何记录 | 待核对：主页该时段是否确无帖子；若确有，需针对性重采（不得用 `--reset`），并排查时间/互动字段的解析 |
 
 默认 npmmirror 未实现安全审计端点（404）；依赖审计改用 `npm audit --registry=https://registry.npmjs.org`，不修改全局 registry。2026-10-27 已取得上表结果；审计告警与实际可利用性分开判断。
