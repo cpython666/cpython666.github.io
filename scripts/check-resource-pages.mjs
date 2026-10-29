@@ -63,6 +63,14 @@ try {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
   }
+  // Keep a fixture-only duplicate of Spider-Project so the carousel's repository
+  // de-duplication stays covered after the production duplicate was fixed.
+  const projectDataPath = join(fixture, 'projects/data.js')
+  const projectDataSource = await readFile(projectDataPath, 'utf8')
+  await writeFile(projectDataPath, projectDataSource.replace(
+    'export function sortProjects',
+    "projects.push({ ...projects.find(project => project.title === 'Spider-Project'), id: 999, title: 'Spider-Project Duplicate' })\n\nexport function sortProjects"
+  ))
   // Data modules are plain exports, with no article loaders or imports.
   const loadData = async path => import(`data:text/javascript;base64,${Buffer.from(await readFile(join(fixture, path))).toString('base64')}`)
   const { navigationData } = await loadData('nav/data.js')
@@ -157,7 +165,7 @@ config.transformHead = context => context.pageData.frontmatter.redirect
 export default config\n`)
   await promisify(execFile)(process.execPath, [join(root, 'node_modules/vitepress/bin/vitepress.js'), 'build', fixture], { cwd: root })
   // Keep the duplicate Spider-Project entries near the top to exercise repository deduplication.
-  const fixtureStars = { CoolBgs: 900, 'Spider-Project': 800, 'scrapy-drissionpage': 700, HandwritingGenerator: 600, LearnSpider: 500 }
+  const fixtureStars = { CoolBgs: 900, IPProxyPoolPro: 800, 'Spider-Project': 800, 'scrapy-drissionpage': 700, HandwritingGenerator: 600, LearnSpider: 500 }
   const repos = [...new Set(projects.map(project => project.url.match(/^https:\/\/(?:www\.)?github\.com\/([^/]+\/[^/#?]+)/)?.[1]).filter(Boolean))]
     .map((full_name, index) => ({ full_name, stargazers_count: fixtureStars[full_name.split('/')[1]] ?? 20 + index }))
   const output = join(fixture, '.vitepress/dist')
@@ -736,13 +744,26 @@ export default config\n`)
     await page.goto(`${base}/projects/`, { waitUntil: 'networkidle' })
     await page.locator('.star-status.ready').waitFor()
     assert.equal(await page.locator('.cards .card').count(), projects.length)
-    const topProjects = ['CoolBgs', 'IPProxyPool', 'scrapy-drissionpage', 'HandwritingGenerator', 'LearnSpider']
+    const detailCard = page.locator('.card', { hasText: 'HandwritingGenerator' }).first()
+    assert.equal(await detailCard.locator('.title a').getAttribute('href'), '/projects/handwriting-generator/')
+    assert.equal(await detailCard.locator('.image').getAttribute('href'), '/projects/handwriting-generator/')
+    assert.equal(await detailCard.locator('.actions .btn.primary').getAttribute('href'), '/projects/handwriting-generator/')
+    assert.equal(await detailCard.locator('.actions .btn.secondary').getAttribute('href'), 'https://github.com/cpython666/HandwritingGenerator')
+    assert.equal(await detailCard.locator('.actions .btn.secondary').getAttribute('target'), '_blank')
+    const cardLinks = await page.locator('.cards .card').evaluateAll(cards => cards.map(card => ({
+      title: card.querySelector('.title a')?.getAttribute('href'),
+      primary: card.querySelector('.actions .btn.primary')?.getAttribute('href'),
+    })))
+    assert.ok(cardLinks.every(link => link.title?.startsWith('/') && link.title === link.primary), 'every project opens its internal detail page')
+    const topProjects = ['CoolBgs', 'IPProxyPool', 'Spider-Project', 'scrapy-drissionpage', 'HandwritingGenerator']
       .map(title => projects.find(project => project.title === title))
     assert.ok(topProjects.every(Boolean), 'ranked fixtures refer to existing public project metadata')
     const checkSlide = async (target, project) => {
+      const href = project.detail || project.url
       assert.equal(await target.locator('.featured h2').textContent(), project.title)
-      assert.equal(await target.locator('.featured-actions .btn.primary').getAttribute('href'), project.url)
-      assert.equal(await target.locator('.featured-image').getAttribute('href'), project.url)
+      assert.equal(await target.locator('.featured-actions .btn.primary').getAttribute('href'), href)
+      assert.equal(await target.locator('.featured-image').getAttribute('href'), href)
+      assert.equal(await target.locator('.featured-actions .btn.primary').getAttribute('target'), project.detail ? null : '_blank')
       assert.equal(await target.locator('.featured-image img').getAttribute('src'), project.image)
       assert.equal(await target.locator('.featured-image img').getAttribute('alt'), project.title)
     }

@@ -101,6 +101,10 @@ const onFeaturedFocusOut = (event) => {
 
 const githubUrl = (project) => parseRepoFromUrl(project.url)?.url
 
+const projectLink = (project) => project.detail
+  ? { href: project.detail }
+  : { href: project.url, target: '_blank', rel: 'noopener noreferrer' }
+
 const parseRepoFromUrl = (url) => {
   try {
     const parsed = new URL(url, 'https://example.com')
@@ -304,11 +308,11 @@ onBeforeUnmount(() => {
         <h2>{{ featuredProject.title }}</h2>
         <p>{{ featuredProject.description }}</p>
         <div class="featured-actions">
-          <a :href="featuredProject.url" class="btn primary" target="_blank" rel="noopener noreferrer">查看项目</a>
+          <a v-bind="projectLink(featuredProject)" class="btn primary">查看项目</a>
           <span class="star-pill">★ {{ formatStars(featuredProject.stars) }}</span>
         </div>
       </div>
-      <a :href="featuredProject.url" class="featured-image" target="_blank" rel="noopener noreferrer">
+      <a v-bind="projectLink(featuredProject)" class="featured-image">
         <img :key="featuredProject.id" class="no-zoom" :src="featuredProject.image || defaultImg" :alt="featuredProject.title" @error="onImgErr" />
       </a>
       <div v-if="featuredProjects.length > 1" class="carousel-controls">
@@ -377,7 +381,7 @@ onBeforeUnmount(() => {
 
     <section v-if="filteredItems.length" class="cards">
       <article v-for="project in filteredItems" :key="project.id" class="card">
-        <a :href="project.url" class="image" target="_blank" rel="noopener noreferrer">
+        <a v-bind="projectLink(project)" class="image">
           <img
             class="no-zoom"
             :src="project.image || defaultImg"
@@ -391,7 +395,7 @@ onBeforeUnmount(() => {
         <div class="content">
           <div class="card-head">
             <h3 class="title">
-              <a :href="project.url" target="_blank" rel="noopener noreferrer">{{ project.title }}</a>
+              <a v-bind="projectLink(project)">{{ project.title }}</a>
             </h3>
             <span v-if="githubUrl(project)" class="star-pill">★ {{ formatStars(project.stars) }}</span>
           </div>
@@ -404,16 +408,36 @@ onBeforeUnmount(() => {
           </div>
 
           <div class="actions">
-            <a :href="project.url" class="btn primary" target="_blank" rel="noopener noreferrer">
-              {{ githubUrl(project) ? '查看仓库' : '查看详情' }}
-            </a>
-            <a
-              v-if="project.video_url"
-              :href="project.video_url"
-              class="btn secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >视频</a>
+            <template v-if="project.detail">
+              <a :href="project.detail" class="btn primary">查看详情</a>
+              <a
+                v-if="githubUrl(project)"
+                :href="project.url"
+                class="btn secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+                :aria-label="`在 GitHub 查看 ${project.title}`"
+              >GitHub</a>
+              <a
+                v-if="project.video_url"
+                :href="project.video_url"
+                class="btn secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >视频</a>
+            </template>
+            <template v-else>
+              <a v-bind="projectLink(project)" class="btn primary">
+                {{ githubUrl(project) ? '查看仓库' : '查看详情' }}
+              </a>
+              <a
+                v-if="project.video_url"
+                :href="project.video_url"
+                class="btn secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >视频</a>
+            </template>
           </div>
         </div>
       </article>

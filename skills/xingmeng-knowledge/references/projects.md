@@ -3,8 +3,8 @@
 来自 https://cpython666.github.io/projects/ ，共 20 项。
 
 - [LearnSpider](https://github.com/cpython666/LearnSpider)｜爬虫百战成神：爬虫成神之旅~从零开始! `项目 / 爬虫 / Web`
-- [IPProxyPool](https://github.com/cpython666/Spider-Project)｜自建优质爬虫代理池：自建优质爬虫代理池。曾靠着这个项目给博客刷了四五百万浏览量。 `项目 / 爬虫`
-- [HandwritingGenerator](https://github.com/cpython666/HandwritingGenerator)｜手写字生成器：一个使用 PyQt6 制作的手写文本图片生成器。该工具允许用户自定义多种效果，通过在左边配置效果参数，右边实时预览，并在调整好后输出图片。 `项目 / 软件`
+- [IPProxyPool](https://github.com/cpython666/IPProxyPoolPro)｜自建优质爬虫代理池：从公开代理源采集候选，用 Redis 评分并定时检测，FastAPI 提供查询接口；曾长期支撑站长的高频采集任务。 `项目 / 爬虫`
+- [HandwritingGenerator](https://github.com/cpython666/HandwritingGenerator)｜星笺 · 本地手写图片生成器：星笺（HandwritingGenerator）把文字写成一页有温度的纸笺：选纸张、挑字迹、调墨色与留白，实时预览并导出图片；文字与图像都在本地处理，不需要 API Key。 `项目 / 软件`
 - [CoolBgs](https://github.com/cpython666/CoolBgs)｜炫酷动态背景合集：一个收录多个前端动态背景的仓库，可以在列表中选择切换预览，为自己的网站集成切换炫酷动态背景功能。 `项目 / 前端`
 - [scrapy-drissionpage](https://github.com/cpython666/scrapy-drissionpage)｜Scrapy的DrissionPage中间件：Scrapy的DrissionPage中间件，解决动态加载网页数据无法获取的问题，可以把dp当作网页请求的方式。 `项目 / 爬虫`
 - [AwesomeWeb](https://github.com/cpython666/AwesomeWeb)｜前端小项目功能插件：自己学习前端过程中实现的前端小项目或者功能插件 `项目 / 前端`

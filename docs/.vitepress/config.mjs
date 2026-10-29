@@ -1333,6 +1333,7 @@ export default defineConfig({
       publishedAt;
     const isHome = page === "index.md";
     const isTool = frontmatter.tool === true;
+    const isProject = frontmatter.project === true;
 
     PAGE_INDEX_META.set(pageToPath(page), { noIndex, lastmod: updatedAt });
 
@@ -1342,7 +1343,7 @@ export default defineConfig({
       ["meta", { name: "keywords", content: String(frontmatter.keywords || SITE_KEYWORDS) }],
       ["meta", { property: "og:locale", content: "zh_CN" }],
       ["meta", { property: "og:site_name", content: SITE_NAME }],
-      ["meta", { property: "og:type", content: isHome || isTool ? "website" : "article" }],
+      ["meta", { property: "og:type", content: isHome || isTool || isProject ? "website" : "article" }],
       ["meta", { property: "og:title", content: title }],
       ["meta", { property: "og:description", content: description }],
       ["meta", { property: "og:url", content: url }],
@@ -1372,16 +1373,23 @@ export default defineConfig({
             url: `${SITE_URL}/web-intro/`,
           },
         }
-      : isTool ? {
+      : isTool || isProject ? {
           "@context": "https://schema.org",
-          "@type": "WebApplication",
+          "@type": isProject ? "SoftwareApplication" : "WebApplication",
           name: title,
           description,
           url,
-          applicationCategory: "DeveloperApplication",
-          operatingSystem: "Any",
+          applicationCategory: isProject
+            ? String(frontmatter.applicationCategory || "DesignApplication")
+            : "DeveloperApplication",
+          operatingSystem: isProject
+            ? String(frontmatter.operatingSystem || "macOS, Windows")
+            : "Any",
           inLanguage: "zh-CN",
           isAccessibleForFree: true,
+          ...(isProject && frontmatter.repository
+            ? { sameAs: [String(frontmatter.repository)] }
+            : {}),
         }
       : {
           "@context": "https://schema.org",
