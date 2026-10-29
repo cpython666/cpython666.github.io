@@ -28,7 +28,7 @@
 | 复制文本 | `docs/utils/copy.js` | 提示词等调用此工具，调用方处理成功/失败反馈 |
 | 自绘选择控件 | `docs/components/SiteSelect.vue` | O10 模式与手机资源分类共用；`id`、`label`、`modelValue`、`options` 入参，`update:modelValue` / `change` 仅在选项变化时触发；不使用隐藏原生 select |
 | 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/WebLink.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面；`navigationData` 按 `title` / `items` 分组，“AI模型检测”收录 ModelTrace 与 lm-detector；NavPage 负责搜索、分类和分批展示，WebLink 接收筛选后的 `items` 渲染卡片；顶部只保留搜索和统计，760px 及以下上下排列，不重复显示页面名和介绍 |
-| 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
+| 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/projects/ProjectDetail.vue`、`docs/tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
 | 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
 | 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
 | 发布流程 | `.github/workflows/static.yml` | `actions/setup-node@v7` 配置 Node `24.22.1`，沿用 `npm ci` 和现有锁文件；这是 2026-10-27 核实的最新 LTS 安全版本（当时 26 仍为 Current），固定版本以保证复现，后续安全补丁需重新核实；构建产物目录为 `docs/.vitepress/dist`，源码配置不代表已部署 |
@@ -50,6 +50,8 @@
 - 项目页顶部在 `ProjectPage.vue` 内展示最多 5 个高 Stars GitHub 仓库轮播，按已有 Stars 数据降序、按仓库地址去重，复用现有 API 与 6 小时缓存；未知 Stars 不当作零参与排名，没有任何已知值时回退为“精选项目”。轮播独立于下方搜索/分类，支持前后、指示点和键盘左右键，每 6 秒自动切换；悬停、焦点进入、隐藏页签或减少动态效果时暂停，提供手动播放开关，卸载清理计时器和监听。封面继续使用 16:9 完整展示，不新增轮播依赖。
 - 项目页搜索与分类共用 `.controls` 吸顶栏，≥960px 停在导航下方（`--vp-nav-height`），≤959px 顶部为0；沿用主题实色背景、底边框和低于导航的层级。不能只让内部分类列表 sticky，否则会被短父容器限制。切分类后等 DOM 更新，按筛选栏实际高度定位结果起点，首项不被遮挡且焦点留在按钮；点击已选分类不跳滚动。
 - 项目页五个教程合集（DrissionPage、Pygame、Django、Scrapy、PyQt6）的独立封面位于 `docs/public/imgs/app/<小写技术名>-tutorial.webp`，由 `docs/projects/data.js` 引用；统一为 1280×720（16:9）WebP，约 46–66 KiB，使用深色等距插画、英文技术名与中文主题。更换封面时保持图片比例，并检查“合集”筛选下五张图片实际加载及手机端标题完整性。
+- 项目详情页（2026-10-27）：20 个项目全部有站内详情入口。15 个 GitHub 项目各有 `/projects/<slug>/` 页面，由共享 `docs/projects/ProjectDetail.vue` 加页面 Markdown 组成；5 个教程合集的 `detail` 直接指向已有系列页（`/spider/dp-series/` 等），不重复建页。`docs/projects/data.js` 的 `detail` 字段驱动卡片封面/标题和热门轮播；有 GitHub 仓库的详情项目在卡片保留独立 GitHub 按钮。`IPProxyPool` 已从错误的 Spider-Project 链接改为 `IPProxyPoolPro`，详情页内链安全加固版 `IP-Proxy-Pool`。详情页 frontmatter 使用 `project: true`，配置输出 `SoftwareApplication`、`og:type=website` 并自动进 sitemap。Handwriting 卡片封面仍是旧版 UI 图，是否更换待确认。
+- 详情页正文使用 `layout: home`、`markdownStyles: false`，组件用 `<slot>` 承载 Markdown 并包一层 `.vp-doc`；Quick Start 按钮仅在传入 `quickStart` 时显示。1:1 封面在 hero 中限制最大高度 380px（手机 300px），避免方形图撑高。手机端需覆盖 VitePress 代码块和代码组标签的 `-24px` 外边距，否则 320/390px 会横向溢出。详情页的“快速开始”锚点需保留 `scroll-margin-top`，顶栏下方定位正常。
 - 资源导航广告图、项目精选/卡片封面和图片分割预览使用 `no-zoom`；否则主题会将其加入 PhotoSwipe，并受到 `.vp-doc img.is-zoomable` 的 520px 最大宽度及上下 16px 外边距影响，外链点击也会被图片查看器拦截。
 - 工具导航名称为“工具”，总页 SEO 标题为“在线开发工具箱”。2026-10-27 用户确认迁移到 `/tools/`，源码位于 `docs/tools/`；7 个工具各有 `/tools/<pageId>/index.md` 对应独立网址 `/tools/<pageId>/`，页面用 `SpiderTools tool-id` 复用布局，只渲染当前工具，默认 slot 放静态 Markdown 使用说明、示例和相关工具链接。标题用 sr-only h1，不增加顶部大标题；手机直接打开时定位操作面板，已有指南锚点优先。工具间导航切换页面，输入不跨页面保存。
 - `/spider-tools/` 及7个旧独立页长期保留为轻量跳转壳；`config.mjs` 对 `redirect` 输出新 canonical、head 同步 `legacyRedirect.mjs` 脚本和0秒 meta refresh，SPA 用 `LegacyToolRedirect.vue` 挂载后 replace。同步脚本保留 query/指南 hash，旧根 `#<pageId>` 直接去对应新页，未知 hash 留在新总入口；无JS也可通过 meta refresh 到对应新页。旧页 `search: false`、`hits: false`、`comment: false`，不进 sitemap、不发 GA4 PV，不加 noindex/nofollow 或 robots 禁抓。全站导航、工具分享、公开说明内链和对外知识库统一新地址；不要删除旧页或把所有旧工具重定向到总入口。
