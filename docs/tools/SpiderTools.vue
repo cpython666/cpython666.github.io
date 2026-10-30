@@ -63,6 +63,7 @@ import PanelUrl from './components/PanelUrl.vue'
 import PanelAaencode from './components/PanelAaencode.vue'
 import PanelJjencode from './components/PanelJjencode.vue'
 import PanelImagesplit from './components/PanelImagesplit.vue'
+import PanelMarkdownImage from './components/PanelMarkdownImage.vue'
 import PanelCurlRequests from './components/PanelCurlRequests.vue'
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue'
 import { useRouter } from 'vitepress'
@@ -88,6 +89,7 @@ const panels = {
   aaencode: PanelAaencode,
   jjencode: PanelJjencode,
   imagesplit: PanelImagesplit,
+  'markdown-image': PanelMarkdownImage,
 }
 const toolPath = id => `/tools/${id}/`
 
@@ -99,6 +101,7 @@ const toolList = ref([
   { name: 'AAencode 编码解码', pageId: 'aaencode', icon: 'AA', description: '将 JavaScript 转换为颜文字形式的 AAencode 编码，并提供解码。' },
   { name: 'JJencode 编码解码', pageId: 'jjencode', icon: 'JJ', description: '将 JavaScript 转换为符号形式的 JJencode 编码，并提供解码。' },
   { name: '图片分割', pageId: 'imagesplit', icon: '▦', description: '按行列切分图片，在浏览器内预览并下载切片。' },
+  { name: 'Markdown 转图片', pageId: 'markdown-image', icon: 'MD', badge: 'NEW', description: '把 Markdown 渲染成 PNG 图片，支持标题、列表、代码块、引用和链接，可切换明暗主题与图片宽度。' },
 ])
 
 const activeTool = computed(() => toolList.value.find(tool => tool.pageId === curPageId.value))

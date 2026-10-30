@@ -1,6 +1,6 @@
 # 在线开发工具箱
 
-来自 https://cpython666.github.io/tools/ ，共 7 个工具，全部在浏览器本地运行。
+来自 https://cpython666.github.io/tools/ ，共 8 个工具，全部在浏览器本地运行。
 
 | 工具 | 作用 | 网页直达 | 在本 Skill 中怎么用 |
 | --- | --- | --- | --- |
@@ -11,6 +11,7 @@
 | AAencode 编码解码 | 将 JavaScript 转换为颜文字形式的 AAencode 编码，并提供解码。 | https://cpython666.github.io/tools/aaencode/ | 用 Python 标准库或打开网页 |
 | JJencode 编码解码 | 将 JavaScript 转换为符号形式的 JJencode 编码，并提供解码。 | https://cpython666.github.io/tools/jjencode/ | 用 Python 标准库或打开网页 |
 | 图片分割 | 按行列切分图片，在浏览器内预览并下载切片。 | https://cpython666.github.io/tools/imagesplit/ | 用 Python 标准库或打开网页 |
+| Markdown 转图片 | 把 Markdown 渲染成 PNG 图片，支持标题、列表、代码块、引用和链接，可切换明暗主题与图片宽度。 | https://cpython666.github.io/tools/markdown-image/ | 用 Python 标准库或打开网页 |
 
 ## 本地脚本
 
