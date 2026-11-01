@@ -43,6 +43,7 @@ const widthOptions = [
 ]
 
 function render() {
+  clearTimeout(renderTimer)
   const canvas = canvasRef.value
   if (!canvas) return
   if (!source.value.trim()) {
@@ -119,37 +120,65 @@ onBeforeUnmount(() => clearTimeout(renderTimer))
       </div>
     </div>
 
-    <label for="md-image-input">Markdown 内容</label>
-    <textarea
-      id="md-image-input"
-      v-model="source"
-      rows="10"
-      spellcheck="false"
-      placeholder="在这里粘贴 Markdown，支持标题、列表、代码块、引用和链接"
-    ></textarea>
-
     <p class="notice" role="status">{{ notice }}</p>
 
-    <div v-show="ready" class="preview">
-      <canvas ref="canvasRef" class="preview-canvas" role="img" aria-label="Markdown 渲染出的图片预览"></canvas>
+    <div class="workspace">
+      <div class="editor">
+        <label for="md-image-input">Markdown 内容</label>
+        <textarea
+          id="md-image-input"
+          v-model="source"
+          spellcheck="false"
+          placeholder="在这里粘贴 Markdown，支持标题、列表、代码块、引用和链接"
+        ></textarea>
+      </div>
+      <div class="preview-pane">
+        <div class="pane-label" id="md-image-preview-label">图片预览</div>
+        <div class="preview" :class="{ 'is-empty': !ready }" role="region" aria-labelledby="md-image-preview-label">
+          <canvas v-show="ready" ref="canvasRef" class="preview-canvas" role="img" aria-label="Markdown 渲染出的图片预览"></canvas>
+          <p v-if="!ready" class="preview-empty">输入 Markdown 后，这里会显示图片预览。</p>
+        </div>
+      </div>
     </div>
-    <p class="hint">图片按 2 倍分辨率渲染，导出后放大也清晰；表格和图片语法不在支持范围内。</p>
+    <p class="hint">输入、切换主题或图片宽度后会自动更新预览，不必每次点击「生成图片」。图片按 2 倍分辨率渲染，下载的 PNG 与预览是同一张图；表格和图片语法不在支持范围内。</p>
   </section>
 </template>
 
 <style scoped>
-.md-image { min-width: 0; }
+.md-image { min-width: 0; max-width: 100%; }
 .md-image h3 { margin: 0 0 20px; }
-.options { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-bottom: 18px; }
-.field { display: flex; flex-direction: column; gap: 6px; width: 220px; max-width: 100%; }
-.field label { color: var(--vp-c-text-2); font-size: 13px; }
+.options { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; margin-bottom: 12px; min-width: 0; }
+.field { display: flex; flex-direction: column; gap: 6px; width: 220px; max-width: 100%; min-width: 0; }
+.field label, .pane-label { color: var(--vp-c-text-2); font-size: 13px; line-height: 1.4; }
 .field :deep(.site-select) { width: 100%; }
 .buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.notice {
+  min-height: 22px;
+  margin: 0 0 12px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-width: 0;
+}
+.editor, .preview-pane {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.editor label, .pane-label { margin: 0 0 8px; }
 .md-image textarea {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  margin-top: 8px;
+  min-width: 0;
+  height: 240px;
+  margin: 0;
   padding: 12px;
   border: 1px solid var(--vp-c-divider);
   border-radius: 8px;
@@ -158,7 +187,8 @@ onBeforeUnmount(() => clearTimeout(renderTimer))
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
   line-height: 1.7;
-  resize: vertical;
+  resize: none;
+  overflow: auto;
 }
 .md-image button {
   padding: 8px 14px;
@@ -170,14 +200,50 @@ onBeforeUnmount(() => clearTimeout(renderTimer))
 }
 .md-image .primary { background: var(--vp-c-brand-1); color: white; }
 .md-image button:disabled { opacity: .5; cursor: default; }
-.notice { min-height: 22px; margin: 12px 0; color: var(--vp-c-text-2); font-size: 13px; line-height: 1.7; }
-.preview { max-height: 560px; overflow: auto; padding: 12px; border: 1px solid var(--vp-c-divider); border-radius: 12px; background: var(--vp-c-bg-soft); }
-.preview-canvas { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 8px 28px rgba(0, 0, 0, .12); }
+.preview {
+  box-sizing: border-box;
+  min-width: 0;
+  height: 320px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+.preview.is-empty {
+  display: grid;
+  place-items: center;
+}
+.preview-empty { margin: 0; color: var(--vp-c-text-3); font-size: 13px; line-height: 1.7; text-align: center; }
+.preview-canvas {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+}
 .hint { margin: 12px 0 0; color: var(--vp-c-text-3); font-size: 12px; line-height: 1.7; }
+@media (min-width: 1100px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    height: clamp(420px, calc(100vh - 420px), 640px);
+    height: clamp(420px, calc(100dvh - 420px), 640px);
+  }
+  .editor, .preview-pane { height: 100%; min-height: 0; }
+  .md-image textarea, .preview {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+  }
+}
 @media (max-width: 768px) {
   .field { width: 100%; }
   .buttons { width: 100%; }
   .buttons button { flex: 1 1 0; }
-  .preview { max-height: 420px; padding: 8px; }
+  .preview { padding: 8px; }
 }
 </style>
