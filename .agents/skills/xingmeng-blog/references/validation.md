@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- 2026-11-10 推荐区改版：两份 Vue SFC 编译通过；实际 8080 开发站检查首页、关于页、支持页、中转教程，在 1440/390/320px × 明暗主题共 24 种组合无页面或卡片内部横溢、无 Vite 错误遮罩；首页三组共 10 卡、中转教程只显示 3 卡，链接保留 HTTPS / 新窗口 / noopener，键盘 Tab 可移到下一张开源卡并显示焦点。共享卡片显式清除文章正文缩进；图片固定尺寸且 lazy/async，7 张 WebP 加现有 SVG 合计 16,224 字节；未运行全站构建或正文索引。
+
 - `/tools/` 迁移：`check-tool-seo.mjs` 验证8个新地址 canonical/sitemap、7工具 WebApplication、8旧壳同步head脚本/0秒refresh/新canonical及排除旧sitemap；`check-resource-pages.mjs --tools-only` 验证旧8页直达/SPA/index.html别名、返回历史、旧根全部工具hash、query/指南/未知hash及无JS跳转，并通过原交互和手机明暗回归。真实 ArticleHits 由人工SVG拦截，确认新7工具沿用旧计数键、旧壳无计数节点；GA专项检查确认旧壳直达/SPA均不初始化或增加PV。完整8080开发站已核对旧hash和独立index.html带参数/中文锚点跳到新页，工具导航、唯一h1与页面宽度正常。工具SEO脚本已改为逐字节frontmatter前置检查，LF/CRLF人工受限样本确认不预读正文；未运行本地全站构建。
 
 - 2026-10-27 项目详情页全量：15 个 GitHub 项目详情页（含 Handwriting）在完整 8080 开发站逐页检查；20 个项目卡片的标题/主按钮均指向站内详情，15 个有 GitHub 仓库的卡片保留 `_blank` GitHub 按钮，5 个教程合集复用系列页且无 GitHub 按钮；IPProxyPool 原错误链接已改到 IPProxyPoolPro。所有详情路由和 32 个内部链接返回 200，页面自身图片实际加载。15 页在 1440/390/320px 无横向溢出、唯一 h1、无浏览器控制台错误；Handwriting 的 Python/Rust 代码组、各页 Quick Start 锚点（点击后约 110px，位于顶栏下方）和明暗主题抽查通过。重启 8080 后 local search 已能检索到代理池、StarDream 和字幕提取器等新详情页。全量隔离 VitePress 生产构建（项目和全部详情页，public 资产以软链接提供）通过 SSR；临时脚本用真实 config hooks 检查 15 页 canonical/description/og:type/SoftwareApplication/sameAs/sitemap 和 frontmatter 图片存在。`--projects-only` 回归用 fixture-only Spider-Project 重复项保留轮播去重覆盖，并断言全部卡片标题/主按钮进入站内详情；`check-tool-seo.mjs` 与 `skill:check` 通过。未运行全站构建、未部署。

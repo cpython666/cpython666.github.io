@@ -32,10 +32,15 @@ Windows 和 macOS 流程操作都是一样的。
 
 上面就是我们本期视频的内容，大家可以使用我的邀请链接支持一下，也可以把视频教程分享给需要的朋友。我们下期视频再见 👋
 
+<script setup>
+import RecommendationCards from '../components/RecommendationCards.vue'
+</script>
+
 ## 中转站推荐
 
-- [XFastAPI 推荐入口](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
-- [HeyRoute 推荐入口](https://heyroute.ai/stardream)：一个 API Key 接入 Codex、Claude Code 和 OpenAI 兼容客户端，替换 Base URL 即可使用。[控制台管理入口](https://heyroute.ai/console)。
+<RecommendationCards :groups="['products']" relay-only hide-heading />
+
+部分链接含邀请关系；价格与渠道状态请以平台实时页面为准。[HeyRoute 控制台管理入口](https://heyroute.ai/console)。需要 ChatGPT / Claude 订阅代充，可查看[产品推荐](/web-intro/#recommendation-products)。
 
 ## 参考链接
 

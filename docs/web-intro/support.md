@@ -4,23 +4,21 @@ description: "支持本站的几种方式，以及一个高性价比服务器厂
 keywords: "支持作者,赞助,服务器推荐,打赏,支持博客"
 ---
 
+<script setup>
+import RecommendationCards from '../components/RecommendationCards.vue'
+</script>
+
 # 支持作者
 
-买杯咖啡？
+如果这里的文章、工具或开源软件帮到了你，欢迎分享给需要的朋友，也可以通过下方邀请入口支持本站。部分产品链接含推广关系，请按自己的需求选择。
 
-<!-- 发现了一个很实惠的vpn站点，使用站长的邀请链接注册账号充值，可以让站长获得一些佣金，谢谢大家支持.
-注册链接：
-[https://c.ikunvpn.com/#/register?code=yeHoaHFJ](https://c.ikunvpn.com/#/register?code=yeHoaHFJ)
-![](/support/ikunvpn.png) -->
+<RecommendationCards />
 
-同样发现一个很高性价比的服务器厂商：莱卡云。该产品提供低价格高性能，拥有精选华中/香港/美国/欧洲多种（境内境外）云服务器产品（境外服务器可以免备案），低至25元每月。拥有7x24小时一对一的服务。  
+机场 / VPN 目前暂无有效推荐，[查看停推说明](/web-intro/#vpn-status)。
 
-最近也是活动时间，9.9就可以购买服务器一个月，非常适合新手学习使用。  
+## 请站长喝杯咖啡
 
-如果感兴趣，可以使用我的推广链接，非常的感谢：[https://www.lcayun.com/aff/DECEDOZS](https://www.lcayun.com/aff/DECEDOZS)
-![https://www.lcayun.com/aff/DECEDOZS](/support/lky.png)
-
-
+感谢每一份支持 ☕
 
 ::: details 支付宝
 ![](/support/zfb.jpg)
