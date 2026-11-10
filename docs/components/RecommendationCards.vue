@@ -23,17 +23,18 @@ const imageSource = logo => logo.startsWith('/') ? logo : `/imgs/recommendations
       </header>
       <div class="recommendation-grid">
         <a v-for="item in section.items" :key="item.name" :href="item.link" class="recommendation-card" :class="[{ featured: item.featured }, item.tone]" target="_blank" :rel="section.id === 'opensource' ? 'noopener noreferrer' : 'sponsored noopener noreferrer'">
-          <div v-if="item.visual" class="card-cover">
+          <div v-if="item.cover" class="sponsor-cover">
+            <img class="no-zoom" :src="imageSource(item.cover)" :alt="`${item.name} · ${item.category}`" width="480" height="200" loading="lazy" decoding="async" />
+          </div>
+          <div v-else-if="item.visual" class="card-cover">
             <RecommendationVisual :variant="item.visual" />
             <span v-if="item.badge" class="card-badge">{{ item.badge }}</span>
           </div>
-          <div class="card-content">
+          <div v-if="!item.cover" class="card-content">
             <div class="card-heading">
-              <span v-if="section.id === 'sponsors'" class="sponsor-mark" aria-hidden="true">{{ item.mark }}</span>
-              <img v-else-if="item.logo" class="brand-icon no-zoom" :src="imageSource(item.logo)" alt="" width="28" height="28" loading="lazy" decoding="async" />
+              <img v-if="item.logo" class="brand-icon no-zoom" :src="imageSource(item.logo)" alt="" width="28" height="28" loading="lazy" decoding="async" />
               <span v-else class="brand-letter" aria-hidden="true">{{ item.mark }}</span>
               <h3>{{ item.name }}</h3>
-              <span v-if="section.id === 'sponsors'" class="sponsor-arrow" aria-hidden="true">↗</span>
             </div>
             <span class="card-category">{{ item.category }}</span>
             <p class="card-description">{{ item.description }}</p>
@@ -75,12 +76,8 @@ const imageSource = logo => logo.startsWith('/') ? logo : `/imgs/recommendations
 .card-cta { display: inline-flex; align-items: center; gap: 5px; color: var(--accent); font-size: 12px; font-weight: 600; white-space: nowrap; }
 .card-cta svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .referral-note { text-indent: 0; margin: 12px 0 0; padding: 0; font-size: 11px; line-height: 1.8; color: var(--vp-c-text-2); }
-.section-sponsors .card-content { padding: 18px 20px; }
-.sponsor-mark { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; flex-shrink: 0; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 7px; color: var(--vp-c-text-2); font: 600 12px/1 var(--vp-font-family-base); }
-.sponsor-arrow { margin-left: auto; color: var(--vp-c-text-3); font-size: 17px; }
-.section-sponsors .card-category { display: none; }
-.section-sponsors .card-description { margin: 10px 0 0; font-size: 12px; line-height: 1.7; }
-.section-sponsors .card-footer { display: none; }
+.sponsor-cover { aspect-ratio: 12 / 5; background: #fff; }
+.sponsor-cover img { display: block; width: 100%; height: 100%; margin: 0; object-fit: contain; }
 .dark .recommendation-card { --accent: #a6bedb; --tint: #283345; }
 .dark .featured { --accent: #e6b38e; --tint: #392c22; border-color: #71533e; }
 .dark .violet { --accent: #cbb1df; --tint: #342b3e; }
@@ -89,13 +86,11 @@ const imageSource = logo => logo.startsWith('/') ? logo : `/imgs/recommendations
 .dark .card-badge { color: #70502d; }
 .dark .violet .card-badge { color: #77558e; }
 @container (max-width: 1100px) { .section-products .recommendation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@container (max-width: 820px) { .recommendation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 820px) { .section-opensource .recommendation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @container (max-width: 540px) {
   .section-heading { display: block; }
   .section-heading p { margin-top: 7px; }
   .recommendation-grid, .section-products .recommendation-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .section-sponsors .recommendation-grid { gap: 10px; }
-  .section-sponsors .card-content { padding: 14px 16px; }
   .section-heading h2 { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) { .recommendation-card { transition: none; } .recommendation-card:hover { transform: none; } }

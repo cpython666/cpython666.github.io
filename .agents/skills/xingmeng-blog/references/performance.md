@@ -29,7 +29,7 @@
 ## 首页
 
 - `docs/index/IndexPage.vue` 保存 Typed 实例并在卸载时销毁，同时移除 resize 监听。减少动态效果时显示静态标语、关闭背景旋转与 logo 动画；背景高度测量允许 header 不存在。
-- 首页 `SponsorsLinks.vue` 复用 `RecommendationCards.vue` / `RecommendationVisual.vue`：产品封面为静态 HTML/CSS 与内联 SVG，无额外封面图片、定时器或持续动画；赞助品牌和友链用文字。5 张小图标合计 5,694 字节，固定 28×28，保留 `loading="lazy"`、`decoding="async"` 与 `no-zoom`。历史价格大图只保留文字链接，不在首页请求。
+- 首页 `SponsorsLinks.vue` 复用 `RecommendationCards.vue` / `RecommendationVisual.vue`：产品封面为静态 HTML/CSS 与内联 SVG，无额外封面图片、定时器或持续动画；赞助恢复原 480×200 品牌横幅，导出无损 WebP（`lcayun.webp` / `yuanrenxue.webp` / `qingguo.webp`），合计 88,954 字节，固定 12:5 比例完整显示；不可为了节省体积退回字母文字卡。友链用文字。5 张小图标合计 5,694 字节，固定 28×28；连同赞助图共 94,648 字节，保留 `loading="lazy"`、`decoding="async"` 与 `no-zoom`。历史价格大图只保留文字链接，不在首页请求。
 
 ## 项目 Stars
 
