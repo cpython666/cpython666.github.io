@@ -21,8 +21,8 @@ const friends = [
 </template>
 
 <style scoped>
-.sponsors-section { width: 100%; padding: 32px 24px; border-top: 1px solid var(--vp-c-divider); background: var(--vp-c-bg-alt); }
-.sponsors-content { max-width: 1120px; margin: 0 auto; }
+.sponsors-section { width: 100%; padding: 48px 32px; border-top: 1px solid var(--vp-c-divider); background: var(--vp-c-bg-alt); }
+.sponsors-content { max-width: 1480px; margin: 0 auto; }
 .friend-links { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--vp-c-divider); font-size: 12px; color: var(--vp-c-text-2); }
 .friend-links a { color: var(--vp-c-text-1); }
 .friend-links a:hover { color: var(--vp-c-brand-1); }
