@@ -152,7 +152,7 @@ uv run --extra mcp python mcp_server.py --output-dir outputs
 
 - [HandwritingGenerator 仓库](https://github.com/cpython666/HandwritingGenerator)
 - [PyQt6 实战开发系列](/python/pyqt6-series/)
-- [星笺 Starclip](https://github.com/cpython666/starclip)：星绘坊的「月光笺」通过本地 CLI 复用星笺的 Rust 渲染器；安装包尚未捆绑渲染器和字体
+- [星笺 Starclip](https://github.com/StarDreamTech/starclip)：星绘坊的「月光笺」通过本地 CLI 复用星笺的 Rust 渲染器；安装包尚未捆绑渲染器和字体
 - [返回项目列表](/projects/)
 
 <div class="quick-note">
