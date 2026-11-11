@@ -22,9 +22,9 @@ export const recommendationGroups = [
     id: 'opensource', title: '免费开源', label: '自己做的小工具',
     description: '从自己的日常需求出发，也希望能帮到你。',
     items: [
-      { name: '星笺 Starclip', visual: 'starclip', category: '剪贴板管理', logo: 'starclip.webp', description: '找回复制过的文字、链接与代码，用星标和分组整理常用内容。', tags: ['本地历史', '收藏分组'], link: 'https://github.com/cpython666/starclip', cta: '源码与下载' },
-      { name: '星镜 Starshot', visual: 'starshot', category: '截图与标注', logo: 'starshot.webp', description: '截图、标注、置顶贴图，再加一点留白与背景，让分享更好看。', tags: ['截图标注', '图片美化'], link: 'https://github.com/cpython666/starshot', cta: '源码与下载' },
-      { name: '星匣 StarVault', visual: 'starvault', category: 'AI 聊天记录备份', logo: 'starvault.webp', description: '把分散的 AI 对话收进自己的长期档案，方便检索、回溯与迁移。', tags: ['会话归档', '私有仓库备份'], link: 'https://github.com/cpython666/starvault', cta: '源码与下载' },
+      { name: '星笺 Starclip', visual: 'starclip', category: '剪贴板管理', logo: 'starclip.webp', description: '找回复制过的文字、链接与代码，用星标和分组整理常用内容。', tags: ['本地历史', '收藏分组'], link: 'https://github.com/StarDreamTech/starclip', cta: '源码与下载' },
+      { name: '星镜 Starshot', visual: 'starshot', category: '截图与标注', logo: 'starshot.webp', description: '截图、标注、置顶贴图，再加一点留白与背景，让分享更好看。', tags: ['截图标注', '图片美化'], link: 'https://github.com/StarDreamTech/starshot', cta: '源码与下载' },
+      { name: '星匣 StarVault', visual: 'starvault', category: 'AI 聊天记录备份', logo: 'starvault.webp', description: '把分散的 AI 对话收进自己的长期档案，方便检索、回溯与迁移。', tags: ['会话归档', '私有仓库备份'], link: 'https://github.com/StarDreamTech/starvault', cta: '源码与下载' },
     ],
   },
 ]
