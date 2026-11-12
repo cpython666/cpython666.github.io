@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- 2026-11-12 合并 PR #17 与 master：保留 `cleanUrls`、构建期 `robots.txt` / `feed.xml` / `llms.txt` / `llms-full.txt`、作者实体、面包屑、备份页 noindex 和 Waline `commentPath()`，同时保留 master 的 `skill:build`、Waline、`/tools/`、GA4、科技日报和后来的社交账号。用户授权的 `npm run docs:build`（VitePress 1.6.4）通过。feed 为 50 条，llms 按栏目列出公开文章，链接均无 `.html`；16 条会员路径只出现在 robots Disallow，不进入 feed、llms、llms-full 或 sitemap。备份页为 noindex。产物仍是 `页面.html` 与目录 `index.html`。按 GitHub Pages 的规则本地核对：无后缀文章地址与旧 `.html` 地址打开同一页，目录地址去掉尾斜杠会 301 到带斜杠地址；`/tools/url` 与 `/web-intro/profile-history` 可打开。正式站在合并前已用同一规则响应现有文件。`check-tool-seo.mjs` 改为从 `@graph` 读取 `WebApplication` 后通过。未改部署，未加 Cloudflare/wrangler。推送到 PR 分支不等于 master 已发布。
+
 - 2026-11-10 推荐区视觉改版：3 份 Vue SFC 编译通过；实际 8080 开发站的首页、关于页、支持页、中转教程，在 2470/1440/768/390/320px × 明暗主题共 40 种组合无页面或正文控件横溢、无 Vite 错误遮罩；首页 10 卡、7 个静态封面，中转教程 3 卡。推广/开源链接保持原邀请地址、rel 与新窗口，Tab 可移到下一开源卡并显示焦点；装饰示意 `aria-hidden` 且无内嵌可聚焦控件，减弱动态效果下卡片过渡关闭。文章正文缩进未侵入卡片，图标 lazy/async；5 张图标合计 5,694 字节。用户反馈后三张赞助改回原品牌横幅，480×200 无损 WebP 合计 88,954 字节；首页/关于/支持页在 1440/900/768/390/320px × 明暗主题 30 种组合通过图片加载、12:5 完整展示及无横溢检查，赞助 Tab 焦点可见；产品顺序已实测为 XFastAPI → WildAI · Bewild → HeyRoute → FastAI。未运行全站构建或正文索引。Ego 浏览器通过 CDP 设置的视口在下一次脚本调用会恢复，截图和尺寸断言须与视口设置放在同一次调用，不能只根据截图文件名判断手机验收。
 
 - `/tools/` 迁移：`check-tool-seo.mjs` 验证8个新地址 canonical/sitemap、7工具 WebApplication、8旧壳同步head脚本/0秒refresh/新canonical及排除旧sitemap；`check-resource-pages.mjs --tools-only` 验证旧8页直达/SPA/index.html别名、返回历史、旧根全部工具hash、query/指南/未知hash及无JS跳转，并通过原交互和手机明暗回归。真实 ArticleHits 由人工SVG拦截，确认新7工具沿用旧计数键、旧壳无计数节点；GA专项检查确认旧壳直达/SPA均不初始化或增加PV。完整8080开发站已核对旧hash和独立index.html带参数/中文锚点跳到新页，工具导航、唯一h1与页面宽度正常。工具SEO脚本已改为逐字节frontmatter前置检查，LF/CRLF人工受限样本确认不预读正文；未运行本地全站构建。
@@ -29,7 +31,7 @@
 
 - 2026-10-26提交前定向检查：科技日报006–011及目录均先逐字节检查frontmatter后独立渲染，日期/期数连续、每页唯一h1、无裸加粗星号，本地链接与六张1200px封面有效；侧栏、目录与公开知识索引同步至011。五个平台SVG解析通过，配置/主题/导航/吉祥物检查脚本语法与 `skill:check` 通过。现有 `check-mascot.mjs` 再次全通过且无浏览器错误，生产三图各帧鞋底中心99–100.5px、基线189px；原始素材忽略有效。未重新核实新闻事实，未运行全站构建。
 
-- 2026-10-23昵称与签名历史页：实际工作区8080开发站检查唯一h1、公众号简介原文、两段博客原文与昵称变更日期；个人介绍至历史页往返链接通过，1280px/390px文档与正文无横溢，桌面及手机视口截图已核对。配置语法与 `skill:check` 通过，生成目录已同步；只检查两个公开页面，未运行全站构建。检查脚本需按实际DOM选择元素：VitePress标题带零宽锚点字符，正文链接会补 `.html`，不能据精确字符串定位超时判断页面跳转失效。
+- 2026-10-23昵称与签名历史页：实际工作区8080开发站检查唯一h1、公众号简介原文、两段博客原文与昵称变更日期；个人介绍至历史页往返链接通过，1280px/390px文档与正文无横溢，桌面及手机视口截图已核对。配置语法与 `skill:check` 通过，生成目录已同步；只检查两个公开页面，未运行全站构建。检查脚本需按实际DOM选择元素：VitePress标题带零宽锚点字符。当时正文链接会补 `.html`；2026-11-12 开启 `cleanUrls` 后站内链接和 canonical 不再带 `.html`，目录页仍用尾斜杠，不能再按 `.html` 精确匹配链接。GitHub Pages 用同名 `.html` 文件响应无后缀地址，旧 `.html` 链接仍可打开。
 
 - 2026-10-23 全站原生下拉清理：非 Markdown UI 源码与 309 个公开 Markdown 未发现其他渲染原生下拉，16 个会员文件仅识别 frontmatter 后跳过正文；两处原生 select（O10 模式、手机资源分类）改为共享 `SiteSelect.vue`。`node scripts/check-resource-pages.mjs --tools-only` 覆盖7工具及共享资源分类控件的键盘、选中/取消、外部关闭、焦点、长列表与深浅主题320/390px边界，并断言无 `select/datalist`。同时覆盖分享/O10/cURL复制反馈、剪贴板失败/回退、连续点击、关闭和自动消失；实际工作区8080的O10/资源页已验证真实剪贴板、桌面/手机及明暗主题，截图目视通过，无浏览器错误。本轮验证未运行全站构建。
 - `check-resource-pages.mjs` 的公开工具说明页现在先逐字节读取 frontmatter，到结束行立即停止，确认非会员后才复制正文；LF/CRLF人工读取边界自检会在尝试读取正文首字节时失败。不要恢复带缓冲预读的 `readLines()`。
@@ -65,6 +67,8 @@
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。完整开发服务曾因 `@waline/client` 尚未安装而失败，按锁文件执行 `npm ci --no-audit --no-fund` 后恢复，`package.json` / `package-lock.json` 不变。Skill 格式检查需要 PyYAML，可用 `uv run --with pyyaml python <quick_validate.py> .agents/skills/xingmeng-blog`，无需为此修改项目依赖。
 - 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
+- 验证构建产物（robots/feed/llms/sitemap/JSON-LD）时用“替身文章”整站构建：复制 `docs/` 到临时目录，Markdown 只按 frontmatter 识别会员并全部换成占位正文（会员页只写 `memberOnly: true` 和占位标记），再链接 `node_modules` 运行 `vitepress build`；检查产物中会员占位标记出现 0 次。2026-10-20 用此法验证 307 篇（16 篇会员）通过，约 15 秒。
+- 云端环境 `npm ci` 卡住时，锁文件 resolved 指向被拦截的 `registry.npmmirror.com`；用 `npm ci --registry=https://registry.npmjs.org/ --replace-registry-host=always`，不改锁文件。
 - 文档改动检查链接是否可解析，并使用 skill-creator 自带 `scripts/quick_validate.py` 检查 Skill 格式；格式通过不等同于产品测试通过。
 
 ## 已发现、尚未处理的待办

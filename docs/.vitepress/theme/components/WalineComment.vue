@@ -9,12 +9,18 @@ const el = ref(null)
 let waline
 let initializing
 
+// 开启 cleanUrls 前评论按 /xxx.html 存储，统一成这个格式，旧评论不丢
+const commentPath = () => {
+  const path = route.path
+  return path.endsWith('/') || path.endsWith('.html') ? path : `${path}.html`
+}
+
 const mount = async () => {
   if (import.meta.env.SSR || !walineServerURL || !enabled.value) return
   await nextTick()
   if (!el.value) return
   if (waline) {
-    waline.update({ path: route.path })
+    waline.update({ path: commentPath() })
     return
   }
   if (initializing) return
@@ -26,7 +32,7 @@ const mount = async () => {
     waline = init({
       el: el.value,
       serverURL: walineServerURL,
-      path: route.path,
+      path: commentPath(),
       lang: 'zh-CN',
       dark: 'html.dark',
       reaction: false,

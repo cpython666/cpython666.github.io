@@ -66,9 +66,12 @@ try {
         if (id) {
           assert.equal(head.find(([, attrs]) => attrs.property === 'og:type')[1].content, 'website')
           const schema = JSON.parse(head.find(([tag, attrs]) => tag === 'script' && attrs.type === 'application/ld+json')[2])
-          assert.equal(schema['@type'], 'WebApplication')
-          assert.equal(schema.name, frontmatter.title)
-          assert.equal(schema.url, url)
+          const app = schema['@graph']?.find((node) => node['@type'] === 'WebApplication')
+          assert.ok(app, 'tool page keeps WebApplication inside the author graph')
+          assert.equal(app.name, frontmatter.title)
+          assert.equal(app.url, url)
+          assert.ok(schema['@graph'].some((node) => node['@type'] === 'Person' && node['@id']))
+          assert.ok(schema['@graph'].some((node) => node['@type'] === 'BreadcrumbList'))
         }
       } else {
         const target = `/tools/${suffix}`
