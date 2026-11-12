@@ -1,6 +1,6 @@
 # 星梦启航
 
-> 星梦启航（https://cpython666.github.io）是 Python斗罗（cpython666）的个人博客，主要分享 Python、爬虫与自动化数据采集、DrissionPage、Web3、AI 工具、程序员成长和自媒体复盘。Python斗罗、IT.Python斗罗、cpython666、python666、codefly、stardreamfly 都是同一位作者，见关于页。
+> 星梦启航（https://cpython666.github.io）是 Python斗罗（cpython666，公开昵称 SI斗罗）的个人博客，主要分享 Python、爬虫与自动化数据采集、DrissionPage、Web3、AI 工具、程序员成长和自媒体复盘。Python斗罗、SI斗罗、IT.Python斗罗、cpython666、python666、codefly、stardreamfly 都是同一位作者，见关于页。
 
 这个站点的文章偏个人经验和实战复盘，不是冷冰冰的百科。技术内容强调能落地，Web3 内容强调风险意识和个人认知，生活内容强调普通程序员的成长、自媒体和长期主义。
 
@@ -12,6 +12,7 @@
 - [Web3 与币圈入圈指南](https://cpython666.github.io/web3/basics/)
 - [区块漫步：交易、投资认知与风险复盘](https://cpython666.github.io/web3/block-walk/)
 - [人生感悟与程序员成长](https://cpython666.github.io/life/)
+- [科技日报](https://cpython666.github.io/tech-daily/)
 - [普通人的破局笔记](https://cpython666.github.io/breakthrough-notes/)
 - [关于作者](https://cpython666.github.io/web-intro/)
 

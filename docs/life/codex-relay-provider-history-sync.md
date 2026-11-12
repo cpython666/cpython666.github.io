@@ -32,9 +32,18 @@ Windows 和 macOS 流程操作都是一样的。
 
 上面就是我们本期视频的内容，大家可以使用我的邀请链接支持一下，也可以把视频教程分享给需要的朋友。我们下期视频再见 👋
 
+<script setup>
+import RecommendationCards from '../components/RecommendationCards.vue'
+</script>
+
+## 中转站推荐
+
+<RecommendationCards :groups="['products']" relay-only hide-heading />
+
+部分链接含邀请关系；价格与渠道状态请以平台实时页面为准。[HeyRoute 控制台管理入口](https://heyroute.ai/console)。需要 ChatGPT / Claude 订阅代充，可查看[产品推荐](/web-intro/#recommendation-products)。
+
 ## 参考链接
 
-- [中转站邀请链接](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
 - [Windows + macOS 会话同步帖子](https://linux.do/t/topic/2072220)
 - [Windows + macOS 会话同步软件：codex-provider-sync](https://github.com/Dailin521/codex-provider-sync)
 - [macOS 版本会话同步帖子](https://linux.do/t/topic/2120343)

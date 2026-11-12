@@ -4,6 +4,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildLlmsFullTxt, buildLlmsTxt, buildRobotsTxt, buildRssFeed, stripMarkdownSource } from "./seo-files.mjs";
+import { redirectLegacyTool } from "../tools/legacyRedirect.mjs";
 
 const SITE_URL = "https://cpython666.github.io";
 const SITE_NAME = "星梦启航";
@@ -13,7 +14,7 @@ const SITE_DESCRIPTION =
 const SITE_KEYWORDS = "Python,爬虫,自动化数据采集,DrissionPage,Web3,AI工具,程序员成长,自媒体";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/logo.jpg`;
 const NO_INDEX_PREFIXES = ["草稿箱/", "视频待办列表/", "backup/"];
-const SITE_ALIASES = ["IT.Python斗罗", "cpython666", "python666", "codefly", "stardreamfly"];
+const SITE_ALIASES = ["SI斗罗", "IT.Python斗罗", "cpython666", "python666", "codefly", "stardreamfly"];
 const PERSON_ID = `${SITE_URL}/web-intro/#person`;
 // 全站共用的作者实体，告诉搜索引擎和 AI 各平台的这些账号是同一个人
 const AUTHOR_PERSON = {
@@ -30,10 +31,15 @@ const AUTHOR_PERSON = {
     "https://space.bilibili.com/1909782963",
     "https://codefly.blog.csdn.net/",
     "https://www.yuque.com/python666",
+    "https://x.com/stardreamfly",
+    "https://www.youtube.com/@stardream666",
+    "https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU",
+    "https://www.xiaohongshu.com/user/profile/63e21026000000002600652d",
   ],
 };
 // 侧边栏分组名：文章导航和面包屑共用
 const BLOG_NAV_TITLES = {
+  "/tech-daily/": "科技日报",
   "/backend/": "后端",
   "/backup/": "备份",
   "/breakthrough-notes/": "普通人的破局笔记",
@@ -53,7 +59,7 @@ const BLOG_NAV_TITLES = {
   "/算法/": "算法",
 };
 // 只有这些目录下的文章进 RSS，导航、工具、关于等功能页不算文章
-const FEED_PREFIXES = ["python/", "spider/", "web3/", "life/", "backend/", "web/", "算法/", "好文推荐/", "breakthrough-notes/"];
+const FEED_PREFIXES = ["python/", "spider/", "web3/", "life/", "tech-daily/", "backend/", "web/", "算法/", "好文推荐/", "breakthrough-notes/"];
 const PUBLIC_DIR = join(dirname(fileURLToPath(import.meta.url)), "../public");
 const DOCS_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -712,6 +718,7 @@ let algorithm_items = [
 ];
 let web_intro_items = [
   { text: "站长介绍", link: "/web-intro/" },
+  { text: "昵称与签名历史", link: "/web-intro/profile-history" },
   {
     text: "团队介绍",
     link: "/web-intro/team-intro",
@@ -857,6 +864,10 @@ let life_ai_items = [
     text: "把火箭装进跑车：特斯拉是怎么“飞”起来的？离钢铁侠还差多远",
     link: "/life/tesla-roadster-flying",
   },
+  {
+    text: "中转站给你的到底是不是真 GPT？两个开源项目帮你验一验",
+    link: "/life/model-fingerprint-detection",
+  },
 ];
 let life_geo_items = [
   { text: "星探计划：AI搜索时代的GEO探索", link: "/life/geo/" },
@@ -895,6 +906,20 @@ let breakthrough_notes_items = [
 let backup_items = [
   { text: "备份", link: "/backup/" },
 ];
+const tech_daily_items = [
+  { text: "专栏目录", link: "/tech-daily/" },
+  { text: "011 · Cloudflare开源漏洞审计Skill，南北阁发布33B模型", link: "/tech-daily/2026-10-26" },
+  { text: "010 · Java更新证书信任库，LiteLLM恢复发版", link: "/tech-daily/2026-10-25" },
+  { text: "009 · Kimi新模型上线，PHP又披露特殊配置漏洞", link: "/tech-daily/2026-10-24" },
+  { text: "008 · AI开始给代码写证明，PHP漏洞披露前已遭试探", link: "/tech-daily/2026-10-23" },
+  { text: "007 · PHP紧急修复漏洞，SpaceX与特斯拉评估合并", link: "/tech-daily/2026-10-22" },
+  { text: "006 · DeepSeek开源推理框架，Grok接工单", link: "/tech-daily/2026-10-21" },
+  { text: "005 · MiniMax降价，安卓应用跑上Mac", link: "/tech-daily/2026-10-20" },
+  { text: "004 · 马斯克看重机器人，AI代码也要“答辩”", link: "/tech-daily/2026-10-19" },
+  { text: "003 · DeepSeek更新，AI开始分头干活", link: "/tech-daily/2026-10-18" },
+  { text: "002 · 特斯拉FSD再进一国，AI走进实验室", link: "/tech-daily/2026-10-17" },
+  { text: "001 · Roadster亮相，AI向本地走", link: "/tech-daily/2026-10-16" },
+];
 let nav_config = [
   // {
   //   text: "主站",
@@ -909,12 +934,16 @@ let nav_config = [
     link: "/navigation/",
   },
   {
+    text: "科技日报",
+    link: "/tech-daily/",
+  },
+  {
     text: "项目",
     link: "/projects/",
   },
   {
     text: "工具",
-    link: "/spider-tools/",
+    link: "/tools/",
   },
   {
     text: "博客会员",
@@ -943,7 +972,7 @@ let nav_config = [
 ];
 // 顶部导航单独精简，默认侧栏仍保留完整入口。
 const top_nav_config = nav_config.flatMap((item) => {
-  if (["/breakthrough-notes/", "/backup/", "/web3/block-walk/"].includes(item.link)) {
+  if (["/breakthrough-notes/", "/backup/", "/web3/block-walk/", "/tech-daily/"].includes(item.link)) {
     return [];
   }
   if (item.link === "/navigation/") {
@@ -953,7 +982,10 @@ const top_nav_config = nav_config.flatMap((item) => {
 });
 let sidebar_config = {
   "/": nav_config,
-  "/spider-tools/": [],
+  "/tech-daily/": [
+    { text: "科技日报", collapsed: false, items: tech_daily_items },
+  ],
+  "/tools/": [],
   "/web3/": web3_items,
   "/web3/block-walk/": [
     { text: "区块漫步", collapsed: false, items: block_walk_items },
@@ -1351,6 +1383,15 @@ export default defineConfig({
   },
   transformHead({ page, pageData }) {
     const frontmatter = pageData.frontmatter || {};
+    const redirect = frontmatter.redirect;
+    if (typeof redirect === "string" && /^\/tools\/(?:[a-z0-9-]+\/)?$/.test(redirect)) {
+      PAGE_INDEX_META.set(pageToPath(page), { redirect: true });
+      return [
+        ["link", { rel: "canonical", href: `${SITE_URL}${redirect}` }],
+        ["script", {}, `(${redirectLegacyTool.toString()})(${JSON.stringify(redirect)})`],
+        ["meta", { "http-equiv": "refresh", content: `0;url=${redirect}` }],
+      ];
+    }
     const title = resolvePageTitle(pageData);
     const description = resolvePageDescription(pageData);
     const url = pageToUrl(page);
@@ -1365,6 +1406,8 @@ export default defineConfig({
       toIsoDate(frontmatter.created_at || frontmatter.date) ||
       publishedAt;
     const isHome = page === "index.md";
+    const isTool = frontmatter.tool === true;
+    const isProject = frontmatter.project === true;
 
     const normalizedPage = page.replace(/\\/g, "/");
     const isFeedItem =
@@ -1385,7 +1428,7 @@ export default defineConfig({
       ["meta", { name: "keywords", content: String(frontmatter.keywords || SITE_KEYWORDS) }],
       ["meta", { property: "og:locale", content: "zh_CN" }],
       ["meta", { property: "og:site_name", content: SITE_NAME }],
-      ["meta", { property: "og:type", content: isHome ? "website" : "article" }],
+      ["meta", { property: "og:type", content: isHome || isTool || isProject ? "website" : "article" }],
       ["meta", { property: "og:title", content: title }],
       ["meta", { property: "og:description", content: description }],
       ["meta", { property: "og:url", content: url }],
@@ -1410,6 +1453,24 @@ export default defineConfig({
           inLanguage: "zh-CN",
           author: { "@id": PERSON_ID },
           publisher: { "@id": PERSON_ID },
+        }
+      : isTool || isProject ? {
+          "@type": isProject ? "SoftwareApplication" : "WebApplication",
+          name: title,
+          description,
+          url,
+          applicationCategory: isProject
+            ? String(frontmatter.applicationCategory || "DesignApplication")
+            : "DeveloperApplication",
+          operatingSystem: isProject
+            ? String(frontmatter.operatingSystem || "macOS, Windows")
+            : "Any",
+          inLanguage: "zh-CN",
+          isAccessibleForFree: true,
+          author: { "@id": PERSON_ID },
+          ...(isProject && frontmatter.repository
+            ? { sameAs: [String(frontmatter.repository)] }
+            : {}),
         }
       : {
           "@type": "BlogPosting",
@@ -1438,6 +1499,7 @@ export default defineConfig({
       .filter(Boolean)
       // 会员文章、noindex 页面不进 sitemap，避免和 robots meta 自相矛盾
       .filter((routePath) => !PAGE_INDEX_META.get(routePath)?.noIndex)
+      .filter((routePath) => !PAGE_INDEX_META.get(routePath)?.redirect)
       .sort()
       .map((routePath) => ({
         url: `${SITE_URL}${encodeURI(routePath)}`,
@@ -1541,7 +1603,6 @@ export default defineConfig({
 
     // <meta name="google-site-verification" content="0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU" />
     // 谷歌搜索站点验证头标签
-    // 未成功。。。
     [
       "meta",
       {
@@ -1549,19 +1610,7 @@ export default defineConfig({
         content: "0QTiVl6hixpkg_fJQSKH37g9Y5iqklaWYFXJRt20CgU",
       },
     ],
-    ["meta", { name: "referrer", content: "no-referrer" }], // 谷歌统计
-    // [
-    //   'script',
-    //   { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=TAG_ID' }
-    // ],
-    // [
-    //   'script',
-    //   {},
-    //   `window.dataLayer = window.dataLayer || [];
-    //   function gtag(){dataLayer.push(arguments);}
-    //   gtag('js', new Date());
-    //   gtag('config', 'TAG_ID');`
-    // ],
+    ["meta", { name: "referrer", content: "no-referrer" }],
     // 百度统计
     [
       "script",
@@ -1606,6 +1655,7 @@ export default defineConfig({
     ],
   ],
   themeConfig: {
+    googleAnalyticsId: "G-SELHD8TNN7",
     // https://vitepress.dev/reference/default-theme-config
     logo: "/logo_super.svg",
     nav: top_nav_config,
@@ -1619,19 +1669,50 @@ export default defineConfig({
           // svg: '<svg t="1711703428533" class="icon" viewBox="0 0 1129 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4271" width="200" height="200"><path d="M234.909 9.656a80.468 80.468 0 0 1 68.398 0 167.374 167.374 0 0 1 41.843 30.578l160.937 140.82h115.07l160.936-140.82a168.983 168.983 0 0 1 41.843-30.578A80.468 80.468 0 0 1 930.96 76.445a80.468 80.468 0 0 1-17.703 53.914 449.818 449.818 0 0 1-35.406 32.187 232.553 232.553 0 0 1-22.531 18.508h100.585a170.593 170.593 0 0 1 118.289 53.109 171.397 171.397 0 0 1 53.914 118.288v462.693a325.897 325.897 0 0 1-4.024 70.007 178.64 178.64 0 0 1-80.468 112.656 173.007 173.007 0 0 1-92.539 25.75h-738.7a341.186 341.186 0 0 1-72.421-4.024A177.835 177.835 0 0 1 28.91 939.065a172.202 172.202 0 0 1-27.36-92.539V388.662a360.498 360.498 0 0 1 0-66.789A177.03 177.03 0 0 1 162.487 178.64h105.414c-16.899-12.07-31.383-26.555-46.672-39.43a80.468 80.468 0 0 1-25.75-65.984 80.468 80.468 0 0 1 39.43-63.57M216.4 321.873a80.468 80.468 0 0 0-63.57 57.937 108.632 108.632 0 0 0 0 30.578v380.615a80.468 80.468 0 0 0 55.523 80.469 106.218 106.218 0 0 0 34.601 5.632h654.208a80.468 80.468 0 0 0 76.444-47.476 112.656 112.656 0 0 0 8.047-53.109v-354.06a135.187 135.187 0 0 0 0-38.625 80.468 80.468 0 0 0-52.304-54.719 129.554 129.554 0 0 0-49.89-7.242H254.22a268.764 268.764 0 0 0-37.82 0z m0 0" fill="#20B0E3" p-id="4272"></path><path d="M348.369 447.404a80.468 80.468 0 0 1 55.523 18.507 80.468 80.468 0 0 1 28.164 59.547v80.468a80.468 80.468 0 0 1-16.094 51.5 80.468 80.468 0 0 1-131.968-9.656 104.609 104.609 0 0 1-10.46-54.719v-80.468a80.468 80.468 0 0 1 70.007-67.593z m416.02 0a80.468 80.468 0 0 1 86.102 75.64v80.468a94.148 94.148 0 0 1-12.07 53.11 80.468 80.468 0 0 1-132.773 0 95.757 95.757 0 0 1-12.875-57.133V519.02a80.468 80.468 0 0 1 70.007-70.812z m0 0" fill="#20B0E3" p-id="4273"></path></svg>'
         },
         link: "https://space.bilibili.com/1909782963",
+        ariaLabel: "Bilibili",
       },
-      { icon: "github", link: "https://github.com/cpython666" },
+      // 内置 SVG，避免开发模式依赖外部图标服务。
       {
         icon: {
-          svg: '<svg t="1711708617267" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5302" width="200" height="200"><path d="M0 0h1024v1024H0z" fill="#FF6633" p-id="5303"></path><path d="M698.9824 42.3936c-158.8736-32.5632-289.536 31.2832-324.9152 48.5888-94.72 46.2848-147.712 108.288-174.4896 140.288-25.9584 31.0272-82.7392 105.9328-108.288 215.8592-21.6576 93.1328-10.752 167.7824-6.0416 194.2528 11.4688 64.3072 33.28 186.88 150.4256 275.2 132.5056 99.8912 293.4784 85.5552 342.9888 80.9472 107.264-10.0352 289.4848-57.2928 300.8512-145.7152 5.1712-39.936-24.4224-89.4464-66.2016-102.5024-65.6384-20.5312-108.3392 63.5392-228.6592 80.9472-8.5504 1.2288-126.5664 16.6912-216.6272-48.5888-105.8816-76.6976-98.9696-211.3024-96.256-264.3968 1.536-30.5664 5.5808-93.5424 48.128-161.8944 14.7968-23.7568 60.3136-94.5664 156.4672-134.912 25.2928-10.5984 76.8512-31.5904 144.4352-26.9824 70.0416 4.7616 120.9856 34.5088 144.4352 48.5888 75.8272 45.4144 86.528 90.0608 120.3712 86.3232 35.8912-3.9424 69.9904-59.2896 66.2016-107.9296-7.424-93.7984-155.5968-158.1056-252.8256-178.0736z" fill="#FFFFFF" p-id="5304"></path></svg>',
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12c0 5.303 3.438 9.8 8.205 11.385c.6.113.82-.258.82-.577c0-.285-.01-1.04-.015-2.04c-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729c1.205.084 1.838 1.236 1.838 1.236c1.07 1.835 2.809 1.305 3.495.998c.108-.776.417-1.305.76-1.605c-2.665-.3-5.466-1.332-5.466-5.93c0-1.31.465-2.38 1.235-3.22c-.135-.303-.54-1.523.105-3.176c0 0 1.005-.322 3.3 1.23c.96-.267 1.98-.399 3-.405c1.02.006 2.04.138 3 .405c2.28-1.552 3.285-1.23 3.285-1.23c.645 1.653.24 2.873.12 3.176c.765.84 1.23 1.91 1.23 3.22c0 4.61-2.805 5.625-5.475 5.92c.42.36.81 1.096.81 2.22c0 1.606-.015 2.896-.015 3.286c0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
+        },
+        link: "https://github.com/cpython666",
+        ariaLabel: "GitHub",
+      },
+      {
+        icon: {
+          svg: "<svg t=\"1711708617267\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"5302\" width=\"200\" height=\"200\"><path d=\"M0 0h1024v1024H0z\" fill=\"#FF6633\" p-id=\"5303\"></path><path d=\"M698.9824 42.3936c-158.8736-32.5632-289.536 31.2832-324.9152 48.5888-94.72 46.2848-147.712 108.288-174.4896 140.288-25.9584 31.0272-82.7392 105.9328-108.288 215.8592-21.6576 93.1328-10.752 167.7824-6.0416 194.2528 11.4688 64.3072 33.28 186.88 150.4256 275.2 132.5056 99.8912 293.4784 85.5552 342.9888 80.9472 107.264-10.0352 289.4848-57.2928 300.8512-145.7152 5.1712-39.936-24.4224-89.4464-66.2016-102.5024-65.6384-20.5312-108.3392 63.5392-228.6592 80.9472-8.5504 1.2288-126.5664 16.6912-216.6272-48.5888-105.8816-76.6976-98.9696-211.3024-96.256-264.3968 1.536-30.5664 5.5808-93.5424 48.128-161.8944 14.7968-23.7568 60.3136-94.5664 156.4672-134.912 25.2928-10.5984 76.8512-31.5904 144.4352-26.9824 70.0416 4.7616 120.9856 34.5088 144.4352 48.5888 75.8272 45.4144 86.528 90.0608 120.3712 86.3232 35.8912-3.9424 69.9904-59.2896 66.2016-107.9296-7.424-93.7984-155.5968-158.1056-252.8256-178.0736z\" fill=\"#FFFFFF\" p-id=\"5304\"></path></svg>",
         },
         link: "https://codefly.blog.csdn.net/",
+        ariaLabel: "CSDN",
       },
       {
         icon: {
-          svg: '<svg t="1711724017028" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4251" width="200" height="200"><path d="M228.7 643.9c-0.1 0.1-0.2 0.3-0.3 0.4 3.9-4.4 8-9 12-13.5-7.5 8.4-11.7 13.1-11.7 13.1z" fill="#1590E9" p-id="4252"></path><path d="M894 298.1l25.6-15.1c10.4-6.1 9.1-21.5-2.1-25.9l-12.3-4.8c-18-7.1-34.2-18.2-46.7-33-15.7-18.5-44.7-45.1-90.9-60.8-52.7-18-142.9-14.4-193.2-10.5-15.9 1.2-25 18.4-17.4 32.5 42.6 78.6 16.7 114.3-5.7 140.7-34.3 40.4-97.4 112.2-160.7 183.6 21.9-24.5 41.8-46.8 58.1-65.1 36.4-40.8 91.3-61.5 145.1-51.7 171.5 31.3 191 253.4-9.2 385.6 26.1-1.4 52.6-3.3 79.2-6 252.6-26 272.6-232.1 218-333.9-19.4-36.1-22.2-60.5-20.1-83.9 2-21.5 13.8-40.8 32.3-51.7z" fill="#99C236" p-id="4253"></path><path d="M212.8 704.5C241.1 672.9 316 589 390.7 504.7c-54.6 61.2-121.8 136.7-177.9 199.8z" fill="#1590E9" p-id="4254"></path><path d="M216.3 758.6c-19.5-2.5-28.2-25.6-15.5-40.6-51.7 58.3-91.7 103.5-99.1 112.6-24.1 29.5 247.7 97.9 482.6-56.8 0.1-0.1 0.3-0.2 0.4-0.3-156.5 8.2-298.5-5.9-368.4-14.9z" fill="#CAC134" p-id="4255"></path><path d="M593.9 387.9c-53.8-9.8-108.7 10.9-145.1 51.7-16.3 18.2-36.2 40.5-58.1 65.1C316 589 241.1 672.9 212.8 704.5c-4.1 4.6-8.1 9.1-12 13.5-12.7 14.9-4 38 15.5 40.6 69.9 9 211.9 23.1 368.3 15 200.2-132.3 180.8-354.4 9.3-385.7z" fill="#029F40" p-id="4256"></path></svg>',
+          svg: "<svg t=\"1711724017028\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"4251\" width=\"200\" height=\"200\"><path d=\"M228.7 643.9c-0.1 0.1-0.2 0.3-0.3 0.4 3.9-4.4 8-9 12-13.5-7.5 8.4-11.7 13.1-11.7 13.1z\" fill=\"#1590E9\" p-id=\"4252\"></path><path d=\"M894 298.1l25.6-15.1c10.4-6.1 9.1-21.5-2.1-25.9l-12.3-4.8c-18-7.1-34.2-18.2-46.7-33-15.7-18.5-44.7-45.1-90.9-60.8-52.7-18-142.9-14.4-193.2-10.5-15.9 1.2-25 18.4-17.4 32.5 42.6 78.6 16.7 114.3-5.7 140.7-34.3 40.4-97.4 112.2-160.7 183.6 21.9-24.5 41.8-46.8 58.1-65.1 36.4-40.8 91.3-61.5 145.1-51.7 171.5 31.3 191 253.4-9.2 385.6 26.1-1.4 52.6-3.3 79.2-6 252.6-26 272.6-232.1 218-333.9-19.4-36.1-22.2-60.5-20.1-83.9 2-21.5 13.8-40.8 32.3-51.7z\" fill=\"#99C236\" p-id=\"4253\"></path><path d=\"M212.8 704.5C241.1 672.9 316 589 390.7 504.7c-54.6 61.2-121.8 136.7-177.9 199.8z\" fill=\"#1590E9\" p-id=\"4254\"></path><path d=\"M216.3 758.6c-19.5-2.5-28.2-25.6-15.5-40.6-51.7 58.3-91.7 103.5-99.1 112.6-24.1 29.5 247.7 97.9 482.6-56.8 0.1-0.1 0.3-0.2 0.4-0.3-156.5 8.2-298.5-5.9-368.4-14.9z\" fill=\"#CAC134\" p-id=\"4255\"></path><path d=\"M593.9 387.9c-53.8-9.8-108.7 10.9-145.1 51.7-16.3 18.2-36.2 40.5-58.1 65.1C316 589 241.1 672.9 212.8 704.5c-4.1 4.6-8.1 9.1-12 13.5-12.7 14.9-4 38 15.5 40.6 69.9 9 211.9 23.1 368.3 15 200.2-132.3 180.8-354.4 9.3-385.7z\" fill=\"#029F40\" p-id=\"4256\"></path></svg>",
         },
         link: "https://www.yuque.com/python666",
+        ariaLabel: "语雀",
+      },
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.234 10.162L22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299l-.929-1.329L3.076 1.56h3.182l5.965 8.532l.929 1.329l7.754 11.09h-3.182z"/></svg>',
+        },
+        link: "https://x.com/stardreamfly",
+        ariaLabel: "X",
+      },
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23.498 6.186a3.02 3.02 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.02 3.02 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.02 3.02 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.02 3.02 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814M9.545 15.568V8.432L15.818 12z"/></svg>',
+        },
+        link: "https://www.youtube.com/@stardream666",
+        ariaLabel: "YouTube",
+      },
+      {
+        icon: {
+          svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12.525.02c1.31-.02 2.61-.01 3.91-.02c.08 1.53.63 3.09 1.75 4.17c1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97c-.57-.26-1.1-.59-1.62-.93c-.01 2.92.01 5.84-.02 8.75c-.08 1.4-.54 2.79-1.35 3.94c-1.31 1.92-3.58 3.17-5.91 3.21c-1.43.08-2.86-.31-4.08-1.03c-2.02-1.19-3.44-3.37-3.65-5.71c-.02-.5-.03-1-.01-1.49c.18-1.9 1.12-3.72 2.58-4.96c1.66-1.44 3.98-2.13 6.15-1.72c.02 1.48-.04 2.96-.04 4.44c-.99-.32-2.15-.23-3.02.37c-.63.41-1.11 1.04-1.36 1.75c-.21.51-.15 1.07-.14 1.61c.24 1.64 1.82 3.02 3.5 2.87c1.12-.01 2.19-.66 2.77-1.61c.19-.33.4-.67.41-1.06c.1-1.79.06-3.57.07-5.36c.01-4.03-.01-8.05.02-12.07\"/></svg>",
+        },
+        link: "https://www.douyin.com/user/MS4wLjABAAAAlpAAz6XQc03HLsj1dkuDCkwOSR-b6mWTidBi7N_wgBUvvdjsdduCE62M8l3J23hU",
+        ariaLabel: "抖音",
       },
     ],
 
@@ -1689,7 +1770,7 @@ export default defineConfig({
     // }
     // 会员相关（示例激活码，可在此处配置多个，支持明文或SHA-256哈希）
     vipActivationHashes: ["8873ecdec2da162100e9bd7789ecb8bd7b0ea671d784853b7dde966bf05e510e"],
-    blogNavExclude: ["/nav/","/spider-tools/"],
+    blogNavExclude: ["/nav/","/tools/"],
     blogNavTitles: BLOG_NAV_TITLES,
   },
 });

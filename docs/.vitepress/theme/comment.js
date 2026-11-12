@@ -9,7 +9,7 @@ const commentHiddenPrefixes = [
   '/nav/',
   '/navigation/',
   '/projects/',
-  '/spider-tools/',
+  '/tools/',
   '/vip/',
   '/web-intro/',
   '/index/',

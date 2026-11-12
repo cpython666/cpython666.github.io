@@ -34,9 +34,9 @@ jobs:
       # - uses: pnpm/action-setup@v3 # 如果使用 pnpm，请取消注释
       # - uses: oven-sh/setup-bun@v1 # 如果使用 Bun，请取消注释
       - name: 配置 Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: '24.22.1'
           cache: npm
       - name: 配置 GitHub Pages
         uses: actions/configure-pages@v4
