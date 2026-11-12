@@ -15,6 +15,8 @@
 
 ## 已有检查
 
+- 2026-11-12 把含 #17（`a245f48`）的 master 合并进 PR #16：保留 `cleanUrls`、`robots.txt` / `feed.xml` / `llms.txt` / `llms-full.txt`、作者实体、面包屑、Waline `commentPath()`、`skill:build` 和 `@waline/client`。用户授权的 `npm run docs:build`（VitePress 1.6.4，Node 24.22.1）通过。产物仍是 `页面.html` 与目录 `index.html`，并有 `404.html`。`npx wrangler deploy --dry-run` 读到 `docs/.vitepress/dist`，无 Worker 入口、无绑定，未实际上传。未写 token。GitHub Pages 工作流未改。推送到 PR 分支不等于 master 已发布。
+
 - 2026-11-12 合并 PR #17 与 master：保留 `cleanUrls`、构建期 `robots.txt` / `feed.xml` / `llms.txt` / `llms-full.txt`、作者实体、面包屑、备份页 noindex 和 Waline `commentPath()`，同时保留 master 的 `skill:build`、Waline、`/tools/`、GA4、科技日报和后来的社交账号。用户授权的 `npm run docs:build`（VitePress 1.6.4）通过。feed 为 50 条，llms 按栏目列出公开文章，链接均无 `.html`；16 条会员路径只出现在 robots Disallow，不进入 feed、llms、llms-full 或 sitemap。备份页为 noindex。产物仍是 `页面.html` 与目录 `index.html`。按 GitHub Pages 的规则本地核对：无后缀文章地址与旧 `.html` 地址打开同一页，目录地址去掉尾斜杠会 301 到带斜杠地址；`/tools/url` 与 `/web-intro/profile-history` 可打开。正式站在合并前已用同一规则响应现有文件。`check-tool-seo.mjs` 改为从 `@graph` 读取 `WebApplication` 后通过。未改部署，未加 Cloudflare/wrangler。推送到 PR 分支不等于 master 已发布。
 
 - 2026-11-10 推荐区视觉改版：3 份 Vue SFC 编译通过；实际 8080 开发站的首页、关于页、支持页、中转教程，在 2470/1440/768/390/320px × 明暗主题共 40 种组合无页面或正文控件横溢、无 Vite 错误遮罩；首页 10 卡、7 个静态封面，中转教程 3 卡。推广/开源链接保持原邀请地址、rel 与新窗口，Tab 可移到下一开源卡并显示焦点；装饰示意 `aria-hidden` 且无内嵌可聚焦控件，减弱动态效果下卡片过渡关闭。文章正文缩进未侵入卡片，图标 lazy/async；5 张图标合计 5,694 字节。用户反馈后三张赞助改回原品牌横幅，480×200 无损 WebP 合计 88,954 字节；首页/关于/支持页在 1440/900/768/390/320px × 明暗主题 30 种组合通过图片加载、12:5 完整展示及无横溢检查，赞助 Tab 焦点可见；产品顺序已实测为 XFastAPI → WildAI · Bewild → HeyRoute → FastAI。未运行全站构建或正文索引。Ego 浏览器通过 CDP 设置的视口在下一次脚本调用会恢复，截图和尺寸断言须与视口设置放在同一次调用，不能只根据截图文件名判断手机验收。

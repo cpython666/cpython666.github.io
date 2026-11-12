@@ -8,6 +8,7 @@
 - 基础栈：VitePress 1.6 系列、Vue 单文件组件、npm；依赖版本以 `package.json` 和锁文件为准。
 - 默认主题扩展位于 `docs/.vitepress/theme/`，没有独立业务后端。
 - GitHub Pages 工作流在 `master` 推送或手动触发后安装依赖、构建并部署；流程定义不等于 AI 获得执行全站构建或推送的授权。
+- 2026-11-12 确认双线发布：GitHub Pages 工作流和正式地址 `https://cpython666.github.io` 保持不变；同一份 VitePress 产物再由 Cloudflare Workers 静态资源提供第二份。sitemap、canonical、RSS 仍写死该主域名。仓库不存放 Cloudflare token。
 - 发展目标：用户希望把博客发展为垂直领域有影响力的网站，并适应 AI 时代的内容发现和使用方式。已确认同时服务两类读者：用 AI 做项目的开发者、独立创作者，以及用 AI 提升工作效率的非技术用户。最终垂直主线仍待定；“AI 工作流与实用工具”、围绕共同场景提供直接使用与开发改造两层内容，均为待定建议。“AI × Python 自动化实战”可作为技术深度方向，不再假定全站读者都有技术基础；受众确认不构成首页、栏目或商业模式改版授权。
 - 网站吉祥物：用户于 2026-10-21 选定截图中蓝发、星饰、披肩的人形角色，命名「小星鱼」，授权实现动画；此次“B”指图库第二个选中形象，即首轮文字编号 A，不能误用鲸鱼造型。参考 `https://nav.linux.do/` 的互动形式，形象围绕「星梦启航」品牌；网站吉祥物不按 ChatGPT Work 宠物流程处理。
 
@@ -32,6 +33,7 @@
 | 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
 | 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
 | 发布流程 | `.github/workflows/static.yml` | `actions/setup-node@v7` 配置 Node `24.22.1`，沿用 `npm ci` 和现有锁文件；这是 2026-10-27 核实的最新 LTS 安全版本（当时 26 仍为 Current），固定版本以保证复现，后续安全补丁需重新核实；构建产物目录为 `docs/.vitepress/dist`，源码配置不代表已部署 |
+| Cloudflare Workers 静态副本 | `wrangler.jsonc`，`package.json` 的 `deploy` / `preview` | 与 GitHub Pages 共用 `npm run docs:build` 和 `docs/.vitepress/dist`。纯静态：无 `main`、无 `nodejs_compat`。`cleanUrls` 打开后产物仍是 `页面.html` 与目录 `index.html`。`assets.html_handling` 为 `auto-trailing-slash`：无后缀文章地址回源同名 `.html`，旧 `.html` 地址 307 到无后缀，目录地址去掉尾斜杠则 307 到带斜杠的 `index.html`。`assets.not_found_handling` 为 `404-page`。Worker 名保持 `cpython666`。部署走已连接的 Workers Builds（构建 `npm run docs:build`，部署 `npx wrangler deploy`），不往 GitHub Actions 加 token。后台生产分支须是 `master`。配置合入不等于线上已生效 |
 | 对外知识库 Skill | `skills/xingmeng-knowledge/`、`scripts/build-skill.mjs` | `SKILL.md` 和两个 CLI 脚本手写；`references/` 与 `scripts/lib/` 由 `npm run skill:build` 从资源导航、提示词、项目数据、工具箱函数和文章 frontmatter 生成，不手改。文章只读 frontmatter，跳过会员、草稿、`/backup/`、noindex 和首页布局页；改动上述数据源后需重新生成，`npm run skill:check` 检查是否过期 |
 
 ## 配置关系
@@ -44,7 +46,7 @@
 - 访问量统一由 `ArticleHits.vue` 在主题 `layout-bottom` 插槽挂载一次，位于页脚之后、正常文档流底部居中；首页也使用该组件，沿用根路径统计，其余页面按各自路径统计。图片立即请求，不能因放到底部就懒加载而漏掉未触底的访问；保留 `hits: false`、404 和草稿路径排除。不要再在 `doc-before`、`home-features-after` 或 `footer.message` 中另挂访问量标签。`/tools/` 在计数请求内部映射回原 `/spider-tools/` 键以延续历史计数，公开链接仍用新地址。hits.sh 是本页参考浏览计数，首页计数不等于全站总量，也不称为独立访客；卡片改成中文“本页浏览·今日/累计”、失败隐藏与统计环境隔离属于待定展示/实现建议，GA4 用于后台流量分析。
 - 站内搜索采用 VitePress local search，中文分词逻辑在配置内。
 - SEO 已有 canonical、description、Open Graph、Twitter 卡片、JSON-LD 与 sitemap 生成逻辑；按缺陷修订，不重复接入一套方案。
-- 已开启 `cleanUrls`。VitePress 仍输出 `页面.html` 与目录 `index.html`，站内链接、canonical、sitemap 去掉 `.html`。2026-11-12 核对当前 GitHub Pages：无后缀地址直接打开同名 `.html`（如 `/python/web/fastapi`），目录地址去掉尾斜杠会 301 到带斜杠的 `index.html`（如 `/web-intro` → `/web-intro/`）；因此旧 `.html` 链接继续可用。不要为 cleanUrls 改部署方式，也不要加 Cloudflare 或 wrangler 配置。
+- 已开启 `cleanUrls`。VitePress 仍输出 `页面.html` 与目录 `index.html`，站内链接、canonical、sitemap 去掉 `.html`。2026-11-12 核对当前 GitHub Pages：无后缀地址直接打开同名 `.html`（如 `/python/web/fastapi`），目录地址去掉尾斜杠会 301 到带斜杠的 `index.html`（如 `/web-intro` → `/web-intro/`）；因此旧 `.html` 链接在 GitHub Pages 上继续直接打开。不要为 cleanUrls 改 GitHub Pages 工作流。Workers 静态副本用 `html_handling: auto-trailing-slash` 对齐同一套地址，不替换 Pages，也不改主域名。
 - Waline 评论在开启 cleanUrls 前按 `/xxx.html` 存储。`WalineComment.vue` 的 `commentPath()` 给非目录路径补回 `.html`，目录路径保持尾斜杠，不要去掉。giscus 用 pathname 映射，本身会去扩展名。访问量键在 `ArticleHits.vue` 里本来就会去掉 `.html`，`/tools/` 仍映射回 `/spider-tools/`。
 - JSON-LD 为 `@graph`：全站共用 `AUTHOR_PERSON`（`alternateName` 含 SI斗罗、IT.Python斗罗、cpython666、python666、codefly、stardreamfly；`sameAs` 含 GitHub、B 站、CSDN、语雀，以及后来增加的 X、YouTube、抖音、小红书）+ 页面实体 + 非首页的 `BreadcrumbList`（取 `BLOG_NAV_TITLES` 中有 `index.md` 的分组，含科技日报）。工具页和项目详情仍分别是 `WebApplication`、`SoftwareApplication`，嵌在同一个 `@graph` 里，不再单独带 `@context`。关于页“这些名字都是我”与作者实体对应，并保留昵称与签名历史入口；新增平台账号时两处一起改。
 - `buildEnd` 经 `docs/.vitepress/seo-files.mjs` 生成：`robots.txt`（以 `public/robots.txt` 为模板，所有爬虫含 AI 爬虫共用一组规则，自动追加会员文章 Disallow；单独给某个爬虫开分组会让它忽略这些 Disallow）、`feed.xml`（`FEED_PREFIXES` 目录下最近 50 篇，含后来的 `tech-daily/`，仅 frontmatter 摘要）、`llms.txt`（public 手写介绍 + 按栏目的全部公开文章）、`llms-full.txt`（公开文章 Markdown 去 frontmatter 和 script/style）。会员、noindex、草稿和 `/backup/`（他人帖子，已 noindex）均不进入这些文件。`blogNavExclude` 使用 `/tools/`，与工具页迁移后的路径一致。

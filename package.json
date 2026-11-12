@@ -2,7 +2,8 @@
   "devDependencies": {
     "playwright": "^1.61.1",
     "vitepress": "^1.6.4",
-    "vitepress-plugin-comment-with-giscus": "^1.1.12"
+    "vitepress-plugin-comment-with-giscus": "^1.1.12",
+    "wrangler": "^4.114.0"
   },
   "scripts": {
     "backup:x": "node scripts/x-backup.mjs",
@@ -10,7 +11,9 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs --port 80",
     "skill:build": "node scripts/build-skill.mjs",
-    "skill:check": "node scripts/build-skill.mjs --check"
+    "skill:check": "node scripts/build-skill.mjs --check",
+    "deploy": "npm run docs:build && wrangler deploy",
+    "preview": "npm run docs:build && wrangler dev"
   },
   "dependencies": {
     "@waline/client": "~3.13.0",
