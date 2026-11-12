@@ -1,5 +1,7 @@
 ---
 title: "P29-更换主题"
+description: "程序员不必在界面美化上死磕。用 qt-material 样式表几行代码给 PyQt6 或 PySide 程序换上现成的现代主题。"
+keywords: "PyQt6,qt-material,界面美化,主题,样式表"
 created_at: 2024-12-20 21:43:57
 updated_at: 2024-12-20 21:43:57
 ---

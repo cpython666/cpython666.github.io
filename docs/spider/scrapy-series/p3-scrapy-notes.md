@@ -1,5 +1,7 @@
 ---
 title: "P3-注意事项【Scrapy】"
+description: "Scrapy 实战注意事项：自定义 spider 起始方式、item 可省略、item 与 pipeline 的对应关系、异步执行的坑、同时运行多个爬虫、发送图像与表单数据。"
+keywords: "Scrapy,注意事项,pipeline,item,FormRequest"
 date: "2024-12-20 23:44:51.731912"
 updated: "2024-12-20 23:44:51.731962"
 privacy: "登录可见"

@@ -1,5 +1,7 @@
 ---
 title: "P4-居中显示窗口"
+description: "用 frameGeometry 与 primaryScreen().availableGeometry().center() 把 PyQt6 窗口居中显示，逐句拆解几何计算的过程。"
+keywords: "PyQt6,窗口居中,frameGeometry,QRect,availableGeometry"
 created_at: 2024-12-20 21:32:41
 updated_at: 2024-12-20 21:32:41
 ---

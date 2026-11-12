@@ -1,3 +1,9 @@
+---
+title: "Crawlab使用记录"
+description: "Crawlab 分布式爬虫管理平台的单节点部署记录：安装 Docker、拉取镜像、编写 docker-compose.yml、启动容器。"
+keywords: "Crawlab,爬虫管理平台,Docker部署,分布式爬虫,任务调度"
+---
+
 # Crawlab使用记录
 ## 官网
 官方文档：[https://docs.crawlab.cn/zh/guide/](https://docs.crawlab.cn/zh/guide/)

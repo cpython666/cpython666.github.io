@@ -1,3 +1,9 @@
+---
+title: "Django笔记"
+description: "Django 使用笔记：模型管理、settings 常用配置，以及语言、时区与数据库相关设置。"
+keywords: "Django,Django笔记,settings,模型管理,时区配置"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

@@ -1,3 +1,9 @@
+---
+title: "Cron 表达式介绍"
+description: "Cron 表达式用于设置定时任务，广泛用于 Linux 及 Quartz、APScheduler 等框架。讲解字段结构、特殊字符含义、常见示例与使用注意事项。"
+keywords: "Cron表达式,定时任务,crontab,APScheduler,Linux"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

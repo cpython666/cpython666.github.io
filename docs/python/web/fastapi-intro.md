@@ -1,5 +1,7 @@
 ---
 title: "P1-FastAPI简介-合集规划介绍"
+description: "为什么做 FastAPI 合集：数据采集中间系统就用的它，三四行代码启动服务，但限流、登录、数据库这些还需要自己设计和封装。"
+keywords: "FastAPI,合集规划,Web框架,数据采集系统,重构"
 created_at: 2025-03-31 22:36:10
 updated_at: 2025-03-31 22:38:12
 ---

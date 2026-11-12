@@ -1,3 +1,9 @@
+---
+title: "Starlette 简介"
+description: "Starlette 是轻量级 ASGI 框架，也是 FastAPI 的底层基础。讲解主要特点、安装方式，以及定义处理函数、配置路由、运行应用的完整示例。"
+keywords: "Starlette,ASGI,异步框架,FastAPI底层,Python Web"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

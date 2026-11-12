@@ -1,5 +1,7 @@
 ---
 title: "P32-单独线程处理任务"
+description: "把耗时操作搬到 QThread 里执行，保持 PyQt6 界面响应，并通过信号实时把子线程的任务进度回传到窗口上。"
+keywords: "PyQt6,QThread,多线程,子线程,进度更新"
 created_at: 2024-12-20 21:46:02
 updated_at: 2024-12-20 21:46:22
 ---

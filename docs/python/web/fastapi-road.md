@@ -1,3 +1,9 @@
+---
+title: "FastAPI 学习路线"
+description: "结构化的 FastAPI 学习路线，从准备基础知识、入门、中级技能到进阶优化与项目实战五个阶段，每阶段含目标、内容与资源建议。"
+keywords: "FastAPI,学习路线,Python Web,进阶,项目实战"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

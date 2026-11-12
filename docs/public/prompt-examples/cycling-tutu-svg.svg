@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 960 600" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">大耳朵图图骑自行车</title>
+  <desc id="desc">一个戴黄色帽子、穿红色背带裤的大耳朵男孩骑着蓝色自行车前进，车轮和脚踏持续转动。</desc>
+
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ee9ff"/>
+      <stop offset="1" stop-color="#eefcff"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#71839c"/>
+      <stop offset="1" stop-color="#3f5167"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff655a"/>
+      <stop offset="1" stop-color="#dc2e38"/>
+    </linearGradient>
+    <linearGradient id="pants" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2d86d8"/>
+      <stop offset="1" stop-color="#1552a2"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="tinyShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+    <style>
+      .ink { stroke:#273247; stroke-width:7; stroke-linecap:round; stroke-linejoin:round; }
+      .thin-ink { stroke:#273247; stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+      .blink { transform-box: fill-box; transform-origin: center; animation: blink 4.6s infinite; }
+      .cloud { animation: cloud 16s linear infinite; }
+      .spark { animation: twinkle 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+      @keyframes blink { 0%, 44%, 48%, 100% { transform: scaleY(1); } 46% { transform: scaleY(.12); } }
+      @keyframes cloud { from { transform: translateX(-120px); } to { transform: translateX(1100px); } }
+      @keyframes twinkle { 0%, 100% { opacity:.35; transform:scale(.8); } 50% { opacity:1; transform:scale(1.15); } }
+      @media (prefers-reduced-motion: reduce) { .blink, .cloud, .spark { animation: none !important; } }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect width="960" height="600" fill="url(#sky)"/>
+  <g class="cloud" fill="#fff" opacity=".82">
+    <path d="M-100 116c22-28 63-31 91-5 25-50 104-46 121 11 43-19 92 12 89 55H-100z"/>
+  </g>
+  <g class="cloud" opacity=".72" style="animation-delay:-8s">
+    <path d="M-290 215c21-24 56-27 80-5 24-43 92-38 109 10 38-15 76 12 73 48h-262z" fill="#fff"/>
+  </g>
+  <g opacity=".25" fill="#fff">
+    <circle cx="825" cy="108" r="58"/>
+    <circle cx="870" cy="93" r="42"/>
+  </g>
+  <path d="M0 394 Q160 342 322 392 T640 388 T960 386 V600 H0Z" fill="#b8e8b5"/>
+  <path d="M0 431 Q180 389 360 432 T720 424 T960 420 V600 H0Z" fill="#8ccf91"/>
+  <rect y="455" width="960" height="145" fill="url(#road)"/>
+  <path d="M0 475 H960" stroke="#95a5b8" stroke-width="5" opacity=".4"/>
+  <g fill="#d6e0eb" opacity=".7">
+    <rect x="55" y="520" width="120" height="8" rx="4"/>
+    <rect x="280" y="520" width="120" height="8" rx="4"/>
+    <rect x="505" y="520" width="120" height="8" rx="4"/>
+    <rect x="730" y="520" width="120" height="8" rx="4"/>
+  </g>
+
+  <!-- little motion sparks -->
+  <g class="spark" fill="#ffd166">
+    <path d="M158 349h22l-11 18z"/>
+    <path d="M790 330h17l-8 15z" style="animation-delay:.7s"/>
+  </g>
+
+  <!-- moving shadow -->
+  <ellipse cx="493" cy="490" rx="230" ry="19" fill="#1c2938" opacity=".28" filter="url(#softShadow)">
+    <animate attributeName="rx" values="220;238;220" dur="1.8s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values=".24;.32;.24" dur="1.8s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- bicycle -->
+  <g id="bike">
+    <g fill="none" stroke="#1e6dcb" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="300" cy="432" r="72" fill="#dff6ff" stroke="#23344d" stroke-width="8"/>
+      <circle cx="674" cy="432" r="72" fill="#dff6ff" stroke="#23344d" stroke-width="8"/>
+      <path d="M300 432 L414 312 L515 432 Z"/>
+      <path d="M414 312 L454 432"/>
+      <path d="M414 312 L384 284"/>
+      <path d="M384 284 h-40"/>
+      <path d="M515 432 L674 432"/>
+      <path d="M515 432 L540 326"/>
+      <path d="M540 326 l28-19"/>
+      <path d="M551 310 h38"/>
+    </g>
+    <g id="wheel-left" fill="none" stroke="#9eb6ca" stroke-width="3" opacity=".78">
+      <path d="M300 360V504 M228 432h144 M249 381l102 102 M249 483l102-102"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 300 432" to="360 300 432" dur="1.05s" repeatCount="indefinite"/>
+    </g>
+    <g id="wheel-right" fill="none" stroke="#9eb6ca" stroke-width="3" opacity=".78">
+      <path d="M674 360V504 M602 432h144 M623 381l102 102 M623 483l102-102"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 674 432" to="360 674 432" dur="1.05s" repeatCount="indefinite"/>
+    </g>
+    <circle cx="414" cy="312" r="9" fill="#ffd166" stroke="#273247" stroke-width="5"/>
+    <g id="crank" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round">
+      <circle cx="454" cy="432" r="16" fill="#ffd166"/>
+      <path d="M454 432l34 17 M454 432l-24-22"/>
+      <rect x="486" y="444" width="29" height="9" rx="4.5" fill="#273247" stroke="none"/>
+      <rect x="402" y="404" width="29" height="9" rx="4.5" fill="#273247" stroke="none" transform="rotate(20 416 408)"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 454 432" to="360 454 432" dur="1.05s" repeatCount="indefinite"/>
+    </g>
+    <path d="M561 306 q16-10 30 4" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- rider bounce -->
+  <g id="rider">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -5; 0 0; 0 4; 0 0" dur="1.05s" repeatCount="indefinite"/>
+
+    <!-- rear arm -->
+    <path d="M441 249 Q478 274 535 313" fill="none" stroke="#f3af7a" stroke-width="21" stroke-linecap="round"/>
+    <path d="M441 249 Q478 274 535 313" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="538" cy="313" r="12" fill="#f3af7a" class="ink"/>
+
+    <!-- legs behind -->
+    <path d="M420 365 Q447 396 479 419 L504 439" fill="none" stroke="#f3af7a" stroke-width="22" stroke-linecap="round"/>
+    <path d="M420 365 Q447 396 479 419 L504 439" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round"/>
+    <path d="M393 369 Q421 402 424 431 L409 463" fill="none" stroke="#f3af7a" stroke-width="22" stroke-linecap="round"/>
+    <path d="M393 369 Q421 402 424 431 L409 463" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round"/>
+    <path d="M493 439 l29 5 q12 3 8 13 l-36 1 q-14-2-17-12z" fill="#ffcf4a" class="thin-ink"/>
+    <path d="M389 461 l31-2 q12 3 8 13 l-42 5 q-13-3-9-12z" fill="#ffcf4a" class="thin-ink"/>
+
+    <!-- body -->
+    <path d="M351 228 Q386 207 431 224 L458 326 Q445 363 402 370 Q360 365 337 331z" fill="url(#shirt)" class="ink"/>
+    <path d="M365 230 v101 M416 222 v111" stroke="#ffd166" stroke-width="10" stroke-linecap="round"/>
+    <path d="M353 316 Q394 330 447 315 L451 363 Q414 388 374 372z" fill="url(#pants)" class="ink"/>
+    <circle cx="369" cy="326" r="8" fill="#ffd166"/>
+    <circle cx="425" cy="325" r="8" fill="#ffd166"/>
+
+    <!-- front arm -->
+    <path d="M432 241 Q484 253 542 304" fill="none" stroke="#f3af7a" stroke-width="21" stroke-linecap="round"/>
+    <path d="M432 241 Q484 253 542 304" fill="none" stroke="#273247" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="545" cy="306" r="12" fill="#f3af7a" class="ink"/>
+
+    <!-- neck -->
+    <path d="M383 220 v22 q14 16 28 0 v-25" fill="#f3af7a" class="ink"/>
+
+    <!-- head -->
+    <path d="M326 130 Q349 88 406 96 Q461 101 477 151 L464 219 Q449 251 393 256 Q341 249 324 211z" fill="#f3af7a" class="ink"/>
+    <!-- ears -->
+    <path d="M333 147 Q292 129 288 169 Q289 205 327 197" fill="#f3af7a" class="ink"/>
+    <path d="M463 146 Q507 124 511 165 Q510 201 470 196" fill="#f3af7a" class="ink"/>
+    <path d="M321 157 q-21-7-20 14 q3 16 22 14" fill="none" stroke="#d27f62" stroke-width="5" stroke-linecap="round"/>
+    <path d="M476 157 q23-10 24 11 q-3 18-24 16" fill="none" stroke="#d27f62" stroke-width="5" stroke-linecap="round"/>
+    <!-- hair and cap -->
+    <path d="M326 139 Q340 90 400 91 Q451 90 477 135 Q450 116 416 119 Q374 122 326 139z" fill="#3a2d3b" class="ink"/>
+    <path d="M316 126 Q355 72 414 79 Q453 80 483 117 L470 140 Q420 112 326 145z" fill="#ffcf3d" class="ink"/>
+    <path d="M328 122 Q385 99 469 129" fill="none" stroke="#f29b2f" stroke-width="7" stroke-linecap="round"/>
+    <!-- face -->
+    <ellipse cx="368" cy="164" rx="11" ry="15" fill="#fff" class="ink"/>
+    <ellipse cx="430" cy="164" rx="11" ry="15" fill="#fff" class="ink"/>
+    <ellipse cx="370" cy="167" rx="4.5" ry="7" fill="#273247" class="blink"/>
+    <ellipse cx="428" cy="167" rx="4.5" ry="7" fill="#273247" class="blink"/>
+    <path d="M394 175 q-6 5 0 10" fill="none" stroke="#c87960" stroke-width="5" stroke-linecap="round"/>
+    <path d="M377 202 Q395 215 418 202" fill="none" stroke="#273247" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="346" cy="191" r="8" fill="#f48a78" opacity=".7"/>
+    <circle cx="452" cy="191" r="8" fill="#f48a78" opacity=".7"/>
+  </g>
+
+  <!-- speed lines -->
+  <g stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity=".62">
+    <path d="M117 290h66"/>
+    <path d="M82 316h42"/>
+    <path d="M795 267h56"/>
+  </g>
+  <text x="48" y="62" font-family="system-ui, -apple-system, 'PingFang SC', sans-serif" font-size="26" font-weight="700" fill="#21415d" opacity=".7">快乐出发！</text>
+</svg>

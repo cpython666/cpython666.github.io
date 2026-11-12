@@ -1,5 +1,7 @@
 ---
 title: "P19-窗口双击更换背景"
+description: "监听 PyQt6 窗口的鼠标双击事件，在 mouseDoubleClickEvent 里切换背景图片，附可运行示例。"
+keywords: "PyQt6,双击事件,mouseDoubleClickEvent,更换背景,背景图片"
 created_at: 2024-12-20 21:40:46
 updated_at: 2024-12-20 21:40:46
 ---

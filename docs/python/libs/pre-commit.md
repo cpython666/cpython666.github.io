@@ -1,3 +1,9 @@
+---
+title: "pre-commit 使用指南"
+description: "pre-commit 是 Git 钩子管理工具，在 commit 前自动跑代码检查与格式化。讲解安装、初始化配置、装钩子、手动运行、CI/CD 集成与跳过方式。"
+keywords: "pre-commit,Git钩子,代码规范,black,flake8"
+---
+
 [https://blog.csdn.net/irving512/article/details/108701017](https://blog.csdn.net/irving512/article/details/108701017)
 
 ## pre-commit

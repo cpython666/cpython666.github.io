@@ -1,8 +1,9 @@
 ---
 title: 博客会员
+description: "博客会员说明页，介绍会员权益、开通方式与可见内容范围。"
+keywords: "博客会员,会员权益,订阅,开通说明,付费内容"
 layout: home
 sidebar: false
-
 ---
 
 <script setup>
@@ -54,7 +55,7 @@ const plans = ref([
       { content: '全部资源的搜索', status: 1 },
       { content: '全部资源的浏览', status: 1 },
       { content: '阅读VIP专属文章', status: 1 },
-      { content: '找资源宝典：资源无界，打破信息壁垒', url: '/breakthrough-notes/resource-treasure-manual', status: 1 },
+      { content: '找资源宝典：资源无界，打破信息壁垒（查看说明）', url: '/breakthrough-notes/resource-treasure-manual', status: 1 },
       { content: '会员专属-微信交流群', status: 1 },
       { content: '持续增加中～', status: 1 }
     ]
@@ -79,7 +80,7 @@ const plans = ref([
 const vipPosts = ref([
   { title: 'GEO系统研究报告', path: '/life/geo-system-research-report' },
   { title: 'Docker笔记', path: '/backend/docker' },
-  { title: '找资源宝典：资源无界，打破信息壁垒-说明', path: '/breakthrough-notes/resource-treasure-manual' },
+  { title: '找资源宝典：资源无界，打破信息壁垒', path: '/breakthrough-notes/resource-treasure-guide' },
   { title: 'P1-DrissionPage数据采集中间系统【源码及讲解】', path: '/spider/drissionpage-system/p1-system-source-guide' },
   { title: 'P2-自动化采集系统-体验优化', path: '/spider/drissionpage-system/p2-system-ux-optimization' },
   { title: 'P3-自动化采集系统功能丰富-支持截图，接口文档描述完善', path: '/spider/drissionpage-system/p3-screenshot-api-docs' },
@@ -134,6 +135,7 @@ const activateVip = async () => {
 
 <style scoped>
 .vip-page { max-width: 1120px; margin: 16px auto; padding: 0 12px; }
+.vip-page-title { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 18px; align-items: stretch; }
 .plan-card { position: relative; display: flex; flex-direction: column; min-height: 410px; padding: 24px 22px 20px; text-align: center; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 14px; box-shadow: var(--vp-shadow-1); transition: transform .2s, box-shadow .2s; }
 .plan-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, .1); }
@@ -156,7 +158,7 @@ const activateVip = async () => {
 .vip-button.danger { background: #c45656; }
 .vip-link { color: var(--vp-c-brand-1); text-decoration: none; }
 .vip-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
-.vip-table th, .vip-table td { padding: 8px; text-align: left; border: 1px solid var(--vp-c-divider); }
+.vip-table th, .vip-table td { padding: 8px; text-align: left; border: 1px solid var(--vp-c-divider); overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .plans { grid-template-columns: 1fr; }
   .vip-tools, .vip-activate { display: flex; flex-direction: column; align-items: stretch; }
@@ -164,7 +166,7 @@ const activateVip = async () => {
 </style>
 
 <div class="vip-page">
-  <h1>博客会员</h1>
+  <h1 class="vip-page-title">博客会员</h1>
   <p>目前的开通方式是加我微信并备注开通 VIP，我会手动开通。【之前网站购买过vip的无需再次开通，找我要激活码即可】</p>
   <div class="vip-tools">
     <div class="vip-alert" :class="isVip ? 'is-ok' : 'is-warn'">会员状态：{{ isVip ? '已解锁' : '未解锁' }}</div>

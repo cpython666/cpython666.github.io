@@ -1,5 +1,7 @@
 ---
 title: "P1-教程文档"
+description: "Pygame 基础教程：初始化、设置主屏窗口、设置窗口标题、实现点击 X 退出的固定代码段，以及 Display 显示模块讲解，附教程来源。"
+keywords: "Pygame,教程文档,窗口设置,display模块,Pygame入门"
 created_at: 2024-12-20 22:59:38
 updated_at: 2024-12-20 23:01:54
 ---

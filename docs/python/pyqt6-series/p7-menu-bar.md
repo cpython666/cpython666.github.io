@@ -1,5 +1,7 @@
 ---
 title: "P7-顶部菜单栏实例"
+description: "PyQt6 顶部菜单栏实战：创建 menuBar、添加菜单项与 QAction，并把动作绑定到对应的处理函数上。"
+keywords: "PyQt6,菜单栏,menuBar,QAction,QMainWindow"
 created_at: 2024-12-20 21:35:21
 updated_at: 2024-12-20 21:35:21
 ---

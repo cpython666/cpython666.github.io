@@ -1,5 +1,7 @@
 ---
 title: "P17-背景运动及模糊滤镜"
+description: "复现 Steam 登录界面的运动模糊背景。重写 paintEvent 会让窗口内容一起变模糊，改用 QLabel 堆叠承载背景就能避开这个问题。"
+keywords: "PyQt6,运动背景,模糊滤镜,paintEvent,Steam登录界面"
 created_at: 2024-12-20 21:39:46
 updated_at: 2024-12-20 21:39:46
 ---

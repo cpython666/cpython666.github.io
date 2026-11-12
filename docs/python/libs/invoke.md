@@ -1,5 +1,7 @@
 ---
 title: "常用命令总敲错？记不住？让你的命令短起来！-invoke【python三方库】"
+description: "命令老是拼错、记不住、要翻笔记？用 invoke 把冗长的 Docker 与 Django 命令封装成短命令，讲解安装与实际配置写法。"
+keywords: "invoke,Python三方库,命令封装,Docker,效率工具"
 created_at: 2025-03-06 20:37:43
 updated_at: 2025-03-06 20:44:15
 ---

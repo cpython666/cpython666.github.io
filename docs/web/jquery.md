@@ -1,6 +1,8 @@
-
-
-
+---
+title: "JQuery"
+description: "为什么要学 jQuery：原生 JS 查找元素单一、遍历麻烦、有兼容问题、动画难写且代码冗余。讲解 jQuery 版本差异、入口函数、jq 对象与 DOM 对象的区别及选择器。"
+keywords: "jQuery,选择器,入口函数,DOM操作,前端框架"
+---
 
 # JQuery
 

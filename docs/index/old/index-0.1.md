@@ -1,7 +1,9 @@
 ---
+title: "Python斗罗"
+description: "博客首页 0.1 版本存档。难的从来不是学会，而是知道有这个东西——先突破信息茧房，然后才是去学习。"
+keywords: "首页存档,博客历史,Python斗罗,旧版本,信息茧房"
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-
 hero:
   name: "星梦启航"
   text: "代码笔记"
@@ -35,20 +37,18 @@ features:
     details: 代码项目仓库
     link: https://github.com/cpython666
     linkText: 去 star
-
   - icon:
       src: /icons/csdn.svg
     title: Python斗罗
     details: 博客代码笔记
     link: https://codefly.blog.csdn.net/
     linkText: 去 关注
-
   - icon:
       src: /spider.gif
     title: ing
     details: '<small class="bottom-small">学习爬虫ing~</small>'
-
 ---
+
 ::: tip 心怀桂泰
 **我于这喧嚣世界寻得一方净土，可我却已成净土所厌的喧嚣。**
 :::

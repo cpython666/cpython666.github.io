@@ -1,5 +1,7 @@
 ---
 title: "P9-左侧菜单控制右侧多页面切换"
+description: "做出常见的后台管理界面布局：左侧菜单列表点击后，右侧 QStackedWidget 跟着切换对应页面，PyQt6 完整示例。"
+keywords: "PyQt6,侧边栏,QStackedWidget,多页面切换,后台界面"
 created_at: 2024-12-20 21:36:06
 updated_at: 2024-12-20 21:36:06
 ---

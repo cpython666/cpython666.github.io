@@ -1,5 +1,7 @@
 ---
 title: "P7-DrissionPage项目部署服务器的最佳实践"
+description: "DrissionPage 项目部署到 Linux 服务器或 Docker 时常见的问题与解决思路，本文重点讲思路而非代码。"
+keywords: "DrissionPage,服务器部署,Docker,Linux,无头浏览器"
 date: "2024-12-07 21:40:48.626791"
 updated: "2024-12-07 21:40:48.626903"
 privacy: "登录可见"

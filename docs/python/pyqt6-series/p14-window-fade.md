@@ -1,5 +1,7 @@
 ---
 title: "P14-窗口渐显与渐隐"
+description: "用 QPropertyAnimation 控制 windowOpacity，给 PyQt6 窗口做出淡入淡出的渐显渐隐效果。"
+keywords: "PyQt6,窗口动画,QPropertyAnimation,windowOpacity,渐隐"
 created_at: 2024-12-20 21:38:35
 updated_at: 2024-12-20 21:38:35
 ---

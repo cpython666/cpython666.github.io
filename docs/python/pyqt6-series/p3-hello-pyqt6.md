@@ -1,5 +1,7 @@
 ---
 title: "P3-第一个程序-Hello,PyQt6~"
+description: "从零写出第一个 PyQt6 程序 Hello PyQt6，逐行说明 QApplication、QWidget 与事件循环的作用，同时验证开发环境是否装好。"
+keywords: "PyQt6,Hello World,QApplication,QWidget,PyQt6入门"
 created_at: 2024-12-20 21:32:18
 updated_at: 2024-12-20 21:32:18
 ---

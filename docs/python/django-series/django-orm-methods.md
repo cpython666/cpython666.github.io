@@ -1,5 +1,7 @@
 ---
 title: "django-orm常用的方法函数【django】"
+description: "Django ORM 常用方法速查：模型实例方法、查询集方法、聚合函数、字段查找器、关系查找、更新与创建，以及事务管理。"
+keywords: "Django ORM,查询集,聚合函数,字段查找,事务管理"
 created_at: 2024-12-20 23:24:47
 updated_at: 2024-12-20 23:24:47
 ---

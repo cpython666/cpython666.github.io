@@ -1,3 +1,9 @@
+---
+title: "aiohttp"
+description: "aiohttp 是基于 asyncio 的异步 HTTP 客户端/服务器框架，适合高并发爬虫。讲解安装、异步请求、POST、并发控制、超时与错误处理。"
+keywords: "aiohttp,异步HTTP,asyncio,高并发爬虫,Python异步"
+---
+
 # aiohttp
 `aiohttp` 是一个用于 Python 的异步 HTTP 客户端/服务器框架，基于 `asyncio`，非常适合需要高并发网络请求的场景，例如爬虫、API 调用等。下面我会介绍 `aiohttp` 的基本用法，包括安装、发送异步请求、处理响应，以及常见的使用场景。
 

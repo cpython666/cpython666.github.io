@@ -1,5 +1,7 @@
 ---
 title: "P33-防锯齿选项"
+description: "拆解 QPainter.RenderHint 这个标志枚举里各个防锯齿与渲染选项的含义，以及它们如何影响 PyQt6 的绘制效果。"
+keywords: "PyQt6,防锯齿,RenderHint,QPainter,渲染选项"
 created_at: 2024-12-20 21:46:38
 updated_at: 2024-12-20 21:46:38
 ---

@@ -1,27 +1,29 @@
+---
+title: "关于本站"
+description: "站长 Python斗罗（cpython666，公开昵称 SI斗罗）的个人介绍：各平台用户名说明、技能、奖项与作品，附仓库地址、个性签名、昵称与签名历史和联系方式，以及支持站长的方式。"
+keywords: "关于本站,个人介绍,站长,Python斗罗,SI斗罗,cpython666,星梦启航,作品,联系方式"
+---
+
+<script setup>
+import RecommendationCards from '../components/RecommendationCards.vue'
+</script>
+
 ## 支持站长
-**服务器推荐**：无论自己的博客或者个人网站多炫酷实用，不部署在一台服务器很难让其他人便捷访问到。  
 
-所以这里给大家推荐一个产品：莱卡云。该产品提供低价格高性能，拥有精选华中/香港/美国/欧洲多种（境内境外）云服务器产品（境外服务器可以免备案），低至25元每月。拥有7x24小时一对一的服务。  
+这里收录站点的赞助伙伴、我在用的服务，以及自己开发的免费开源工具。部分链接含推广或邀请关系，通过它们使用服务也能支持本站，谢谢你。
 
-最近也是活动时间，9.9就可以购买服务器一个月，非常适合新手学习使用。  
+<RecommendationCards />
 
-如果感兴趣，可以使用我的推广链接，非常的感谢：[https://www.lcayun.com/aff/DECEDOZS](https://www.lcayun.com/aff/DECEDOZS)
-![https://www.lcayun.com/aff/DECEDOZS](/support/lky.png)
+### 机场 / VPN 推荐状态 {#vpn-status}
 
-**AI 中转站推荐**：如果你也在用 Codex、Claude Code 这类 AI 编程工具，官方额度不够用时，可以试试这个中转站。不用翻墙就能用，价格也比较香，相当于官方 0.几折；平台有信誉、服务稳定、不跑路，适合日常写代码、改项目、跑小任务。
+::: info 暂无有效推荐
+此前推荐的 ikunVPN 已于 2025 年 4 月 5 日前停止服务，飞鸟云在 2025 年 9 月 6 日被记录为疑似停止服务，目前均不再推荐。旧注册链接已移除；有新的实测体验后再更新。
+:::
 
-想支持站长的话，可以通过我的邀请链接注册使用，非常感谢：[https://xfastapi.ai/register?aff=8XQ944ESTPWY](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
+### 历史价格参考
 
-![XFastAPI 中转站价格展示](/support/xfastapi-pricing.png)
+价格与可用性以平台当前页面为准，以下旧截图仅供回看：[XFastAPI 价格](/support/xfastapi-pricing.png) · [FastAI 价格](/support/fastai-pricing.png) · [FastAI 渠道状态](/support/fastai-status.png)。
 
-
-**魔法推荐**：2025-04-05 之前的ikunVPN跑路了，呜呜🥹，对不起大家。这也告诉我们一个道理就是，不要购买太长期的，月付就可以，币面大额损失。  
-2025/09/06 飞鸟云疑似跑路，暂无魔法推荐，有好用的可以向我推荐。  
-
-<!-- 现在发现了一个很实惠的vpn站点，使用站长的邀请链接注册账号充值，可以让站长获得一些佣金，谢谢大家支持.
-注册链接：
-[https://fn1.476579.xyz/#/register?code=JwHkdnDm](https://fn1.476579.xyz/#/register?code=JwHkdnDm)
-![https://fn1.476579.xyz/#/register?code=JwHkdnDm](/support/fny.png) -->
 
 ---
 
@@ -30,6 +32,26 @@
 ## 个人介绍
 
 也算是半个诗人吧，毕竟代码里那么多换行。
+
+### 这些名字都是我
+
+下面这些用户名和昵称属于同一个人，都是本站站长，看到哪个都可以认作同一个作者：
+
+| 名字 | 用在哪里 |
+| --- | --- |
+| Python斗罗 | 主要笔名：本站署名、B 站；公众号曾用名 |
+| SI斗罗 | 2026-10-21 起的公开昵称：公众号，以及 B 站、抖音、小红书、X、YouTube |
+| IT.Python斗罗 | 本站页脚版权署名 |
+| cpython666 | GitHub 账号、本站域名 `cpython666.github.io` |
+| 星梦启航 | 本站站名、知识星球名称 |
+| python666 | 语雀文档 `yuque.com/python666` |
+| codefly | CSDN 博客 `codefly.blog.csdn.net` |
+| stardreamfly | X 账号 `x.com/stardreamfly`，以及镜像站 `stardreamfly.github.io` |
+
+本站 `https://cpython666.github.io` 是这些内容的原始出处，其他平台和镜像上的同名文章都由我本人发布。
+
+用过的名字和写过的简介，收在[昵称与签名历史](/web-intro/profile-history)里。
+
 ## 技能
 
 全栈开发/Python后端/自动化爬虫/前端
@@ -64,7 +86,7 @@ Github主页：https://cpython666.github.io/
 
 语雀文档：https://www.yuque.com/python666
 
-公众号：Python斗罗
+公众号：SI斗罗（曾用名：Python斗罗）
 
 ## 仓库地址
 
@@ -80,6 +102,8 @@ https://stardreamfly.github.io
 ## 个性签名
 
 凭着兴趣做一些事情，很累但也很酷。编程也可以很有趣。授人以鱼不如授人以渔。
+
+[查看昵称与签名历史](/web-intro/profile-history)
 
 
 

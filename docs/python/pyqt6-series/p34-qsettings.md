@@ -1,5 +1,7 @@
 ---
 title: "P34-配置相关QSettings"
+description: "用 QSettings 持久化 PyQt6 程序的配置项，读写窗口位置、用户偏好等状态，跨平台自动落到注册表或配置文件。"
+keywords: "PyQt6,QSettings,配置持久化,读写配置,用户偏好"
 created_at: 2024-12-20 21:46:55
 updated_at: 2024-12-20 21:46:55
 ---

@@ -1,3 +1,9 @@
+---
+title: "Langchain"
+description: "Langchain 是构建大模型应用的开源框架，提供工具与组件帮助开发者集成语言模型，做出聊天机器人、问答系统和内容生成工具。"
+keywords: "Langchain,大语言模型,LLM应用,AI框架,聊天机器人"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

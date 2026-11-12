@@ -1,5 +1,7 @@
 ---
 title: "P8-多种栏示例"
+description: "一次看清 PyQt6 里的菜单栏、工具栏、状态栏怎么写，各自适用什么场景，附可运行的对比示例代码。"
+keywords: "PyQt6,工具栏,状态栏,菜单栏,toolBar"
 created_at: 2024-12-20 21:35:41
 updated_at: 2024-12-20 21:35:41
 ---

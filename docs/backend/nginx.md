@@ -1,3 +1,9 @@
+---
+title: "Nginx笔记"
+description: "Nginx 是高性能的 Web 服务器与反向代理服务器。整理常用命令、简介与配置文件基础，含启动、重载、测试配置等操作说明。"
+keywords: "Nginx,反向代理,Web服务器,常用命令,配置文件"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

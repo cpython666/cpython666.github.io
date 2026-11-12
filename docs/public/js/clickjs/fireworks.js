@@ -1,10 +1,16 @@
 (function () {
     const STORAGE_KEY = 'cpython666:disable-fireworks';
     const CHANGE_EVENT = 'cpython666-effects-change';
+    if (window.CPython666Effects?.applyFireworkSetting) {
+        window.CPython666Effects.applyFireworkSetting();
+        return;
+    }
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let canvasEl = null;
     let clickHandler = null;
     let resizeHandler = null;
     let render = null;
+    const animations = new Set();
 
     function getFireworksDisabled() {
         try {
@@ -29,6 +35,8 @@
             render.pause();
         }
         render = null;
+        animations.forEach(function (animation) { animation.pause(); });
+        animations.clear();
 
         if (canvasEl && canvasEl.parentNode) {
             canvasEl.parentNode.removeChild(canvasEl);
@@ -39,17 +47,21 @@
     function initfirework() {
         cleanupFirework();
 
-        if (getFireworksDisabled() || typeof anime === 'undefined') {
+        if (!document.body || getFireworksDisabled() || reducedMotion.matches || document.hidden || typeof anime === 'undefined') {
             return;
         }
 
         const activeCanvas = document.createElement('canvas');
         activeCanvas.className = 'fireworks';
-        activeCanvas.style = 'position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;';
+        activeCanvas.style = 'position:fixed;left:0;top:0;width:100%;height:100%;z-index:99999999;pointer-events:none;';
         document.body.appendChild(activeCanvas);
         canvasEl = activeCanvas;
 
         const ctx = activeCanvas.getContext('2d');
+        if (!ctx) {
+            cleanupFirework();
+            return;
+        }
         const numberOfParticules = 30;
         const tap = 'mousedown';
         const colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
@@ -118,7 +130,15 @@
             for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++) {
                 n.push(createParticule(e, t));
             }
-            anime.timeline().add({
+            const animation = anime.timeline({
+                complete: function () {
+                    animations.delete(animation);
+                    if (!animations.size) {
+                        render.pause();
+                        ctx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
+                    }
+                }
+            }).add({
                 targets: n,
                 x: function (e) {
                     return e.endPos.x;
@@ -144,29 +164,18 @@
                 update: renderParticule,
                 offset: 0
             });
+            animations.add(animation);
         }
 
-        function debounce(fn, delay) {
-            var timer;
-            return function () {
-                var context = this;
-                var args = arguments;
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    fn.apply(context, args);
-                }, delay);
-            };
+        function setCanvasSize() {
+            const ratio = Math.min(window.devicePixelRatio || 1, 2);
+            activeCanvas.width = ratio * window.innerWidth;
+            activeCanvas.height = ratio * window.innerHeight;
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
         }
-
-        const setCanvasSize = debounce(function () {
-            activeCanvas.width = 2 * window.innerWidth;
-            activeCanvas.height = 2 * window.innerHeight;
-            activeCanvas.style.width = window.innerWidth + 'px';
-            activeCanvas.style.height = window.innerHeight + 'px';
-            activeCanvas.getContext('2d').scale(2, 2);
-        }, 500);
 
         render = anime({
+            autoplay: false,
             duration: Infinity,
             update: function () {
                 ctx.clearRect(0, 0, activeCanvas.width, activeCanvas.height);
@@ -196,7 +205,7 @@
     }
 
     function applyFireworkSetting() {
-        if (getFireworksDisabled()) {
+        if (getFireworksDisabled() || reducedMotion.matches || document.hidden) {
             cleanupFirework();
             return;
         }
@@ -211,10 +220,13 @@
     window.CPython666Effects.isFireworksDisabled = getFireworksDisabled;
 
     window.addEventListener(CHANGE_EVENT, applyFireworkSetting);
+    window.addEventListener('storage', applyFireworkSetting);
+    document.addEventListener('visibilitychange', applyFireworkSetting);
+    reducedMotion.addEventListener('change', applyFireworkSetting);
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initfirework);
+        document.addEventListener('DOMContentLoaded', applyFireworkSetting, { once: true });
     } else {
-        initfirework();
+        applyFireworkSetting();
     }
 })();

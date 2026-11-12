@@ -1,5 +1,7 @@
 ---
 title: "P25-图片浏览，ctrl+滚轮放大缩小，左键按压拖拽，右键按压画框，框显示坐标信息"
+description: "进阶版 PyQt6 图片浏览器：Ctrl+滚轮缩放、左键拖拽平移、右键拉框选区，并实时显示选框的坐标信息。"
+keywords: "PyQt6,图片标注,框选,QGraphicsView,坐标显示"
 created_at: 2024-12-20 21:42:41
 updated_at: 2024-12-20 21:42:41
 ---

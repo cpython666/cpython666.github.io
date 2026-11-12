@@ -1,5 +1,7 @@
 ---
 title: "P3-DrissionPage批量监听采集接口数据"
+description: "点击下一页、滚动加载更多、展开评论——这类批量采集需求怎么做？用 DrissionPage 批量监听接口响应，一次拿全数据。"
+keywords: "DrissionPage,批量采集,监听接口,翻页,滚动加载"
 date: "2024-11-28 21:40:43.094588"
 updated: "2024-11-28 21:40:43.094622"
 privacy: "登录可见"

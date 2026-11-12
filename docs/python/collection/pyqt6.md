@@ -1,3 +1,9 @@
+---
+title: "PyQt6实战开发之旅-代码均可运行"
+description: "PyQt6 实战开发合集入口，附免费视频教程。不逐个死磕几百个控件，而是从有 Python 基础的角度切入，代码均可直接运行。"
+keywords: "PyQt6,Python GUI,桌面开发,Qt,PyQt6教程"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

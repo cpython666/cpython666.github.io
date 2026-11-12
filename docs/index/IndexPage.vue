@@ -1,25 +1,26 @@
 <template>
+  <div class="home-page">
+    <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
 
-  <div id="big-bg" :style="{ backgroundImage: `url(${randomImage})` }">
-
-  </div>
-
-  <div id="center-div">
-    <div id="small-bg" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
-         :style="{ backgroundImage: `url(${randomImage})` }">
-      <!-- 背景部分 -->
     </div>
-    <div class="content">
-      <div style="cursor: pointer" @click="openLink">
-        <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+
+    <div id="center-div">
+      <div id="small-bg" :class="{ 'rotate-animation': randomImage === 'imgs/bg/small_videos.png' }"
+           :style="{ backgroundImage: `url(${randomImage})` }">
+        <!-- 背景部分 -->
       </div>
-      <div id="box-cursor">
-        <span id="box"></span>
+      <div class="content">
+        <div style="cursor: pointer" @click="openLink">
+          <img id="index-logo" alt="星梦起航，点击跳转～" src="/logo_super.svg">
+        </div>
+        <div id="box-cursor">
+          <span id="box" ref="typingBox"></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <sponsors-links/>
+    <sponsors-links/>
+  </div>
 </template>
 
 <script setup>
@@ -28,24 +29,19 @@ import Typed from 'typed.js';
 import SponsorsLinks from "./SponsorsLinks.vue";
 // 响应式数据
 const randomImage = ref('');
+const typingBox = ref(null);
+let typed;
 const openLink = () => {
   window.location.href = '/';
 };
 const changeBgHeight = () => {
   const header = document.querySelector('header');
   const bg = document.querySelector('#small-bg');
-  console.log(header.clientHeight)
-
-  const headerHeight = header.clientHeight;
-  console.log(headerHeight)
   const bg1 = document.querySelector('#big-bg');
-  // bg.style.height = `calc(100vh)`;
-  // bg1.style.height = `calc(100vh)`;
+  if (!bg || !bg1) return;
+  const headerHeight = header?.clientHeight || 0;
   bg.style.height = `calc(100vh - ${headerHeight}px)`;
   bg1.style.height = `calc(100vh - ${headerHeight}px)`;
-
-
-  console.log('背景图片高度', bg.clientHeight)
 }
 // 图片列表
 const images = [
@@ -91,12 +87,7 @@ const getRandomImage = () => {
 
 // 设置随机背景图片
 const setRandomBackgroundImage = () => {
-  const a = getRandomImage();
-  randomImage.value = a;
-  if (randomImage.value === 'imgs/bg/result_image.png') {
-
-  }
-  console.log('改变了背景，', randomImage.value)
+  randomImage.value = getRandomImage();
 }
 onMounted(
     () => {
@@ -120,7 +111,11 @@ onMounted(
         loop: true,
         loopCount: 200
       };
-      new Typed('#box', options);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        typingBox.value.textContent = options.strings[0].replace(/\^\d+/g, '');
+      } else {
+        typed = new Typed(typingBox.value, options);
+      }
 
       setRandomBackgroundImage()
       changeBgHeight()
@@ -128,32 +123,20 @@ onMounted(
       window.addEventListener('resize', changeBgHeight);
     });
 onBeforeUnmount(() => {
+  typed?.destroy();
   window.removeEventListener('resize', changeBgHeight);
 });
 </script>
 
-<style>
-.container {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-/* 修复文章导航栏溢出样式问题 */
-.VPNavBarMenu {
-  width: 100%;
+<style scoped>
+.home-page {
+  position: relative;
+  overflow: hidden;
 }
 
 #big-bg {
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: absolute;
   justify-content: center;
   align-items: center;
@@ -175,7 +158,7 @@ body::-webkit-scrollbar {
 #center-div {
   border-radius: 50px;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -195,7 +178,7 @@ body::-webkit-scrollbar {
   left: 0;
   border-radius: 50px;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -284,5 +267,14 @@ body::-webkit-scrollbar {
 
 .rotate-animation {
   animation: rotate 50s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #index-logo,
+  #index-logo:hover,
+  .rotate-animation {
+    animation: none;
+    transition: none;
+  }
 }
 </style>

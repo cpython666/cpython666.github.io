@@ -1,3 +1,9 @@
+---
+title: "博客搭建记录"
+description: "VitePress 博客搭建过程记录：用 Element 组件做回到顶部按钮、实现分享页面按钮获取当前链接与标题，以及首页重构。"
+keywords: "VitePress,博客搭建,回到顶部,分享按钮,首页重构"
+---
+
 # 博客搭建记录
 
 

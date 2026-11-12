@@ -1,0 +1,94 @@
+# 架构与入口
+
+本文件中的源码路径均相对仓库根目录。
+
+## 项目事实
+
+- 站点名称：星梦启航；正式地址：`https://cpython666.github.io`。
+- 基础栈：VitePress 1.6 系列、Vue 单文件组件、npm；依赖版本以 `package.json` 和锁文件为准。
+- 默认主题扩展位于 `docs/.vitepress/theme/`，没有独立业务后端。
+- GitHub Pages 工作流在 `master` 推送或手动触发后安装依赖、构建并部署；流程定义不等于 AI 获得执行全站构建或推送的授权。
+- 2026-11-12 确认双线发布：GitHub Pages 工作流和正式地址 `https://cpython666.github.io` 保持不变；同一份 VitePress 产物再由 Cloudflare Workers 静态资源提供第二份。sitemap、canonical、RSS 仍写死该主域名。仓库不存放 Cloudflare token。
+- 发展目标：用户希望把博客发展为垂直领域有影响力的网站，并适应 AI 时代的内容发现和使用方式。已确认同时服务两类读者：用 AI 做项目的开发者、独立创作者，以及用 AI 提升工作效率的非技术用户。最终垂直主线仍待定；“AI 工作流与实用工具”、围绕共同场景提供直接使用与开发改造两层内容，均为待定建议。“AI × Python 自动化实战”可作为技术深度方向，不再假定全站读者都有技术基础；受众确认不构成首页、栏目或商业模式改版授权。
+- 网站吉祥物：用户于 2026-10-21 选定截图中蓝发、星饰、披肩的人形角色，命名「小星鱼」，授权实现动画；此次“B”指图库第二个选中形象，即首轮文字编号 A，不能误用鲸鱼造型。参考 `https://nav.linux.do/` 的互动形式，形象围绕「星梦启航」品牌；网站吉祥物不按 ChatGPT Work 宠物流程处理。
+
+## 代码地图
+
+| 任务 | 源码入口 | 约束或关系 |
+| --- | --- | --- |
+| 站点、顶部导航、侧边栏、SEO、搜索 | `docs/.vitepress/config.mjs` | 顶栏使用 `top_nav_config`，文章导航后提供独立的 `/prompts/` 入口，不显示破局笔记、备份、区块漫步；默认侧栏仍使用完整的 `nav_config`，已有侧边栏目标路径存在性检查 |
+| 个人介绍与昵称签名历史 | `docs/web-intro/index.md`、`docs/web-intro/profile-history.md` | 2026-10-23用户要求归档；个人介绍、个性签名及 `web_intro_items` 提供入口。历史页按平台保留实际用过的文字，区分启用日期与留档日期，不把候选文案记成使用历史 |
+| 文章导航与提示词 | `docs/navigation/NavIndex.vue`、`docs/prompts/PromptPage.vue`、`docs/prompts/prompts.js` | `/navigation/` 只展示文章目录，`/prompts/` 独立展示提示词并支持分类、搜索、复制与分享；原 `/navigation/` 提示词 hash 入口 replace 跳转，旧 ID 保持兼容 |
+| 导航会员标记数据 | `docs/navigation/member.data.mjs` | 使用全站内容加载器，AI 不直接执行；隔离测试替换为人工 fixture |
+| 主题插槽、评论、图片查看、会员遮罩 | `docs/.vitepress/theme/index.js` | 按本次功能限定修改范围 |
+| 吉祥物小星鱼 | `docs/.vitepress/theme/components/StarFishMascotLoader.vue`、`StarFishMascot.vue` | load 后空闲导入图片帧主体；展开加载 `docs/public/mascot/xiaoxingyu/sprites.webp`，弹跳复用原待机图，首次打招呼加载 `wave.webp`，开心/小憩共用按需 `moods.webp`；原画及停用的 Live2D 工程在被 Git 忽略的 `.local-assets/mascot/xiaoxingyu/` |
+| 评论（giscus + Waline 并存） | `docs/.vitepress/theme/comment.js`、`components/WalineComment.vue` | 两者共用 `useCommentEnabled` 显示规则；Waline 在 `doc-after` 插槽、位于 giscus 之上，服务端 `https://cpython666-waline.vercel.app`（Vercel + Neon，图片默认 base64 存库），`walineServerURL` 留空时不渲染；`@waline/client` 保留 `~3.13.0`、锁文件为 3.13.0，Node 构建环境升级不顺带升级评论依赖 |
+| 首页展示与打字效果 | `docs/index.md`、`docs/index/IndexPage.vue` | 首页设 `markdownStyles: false` 保留全宽展示；组件样式必须 scoped，旋转背景在首页容器内裁切；Typed 与 resize 监听需随组件卸载清理 |
+| 首页赞助、产品推荐与免费开源 | `docs/index/SponsorsLinks.vue`、`docs/components/RecommendationCards.vue`、`RecommendationVisual.vue`、`recommendations.js` | 首页下部按赞助 / 产品推荐 / 免费开源分组；共享卡片也用于 `/web-intro/`、`/web-intro/support`，中转站教程通过 `relay-only` 只展示中转服务。产品顺序固定 XFastAPI → WildAI · Bewild → HeyRoute → FastAI；邀请入口分别为 `https://xfastapi.ai/register?aff=8XQ944ESTPWY` 与 `https://heyroute.ai/stardream`，`/console` 仅作管理入口。Bewild 使用用户邀请链接 `https://bewild.ai/?code=STARLOOK`，权益准确写好友订阅减 $1、站长获 $1，条件以平台规则为准。免费开源展示星笺 Starclip、星镜 Starshot、星匣 StarVault，卡片与星绘坊详情页的仓库链接指向 `https://github.com/StarDreamTech/` 下的同名仓库（2026-11-11 从 cpython666 转入，路径不变）。未转移的仓库（如 HandwritingGenerator）和个人主页仍指向 cpython666。首页内容最大宽度 1480px；赞助保留原三张 480×200 品牌横幅，以无损 WebP 完整展示（12:5、不裁图），桌面三列、窄屏一列；不可简化成字母方块和文字卡。产品推荐大屏 4 列、免费开源 3 列，按组件容器宽度切为 2/1 列，文章窄栏同步适配。7 张产品封面由静态 HTML/CSS/内联 SVG 绘制并标注功能/服务示意；星笺为剪贴列表、星镜为选区标注、星匣为会话归档，不使用真实私人内容。不新增依赖、定时器或持续动画；3 张赞助封面合计 88,954 字节；4 张本地 WebP 图标和现有 XFastAPI SVG 合计 5,694 字节，固定 28px。所有卡片图片懒加载、异步解码、`no-zoom`。徽标统一放封面右上，Bewild 完整邀请说明放分组下方；历史价格截图改成文字链接按需打开。机场无有效推荐，关于页 `#vpn-status` 保留停推说明，移除旧注册链接；产品分组锚点为 `#recommendation-products`。推广链接含 `sponsored noopener noreferrer`，开源项目与友链不标赞助 |
+| 文章工具、目录开关、阅读量 | `docs/.vitepress/theme/components/` | 优先复用现有组件 |
+| 复制文本 | `docs/utils/copy.js` | 提示词等调用此工具，调用方处理成功/失败反馈 |
+| 自绘选择控件 | `docs/components/SiteSelect.vue` | O10 模式与手机资源分类共用；`id`、`label`、`modelValue`、`options` 入参，`update:modelValue` / `change` 仅在选项变化时触发；不使用隐藏原生 select |
+| 资源导航 | `docs/nav/NavPage.vue`、`docs/nav/WebLink.vue`、`docs/nav/data.js` | 与文章导航是两个不同页面；`navigationData` 按 `title` / `items` 分组，“AI模型检测”收录 ModelTrace 与 lm-detector；NavPage 负责搜索、分类和分批展示，WebLink 接收筛选后的 `items` 渲染卡片；顶部只保留搜索和统计，760px 及以下上下排列，不重复显示页面名和介绍 |
+| 项目和工具 | `docs/projects/ProjectPage.vue`、`docs/projects/ProjectDetail.vue`、`docs/tools/SpiderTools.vue` | 项目封面使用独立 16:9 容器与 `object-fit: contain`，完整保留不同比例原图；不要恢复 `cover` 裁切或让图片百分比高度撑高网格 |
+| 备份展示与会员介绍 | `docs/components/XBackupList.vue`、`docs/vip/index.md` | 备份统计栏在手机端取消 260px 最小宽度，三列允许收缩；会员介绍表格允许长链接任意位置换行 |
+| 全局特效和样式 | `docs/public/js/`、`docs/public/css/index.css` | 脚本由站点 head 引入 |
+| 发布流程 | `.github/workflows/static.yml` | `actions/setup-node@v7` 配置 Node `24.22.1`，沿用 `npm ci` 和现有锁文件；这是 2026-10-27 核实的最新 LTS 安全版本（当时 26 仍为 Current），固定版本以保证复现，后续安全补丁需重新核实；构建产物目录为 `docs/.vitepress/dist`，源码配置不代表已部署 |
+| Cloudflare Workers 静态副本 | `wrangler.jsonc`，`package.json` 的 `deploy` / `preview` | 与 GitHub Pages 共用 `npm run docs:build` 和 `docs/.vitepress/dist`。纯静态：无 `main`、无 `nodejs_compat`。`cleanUrls` 打开后产物仍是 `页面.html` 与目录 `index.html`。`assets.html_handling` 为 `auto-trailing-slash`：无后缀文章地址回源同名 `.html`，旧 `.html` 地址 307 到无后缀，目录地址去掉尾斜杠则 307 到带斜杠的 `index.html`。`assets.not_found_handling` 为 `404-page`。Worker 名保持 `cpython666`。部署走已连接的 Workers Builds（构建 `npm run docs:build`，部署 `npx wrangler deploy`），不往 GitHub Actions 加 token。后台生产分支须是 `master`。配置合入不等于线上已生效 |
+| 对外知识库 Skill | `skills/xingmeng-knowledge/`、`scripts/build-skill.mjs` | `SKILL.md` 和两个 CLI 脚本手写；`references/` 与 `scripts/lib/` 由 `npm run skill:build` 从资源导航、提示词、项目数据、工具箱函数和文章 frontmatter 生成，不手改。文章只读 frontmatter，跳过会员、草稿、`/backup/`、noindex 和首页布局页；改动上述数据源后需重新生成，`npm run skill:check` 检查是否过期 |
+
+## 配置关系
+
+- 顶部社交入口保留原 Bilibili、GitHub、CSDN、语雀，之后依次增加 X、YouTube、抖音，共七项，维护于 `docs/.vitepress/config.mjs` 的 `themeConfig.socialLinks`。X 使用用户确认的 `https://x.com/stardreamfly`，YouTube 使用 `https://www.youtube.com/@stardream666`；抖音使用本轮用户提供的新账号完整链接，与 `docs/nav/data.js`“认识我”中的“SI斗罗”一致；“认识我”中的 B站、公众号、新抖音、小红书、X、YouTube 卡片名称统一为“SI斗罗”，图标使用各平台标识以便区分，不使用相同个人头像；B站复用现有图标，抖音/微信/小红书/X/YouTube 的本地 SVG 位于 `docs/public/logos/`，取自已安装的 Simple Icons，并保留浅色底以兼容深色主题；小红书使用用户确认的 `https://www.xiaohongshu.com/user/profile/63e21026000000002600652d`，公众号保留既有二维码与入口，旧“Python爸爸”卡片及原链接继续保留，并标注旧账号已封禁。各顶栏入口使用内联 SVG 和明确的 `ariaLabel`；GitHub、X、YouTube、抖音图标取自已安装的 `@iconify-json/simple-icons`，沿用主题 20px 尺寸与 `currentColor`。不要恢复字符串图标：VitePress 开发模式可能回退到 `api.iconify.design` 远程蒙版，请求失败会让图标空白；CSDN、语雀继续使用原有内联 SVG。
+- 资源收录位置：7-Zip 在 `docs/nav/data.js` 的“其他工具”分类，官网图标存为 `docs/public/logos/7zip.png`；吾爱破解主站已分别收录于“资源”和“交流论坛”，新增时先检查已有链接，避免重复追加。
+- 资源分类直接按 `navigationData` 数组排序：Agent、AI聊天对话、AI代码编程、Skill、AI模型检测、AI图像绘画、AI 3D、AI文档办公优先，其余分类保持原相对顺序；桌面分类栏、手机下拉框和全部资源卡片共用此顺序。Agent 收录 DeepSeek Harness、OpenClaw（小龙虾）、WorkBuddy，官网图标存为 `docs/public/logos/` 下的 `deepseek-harness.svg`、`openclaw.svg`、`workbuddy.svg`。
+- 文章导航遍历 `theme.sidebar`，结合 `blogNavInclude`、`blogNavExclude` 和 `blogNavTitles` 生成分组与标题；不要再维护第二份文章目录。“区块漫步”作为 `/web3/block-walk/` 的独立分类，放在“币圈入圈指南”之后，复用 `block_walk_items`；其十篇文章从 `/web3/` 父分组移出，避免重复计数，顶部仍不显示该入口。
+- 文章导航、提示词、项目、资源导航、工具和会员介绍页直接展示功能内容，不再在顶栏下方重复大页面标题、装饰标签和介绍；必要 h1 视觉隐藏。项目统计并入结果行；项目名称、工具面板标题、文章分组以及归档账号等内容标识保留。禁止用全局隐藏全部 h1 的方式误伤文章正文。
+- 访问量统一由 `ArticleHits.vue` 在主题 `layout-bottom` 插槽挂载一次，位于页脚之后、正常文档流底部居中；首页也使用该组件，沿用根路径统计，其余页面按各自路径统计。图片立即请求，不能因放到底部就懒加载而漏掉未触底的访问；保留 `hits: false`、404 和草稿路径排除。不要再在 `doc-before`、`home-features-after` 或 `footer.message` 中另挂访问量标签。`/tools/` 在计数请求内部映射回原 `/spider-tools/` 键以延续历史计数，公开链接仍用新地址。hits.sh 是本页参考浏览计数，首页计数不等于全站总量，也不称为独立访客；卡片改成中文“本页浏览·今日/累计”、失败隐藏与统计环境隔离属于待定展示/实现建议，GA4 用于后台流量分析。
+- 站内搜索采用 VitePress local search，中文分词逻辑在配置内。
+- SEO 已有 canonical、description、Open Graph、Twitter 卡片、JSON-LD 与 sitemap 生成逻辑；按缺陷修订，不重复接入一套方案。
+- 已开启 `cleanUrls`。VitePress 仍输出 `页面.html` 与目录 `index.html`，站内链接、canonical、sitemap 去掉 `.html`。2026-11-12 核对当前 GitHub Pages：无后缀地址直接打开同名 `.html`（如 `/python/web/fastapi`），目录地址去掉尾斜杠会 301 到带斜杠的 `index.html`（如 `/web-intro` → `/web-intro/`）；因此旧 `.html` 链接在 GitHub Pages 上继续直接打开。不要为 cleanUrls 改 GitHub Pages 工作流。Workers 静态副本用 `html_handling: auto-trailing-slash` 对齐同一套地址，不替换 Pages，也不改主域名。
+- Waline 评论在开启 cleanUrls 前按 `/xxx.html` 存储。`WalineComment.vue` 的 `commentPath()` 给非目录路径补回 `.html`，目录路径保持尾斜杠，不要去掉。giscus 用 pathname 映射，本身会去扩展名。访问量键在 `ArticleHits.vue` 里本来就会去掉 `.html`，`/tools/` 仍映射回 `/spider-tools/`。
+- JSON-LD 为 `@graph`：全站共用 `AUTHOR_PERSON`（`alternateName` 含 SI斗罗、IT.Python斗罗、cpython666、python666、codefly、stardreamfly；`sameAs` 含 GitHub、B 站、CSDN、语雀，以及后来增加的 X、YouTube、抖音、小红书）+ 页面实体 + 非首页的 `BreadcrumbList`（取 `BLOG_NAV_TITLES` 中有 `index.md` 的分组，含科技日报）。工具页和项目详情仍分别是 `WebApplication`、`SoftwareApplication`，嵌在同一个 `@graph` 里，不再单独带 `@context`。关于页“这些名字都是我”与作者实体对应，并保留昵称与签名历史入口；新增平台账号时两处一起改。
+- `buildEnd` 经 `docs/.vitepress/seo-files.mjs` 生成：`robots.txt`（以 `public/robots.txt` 为模板，所有爬虫含 AI 爬虫共用一组规则，自动追加会员文章 Disallow；单独给某个爬虫开分组会让它忽略这些 Disallow）、`feed.xml`（`FEED_PREFIXES` 目录下最近 50 篇，含后来的 `tech-daily/`，仅 frontmatter 摘要）、`llms.txt`（public 手写介绍 + 按栏目的全部公开文章）、`llms-full.txt`（公开文章 Markdown 去 frontmatter 和 script/style）。会员、noindex、草稿和 `/backup/`（他人帖子，已 noindex）均不进入这些文件。`blogNavExclude` 使用 `/tools/`，与工具页迁移后的路径一致。
+- Google 搜索：保留 `config.mjs` 的 `google-site-verification` 与现有 SEO/sitemap。2026-10-27 已在 Search Console 确认正式 URL 前缀资源可访问并有搜索数据，首次提交 `/sitemap.xml`；Google 实时网址测试确认可抓取，XML 与 robots 检查正常，人工处置与安全问题报告均无问题，但地图详情仍显示“无法读取”、尚未发现网址，地图处理待确认，不确定归因为延迟或代码故障。已重提一次，不反复提交；按后续读取结果处理。不要将提交成功当成所有页面已收录，不记录验证值或账号数据。
+- Google Analytics 4：`themeConfig.googleAnalyticsId` 配置网站数据流，`theme/googleAnalytics.js` 由主题 setup 调用；仅生产构建且正式 HTTPS origin 启用。首屏与 VitePress 完成路由后手动发 `page_view`，用 `useData().title` 取当前标题、按 pathname 去重；`send_page_view: false`，后台增强型衡量须保持关闭，避免 history 自动事件重复计数。页面 URL 去 query/hash，首次 referrer 仅保留 origin、SPA 用上一净化网址；不传正文、工具输入、会员口令或整份 frontmatter，关闭广告信号。本地与开发环境不初始化 GA、不请求 Google；2026-10-27 已推送并部署，正式站 URL 工具→O10 的 SPA 切换发出正确 PV，GA4 实时报告已收到对应两个页面访问。已将现有 Search Console URL 前缀资源关联到同一网站数据流，GA4 报告导航出现“查询”和“Google 自然搜索流量”，查询报表已展示既有搜索数据；历史搜索报表导入与实时访问收数分开核实。
+- `themeConfig.lastUpdated` 在当前 VitePress 版本仍有兼容处理，不能仅凭位置断言更新时间失效。
+- 项目页顶部在 `ProjectPage.vue` 内展示最多 5 个高 Stars GitHub 仓库轮播，按已有 Stars 数据降序、按仓库地址去重，复用现有 API 与 6 小时缓存；未知 Stars 不当作零参与排名，没有任何已知值时回退为“精选项目”。轮播独立于下方搜索/分类，支持前后、指示点和键盘左右键，每 6 秒自动切换；悬停、焦点进入、隐藏页签或减少动态效果时暂停，提供手动播放开关，卸载清理计时器和监听。封面继续使用 16:9 完整展示，不新增轮播依赖。
+- 项目页搜索与分类共用 `.controls` 吸顶栏，≥960px 停在导航下方（`--vp-nav-height`），≤959px 顶部为0；沿用主题实色背景、底边框和低于导航的层级。不能只让内部分类列表 sticky，否则会被短父容器限制。切分类后等 DOM 更新，按筛选栏实际高度定位结果起点，首项不被遮挡且焦点留在按钮；点击已选分类不跳滚动。
+- 项目页五个教程合集（DrissionPage、Pygame、Django、Scrapy、PyQt6）的独立封面位于 `docs/public/imgs/app/<小写技术名>-tutorial.webp`，由 `docs/projects/data.js` 引用；统一为 1280×720（16:9）WebP，约 46–66 KiB，使用深色等距插画、英文技术名与中文主题。更换封面时保持图片比例，并检查“合集”筛选下五张图片实际加载及手机端标题完整性。
+- 项目详情页（2026-10-27）：20 个项目全部有站内详情入口。15 个 GitHub 项目各有 `/projects/<slug>/` 页面，由共享 `docs/projects/ProjectDetail.vue` 加页面 Markdown 组成；5 个教程合集的 `detail` 直接指向已有系列页（`/spider/dp-series/` 等），不重复建页。`docs/projects/data.js` 的 `detail` 字段驱动卡片封面/标题和热门轮播；有 GitHub 仓库的详情项目在卡片保留独立 GitHub 按钮。`IPProxyPool` 已从错误的 Spider-Project 链接改为 `IPProxyPoolPro`，详情页内链安全加固版 `IP-Proxy-Pool`。详情页 frontmatter 使用 `project: true`，配置输出 `SoftwareApplication`、`og:type=website` 并自动进 sitemap。Handwriting 卡片封面仍是旧版 UI 图，是否更换待确认。
+- 详情页正文使用 `layout: home`、`markdownStyles: false`，组件用 `<slot>` 承载 Markdown 并包一层 `.vp-doc`；Quick Start 按钮仅在传入 `quickStart` 时显示。1:1 封面在 hero 中限制最大高度 380px（手机 300px），避免方形图撑高。手机端需覆盖 VitePress 代码块和代码组标签的 `-24px` 外边距，否则 320/390px 会横向溢出。详情页的“快速开始”锚点需保留 `scroll-margin-top`，顶栏下方定位正常。
+- 资源导航广告图、项目精选/卡片封面和图片分割预览使用 `no-zoom`；否则主题会将其加入 PhotoSwipe，并受到 `.vp-doc img.is-zoomable` 的 520px 最大宽度及上下 16px 外边距影响，外链点击也会被图片查看器拦截。
+- 工具导航名称为“工具”，总页 SEO 标题为“在线开发工具箱”。2026-10-27 用户确认迁移到 `/tools/`，源码位于 `docs/tools/`；7 个工具各有 `/tools/<pageId>/index.md` 对应独立网址 `/tools/<pageId>/`，页面用 `SpiderTools tool-id` 复用布局，只渲染当前工具，默认 slot 放静态 Markdown 使用说明、示例和相关工具链接。标题用 sr-only h1，不增加顶部大标题；手机直接打开时定位操作面板，已有指南锚点优先。工具间导航切换页面，输入不跨页面保存。
+- `/spider-tools/` 及7个旧独立页长期保留为轻量跳转壳；`config.mjs` 对 `redirect` 输出新 canonical、head 同步 `legacyRedirect.mjs` 脚本和0秒 meta refresh，SPA 用 `LegacyToolRedirect.vue` 挂载后 replace。同步脚本保留 query/指南 hash，旧根 `#<pageId>` 直接去对应新页，未知 hash 留在新总入口；无JS也可通过 meta refresh 到对应新页。旧页 `search: false`、`hits: false`、`comment: false`，不进 sitemap、不发 GA4 PV，不加 noindex/nofollow 或 robots 禁抓。全站导航、工具分享、公开说明内链和对外知识库统一新地址；不要删除旧页或把所有旧工具重定向到总入口。
+- `SpiderTools.vue` 元数据维护名称、简介和稳定 `pageId`；分享复制三行「名称／简介／https://cpython666.github.io/tools/<pageId>/」，不包含用户输入或 query。旧总入口 `#<pageId>` 用 replace 跳到独立页并保留 query，未知 hash 保持总入口；兼容需同时监听 hashchange 和链式 onAfterRouteChange（卸载恢复），因为同页面 query 导航的 pushState 不触发 hashchange。独立页的指南 hash 不参与旧入口跳转。
+- 独立工具页 frontmatter 为 `layout: home`、`markdownStyles: false`、`tool: true`，各自维护 title/description；沿用现有 canonical、社交元数据与 sitemap，`tool: true` 输出 WebApplication 和 og:type=website。知识库工具链接同步为独立网址；生成器必须在 frontmatter 结束行停止读取，不能用固定大小缓冲区预读会员正文。
+- URL 编码解码复用现有 `/tools/url/` 与 `PanelUrl.vue`，不要重复新增工具入口。按 `encodeURIComponent` / `decodeURIComponent` 实时展示两侧只读结果，空格为 `%20`、解码时 `+` 不转空格；异常百分号或不完整 UTF-8 只清空解码侧并提示，修正后恢复。两侧复制调用公共 `copy.js` 和顶部 `feedback`，按钮同步成功/失败状态；输入变化与卸载清理状态，异步复制完成前再次编辑不得显示过期反馈。手机结果上下排列，无原生下拉框。
+- O10 工具位于 `docs/tools/components/PanelO10.vue`，算法在 `utils/o10.js`，来源为相邻 `Python-Project/O10加解密/O10encode.py`。标准版按 Unicode 码点转二进制、以大写 O 分隔；Pro 版以 I/l 表示 1/0、数字 1 分隔，须保持原版输出兼容，不能按 UTF-16 码元拆开 emoji。网页只接受对应模式的规范编码字符及非空分段，超出 Unicode 范围报错；空输入清空结果并提示，不沿用原 Python 空串解码异常。输入或模式改变时清空旧结果，支持复制结果及结果复用。 页面简介、SEO description 与分享文案须同时写明标准版的数字 0、1／大写 O，以及 Pro 版的大写 I／小写 l／数字 1，避免将两种模式都描述成 O、1、0。
+- `SiteSelect.vue` 用按钮 combobox 和自绘 listbox 展示选项，沿用主题颜色；支持方向/Home/End/Enter/Space/Escape/Tab、字母前缀定位、外部点击关闭、选中项标记和菜单内部滚动。展开空间不足时向上打开，resize 关闭；页面选择行为仍由调用方处理，不能破坏资源分类 hash、搜索清空与分批重置。
+- 工具分享、O10 结果复制和 cURL 代码复制统一由 `SpiderTools.vue` 的 `feedback` 事件呈现视口顶部提示，使用图标、成功/失败颜色、实色卡片与阴影，成功 4 秒、失败 6 秒并支持手动关闭；连续操作重置计时，提示内获得键盘焦点时暂停倒计时、离开后恢复，关闭时仅在焦点仍位于提示内才还给触发按钮，路由切换/卸载清理。分享和结果复制按钮同步显示已复制状态，O10 输入或模式改变后重置；不要只在结果框下方放提示，避免反馈落到视口外。cURL 复制也调用公共复制函数，保留旧浏览器回退。
+- 公用复制函数 `docs/utils/copy.js` 的旧浏览器回退使用 textarea 保留换行，不能用单行 input，否则工具、提示词的多行分享文本会连成一行。
+- 完整顶栏在 768–1279px 使用 VitePress 原生折叠菜单（`docs/public/css/index.css`），1280px 以上恢复桌面导航；菜单、主题切换和社交链接仍来自同一主题配置，不复制菜单数据。默认 768px 即展开桌面菜单会被当前八个入口和搜索框撑宽，相关验证需包含开菜单、路由跳转及缩放后的滚动解锁。
+- 当前首页由 `docs/index.md` 引入 `IndexPage.vue`，主展示为随机背景、品牌图标、挂载后显示的打字标语和赞助链接；组件内尚无固定的受众/任务说明、学习路线或代表案例入口。若后续调整定位，先确认主线与首页内容，再修改展示；现状不等于已确认改版方案。
+- 2026-10-22 用户要求停用Live2D、恢复图片帧并继续补中间动作；当前保留原蓝发人形，规范化原8姿态，挥手16姿态、开心与入睡各8姿态。使用原生Web Animations API离散图集时间线，每步80ms；挥手45步3.6秒、开心26步2.08秒，入睡0.64秒后保持。中立帧直接复用原待机，所有图统一200px格，以最底部4%不透明鞋底确定锚点，避免披风尖端干扰；角色外层固定，已移除全身上下浮动。观感仍以用户验收为准。
+- 图片帧动作切换先从当前显示姿态倒放收回中立，再进入最新选择；弹跳则待落地归位再切换。不直接换图，连续点击只保留最新意图。暂停保留currentTime；显式隐藏取消动作及加载。保留拖动、方向键、大小、暂停、隐藏/召回与偏好键 `cpython666:starfish-mascot`；手机首次收起、展开最大120px，桌面默认160px。
+- 用户在鞋底对齐修正后仍反馈动作有持续抖动感，并询问Live2D所需软件与MCP、表示可以安装。几何稳定检查不代表形象与动作观感已验收；独立生成各帧仍存在脸型、比例与细节变化。后续转向合格分层原画与Cubism绑定属于评估方向，目前未重新启用Live2D或安装新软件。 用户后续以[以太之尘《异环三小只》](https://www.douyin.com/video/7699311820796698225)作为“Q弹”动作参考；原视频页面标注AI生成，作者有[ComfyUI / AnimateDiff转绘教程](https://www.bilibili.com/video/BV1LC4y1G7JT/)，但本条作品的具体软件与流程未确认，不能称其为Live2D示例。用户已确认沿用小星鱼，重点改善动作弹性；当前新增「弹一下」作为本地动作样例，同一张待机原画完成轻蹲、弹起、落地回弹与收稳，不替换角色设计。用户已确认弹跳流畅，仍反馈其他动作抖动，并要求重新生成尝试。已用内置image_gen重生成挥手与开心/小憩两张16格图集，已完成本地试播，用户于2026-10-26要求分批提交推送；旧图备份位于 `.local-assets/mascot/xiaoxingyu/regeneration-2026-10-23/`。新小憩是站姿双手放腹前、逐渐闭眼，整体较少歪头。新图内部更一致，但原待机切入/返回的脸、胸针比例差仍存在，不能宣称消抖完成；整身图逐帧重绘不是连续变形。头发、披风独立物理摆动及是否重新分层绑定仍待定，不能把本次整体弹性变换称为完成Live2D绑定。
+- Live2D 渲染器、公开模型与旧说明已移至 `.local-assets/mascot/xiaoxingyu/live2d-source/archived-web-2026-10-22/` 本地存档；当前网站不导入运行库或请求模型。Linux DO 参考站未取得可核实动画源码，不能把其他桌宠代码归为其实现。
+- 不在首页组件中使用全局 `.container`、`.content`、`*` 或 `.VPNavBarMenu` 覆盖。原 `.container { margin: 0 !important; padding: 0 !important; }` 曾同时破坏导航和项目页的大屏居中；构建后的首页 CSS 也可能影响直接访问其他页面。依赖 VitePress 原有容器居中规则，验证时包含真实首页组件及首页到项目页的 SPA 跳转。
+- 普通文章/分类目录页以侧栏之外的可用内容区为居中基准，不能强行按整个视口平移正文。检查文章阅读模式退出和路由切换时的 body 类清理。
+- 工具面板窄屏约束：JJencode 输入框限制最大宽度；cURL 编辑头用最小高度并允许换行，按钮文字不折行。图片分割的覆盖画布使用实际匹配的 `.preview-overlay`，空态隐藏预览，`ResizeObserver` 随图片尺寸同步网格并在卸载时断开，不能只在上传时计算一次。
+- Markdown 转图片（`docs/tools/components/PanelMarkdownImage.vue`）在视口 ≥1100px 时左右分栏：顶部保留主题、宽度、生成和下载；左侧编辑、右侧预览。输入约 300ms 防抖后自动重绘，切换主题或宽度会取消等待并立即重绘。两栏限高，编辑区和预览区各自滚动。更窄时改回上编辑、下预览。样式只写在该组件内。下载仍导出当前 canvas，与预览是同一张图。
+
+## 文章写作约定
+
+- 科技日报专栏（2026-10-20用户确认）：将WechatPilot的公众号内容分期同步到 `docs/tech-daily/YYYY-MM-DD.md`，索引为 `docs/tech-daily/index.md`，封面为 `docs/public/imgs/tech-daily/YYYY-MM-DD/cover.jpg`。001期始于2026-10-16，2026-10-26已补至011期；日期是各期消息窗口日期。博客可完整放官方公告、仓库、报道直链，并在文末列来源索引；公众号维持原有风格，不向其反向增加博客引流或来源索引。普通作者沿用本期公众号母稿；用户2026-10-21更名为SI斗罗，后续新稿使用新名，历史稿保留当时署名（见WechatPilot偏好记录）。frontmatter除既有SEO字段外写 `date / author / image / column / issue`。侧栏 `tech_daily_items` 按期号倒序，`/tech-daily/` 和 `blogNavTitles` 自动提供文章导航分类；顶部仍沿用原八个入口。后续同时更新本期页、索引摘要、侧栏；发布状态以 GitHub Pages 部署结果与线上核验为准，不能把 Git 提交或推送等同于线上生效。公众号来源与发布状态在相邻WechatPilot仓库的同日期 `articles/<日期>_tech-daily/` 和项目 Skill 的 `references/blog-column.md` 维护。
+- 上述博客适配中，中文句末标点紧接后文时Markdown的 `**...**` 可能显示为裸星号；局部使用 `<strong>...</strong>`，定向渲染检查。不要为此更改全站Markdown规则或公众号母稿。
+- 修改文章前核对 frontmatter 标题和页面用途，不能仅凭文件名定位。`docs/breakthrough-notes/resource-treasure-manual.md` 是《找资源宝典》的公开说明页，不设会员限制、不列入 `vipPosts`，套餐权益保留“查看说明”链接。正式正文是 `docs/breakthrough-notes/resource-treasure-guide.md`，保留 `memberOnly: true`；说明页、侧边栏与 VIP 文章列表均链接到它，资源条目应加在正式正文。
+- 宝典原始数据在本机 SQL 备份的 `sd_blog` 表中：`id=103` / `bNExJ` 为公开说明，`id=104` / `xiYpj` 才是会员正文。`stardream-2024-10-19.sql` 与 `stardream-2025-05-12.sql` 的正式正文一致，2026-10-16 已按用户授权恢复并追加吾爱破解条目。旧 VIP 权益里的 `/blog/bNExJ` 本来也是说明入口，不能把它当作正文旧地址。仓库历史查不到文章时，应按用户授权继续检查原 SQL/迁移输入；备份文件名日期可能不反映内容更新时间，应核对记录时间及多份备份。
+- 新文章放在对应目录的 Markdown 文件，frontmatter 写 `title`、`description`、`keywords`，并在 `config.mjs` 对应侧边栏数组登记；图片放 `docs/public/imgs/<目录>/<文章>/`。
+- 软件教程截图用演示数据替换真实账号、订阅、余额等信息，不做大面积打码；文中注明“演示数据”。
+- 截图标注统一风格：红色圆角框圈住目标，红底白字胶囊标签带白圈编号，红色箭头指向目标，正文按编号逐条说明；图片宽度 1200px。
+- 服务端软件教程（如 Jenkins）用临时本地实例 + 演示任务截真实界面，Playwright 截图前把页面里的本机路径、系统用户名替换成通用值（如 `/var/jenkins_home`），完成后停掉实例并删除临时数据。本机 Docker Desktop 拉 Docker Hub 镜像曾卡住，可改用 shell 代理下载官方 war/二进制直接运行。
+- 命令行 / 框架类教程（如 `docs/backend/go-zero.md`）没有界面可截：先在临时环境把演示项目真实跑通，命令输出按实际结果写；配图用 HTML 还原终端窗口、架构图，再用 Playwright 渲染成 1200px 宽 PNG，红色标注风格同上；文中写明所用版本。
+- 视频改写的文章（首例：`docs/life/tesla-roadster-flying.md`，登记在 `life_ai_items`“AI 主题”）：配图用成片截帧，1280px 宽 JPG，放 `docs/public/imgs/life/<文章>/`；开头说明是视频文字版并嵌入 B 站视频，保留片中“示意重绘”“粗估”等标注。
+- 嵌入 B 站视频用 `player.bilibili.com/player.html?bvid=...&autoplay=0` 的 iframe，外层 16:9 相对定位容器，并在下方附视频直链（首例：`docs/life/cc-switch-guide.md`）。

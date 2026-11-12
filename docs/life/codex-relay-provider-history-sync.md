@@ -1,3 +1,9 @@
+---
+title: "Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐"
+description: "Codex 五小时额度一小时就用完？记录中转站的配置方法、历史记录不显示的解决办法，以及实测好用的中转站推荐。"
+keywords: "Codex,中转站,API额度,历史记录,Codex配置"
+---
+
 # Codex 如何使用中转站？历史记录不显示如何解决？好用的中转站推荐
 
 最近使用 Codex 编程很爽啊，自己根本就不手动写代码了。
@@ -26,9 +32,18 @@ Windows 和 macOS 流程操作都是一样的。
 
 上面就是我们本期视频的内容，大家可以使用我的邀请链接支持一下，也可以把视频教程分享给需要的朋友。我们下期视频再见 👋
 
+<script setup>
+import RecommendationCards from '../components/RecommendationCards.vue'
+</script>
+
+## 中转站推荐
+
+<RecommendationCards :groups="['products']" relay-only hide-heading />
+
+部分链接含邀请关系；价格与渠道状态请以平台实时页面为准。[HeyRoute 控制台管理入口](https://heyroute.ai/console)。需要 ChatGPT / Claude 订阅代充，可查看[产品推荐](/web-intro/#recommendation-products)。
+
 ## 参考链接
 
-- [中转站邀请链接](https://xfastapi.ai/register?aff=8XQ944ESTPWY)
 - [Windows + macOS 会话同步帖子](https://linux.do/t/topic/2072220)
 - [Windows + macOS 会话同步软件：codex-provider-sync](https://github.com/Dailin521/codex-provider-sync)
 - [macOS 版本会话同步帖子](https://linux.do/t/topic/2120343)

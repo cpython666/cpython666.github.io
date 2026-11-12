@@ -1,5 +1,7 @@
 ---
 title: "P6-多页面切换实例"
+description: "用 QTabWidget 搭配 QWidget 实现 PyQt6 多页面切换，附可运行示例，说明如何把每个页面拆成独立的 QWidget 子类。"
+keywords: "PyQt6,多页面切换,QTabWidget,QWidget,QMainWindow"
 created_at: 2024-12-20 21:34:34
 updated_at: 2024-12-20 21:34:34
 ---

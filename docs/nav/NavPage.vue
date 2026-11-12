@@ -1,206 +1,189 @@
 <script setup>
-import { navigationData } from './data.js';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { navigationData } from './data.js'
 import WebLink from './WebLink.vue'
-import { ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue'
+import SiteSelect from '../components/SiteSelect.vue'
 
-// import {WebLink} from 'vitepress/theme'
-
-const activeAnchor = ref('')
+const PAGE_SIZE = 36
 const searchText = ref('')
-const filteredNav = computed(() => {
-  const q = searchText.value.trim()
-  if (!q) return navigationData
-  return navigationData.filter((s) => s.title.includes(q))
-})
+const activeCategory = ref('')
+const visibleCount = ref(PAGE_SIZE)
+const loadTrigger = ref(null)
+const autoLoadEnabled = ref(false)
+let loadObserver
+const groups = navigationData.map(group => ({ title: group.title, count: group.items.length }))
+const resources = navigationData.flatMap(group => group.items.map((site, index) => ({
+  ...site,
+  section: group.title,
+  key: `${group.title}:${index}:${site.link}`,
+  search: [group.title, site.title, site.desc, site.link, ...(site.categories || [])].join(' ').toLowerCase(),
+})))
+const categoryOptions = [
+  { value: '', label: `全部资源 · ${resources.length}` },
+  ...groups.map(group => ({ value: group.title, label: `${group.title} · ${group.count}` })),
+]
+const normalizedQuery = computed(() => searchText.value.trim().toLowerCase())
+const filteredItems = computed(() => resources.filter(site =>
+  (!activeCategory.value || site.section === activeCategory.value)
+  && (!normalizedQuery.value || site.search.includes(normalizedQuery.value)),
+))
+const visibleItems = computed(() => filteredItems.value.slice(0, visibleCount.value))
+const showSponsor = computed(() => !normalizedQuery.value && (!activeCategory.value || activeCategory.value === '站长推荐'))
+watch([searchText, activeCategory], () => { visibleCount.value = PAGE_SIZE })
 
-const handleScroll = () => {
-  const navHeight = document.querySelector('header')?.offsetHeight || 0
-  const fromTop = window.scrollY + navHeight + 12
-  let current = ''
-  for (const s of navigationData) {
-    const el = document.getElementById(s.title)
-    if (!el) continue
-    if (el.offsetTop <= fromTop) {
-      current = '#' + s.title
-    } else {
-      break
-    }
-  }
-  if (current) activeAnchor.value = current
+const updateHash = (category) => {
+  const url = new URL(window.location.href)
+  url.hash = category ? encodeURIComponent(category) : ''
+  window.history.replaceState(window.history.state, '', url)
 }
-
-const scrollToAnchor = (id) => {
-  const target = document.getElementById(id)
-  if (target) {
-    // 使用 scrollIntoView，使滚动更加稳定；配合内容区的 scroll-margin-top 避免被头部遮挡
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    activeAnchor.value = '#' + id
+const selectCategory = async (category) => {
+  activeCategory.value = category
+  searchText.value = ''
+  updateHash(category)
+  await nextTick()
+  document.getElementById('resource-results')?.scrollIntoView({ block: 'start', behavior: 'instant' })
+}
+const searchAll = () => {
+  activeCategory.value = ''
+  updateHash('')
+}
+const loadMore = async (focusNewItem = false) => {
+  const firstNewIndex = visibleItems.value.length
+  if (firstNewIndex >= filteredItems.value.length) return
+  visibleCount.value += PAGE_SIZE
+  if (focusNewItem) {
+    await nextTick()
+    document.querySelectorAll('#resource-results .site-link')[firstNewIndex]?.focus()
   }
 }
-
-const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
-
+const observeLoadTrigger = () => {
+  loadObserver?.disconnect()
+  if (loadTrigger.value) loadObserver?.observe(loadTrigger.value)
+}
+watch([loadTrigger, visibleItems], observeLoadTrigger, { flush: 'post' })
+const syncCategoryHash = async () => {
+  let category = ''
+  try { category = decodeURIComponent(window.location.hash.slice(1)) } catch {}
+  activeCategory.value = groups.some(group => group.title === category) ? category : ''
+  searchText.value = ''
+  if (activeCategory.value) {
+    await nextTick()
+    document.getElementById('resource-results')?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }
+}
 onMounted(() => {
-  nextTick(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-  })
+  syncCategoryHash()
+  window.addEventListener('hashchange', syncCategoryHash)
+  if (typeof IntersectionObserver === 'function') {
+    autoLoadEnabled.value = true
+    loadObserver = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) loadMore()
+    }, { rootMargin: '0px 0px 400px 0px' })
+    observeLoadTrigger()
+  }
 })
-
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll)
+  loadObserver?.disconnect()
+  window.removeEventListener('hashchange', syncCategoryHash)
 })
-
 </script>
 
 <template>
-  <button class="backtop" type="button" aria-label="回到顶部" @click="scrollToTop">UP</button>
-  <div class="page">
-    <div class="my-nav">
-      <div class="nav-card">
-        <div class="nav-search">
-          <input v-model="searchText" class="nav-input" placeholder="搜索分类" type="search" />
+  <main class="resources-page">
+    <h1 class="sr-only">资源导航</h1>
+    <header class="resource-toolbar">
+      <div class="resource-search">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input v-model="searchText" aria-label="搜索资源" type="search" placeholder="搜索名称、简介、标签或网址" @input="searchAll" />
+        <button v-if="searchText" type="button" aria-label="清除搜索" @click="selectCategory('')">清除</button>
+      </div>
+      <span class="resource-stats">{{ resources.length }} 个资源 · {{ groups.length }} 个分类</span>
+    </header>
+    <div class="mobile-categories">
+      <label for="resource-category">分类</label>
+      <SiteSelect id="resource-category" label="资源分类" :model-value="activeCategory" :options="categoryOptions" @update:model-value="selectCategory" />
+    </div>
+    <div class="resource-workspace">
+      <aside class="resource-sidebar" aria-label="资源分类">
+        <p class="sidebar-heading">浏览分类</p>
+        <nav>
+          <button class="category-button" :class="{ active: !activeCategory }" type="button" :aria-pressed="!activeCategory" @click="selectCategory('')">
+            <span>全部资源</span><span class="category-count">{{ resources.length }}</span>
+          </button>
+          <button v-for="group in groups" :key="group.title" class="category-button" :class="{ active: activeCategory === group.title }" type="button" :aria-pressed="activeCategory === group.title" @click="selectCategory(group.title)">
+            <span>{{ group.title }}</span><span class="category-count">{{ group.count }}</span>
+          </button>
+        </nav>
+      </aside>
+      <section id="resource-results" class="resource-results" aria-label="资源列表">
+        <div class="results-heading">
+          <h2 :id="activeCategory || undefined">{{ normalizedQuery ? '搜索结果' : activeCategory || '全部资源' }}</h2>
+          <span role="status" aria-live="polite">已显示 {{ visibleItems.length }} / {{ filteredItems.length }}</span>
         </div>
-          <div class="nav-scroll">
-            <a
-              v-for="(sites, index) in filteredNav"
-              :key="index"
-              class="nav-link"
-              :class="{ 'is-active': activeAnchor === '#' + sites.title }"
-              :title="sites.title"
-              href="#"
-              @click.prevent="scrollToAnchor(sites.title)"
-            >
-              {{ sites.title }}
-            </a>
-          </div>
-      </div>
+        <a v-if="showSponsor" class="sponsor-banner" href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
+          <img class="no-zoom" src="/imgs/ads/qgwl.jpeg" alt="青果网络代理服务" width="960" height="70" loading="lazy" decoding="async" />
+        </a>
+        <WebLink v-if="visibleItems.length" :items="visibleItems" />
+        <div v-else-if="!showSponsor" class="empty-state">
+          <h3>没有找到匹配的资源</h3>
+          <p>试试其他关键词，或返回全部资源。</p>
+          <button type="button" @click="selectCategory('')">清除筛选</button>
+        </div>
+        <div v-if="visibleItems.length < filteredItems.length" ref="loadTrigger" class="load-trigger">
+          <p v-if="autoLoadEnabled" class="load-hint">继续向下浏览，自动加载更多</p>
+          <button v-else class="load-more" type="button" @click="loadMore(true)">加载更多 <span>还有 {{ filteredItems.length - visibleItems.length }} 个</span></button>
+        </div>
+        <p class="source-note">部分资源整理自 <a href="https://spiderbox.cn/" target="_blank" rel="noopener noreferrer">虫盒</a>，持续补充中。</p>
+      </section>
     </div>
-    <div>
-      <WebLink :datalist="navigationData"></WebLink>
-      <div class="source-note">
-        资源链接来源于
-        <a href="https://spiderbox.cn/" target="_blank" rel="noopener noreferrer">《虫盒》</a>
-        <span class="note-updating">持续更新中</span>
-      </div>
-    </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-.my-nav {
-  padding: 8px;
-  position: sticky;
-  top: 8px;
-  align-self: flex-start;
-  z-index: 20;
-}
-
-.nav-card {
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
-  box-shadow: var(--vp-shadow-2);
-  padding: 10px;
-  border: 1px solid var(--vp-c-divider);
-  backdrop-filter: blur(6px);
-  position: relative;
-  z-index: 20;
-  box-sizing: border-box;
-  width: 150px;
-  /* 居中内部内容 */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.nav-search { padding: 6px 8px 0; }
-
-.nav-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 6px 8px;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-}
-
-.nav-scroll {
-  max-height: 100vh;
-  overflow: auto;
-  width: 100%;
-}
-
-.nav-link {
-  display: block;
-  margin: 3px 6px;
-  padding: 6px 8px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  color: var(--vp-c-text-1);
-  background: var(--vp-c-bg-alt);
-  border-radius: 10px;
-  border: none;
-  text-align: center;
-  min-width: 5em;
-  white-space: nowrap !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.nav-link:hover {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  transform: translateX(2px);
-}
-
-.nav-link.is-active {
-  background: var(--vp-c-brand-1);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.35);
-}
-
-.page {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  max-width: 1120px;
-  margin: 16px auto;
-  padding: 0 12px;
-}
-
-.source-note {
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin: 12px 0 0;
-  color: var(--vp-c-text-1);
-  font-weight: 600;
-}
-.source-note a {
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-}
-.source-note a:hover { text-decoration: underline; }
-.source-note .note-updating {
-  font-weight: 500;
-  color: var(--vp-c-text-2);
-  margin-left: 8px;
-}
-
-.backtop {
-  position: fixed;
-  right: 24px;
-  bottom: 100px;
-  z-index: 50;
-  width: 40px;
-  height: 40px;
-  color: var(--vp-c-brand-1);
-  cursor: pointer;
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 50%;
-  box-shadow: var(--vp-shadow-2);
+.resources-page { width: min(1240px, calc(100% - 40px)); margin: 12px auto 48px; }
+.resources-page p { text-indent: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.resource-toolbar { display: flex; align-items: center; gap: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--vp-c-divider); }
+.resource-stats { color: var(--vp-c-text-3); font-size: 12px; white-space: nowrap; }
+.resource-search { display: flex; flex: 1; min-width: 0; align-items: center; gap: 10px; min-height: 46px; padding: 0 14px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); }
+.resource-search:focus-within { border-color: var(--vp-c-brand-1); outline: 2px solid var(--vp-c-brand-soft); }
+.resource-search svg { flex: none; width: 20px; height: 20px; fill: none; stroke: var(--vp-c-text-3); stroke-width: 1.8; }
+.resource-search input { width: 100%; min-width: 0; padding: 11px 0; outline: none; background: transparent; color: var(--vp-c-text-1); font: inherit; font-size: 14px; }
+.resource-search button { flex: none; color: var(--vp-c-brand-1); font-size: 13px; cursor: pointer; }
+.resource-workspace { display: grid; grid-template-columns: 192px minmax(0, 1fr); align-items: start; gap: 28px; margin-top: 20px; }
+.resource-sidebar { position: sticky; top: calc(var(--vp-nav-height, 64px) + 16px); min-width: 0; }
+.sidebar-heading { margin: 0 0 12px; padding-left: 12px; color: var(--vp-c-text-3); font-size: 12px; font-weight: 600; }
+.resource-sidebar nav { display: grid; gap: 4px; max-height: calc(100dvh - 160px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
+.category-button { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 38px; padding: 8px 12px; border-radius: 8px; color: var(--vp-c-text-2); font-size: 13px; text-align: left; cursor: pointer; }
+.category-button:hover { background: var(--vp-c-bg-soft); color: var(--vp-c-text-1); }
+.category-button.active { color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); font-weight: 600; }
+.category-count { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .8; }
+.resource-results { min-width: 0; scroll-margin-top: calc(var(--vp-nav-height, 64px) + 20px); }
+.results-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.results-heading h2 { margin: 0; padding: 0; border: 0; font-size: 20px; line-height: 1.5; scroll-margin-top: calc(var(--vp-nav-height, 64px) + 20px); }
+.results-heading span { flex: none; color: var(--vp-c-text-3); font-size: 12px; }
+.sponsor-banner { display: block; margin-bottom: 16px; overflow: hidden; border-radius: 8px; }
+.sponsor-banner img { display: block; width: 100%; height: auto; aspect-ratio: 96 / 7; object-fit: contain; }
+.load-trigger { margin-top: 24px; }
+.load-hint { margin: 0; color: var(--vp-c-text-3); font-size: 13px; text-align: center; }
+.load-more { display: block; width: 100%; padding: 14px 20px; border: 1px solid var(--vp-c-divider); border-radius: 10px; background: var(--vp-c-bg-soft); color: var(--vp-c-brand-1); font-size: 14px; font-weight: 600; cursor: pointer; }
+.load-more span { margin-left: 8px; color: var(--vp-c-text-3); font-size: 12px; font-weight: 400; }
+.load-more:hover { border-color: var(--vp-c-brand-2); }
+.source-note { margin: 28px 0 0; color: var(--vp-c-text-3); font-size: 12px; }
+.source-note a { color: var(--vp-c-text-2); text-decoration: underline; }
+.empty-state { padding: 56px 20px; border: 1px dashed var(--vp-c-divider); border-radius: 12px; text-align: center; }
+.empty-state h3 { margin: 0 0 10px; font-size: 18px; }
+.empty-state p { color: var(--vp-c-text-2); }
+.empty-state button { margin-top: 16px; color: var(--vp-c-brand-1); cursor: pointer; }
+.mobile-categories { display: none; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+@media (max-width: 760px) {
+  .resources-page { width: calc(100% - 24px); margin-top: 12px; }
+  .resource-toolbar { align-items: stretch; flex-direction: column; gap: 8px; }
+  .resource-search input { font-size: 16px; }
+  .resource-sidebar { display: none; }
+  .resource-workspace { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
+  .mobile-categories { display: flex; align-items: center; gap: 12px; margin-top: 16px; color: var(--vp-c-text-2); font-size: 14px; }
+  .mobile-categories .site-select { flex: 1; }
 }
 </style>

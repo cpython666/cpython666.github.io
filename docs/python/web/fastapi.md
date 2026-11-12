@@ -1,3 +1,9 @@
+---
+title: "FastAPI 简介"
+description: "FastAPI 基于 Python 类型提示并支持异步，是现代高性能的 API 框架。讲解主要特点、定义数据模型与路由、安装方式和适用场景。"
+keywords: "FastAPI,Python Web框架,类型提示,异步,API开发"
+---
+
 [![](/imgs/ads/lky.png)](https://www.lcayun.com/aff/DECEDOZS)
 
 

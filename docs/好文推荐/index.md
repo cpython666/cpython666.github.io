@@ -1,3 +1,9 @@
+---
+title: "好文分享"
+description: "好文与工具分享合集：GitHub Gist、Codeshare、JSFiddle、Codepad、JS Bin 等代码共享网站，以及艺术字生成、图片压缩和爬虫相关资源。"
+keywords: "好文推荐,在线工具,代码共享,GitHub Gist,图片压缩"
+---
+
 # 好文分享
 
 [程序员脱单指南](/好文推荐/程序员脱单指南.md)

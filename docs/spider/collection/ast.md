@@ -1,3 +1,9 @@
+---
+title: "ast详解"
+description: "抽象语法树 AST 是代码分析、混淆与还原的核心，也是 JS 逆向的基本功。讲解什么是 AST、为什么要学，以及完整的学习路线与资源。"
+keywords: "AST,抽象语法树,JS逆向,代码混淆,astexplorer"
+---
+
 # ast详解
 
 ## 在线网站

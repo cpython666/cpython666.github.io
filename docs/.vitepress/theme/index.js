@@ -9,48 +9,30 @@ import ArticleTools from './components/ArticleTools.vue'
 import ArticleHits from './components/ArticleHits.vue'
 import ArticleOutlineToggle from './components/ArticleOutlineToggle.vue'
 import VipBtn from './components/VipBtn.vue'
+import WalineComment from './components/WalineComment.vue'
+import StarFishMascotLoader from './components/StarFishMascotLoader.vue'
+import { useCommentEnabled } from './comment.js'
+import { useGoogleAnalytics } from './googleAnalytics.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
   Layout: () => h(DefaultTheme.Layout, null, {
     'aside-outline-before': () => h(ArticleOutlineToggle),
-    'doc-before': () => h(ArticleHits),
-    'home-features-after': () => h(ArticleHits),
-    'layout-bottom': () => h(ArticleTools),
+    'doc-after': () => h(WalineComment),
+    'layout-bottom': () => [h(ArticleHits), h(ArticleTools), h(StarFishMascotLoader)],
   }),
-  async enhanceApp({ app }) {
+  enhanceApp({ app }) {
     app.component('VipBtn', VipBtn);
-    if (!import.meta.env.SSR && window.location.pathname === '/') {
-      const { loadOml2d } = await import('oh-my-live2d');
-      loadOml2d({
-        models: [
-          {
-            path: 'https://cdn.jsdelivr.net/gh/Eikanya/Live2d-model/Live2D/Senko_Normals/senko.model3.json'
-          }
-        ]
-      });
-    }
   },
   setup() {
+    useGoogleAnalytics();
     const { frontmatter, theme } = useData();
     const route = useRoute();
-    const commentHiddenPrefixes = [
-      '/backup/',
-      '/nav/',
-      '/navigation/',
-      '/projects/',
-      '/spider-tools/',
-      '/vip/',
-      '/web-intro/',
-      '/index/',
-    ];
+    const commentEnabled = useCommentEnabled();
     const commentFrontmatter = computed(() => ({
       ...frontmatter.value,
-      comment: route.path !== '/'
-        && frontmatter.value.layout !== 'home'
-        && frontmatter.value.comment !== false
-        && !commentHiddenPrefixes.some((prefix) => route.path.startsWith(prefix)),
+      comment: commentEnabled.value,
     }));
     giscusTalk(
       {
@@ -108,7 +90,7 @@ export default {
           order: 8,
           isButton: true,
           tagName: "a",
-          html: "↓",
+          html: '<svg class="pswp__icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>',
           title: "下载图片",
           onInit: (el, pswp) => {
             const update = () => {
@@ -127,7 +109,7 @@ export default {
           order: 9,
           isButton: true,
           tagName: "a",
-          html: "↗",
+          html: '<svg class="pswp__icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6m0-6-9 9"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></svg>',
           title: "打开原图",
           onInit: (el, pswp) => {
             const update = () => {

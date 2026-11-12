@@ -1,9 +1,34 @@
 <script setup>
-import { useData } from 'vitepress'
-import { computed, ref, watchEffect } from 'vue'
+import { useData, useRouter } from 'vitepress'
+import { computed, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { data as memberArticlePaths } from './member.data.mjs'
 
 const { theme } = useData()
+const router = useRouter()
+let previousRouteHook
+let routeHook
+const redirectLegacyPrompts = () => {
+  const url = new URL(window.location.href)
+  if (url.hash !== '#prompts' && !url.hash.startsWith('#prompt-')) return
+  url.pathname = '/prompts/'
+  if (url.hash === '#prompts') url.hash = ''
+  window.location.replace(url.href)
+}
+onMounted(() => {
+  redirectLegacyPrompts()
+  window.addEventListener('hashchange', redirectLegacyPrompts)
+  previousRouteHook = router.onAfterRouteChange
+  const previous = previousRouteHook ?? router.onAfterRouteChanged
+  routeHook = async (href) => {
+    await previous?.(href)
+    redirectLegacyPrompts()
+  }
+  router.onAfterRouteChange = routeHook
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('hashchange', redirectLegacyPrompts)
+  if (router.onAfterRouteChange === routeHook) router.onAfterRouteChange = previousRouteHook
+})
 
 const query = ref('')
 const activePath = ref('')
@@ -132,7 +157,6 @@ const totalArticles = computed(() => allArticles.value.length)
 const activeGroup = computed(() => navGroups.value.find(group => group.path === activePath.value) || navGroups.value[0])
 const activeGroupPath = computed(() => activeGroup.value?.path || '')
 const activeGroupText = computed(() => activeGroup.value?.text || '全部文章')
-const activeGroupArticleCount = computed(() => activeGroup.value?.articles.length || 0)
 const normalizedQuery = computed(() => query.value.trim().toLowerCase())
 
 const visibleArticles = computed(() => {
@@ -162,25 +186,8 @@ const selectGroup = (path) => {
 
 <template>
   <main class="nav-page">
-    <section class="nav-hero">
-      <div class="hero-copy">
-        <p class="eyebrow">站内索引</p>
-        <h1>文章导航</h1>
-        <p class="summary">按博客配置自动生成分类与文章入口，新增文章后这里会同步更新。</p>
-      </div>
-      <div class="hero-stats" aria-label="文章统计">
-        <div>
-          <strong>{{ navGroups.length }}</strong>
-          <span>分类</span>
-        </div>
-        <div>
-          <strong>{{ totalArticles }}</strong>
-          <span>文章</span>
-        </div>
-      </div>
-    </section>
-
-    <section v-if="navGroups.length" class="nav-workspace">
+    <h1 class="page-title-sr">文章导航</h1>
+    <div v-if="navGroups.length" class="nav-workspace">
       <aside class="category-panel" aria-label="文章分类">
         <button
           v-for="group in navGroups"
@@ -197,9 +204,9 @@ const selectGroup = (path) => {
 
       <section class="article-panel">
         <div class="toolbar">
-          <div>
-            <p class="panel-kicker">{{ normalizedQuery ? '搜索结果' : activeGroupText }}</p>
-            <h2>{{ normalizedQuery ? `找到 ${visibleArticles.length} 篇文章` : `${activeGroupArticleCount} 篇文章` }}</h2>
+          <div class="toolbar-summary">
+            <h2>{{ normalizedQuery ? '搜索结果' : activeGroupText }}</h2>
+            <span>{{ visibleArticles.length }} / {{ totalArticles }} 篇文章</span>
           </div>
           <label class="search-box">
             <span>搜索</span>
@@ -234,89 +241,32 @@ const selectGroup = (path) => {
           <p>换个关键词试试看。</p>
         </div>
       </section>
-    </section>
+    </div>
 
-    <section v-else class="empty-state">
+    <div v-else class="empty-state">
       <h3>暂无文章配置</h3>
       <p>请先在 VitePress 配置里添加 sidebar 项。</p>
-    </section>
+    </div>
   </main>
 </template>
 
 <style scoped>
-.nav-page {
-  width: min(1180px, calc(100% - 32px));
-  margin: 20px auto 40px;
+.nav-page { width: min(1180px, calc(100% - 32px)); margin: 16px auto 40px; }
+.nav-workspace { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; align-items: start; }
+.toolbar-summary { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; }
+.toolbar-summary span { color: var(--vp-c-text-2); font-size: 13px; }
+.category-button:focus-visible, .search-box:focus-within { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+.page-title-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
-
-.nav-hero {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 28px 0 20px;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.eyebrow,
-.panel-kicker {
-  margin: 0 0 8px;
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.nav-hero h1 {
-  margin: 0;
-  font-size: 40px;
-  line-height: 1.15;
-}
-
-.summary {
-  max-width: 560px;
-  margin: 12px 0 0;
-  color: var(--vp-c-text-2);
-  line-height: 1.8;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 96px);
-  gap: 10px;
-}
-
-.hero-stats div {
-  min-height: 74px;
-  padding: 12px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg-soft);
-}
-
-.hero-stats strong,
-.hero-stats span {
-  display: block;
-}
-
-.hero-stats strong {
-  font-size: 26px;
-  line-height: 1;
-}
-
-.hero-stats span {
-  margin-top: 8px;
-  color: var(--vp-c-text-2);
-  font-size: 13px;
-}
-
-.nav-workspace {
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 24px;
-  margin-top: 24px;
-  align-items: start;
-}
-
 .category-panel {
   position: sticky;
   top: 88px;
@@ -379,7 +329,8 @@ const selectGroup = (path) => {
 
 .toolbar h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .search-box {
@@ -433,6 +384,7 @@ const selectGroup = (path) => {
 .section-heading h3 {
   margin: 0;
   font-size: 17px;
+  font-weight: 600;
 }
 
 .section-heading span {
@@ -526,33 +478,12 @@ const selectGroup = (path) => {
   margin: 0;
 }
 
+
 @media (max-width: 860px) {
-  .nav-page {
-    width: min(100% - 24px, 1180px);
-  }
-
-  .nav-hero,
-  .toolbar {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .nav-workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .category-panel {
-    position: static;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  }
-
-  .search-box {
-    width: 100%;
-  }
+  .nav-page { width: calc(100% - 24px); }
+  .toolbar { align-items: stretch; flex-direction: column; }
+  .nav-workspace { grid-template-columns: minmax(0, 1fr); }
+  .category-panel { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
+  .search-box { width: 100%; min-width: 0; }
 }
 </style>

@@ -1,5 +1,7 @@
 ---
 title: "P2-快速开始-项目实战"
+description: "以新闻推送页面为例走完 Scrapy 全流程：安装、创建项目、逐个说明项目文件作用、修改 ROBOTSTXT_OBEY 与 User-Agent 等设置。"
+keywords: "Scrapy,项目实战,创建项目,settings配置,ROBOTSTXT_OBEY"
 date: "2024-12-20 23:42:24.029234"
 updated: "2024-12-20 23:42:24.029265"
 privacy: "登录可见"

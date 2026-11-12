@@ -1,5 +1,7 @@
 ---
 title: "P2-合集简介"
+description: "PyQt6 合集的编排思路：把大项目拆成可复用的小功能点，方便按需查阅。附 PyQt6 各组成模块的功能说明与版本信息。"
+keywords: "PyQt6,PyQt6模块,QtWidgets,QtCore,PyQt6版本"
 created_at: 2024-12-20 21:31:44
 updated_at: 2024-12-20 21:31:44
 ---

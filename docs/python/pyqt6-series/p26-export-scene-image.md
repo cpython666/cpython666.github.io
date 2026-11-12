@@ -1,5 +1,7 @@
 ---
 title: "P26-图片场景输出为图片"
+description: "把 QGraphicsScene 的内容导出成图片文件。对比按视图区域导出和用 itemsBoundingRect 按实际内容外接矩形导出两种做法。"
+keywords: "PyQt6,场景导出,QGraphicsScene,itemsBoundingRect,保存图片"
 created_at: 2024-12-20 21:42:58
 updated_at: 2024-12-20 21:42:58
 ---

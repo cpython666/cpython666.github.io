@@ -9,7 +9,7 @@ const copy_text = (text = '') => {
         return Promise.reject(err)
       })
   } catch (e) {
-    let input = document.createElement('input')
+    let input = document.createElement('textarea')
     input.style.position = 'fixed'
     input.style.top = '-10000px'
     input.style.zIndex = '-999'

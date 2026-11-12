@@ -1,327 +1,45 @@
-<template>
-  <div class="navigation">
-    <div v-for="(category, index) in categories" :key="index" class="category">
-      <div class="title-box">
-        <div class="h2" :id="category.title">{{ category.title }}</div>
-      </div>
-      <div class="sites">
-        <div v-for="(site, sIndex) in category.items" :key="sIndex" class="site"
-             @mouseover="site.showTooltip = true" @mouseleave="site.showTooltip = false">
-          <div class="card" :title="site.desc">
-            <a :href="site.link" class="site-link" target="_blank" rel="noopener noreferrer">
-              <div class="card-head">
-                <img :src="site.icon" class="site-icon" :alt="site.title" loading="lazy">
-                <div class="h4">{{ site.title }}</div>
-                <label class="toggle">
-                  <input type="checkbox">
-                  <span></span>
-                </label>
-              </div>
-              <div>
-                <div class="badge badge-info" v-if="site.doc_link" @click="openNewPage(site.doc_link)">
-                  文档->
-                </div>
-                <div class="badge badge-info" v-for="(category, sIndex) in site.categories">
-                  {{ category }}
-                </div>
-              </div>
+<script setup>
+defineProps({ items: { type: Array, required: true } })
+const fallbackIcon = '/icons/github.svg'
+const onIconError = (event) => {
+  const img = event.target
+  if (img.getAttribute('src') !== fallbackIcon) img.src = fallbackIcon
+}
+</script>
 
-              <div class="site-info">
-                <div class="desc">{{ site.desc }}</div>
-              </div>
-            </a>
-          </div>
-          <div v-show="site.showTooltip" class="tooltip">
-            <div class="triangle"></div> <!-- 用于显示三角形指示器 -->
-            <div class="content">
-              {{ site.desc }}
-            </div>
-          </div>
+<template>
+  <div class="sites">
+    <article v-for="site in items" :key="site.key" class="site">
+      <a :href="site.link" class="site-link" target="_blank" rel="noopener noreferrer" :title="site.desc">
+        <div class="card-head">
+          <img :src="site.icon || fallbackIcon" alt="" class="site-icon" width="36" height="36" loading="lazy" decoding="async" @error="onIconError" />
+          <div class="card-title"><h3>{{ site.title }}</h3><span>{{ site.section }}</span></div>
+          <span class="external-mark" aria-hidden="true">↗</span>
         </div>
-        <div id="ad" v-if="category.title=='站长推荐'" class="flex-grow justify-center w-100"
-             style="display: flex; justify-content: center; align-items: center;">
-          <a href="https://www.qg.net/product/proxyip.html?source=star" target="_blank" rel="noopener noreferrer">
-            <img style="width:960px;height:70px;" src="/imgs/ads/qgwl.jpeg" loading="lazy"/>
-          </a>
-        </div>
+        <p class="desc">{{ site.desc }}</p>
+      </a>
+      <div v-if="site.categories?.length || site.doc_link" class="site-meta">
+        <span v-for="tag in site.categories" :key="tag" class="badge">{{ tag }}</span>
+        <a v-if="site.doc_link" :href="site.doc_link" class="doc-link" target="_blank" rel="noopener noreferrer">文档 ↗</a>
       </div>
-    </div>
+    </article>
   </div>
 </template>
 
-<script>
-import {reactive} from 'vue';
-
-export default {
-  props: {
-    datalist: {
-      type: Array,
-      required: true
-    }
-  },
-  setup(props) {
-    const categories = reactive(props.datalist.map(item => ({
-      ...item,
-      showTooltip: false,
-    })));
-    const openNewPage = (link) => {
-      window.open(link, '_blank');
-    }
-    return {
-      categories,
-      openNewPage
-    };
-  }
-};
-</script>
 <style scoped>
-#ad {
-    transition: transform 0.3s ease; /* 设置动画效果 */
-  margin: 10px 0;
-}
-
-#ad:hover {
-    transform: scale(1.1); /* 放大图片 */
-}
-.toggle span {
-  display: block;
-  width: 20px;
-  height: 12px;
-  border-radius: 99em;
-  background-color: #c1c5cd;
-  box-shadow: inset 1px 1px 1px 0 rgba(0, 0, 0, 0.05);
-  position: relative;
-  transition: 0.15s ease;
-}
-
-.toggle span:before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 1.5px;
-  top: 1.5px;
-  height: 9px;
-  width: 9px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-  transition: 0.15s ease;
-}
-
-.toggle input {
-  clip: rect(0 0 0 0);
-  -webkit-clip-path: inset(50%);
-  clip-path: inset(50%);
-  height: 0.5px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 0.5px;
-}
-
-.toggle input:checked + span {
-  background-color: #434ce8;
-}
-
-.toggle input:checked + span:before {
-  transform: translateX(calc(100% - 1px));
-}
-
-.toggle input:focus + span {
-  box-shadow: 0 0 0 2px #ecf3fe;
-}
-
-.toggle {
-  transform: scale(1.5);
-}
-
-.toggle:hover {
-  transform: scale(2);
-}
-
-
-.badge {
-  display: inline-block;
-  padding: 0.25em 0.4em;
-  margin: 0 0.25em;
-  font-size: 50%;
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25rem;
-}
-
-.badge-primary {
-  color: #fff;
-  background-color: #007bff;
-}
-
-.badge-info {
-  color: #fff;
-  background-color: #17a2b8;
-}
-
-button {
-  padding: 5px 8px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.title-box {
-  display: flex;
-}
-
-.desc {
-  text-indent: 2em;
-  width: 100%;
-  font-size: 12px;
-  line-height: 14px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  /* 设置显示的行数 */
-  -webkit-line-clamp: 2;
-}
-
-.tooltip {
-  position: absolute;
-  background-color: #333;
-  color: #fff;
-  padding: 2px 3px;
-  width: 100%;
-  border-radius: 1rem;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* 三角形指示器样式 */
-.triangle {
-  position: absolute;
-  top: -5px;
-  /* 调整三角形位置 */
-  left: 50%;
-  /* 水平居中 */
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  /* 左边透明 */
-  border-right: 10px solid transparent;
-  /* 右边透明 */
-  border-bottom: 10px solid #333;
-  /* 底部为背景色，即三角形 */
-}
-
-.content {
-  font-size: 12px;
-  line-height: 14px;
-  padding: 3px 2px;
-  /* 调整内容位置，避免与三角形重叠 */
-  z-index: 999;
-}
-
-img {
-  transition: height 0.3s ease-in-out;
-}
-
-.card {
-  width: 100%;
-}
-
-.navigation .h2 {
-  font-size: 24px;
-  font-weight: 500;
-  /* 防止滚动到标题时被头部遮挡 */
-  scroll-margin-top: calc(var(--vp-nav-height, 64px) + 12px);
-
-}
-
-.h4 {
-  font-size: 15px;
-  font-weight: 500;
-}
-
-p {
-  font-size: 10px;
-}
-
-.navigation {
-  display: flex;
-  flex-direction: column;
-}
-
-.category {
-  margin-bottom: 5px;
-}
-
-.sites {
-  display: flex;
-  flex-wrap: wrap;
-  z-index: -1;
-}
-
-.site {
-  width: 175px;
-  margin: 6px 6px 6px 12px;
-  padding: 8px;
-  transition: transform 0.3s ease-in-out;
-  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #FFFFFF;
-  border-radius: 1rem;
-
-}
-
-.site:hover {
-  transform: scale(1.05);
-
-  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #FFFFFF;;
-}
-
-.site-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-}
-
-.card-head {
-  width: 100%;
-  display: flex;
-  font-size: 14px;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.site-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  border-radius: 2px;
-}
-
-.site-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.site-info h4 {
-  margin: 0;
-}
-
-.site-info p {
-  margin: 5px 0;
-}
+.sites { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.site { display: flex; flex-direction: column; min-width: 0; padding: 18px; border: 1px solid var(--vp-c-divider); border-radius: 12px; background: var(--vp-c-bg); }
+.site:hover { border-color: var(--vp-c-brand-2); background: var(--vp-c-bg-soft); }
+.site-link { display: block; color: inherit; text-decoration: none; }
+.card-head { display: flex; align-items: center; gap: 12px; }
+.site-icon { flex: none; width: 36px; height: 36px; object-fit: contain; border-radius: 8px; background: var(--vp-c-bg-soft); }
+.card-title { flex: 1; min-width: 0; }
+.card-title h3 { overflow: hidden; margin: 0; color: var(--vp-c-text-1); font-size: 15px; font-weight: 600; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.card-title span { color: var(--vp-c-text-3); font-size: 11px; }
+.external-mark { color: var(--vp-c-text-3); font-size: 18px; }
+.desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-height: 5.1em; margin: 14px 0 0; color: var(--vp-c-text-2); font-size: 13px; line-height: 1.7; text-indent: 0; overflow-wrap: anywhere; }
+.site-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 14px; }
+.badge { max-width: 100%; padding: 3px 7px; border-radius: 5px; background: var(--vp-c-default-soft); color: var(--vp-c-text-2); font-size: 11px; line-height: 1.4; overflow-wrap: anywhere; }
+.doc-link { margin-left: auto; color: var(--vp-c-brand-1); font-size: 12px; text-decoration: none; }
+a:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 4px; border-radius: 4px; }
 </style>

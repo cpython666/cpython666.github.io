@@ -1,5 +1,7 @@
 ---
 title: "P5-DrissionPage监听websocket请求"
+description: "讲完 HTTP 监听后，网上关于 WebSocket 监听的教程还很少。结合现有资料实现用 DrissionPage 监听 WebSocket 请求。"
+keywords: "DrissionPage,WebSocket,监听请求,实时数据,自动化采集"
 date: "2024-12-02 22:37:40.499152"
 updated: "2024-12-02 22:37:40.499228"
 privacy: "登录可见"
