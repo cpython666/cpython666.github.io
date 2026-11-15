@@ -30,6 +30,13 @@ export const navigationData = [
                 "desc": "Codex 是 OpenAI 的编码 agent，支持在 CLI、IDE 和应用内执行编码、调试、审查与自动化工作流。",
                 "categories": ["Agent", "Coding", "OpenAI"]
             },
+            {
+                "link": "https://usemagpie.ai/zh/",
+                "icon": "/logos/magpie.png",
+                "title": "magpie",
+                "desc": "在本地跑一个网关，把模型供应商添加一次后，就能在 Codex、Claude Code、Gemini CLI 等 Agent 里一键切换模型。",
+                "categories": ["AI", "Agent", "开源"]
+            },
         ]
     },
     {

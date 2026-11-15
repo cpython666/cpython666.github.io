@@ -1,10 +1,10 @@
 # 资源导航
 
-站长整理的 540 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
+站长整理的 541 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
 
 ## 分类目录
 
-- Agent（4）
+- Agent（5）
 - AI聊天对话（10）
 - AI代码编程（6）
 - Skill（2）
@@ -63,6 +63,7 @@
 - [OpenClaw（小龙虾）](https://openclaw.ai/)：可在本机运行的开源 AI 助手，通过聊天应用处理邮件、日程和自动化任务。 `AI / Agent / 开源`
 - [WorkBuddy](https://www.workbuddy.cn/)：腾讯 AI 办公工作台，用自然语言完成文件处理与内容制作，支持多智能体协作。 `AI / Agent / 办公`
 - [Codex](https://developers.openai.com/codex)：Codex 是 OpenAI 的编码 agent，支持在 CLI、IDE 和应用内执行编码、调试、审查与自动化工作流。 `Agent / Coding / OpenAI`
+- [magpie](https://usemagpie.ai/zh/)：在本地跑一个网关，把模型供应商添加一次后，就能在 Codex、Claude Code、Gemini CLI 等 Agent 里一键切换模型。 `AI / Agent / 开源`
 
 ## AI聊天对话
 
