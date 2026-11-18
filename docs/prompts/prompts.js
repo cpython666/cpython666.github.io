@@ -190,6 +190,15 @@ export const prompts = [
     "previewStatus": "待标注"
   },
   {
+    "id": "cycling-spongebob-svg",
+    "title": "骑自行车的海绵宝宝",
+    "category": "模型测试",
+    "text": "生成一个动态的骑自行车的海绵宝宝的svg",
+    "preview": "/prompt-examples/cycling-spongebob-svg.svg",
+    "previewStatus": "正常",
+    "previewNote": "双脚与踏板使用相同的闭环关键帧，随曲柄交替完成蹬踏。"
+  },
+  {
     "id": "training-cutoff",
     "category": "模型测试",
     "title": "训练数据截止时间",
