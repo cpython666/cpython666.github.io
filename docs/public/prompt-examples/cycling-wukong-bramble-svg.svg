@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" style="display:block;max-width:100%;height:auto" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+<title id="title">齐天大圣和熊二一起骑自行车</title>
+<desc id="desc">一幅循环播放的卡通动画：戴金冠、披红斗篷的齐天大圣，与金棕色、圆滚滚的熊二在山野骑行。两人的双脚紧跟踏板，车轮转动，云朵、道路和小花向后移动。</desc>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#F8F1D9"/><stop offset="1" stop-color="#E5EDDC"/></linearGradient>
+  <linearGradient id="hill" x2="0" y2="1"><stop stop-color="#B4CEAD"/><stop offset="1" stop-color="#D9DFB8"/></linearGradient>
+  <clipPath id="canvas"><rect x="16" y="16" width="1408" height="928" rx="38"/></clipPath>
+  <g id="cloud" fill="#FFFCED"><path d="M-89 9Q-106-17-76-27Q-70-63-33-51Q-7-89 28-48Q67-62 79-27Q111-20 99 9Z"/></g>
+  <g id="roadMarks" fill="#F9EDC5"><rect x="0" y="0" width="95" height="6" rx="3"/><rect x="226" y="-17" width="36" height="5" rx="2.5"/><rect x="360" y="7" width="115" height="6" rx="3"/><rect x="575" y="-13" width="46" height="5" rx="2.5"/></g>
+</defs>
+<rect width="1440" height="960" rx="44" fill="#FFFAED"/>
+<g clip-path="url(#canvas)">
+<rect x="16" y="16" width="1408" height="928" fill="url(#sky)"/>
+<circle cx="1188" cy="202" r="98" fill="#F1CD75" opacity=".7"/>
+<circle cx="1188" cy="202" r="76" fill="#F7D883"/>
+<g opacity=".85"><animateTransform attributeName="transform" type="translate" values="0 0;-45 0;0 0" dur="18s" repeatCount="indefinite"/><use href="#cloud" transform="translate(175 285) scale(.85)"/><use href="#cloud" transform="translate(816 273) scale(.64)"/><use href="#cloud" transform="translate(1327 344) scale(.65)"/></g>
+<g fill="none" stroke="#73928A" stroke-width="3.5" stroke-linecap="round"><path d="M994 261q11-10 23 0 12-12 25-5 M1058 294q9-9 18 0 10-11 19-4"/></g>
+<path d="M-30 593Q104 469 265 543Q417 421 578 530Q739 415 918 520Q1151 416 1471 555V798H-30Z" fill="#C8D8BD"/>
+<path d="M-50 664Q153 512 371 633Q620 508 822 618Q1069 521 1490 636V828H-50Z" fill="url(#hill)"/>
+<path d="M-30 708Q168 653 362 713T734 706T1092 715T1460 701V950H-30Z" fill="#BCD0A2"/>
+<g stroke="#85AA81" stroke-width="5" stroke-linecap="round" fill="none" opacity=".7"><path d="M77 683v-65m0 37-19-19m19 2 18-20 M695 683v-64m0 36-18-18m18 0 21-22 M1328 675v-81m0 37-22-20m22 38 24-26"/></g>
+<path d="M-30 783Q350 758 709 782T1470 779V881Q1090 865 700 883T-30 876Z" fill="#D8C89D"/>
+<path d="M-30 786Q350 761 709 785T1470 782" fill="none" stroke="#EEE0B3" stroke-width="8"/>
+<g transform="translate(0 842)"><g><animateTransform attributeName="transform" type="translate" from="0 0" to="-640 0" dur="2.2s" repeatCount="indefinite"/><use href="#roadMarks" x="0"/><use href="#roadMarks" x="640"/><use href="#roadMarks" x="1280"/></g></g>
+<g font-family="'PingFang SC','Microsoft YaHei',sans-serif" text-anchor="middle" fill="#374F41">
+<text x="720" y="82" font-size="14" font-weight="700" letter-spacing="5" fill="#718971">HAPPY RIDE · 好朋友，一起出发</text>
+<text x="720" y="157" font-size="55" font-weight="900" letter-spacing="3">大圣和熊二，追风去！</text>
+<path d="M554 179q168 15 335-1" fill="none" stroke="#E7B858" stroke-width="5" stroke-linecap="round"/>
+<text x="720" y="213" font-size="19" letter-spacing="3" fill="#7A8A70">一个筋斗太快，一起骑车刚好。</text>
+</g>
+<g fill="#827B58" opacity=".2"><ellipse cx="400" cy="831" rx="252" ry="17"/><ellipse cx="1040" cy="833" rx="247" ry="17"/></g>
+<!-- 后侧腿先绘制，车架在中间，前侧腿最后绘制 -->
+<g transform="translate(405 716)"><g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-48 -170 L30.38 -97.16 L-38.00 -11.00" fill="none" stroke="#46372E" stroke-width="43"><animate attributeName="d" values="M-48 -170 L30.38 -97.16 L-38.00 -11.00;M-48 -170 L33.53 -100.70 L-37.44 -16.66;M-48 -170 L36.80 -104.74 L-35.79 -22.10;M-48 -170 L40.07 -109.23 L-33.11 -27.11;M-48 -170 L43.20 -114.05 L-29.51 -31.51;M-48 -170 L46.06 -118.99 L-25.11 -35.11;M-48 -170 L48.50 -123.78 L-20.10 -37.79;M-48 -170 L50.46 -128.10 L-14.66 -39.44;M-48 -170 L51.88 -131.62 L-9.00 -40.00;M-48 -170 L52.78 -134.05 L-3.34 -39.44;M-48 -170 L53.19 -135.21 L2.10 -37.79;M-48 -170 L53.12 -135.03 L7.11 -35.11;M-48 -170 L52.60 -133.54 L11.51 -31.51;M-48 -170 L51.59 -130.89 L15.11 -27.11;M-48 -170 L50.09 -127.25 L17.79 -22.10;M-48 -170 L48.06 -122.87 L19.44 -16.66;M-48 -170 L45.51 -118.00 L20.00 -11.00;M-48 -170 L42.49 -112.90 L19.44 -5.34;M-48 -170 L39.08 -107.82 L17.79 0.10;M-48 -170 L35.42 -103.00 L15.11 5.11;M-48 -170 L31.71 -98.62 L11.51 9.51;M-48 -170 L28.17 -94.85 L7.11 13.11;M-48 -170 L25.02 -91.79 L2.10 15.79;M-48 -170 L22.47 -89.49 L-3.34 17.44;M-48 -170 L20.65 -87.93 L-9.00 18.00;M-48 -170 L19.62 -87.08 L-14.66 17.44;M-48 -170 L19.38 -86.88 L-20.10 15.79;M-48 -170 L19.86 -87.27 L-25.11 13.11;M-48 -170 L21.00 -88.22 L-29.51 9.51;M-48 -170 L22.69 -89.68 L-33.11 5.11;M-48 -170 L24.88 -91.66 L-35.79 0.10;M-48 -170 L27.47 -94.15 L-37.44 -5.34;M-48 -170 L30.38 -97.16 L-38.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <path d="M-48 -170 L30.38 -97.16 L-38.00 -11.00" fill="none" stroke="#9D433A" stroke-width="34"><animate attributeName="d" values="M-48 -170 L30.38 -97.16 L-38.00 -11.00;M-48 -170 L33.53 -100.70 L-37.44 -16.66;M-48 -170 L36.80 -104.74 L-35.79 -22.10;M-48 -170 L40.07 -109.23 L-33.11 -27.11;M-48 -170 L43.20 -114.05 L-29.51 -31.51;M-48 -170 L46.06 -118.99 L-25.11 -35.11;M-48 -170 L48.50 -123.78 L-20.10 -37.79;M-48 -170 L50.46 -128.10 L-14.66 -39.44;M-48 -170 L51.88 -131.62 L-9.00 -40.00;M-48 -170 L52.78 -134.05 L-3.34 -39.44;M-48 -170 L53.19 -135.21 L2.10 -37.79;M-48 -170 L53.12 -135.03 L7.11 -35.11;M-48 -170 L52.60 -133.54 L11.51 -31.51;M-48 -170 L51.59 -130.89 L15.11 -27.11;M-48 -170 L50.09 -127.25 L17.79 -22.10;M-48 -170 L48.06 -122.87 L19.44 -16.66;M-48 -170 L45.51 -118.00 L20.00 -11.00;M-48 -170 L42.49 -112.90 L19.44 -5.34;M-48 -170 L39.08 -107.82 L17.79 0.10;M-48 -170 L35.42 -103.00 L15.11 5.11;M-48 -170 L31.71 -98.62 L11.51 9.51;M-48 -170 L28.17 -94.85 L7.11 13.11;M-48 -170 L25.02 -91.79 L2.10 15.79;M-48 -170 L22.47 -89.49 L-3.34 17.44;M-48 -170 L20.65 -87.93 L-9.00 18.00;M-48 -170 L19.62 -87.08 L-14.66 17.44;M-48 -170 L19.38 -86.88 L-20.10 15.79;M-48 -170 L19.86 -87.27 L-25.11 13.11;M-48 -170 L21.00 -88.22 L-29.51 9.51;M-48 -170 L22.69 -89.68 L-33.11 5.11;M-48 -170 L24.88 -91.66 L-35.79 0.10;M-48 -170 L27.47 -94.15 L-37.44 -5.34;M-48 -170 L30.38 -97.16 L-38.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <g transform="translate(-29.00 0.00)"><animateTransform attributeName="transform" type="translate" values="-29.00 0.00;-28.44 -5.66;-26.79 -11.10;-24.11 -16.11;-20.51 -20.51;-16.11 -24.11;-11.10 -26.79;-5.66 -28.44;-0.00 -29.00;5.66 -28.44;11.10 -26.79;16.11 -24.11;20.51 -20.51;24.11 -16.11;26.79 -11.10;28.44 -5.66;29.00 -0.00;28.44 5.66;26.79 11.10;24.11 16.11;20.51 20.51;16.11 24.11;11.10 26.79;5.66 28.44;0.00 29.00;-5.66 28.44;-11.10 26.79;-16.11 24.11;-20.51 20.51;-24.11 16.11;-26.79 11.10;-28.44 5.66;-29.00 0.00" dur="1.2s" repeatCount="indefinite"/><g transform="translate(0 -9)"><path d="M-24-32 L-4-32-2-15 Q23-13 30-2 L29 7 H-26Z" fill="#403D3A" stroke="#46372E" stroke-width="5"/><path d="M-24-30h20 M-25 1h51" stroke="#ECC86C" stroke-width="5"/></g><path d="M-20 0h40" stroke="#46372E" stroke-width="6"/></g>
+    </g><g transform="translate(-160 0)">
+      <circle r="110" fill="#fff9e9" stroke="#46372E" stroke-width="15"/>
+      <circle r="97" fill="#CDE2D0" fill-opacity=".26" stroke="#fff4d9" stroke-width="5"/>
+      <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.4s" repeatCount="indefinite"/>
+        <g stroke="#9BADA5" stroke-width="2.4"><path d="M0 0 L94.00 0.00"/><path d="M0 0 L76.05 55.25"/><path d="M0 0 L29.05 89.40"/><path d="M0 0 L-29.05 89.40"/><path d="M0 0 L-76.05 55.25"/><path d="M0 0 L-94.00 0.00"/><path d="M0 0 L-76.05 -55.25"/><path d="M0 0 L-29.05 -89.40"/><path d="M0 0 L29.05 -89.40"/><path d="M0 0 L76.05 -55.25"/></g>
+        <path d="M-67-79 A104 104 0 0 1-13-103" fill="none" stroke="#F7D279" stroke-width="5" stroke-linecap="round"/>
+        <rect x="-5" y="-81" width="10" height="23" rx="4" fill="#EEAC50" transform="rotate(18)"/>
+      </g><circle r="10" fill="#FFF3CF" stroke="#46372E" stroke-width="5"/>
+    </g><g transform="translate(160 0)">
+      <circle r="110" fill="#fff9e9" stroke="#46372E" stroke-width="15"/>
+      <circle r="97" fill="#CDE2D0" fill-opacity=".26" stroke="#fff4d9" stroke-width="5"/>
+      <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.4s" repeatCount="indefinite"/>
+        <g stroke="#9BADA5" stroke-width="2.4"><path d="M0 0 L94.00 0.00"/><path d="M0 0 L76.05 55.25"/><path d="M0 0 L29.05 89.40"/><path d="M0 0 L-29.05 89.40"/><path d="M0 0 L-76.05 55.25"/><path d="M0 0 L-94.00 0.00"/><path d="M0 0 L-76.05 -55.25"/><path d="M0 0 L-29.05 -89.40"/><path d="M0 0 L29.05 -89.40"/><path d="M0 0 L76.05 -55.25"/></g>
+        <path d="M-67-79 A104 104 0 0 1-13-103" fill="none" stroke="#F7D279" stroke-width="5" stroke-linecap="round"/>
+        <rect x="-5" y="-81" width="10" height="23" rx="4" fill="#EEAC50" transform="rotate(18)"/>
+      </g><circle r="10" fill="#FFF3CF" stroke="#46372E" stroke-width="5"/>
+    </g>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-160 0-49-145 0 0-160 0 M-49-145 121-155 0 0 M121-155 160 0" stroke="#46372E" stroke-width="19"/>
+      <path d="M-160 0-49-145 0 0-160 0 M-49-145 121-155 0 0 M121-155 160 0" stroke="#4D9E96" stroke-width="11"/>
+      <path d="M-49-145-64-183 M121-155 111-194 151-203" stroke="#46372E" stroke-width="9"/>
+      <path d="M143-204h34" stroke="#564137" stroke-width="13"/>
+      <path d="M159-197q-29 13-20 53" stroke="#746A55" stroke-width="2.5"/>
+      <path d="M-112-111Q-166-141-211-108 M117-113q45-19 81 19" stroke="#FFF5D9" stroke-width="7"/>
+      <path d="M-160 0H0" stroke="#827864" stroke-width="5"/>
+    </g>
+    <path d="M-100-190Q-75-198-27-189 Q-21-174-49-175H-87Q-101-178-100-190Z" fill="#584237" stroke="#46372E" stroke-width="5"/>
+    <circle r="28" fill="#FEF1C9" stroke="#46372E" stroke-width="5"/>
+    <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.2s" repeatCount="indefinite"/><path d="M-29 0H29" stroke="#6E7466" stroke-width="8"/><circle r="7" fill="#46372E"/></g>
+    <path d="M16-94 52-108 59-84 24-70Z" fill="#FFF9E7" stroke="#46372E" stroke-width="4"/>
+    
+<!-- 大圣的披风、尾巴和金箍棒 -->
+<g stroke="#46372E" stroke-width="5" stroke-linejoin="round">
+  <path d="M-78-246C-167-218-114-143-180-147C-227-150-228-193-201-200" fill="none" stroke="#46372E" stroke-width="22" stroke-linecap="round"/>
+  <path d="M-78-246C-167-218-114-143-180-147C-227-150-228-193-201-200" fill="none" stroke="#C78B43" stroke-width="13" stroke-linecap="round"/>
+  <g transform="rotate(-18 -63 -260)"><rect x="-71" y="-437" width="15" height="295" rx="7" fill="#B94935"/><path d="M-63-434v41 M-63-187v41" stroke="#F4CD68" stroke-width="11"/><path d="M-70-391h14 M-70-189h14" stroke="#46372E" stroke-width="3"/></g>
+  <path d="M-22-318C-84-329-95-291-153-291Q-190-287-218-313Q-224-242-174-226Q-116-204-64-252L3-297Z" fill="#DE5843">
+    <animate attributeName="d" values="M-22-318C-84-329-95-291-153-291Q-190-287-218-313Q-224-242-174-226Q-116-204-64-252L3-297Z;M-22-318C-84-320-98-310-154-302Q-190-294-218-326Q-229-259-174-244Q-116-226-64-252L3-297Z;M-22-318C-84-329-95-291-153-291Q-190-287-218-313Q-224-242-174-226Q-116-204-64-252L3-297Z" dur="1.2s" repeatCount="indefinite"/>
+  </path><path d="M-59-293Q-127-247-177-274" fill="none" stroke="#A83D37" stroke-width="4"/>
+</g>
+<!-- 胸甲和手臂 -->
+<path d="M-39-316Q15-326 43-287L19-223-42-182-93-206Q-101-230-81-279Z" fill="#F5BE4F" stroke="#46372E" stroke-width="6" stroke-linejoin="round"/>
+<path d="M-76-269Q-22-244 27-274L17-230-44-197-86-216Z" fill="#E3A237"/>
+<path d="M-81-231Q-38-204 15-237L22-217Q-38-177-87-206Z" fill="#AF3E32" stroke="#46372E" stroke-width="5"/>
+<path d="M-57-219l23 9-10 19-22-9Z" fill="#FFE092" stroke="#46372E" stroke-width="4"/>
+<path d="M-75-192-42-178-12-207 1-177-47-157-96-174Z" fill="#F2C366" stroke="#46372E" stroke-width="5"/>
+<path d="M10-287Q42-266 64-239L142-207" fill="none" stroke="#46372E" stroke-width="37" stroke-linecap="round"/>
+<path d="M10-287Q42-266 64-239L142-207" fill="none" stroke="#CE9049" stroke-width="27" stroke-linecap="round"/>
+<path d="M-1-302Q20-315 37-287L28-266-5-275Z" fill="#FFD573" stroke="#46372E" stroke-width="5"/>
+<path d="M90-235l-13 28 27 11 13-28Z" fill="#F8CC67" stroke="#46372E" stroke-width="4"/>
+<path d="M130-222q18-5 27 9l-1 16q-15 10-29-5Z" fill="#E4AC68" stroke="#46372E" stroke-width="4"/>
+<path d="M147-211v11 M138-215v12" stroke="#976033" stroke-width="3" stroke-linecap="round"/>
+<!-- 头部；金冠双翎 -->
+<g><animateTransform attributeName="transform" type="rotate" values="-1 -15 -307;1 -15 -307;-1 -15 -307" dur="1.2s" repeatCount="indefinite"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M-34-424C-64-515-159-529-183-469" stroke="#46372E" stroke-width="12"/>
+    <path d="M-34-424C-64-515-159-529-183-469" stroke="#D95B44" stroke-width="7"/>
+    <path d="M-8-425C-29-527-122-544-158-504" stroke="#46372E" stroke-width="12"/>
+    <path d="M-8-425C-29-527-122-544-158-504" stroke="#E7A543" stroke-width="7"/>
+    <path d="M-135-508l-15 11 M-108-506l-12 13 M-79-492l-13 10 M-102-532l-8 13 M-73-522l-9 13" stroke="#F6DA91" stroke-width="3"/>
+  </g>
+  <path d="M-83-360Q-114-364-111-339Q-107-320-82-328 M61-362Q84-371 89-347Q88-327 66-328" fill="#C88E4B" stroke="#46372E" stroke-width="5"/>
+  <path d="M-83-344q-17-14-18 3 M73-344q5-12 10-3" fill="none" stroke="#965A35" stroke-width="4"/>
+  <path d="M-87-389Q-91-432-43-442L-25-456-17-441 1-452 7-437Q52-438 67-399L70-346Q62-307 14-298L-27-303-40-293-49-310Q-90-315-88-356L-101-368Z" fill="#C68A46" stroke="#46372E" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M-65-386Q-49-411-24-390Q-8-368 4-391Q33-418 53-384L57-349Q48-322 12-315Q-26-308-59-329Q-77-346-65-386Z" fill="#FFE0A0"/>
+  <path d="M-85-399Q-6-418 65-396L62-416Q-7-436-85-420Z" fill="#F6CB5B" stroke="#46372E" stroke-width="4"/>
+  <path d="M-44-416-51-450-19-434-3-458 13-433 37-449 35-415Z" fill="#FFD979" stroke="#46372E" stroke-width="4"/>
+  <path d="M-15-429q11-12 19 0l-8 11Z" fill="#D9523D" stroke="#46372E" stroke-width="3"/>
+  <path d="M-56-380q16-8 28 2 M9-380q17-12 30-2" fill="none" stroke="#46372E" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#46372E"><ellipse cx="-36" cy="-365" rx="5.5" ry="8"/><ellipse cx="28" cy="-366" rx="5.5" ry="8"/></g>
+  <path d="M-9-353q8-8 17 0l-9 6Z" fill="#A9673F"/>
+  <path d="M-31-340Q0-322 31-346Q22-316-6-325Z" fill="#8B4032" stroke="#46372E" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M-24-337Q0-329 23-341L19-334Q0-326-19-332Z" fill="#FFFAE7"/>
+  <path d="M-65-350l12 2 M43-351l12-3" stroke="#DE9465" stroke-width="6" stroke-linecap="round"/>
+</g>
+<path d="M-41-317q28 18 55-2l12 17q-31 26-77 1Z" fill="#DF5B42" stroke="#46372E" stroke-width="5"/>
+<g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-48 -170 L45.51 -118.00 L20.00 -11.00" fill="none" stroke="#46372E" stroke-width="43"><animate attributeName="d" values="M-48 -170 L45.51 -118.00 L20.00 -11.00;M-48 -170 L42.49 -112.90 L19.44 -5.34;M-48 -170 L39.08 -107.82 L17.79 0.10;M-48 -170 L35.42 -103.00 L15.11 5.11;M-48 -170 L31.71 -98.62 L11.51 9.51;M-48 -170 L28.17 -94.85 L7.11 13.11;M-48 -170 L25.02 -91.79 L2.10 15.79;M-48 -170 L22.47 -89.49 L-3.34 17.44;M-48 -170 L20.65 -87.93 L-9.00 18.00;M-48 -170 L19.62 -87.08 L-14.66 17.44;M-48 -170 L19.38 -86.88 L-20.10 15.79;M-48 -170 L19.86 -87.27 L-25.11 13.11;M-48 -170 L21.00 -88.22 L-29.51 9.51;M-48 -170 L22.69 -89.68 L-33.11 5.11;M-48 -170 L24.88 -91.66 L-35.79 0.10;M-48 -170 L27.47 -94.15 L-37.44 -5.34;M-48 -170 L30.38 -97.16 L-38.00 -11.00;M-48 -170 L33.53 -100.70 L-37.44 -16.66;M-48 -170 L36.80 -104.74 L-35.79 -22.10;M-48 -170 L40.07 -109.23 L-33.11 -27.11;M-48 -170 L43.20 -114.05 L-29.51 -31.51;M-48 -170 L46.06 -118.99 L-25.11 -35.11;M-48 -170 L48.50 -123.78 L-20.10 -37.79;M-48 -170 L50.46 -128.10 L-14.66 -39.44;M-48 -170 L51.88 -131.62 L-9.00 -40.00;M-48 -170 L52.78 -134.05 L-3.34 -39.44;M-48 -170 L53.19 -135.21 L2.10 -37.79;M-48 -170 L53.12 -135.03 L7.11 -35.11;M-48 -170 L52.60 -133.54 L11.51 -31.51;M-48 -170 L51.59 -130.89 L15.11 -27.11;M-48 -170 L50.09 -127.25 L17.79 -22.10;M-48 -170 L48.06 -122.87 L19.44 -16.66;M-48 -170 L45.51 -118.00 L20.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <path d="M-48 -170 L45.51 -118.00 L20.00 -11.00" fill="none" stroke="#D4553F" stroke-width="34"><animate attributeName="d" values="M-48 -170 L45.51 -118.00 L20.00 -11.00;M-48 -170 L42.49 -112.90 L19.44 -5.34;M-48 -170 L39.08 -107.82 L17.79 0.10;M-48 -170 L35.42 -103.00 L15.11 5.11;M-48 -170 L31.71 -98.62 L11.51 9.51;M-48 -170 L28.17 -94.85 L7.11 13.11;M-48 -170 L25.02 -91.79 L2.10 15.79;M-48 -170 L22.47 -89.49 L-3.34 17.44;M-48 -170 L20.65 -87.93 L-9.00 18.00;M-48 -170 L19.62 -87.08 L-14.66 17.44;M-48 -170 L19.38 -86.88 L-20.10 15.79;M-48 -170 L19.86 -87.27 L-25.11 13.11;M-48 -170 L21.00 -88.22 L-29.51 9.51;M-48 -170 L22.69 -89.68 L-33.11 5.11;M-48 -170 L24.88 -91.66 L-35.79 0.10;M-48 -170 L27.47 -94.15 L-37.44 -5.34;M-48 -170 L30.38 -97.16 L-38.00 -11.00;M-48 -170 L33.53 -100.70 L-37.44 -16.66;M-48 -170 L36.80 -104.74 L-35.79 -22.10;M-48 -170 L40.07 -109.23 L-33.11 -27.11;M-48 -170 L43.20 -114.05 L-29.51 -31.51;M-48 -170 L46.06 -118.99 L-25.11 -35.11;M-48 -170 L48.50 -123.78 L-20.10 -37.79;M-48 -170 L50.46 -128.10 L-14.66 -39.44;M-48 -170 L51.88 -131.62 L-9.00 -40.00;M-48 -170 L52.78 -134.05 L-3.34 -39.44;M-48 -170 L53.19 -135.21 L2.10 -37.79;M-48 -170 L53.12 -135.03 L7.11 -35.11;M-48 -170 L52.60 -133.54 L11.51 -31.51;M-48 -170 L51.59 -130.89 L15.11 -27.11;M-48 -170 L50.09 -127.25 L17.79 -22.10;M-48 -170 L48.06 -122.87 L19.44 -16.66;M-48 -170 L45.51 -118.00 L20.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <g transform="translate(29.00 0.00)"><animateTransform attributeName="transform" type="translate" values="29.00 0.00;28.44 5.66;26.79 11.10;24.11 16.11;20.51 20.51;16.11 24.11;11.10 26.79;5.66 28.44;0.00 29.00;-5.66 28.44;-11.10 26.79;-16.11 24.11;-20.51 20.51;-24.11 16.11;-26.79 11.10;-28.44 5.66;-29.00 0.00;-28.44 -5.66;-26.79 -11.10;-24.11 -16.11;-20.51 -20.51;-16.11 -24.11;-11.10 -26.79;-5.66 -28.44;-0.00 -29.00;5.66 -28.44;11.10 -26.79;16.11 -24.11;20.51 -20.51;24.11 -16.11;26.79 -11.10;28.44 -5.66;29.00 0.00" dur="1.2s" repeatCount="indefinite"/><g transform="translate(0 -9)"><path d="M-24-32 L-4-32-2-15 Q23-13 30-2 L29 7 H-26Z" fill="#403D3A" stroke="#46372E" stroke-width="5"/><path d="M-24-30h20 M-25 1h51" stroke="#ECC86C" stroke-width="5"/></g><path d="M-20 0h40" stroke="#46372E" stroke-width="6"/></g>
+    </g></g>
+<g transform="translate(1038 716)"><g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-59 -163 L38.87 -117.34 L20.00 -11.00" fill="none" stroke="#46372E" stroke-width="57"><animate attributeName="d" values="M-59 -163 L38.87 -117.34 L20.00 -11.00;M-59 -163 L36.22 -112.03 L19.44 -5.34;M-59 -163 L33.22 -106.79 L17.79 0.10;M-59 -163 L30.02 -101.85 L15.11 5.11;M-59 -163 L26.80 -97.41 L11.51 9.51;M-59 -163 L23.75 -93.60 L7.11 13.11;M-59 -163 L21.07 -90.53 L2.10 15.79;M-59 -163 L18.94 -88.23 L-3.34 17.44;M-59 -163 L17.45 -86.71 L-9.00 18.00;M-59 -163 L16.65 -85.92 L-14.66 17.44;M-59 -163 L16.53 -85.81 L-20.10 15.79;M-59 -163 L17.05 -86.32 L-25.11 13.11;M-59 -163 L18.14 -87.41 L-29.51 9.51;M-59 -163 L19.73 -89.08 L-33.11 5.11;M-59 -163 L21.76 -91.29 L-35.79 0.10;M-59 -163 L24.14 -94.07 L-37.44 -5.34;M-59 -163 L26.80 -97.40 L-38.00 -11.00;M-59 -163 L29.64 -101.30 L-37.44 -16.66;M-59 -163 L32.56 -105.72 L-35.79 -22.10;M-59 -163 L35.42 -110.58 L-33.11 -27.11;M-59 -163 L38.10 -115.73 L-29.51 -31.51;M-59 -163 L40.47 -120.92 L-25.11 -35.11;M-59 -163 L42.41 -125.86 L-20.10 -37.79;M-59 -163 L43.90 -130.19 L-14.66 -39.44;M-59 -163 L44.92 -133.58 L-9.00 -40.00;M-59 -163 L45.51 -135.76 L-3.34 -39.44;M-59 -163 L45.72 -136.59 L2.10 -37.79;M-59 -163 L45.58 -136.03 L7.11 -35.11;M-59 -163 L45.08 -134.16 L11.51 -31.51;M-59 -163 L44.19 -131.12 L15.11 -27.11;M-59 -163 L42.87 -127.14 L17.79 -22.10;M-59 -163 L41.10 -122.46 L19.44 -16.66;M-59 -163 L38.87 -117.34 L20.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <path d="M-59 -163 L38.87 -117.34 L20.00 -11.00" fill="none" stroke="#B8803E" stroke-width="48"><animate attributeName="d" values="M-59 -163 L38.87 -117.34 L20.00 -11.00;M-59 -163 L36.22 -112.03 L19.44 -5.34;M-59 -163 L33.22 -106.79 L17.79 0.10;M-59 -163 L30.02 -101.85 L15.11 5.11;M-59 -163 L26.80 -97.41 L11.51 9.51;M-59 -163 L23.75 -93.60 L7.11 13.11;M-59 -163 L21.07 -90.53 L2.10 15.79;M-59 -163 L18.94 -88.23 L-3.34 17.44;M-59 -163 L17.45 -86.71 L-9.00 18.00;M-59 -163 L16.65 -85.92 L-14.66 17.44;M-59 -163 L16.53 -85.81 L-20.10 15.79;M-59 -163 L17.05 -86.32 L-25.11 13.11;M-59 -163 L18.14 -87.41 L-29.51 9.51;M-59 -163 L19.73 -89.08 L-33.11 5.11;M-59 -163 L21.76 -91.29 L-35.79 0.10;M-59 -163 L24.14 -94.07 L-37.44 -5.34;M-59 -163 L26.80 -97.40 L-38.00 -11.00;M-59 -163 L29.64 -101.30 L-37.44 -16.66;M-59 -163 L32.56 -105.72 L-35.79 -22.10;M-59 -163 L35.42 -110.58 L-33.11 -27.11;M-59 -163 L38.10 -115.73 L-29.51 -31.51;M-59 -163 L40.47 -120.92 L-25.11 -35.11;M-59 -163 L42.41 -125.86 L-20.10 -37.79;M-59 -163 L43.90 -130.19 L-14.66 -39.44;M-59 -163 L44.92 -133.58 L-9.00 -40.00;M-59 -163 L45.51 -135.76 L-3.34 -39.44;M-59 -163 L45.72 -136.59 L2.10 -37.79;M-59 -163 L45.58 -136.03 L7.11 -35.11;M-59 -163 L45.08 -134.16 L11.51 -31.51;M-59 -163 L44.19 -131.12 L15.11 -27.11;M-59 -163 L42.87 -127.14 L17.79 -22.10;M-59 -163 L41.10 -122.46 L19.44 -16.66;M-59 -163 L38.87 -117.34 L20.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <g transform="translate(29.00 0.00)"><animateTransform attributeName="transform" type="translate" values="29.00 0.00;28.44 5.66;26.79 11.10;24.11 16.11;20.51 20.51;16.11 24.11;11.10 26.79;5.66 28.44;0.00 29.00;-5.66 28.44;-11.10 26.79;-16.11 24.11;-20.51 20.51;-24.11 16.11;-26.79 11.10;-28.44 5.66;-29.00 0.00;-28.44 -5.66;-26.79 -11.10;-24.11 -16.11;-20.51 -20.51;-16.11 -24.11;-11.10 -26.79;-5.66 -28.44;-0.00 -29.00;5.66 -28.44;11.10 -26.79;16.11 -24.11;20.51 -20.51;24.11 -16.11;26.79 -11.10;28.44 -5.66;29.00 0.00" dur="1.2s" repeatCount="indefinite"/><g transform="translate(0 -9)"><path d="M-28-24 Q-9-29 4-17 Q28-16 32-4 Q34 7 20 7 H-22 Q-34 5-28-24Z" fill="#DDA04B" stroke="#46372E" stroke-width="5"/><path d="M11-4v7 M20-3v6" stroke="#98682F" stroke-width="3"/></g><path d="M-20 0h40" stroke="#46372E" stroke-width="6"/></g>
+    </g><g transform="translate(-160 0)">
+      <circle r="110" fill="#fff9e9" stroke="#46372E" stroke-width="15"/>
+      <circle r="97" fill="#CDE2D0" fill-opacity=".26" stroke="#fff4d9" stroke-width="5"/>
+      <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.4s" repeatCount="indefinite"/>
+        <g stroke="#9BADA5" stroke-width="2.4"><path d="M0 0 L94.00 0.00"/><path d="M0 0 L76.05 55.25"/><path d="M0 0 L29.05 89.40"/><path d="M0 0 L-29.05 89.40"/><path d="M0 0 L-76.05 55.25"/><path d="M0 0 L-94.00 0.00"/><path d="M0 0 L-76.05 -55.25"/><path d="M0 0 L-29.05 -89.40"/><path d="M0 0 L29.05 -89.40"/><path d="M0 0 L76.05 -55.25"/></g>
+        <path d="M-67-79 A104 104 0 0 1-13-103" fill="none" stroke="#F7D279" stroke-width="5" stroke-linecap="round"/>
+        <rect x="-5" y="-81" width="10" height="23" rx="4" fill="#EEAC50" transform="rotate(18)"/>
+      </g><circle r="10" fill="#FFF3CF" stroke="#46372E" stroke-width="5"/>
+    </g><g transform="translate(160 0)">
+      <circle r="110" fill="#fff9e9" stroke="#46372E" stroke-width="15"/>
+      <circle r="97" fill="#CDE2D0" fill-opacity=".26" stroke="#fff4d9" stroke-width="5"/>
+      <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2.4s" repeatCount="indefinite"/>
+        <g stroke="#9BADA5" stroke-width="2.4"><path d="M0 0 L94.00 0.00"/><path d="M0 0 L76.05 55.25"/><path d="M0 0 L29.05 89.40"/><path d="M0 0 L-29.05 89.40"/><path d="M0 0 L-76.05 55.25"/><path d="M0 0 L-94.00 0.00"/><path d="M0 0 L-76.05 -55.25"/><path d="M0 0 L-29.05 -89.40"/><path d="M0 0 L29.05 -89.40"/><path d="M0 0 L76.05 -55.25"/></g>
+        <path d="M-67-79 A104 104 0 0 1-13-103" fill="none" stroke="#F7D279" stroke-width="5" stroke-linecap="round"/>
+        <rect x="-5" y="-81" width="10" height="23" rx="4" fill="#EEAC50" transform="rotate(18)"/>
+      </g><circle r="10" fill="#FFF3CF" stroke="#46372E" stroke-width="5"/>
+    </g>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-160 0-49-145 0 0-160 0 M-49-145 121-155 0 0 M121-155 160 0" stroke="#46372E" stroke-width="19"/>
+      <path d="M-160 0-49-145 0 0-160 0 M-49-145 121-155 0 0 M121-155 160 0" stroke="#E7894F" stroke-width="11"/>
+      <path d="M-49-145-64-183 M121-155 111-194 151-203" stroke="#46372E" stroke-width="9"/>
+      <path d="M143-204h34" stroke="#564137" stroke-width="13"/>
+      <path d="M159-197q-29 13-20 53" stroke="#746A55" stroke-width="2.5"/>
+      <path d="M-112-111Q-166-141-211-108 M117-113q45-19 81 19" stroke="#FFF5D9" stroke-width="7"/>
+      <path d="M-160 0H0" stroke="#827864" stroke-width="5"/>
+    </g>
+    <path d="M-100-190Q-75-198-27-189 Q-21-174-49-175H-87Q-101-178-100-190Z" fill="#584237" stroke="#46372E" stroke-width="5"/>
+    <circle r="28" fill="#FEF1C9" stroke="#46372E" stroke-width="5"/>
+    <g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="1.2s" repeatCount="indefinite"/><path d="M-29 0H29" stroke="#6E7466" stroke-width="8"/><circle r="7" fill="#46372E"/></g>
+    <path d="M16-94 52-108 59-84 24-70Z" fill="#FFF9E7" stroke="#46372E" stroke-width="4"/>
+    
+<!-- 熊二：宽厚身形、浅色肚皮与大口鼻 -->
+<path d="M-109-201Q-146-205-141-176Q-129-157-108-172" fill="#D49A49" stroke="#46372E" stroke-width="6"/>
+<path d="M-82-314Q-19-347 36-294Q78-253 57-202Q32-155-47-151Q-129-154-141-209Q-151-263-112-300Z" fill="#DBA34E" stroke="#46372E" stroke-width="7"/>
+<path d="M-62-299Q-3-320 28-269Q53-224 16-192Q-22-162-66-184Q-99-206-92-249Z" fill="#F7D98E"/>
+<path d="M-119-270l13-10 M-123-250l13-9 M-100-187l12 6" stroke="#B57C35" stroke-width="4" stroke-linecap="round"/>
+<path d="M26-286Q45-263 72-229L143-206" fill="none" stroke="#46372E" stroke-width="53" stroke-linecap="round"/>
+<path d="M26-286Q45-263 72-229L143-206" fill="none" stroke="#D9A04D" stroke-width="41" stroke-linecap="round"/>
+<path d="M120-224Q151-239 164-218L161-197Q139-182 121-204Z" fill="#DFA955" stroke="#46372E" stroke-width="5"/>
+<path d="M139-215l-2 15 M150-214l-2 13" stroke="#A57437" stroke-width="3" stroke-linecap="round"/>
+<g><animateTransform attributeName="transform" type="rotate" values="1 -24 -299;-1 -24 -299;1 -24 -299" dur="1.2s" repeatCount="indefinite"/>
+  <circle cx="-89" cy="-391" r="30" fill="#D19A49" stroke="#46372E" stroke-width="6"/><circle cx="-89" cy="-391" r="16" fill="#A96F39"/>
+  <circle cx="67" cy="-388" r="28" fill="#D19A49" stroke="#46372E" stroke-width="6"/><circle cx="67" cy="-388" r="15" fill="#A96F39"/>
+  <path d="M-109-357Q-118-410-67-429Q-20-450 34-427Q86-405 85-349Q83-294 29-279Q-23-264-77-290Q-113-312-109-357Z" fill="#DCA44E" stroke="#46372E" stroke-width="7"/>
+  <path d="M-51-427q5-26 23-23l-1 13q19-18 31-8l-9 16" fill="#A97236" stroke="#46372E" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M-95-355Q-89-389-59-383Q-28-389-13-364Q2-388 37-381Q70-377 75-347L67-313Q35-284-13-286Q-79-285-96-323Z" fill="#EABB6A"/>
+  <path d="M-80-383q18-13 37-4 M6-388q18-10 35 3" fill="none" stroke="#83582F" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="-53" cy="-364" rx="14" ry="17" fill="#FFF9DE"/><ellipse cx="27" cy="-365" rx="14" ry="17" fill="#FFF9DE"/>
+  <ellipse cx="-48" cy="-362" rx="5.5" ry="9" fill="#46372E"/><ellipse cx="32" cy="-363" rx="5.5" ry="9" fill="#46372E"/>
+  <path d="M-70-333Q-61-357-24-351Q-8-371 19-350Q59-350 70-326Q77-301 44-288Q2-273-42-289Q-75-300-70-333Z" fill="#FFE4A7" stroke="#A3763D" stroke-width="3"/>
+  <path d="M-18-352Q3-362 27-351Q34-336 8-330Q-16-331-18-352Z" fill="#755139" stroke="#46372E" stroke-width="3"/>
+  <ellipse cx="2" cy="-349" rx="10" ry="3.5" fill="#AD8760"/>
+  <path d="M-27-315Q7-292 45-320Q41-287 13-286Q-13-286-27-315Z" fill="#7E4532" stroke="#46372E" stroke-width="3"/>
+  <path d="M-21-312q27 13 57-3l-7 12q-22 7-42-1Z" fill="#FFFEEC"/>
+  <path d="M-2-288q8-13 24-4l5 5" fill="#DC8265"/>
+  <path d="M-81-334l15 3 M61-339l12-2" stroke="#D89054" stroke-width="7" stroke-linecap="round"/>
+</g>
+<!-- 迎风的小绿领巾 -->
+<path d="M-82-298Q-22-274 33-297L40-278Q-22-253-86-277Z" fill="#4D927B" stroke="#46372E" stroke-width="5"/>
+<path d="M-75-289Q-118-304-141-283L-125-261-98-265-79-276Z" fill="#62A58B" stroke="#46372E" stroke-width="4"><animate attributeName="d" values="M-75-289Q-118-304-141-283L-125-261-98-265-79-276Z;M-75-289Q-118-294-144-302L-133-271-98-265-79-276Z;M-75-289Q-118-304-141-283L-125-261-98-265-79-276Z" dur="1.2s" repeatCount="indefinite"/></path>
+<g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M-59 -163 L26.80 -97.40 L-38.00 -11.00" fill="none" stroke="#46372E" stroke-width="57"><animate attributeName="d" values="M-59 -163 L26.80 -97.40 L-38.00 -11.00;M-59 -163 L29.64 -101.30 L-37.44 -16.66;M-59 -163 L32.56 -105.72 L-35.79 -22.10;M-59 -163 L35.42 -110.58 L-33.11 -27.11;M-59 -163 L38.10 -115.73 L-29.51 -31.51;M-59 -163 L40.47 -120.92 L-25.11 -35.11;M-59 -163 L42.41 -125.86 L-20.10 -37.79;M-59 -163 L43.90 -130.19 L-14.66 -39.44;M-59 -163 L44.92 -133.58 L-9.00 -40.00;M-59 -163 L45.51 -135.76 L-3.34 -39.44;M-59 -163 L45.72 -136.59 L2.10 -37.79;M-59 -163 L45.58 -136.03 L7.11 -35.11;M-59 -163 L45.08 -134.16 L11.51 -31.51;M-59 -163 L44.19 -131.12 L15.11 -27.11;M-59 -163 L42.87 -127.14 L17.79 -22.10;M-59 -163 L41.10 -122.46 L19.44 -16.66;M-59 -163 L38.87 -117.34 L20.00 -11.00;M-59 -163 L36.22 -112.03 L19.44 -5.34;M-59 -163 L33.22 -106.79 L17.79 0.10;M-59 -163 L30.02 -101.85 L15.11 5.11;M-59 -163 L26.80 -97.41 L11.51 9.51;M-59 -163 L23.75 -93.60 L7.11 13.11;M-59 -163 L21.07 -90.53 L2.10 15.79;M-59 -163 L18.94 -88.23 L-3.34 17.44;M-59 -163 L17.45 -86.71 L-9.00 18.00;M-59 -163 L16.65 -85.92 L-14.66 17.44;M-59 -163 L16.53 -85.81 L-20.10 15.79;M-59 -163 L17.05 -86.32 L-25.11 13.11;M-59 -163 L18.14 -87.41 L-29.51 9.51;M-59 -163 L19.73 -89.08 L-33.11 5.11;M-59 -163 L21.76 -91.29 L-35.79 0.10;M-59 -163 L24.14 -94.07 L-37.44 -5.34;M-59 -163 L26.80 -97.40 L-38.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <path d="M-59 -163 L26.80 -97.40 L-38.00 -11.00" fill="none" stroke="#DFA14A" stroke-width="48"><animate attributeName="d" values="M-59 -163 L26.80 -97.40 L-38.00 -11.00;M-59 -163 L29.64 -101.30 L-37.44 -16.66;M-59 -163 L32.56 -105.72 L-35.79 -22.10;M-59 -163 L35.42 -110.58 L-33.11 -27.11;M-59 -163 L38.10 -115.73 L-29.51 -31.51;M-59 -163 L40.47 -120.92 L-25.11 -35.11;M-59 -163 L42.41 -125.86 L-20.10 -37.79;M-59 -163 L43.90 -130.19 L-14.66 -39.44;M-59 -163 L44.92 -133.58 L-9.00 -40.00;M-59 -163 L45.51 -135.76 L-3.34 -39.44;M-59 -163 L45.72 -136.59 L2.10 -37.79;M-59 -163 L45.58 -136.03 L7.11 -35.11;M-59 -163 L45.08 -134.16 L11.51 -31.51;M-59 -163 L44.19 -131.12 L15.11 -27.11;M-59 -163 L42.87 -127.14 L17.79 -22.10;M-59 -163 L41.10 -122.46 L19.44 -16.66;M-59 -163 L38.87 -117.34 L20.00 -11.00;M-59 -163 L36.22 -112.03 L19.44 -5.34;M-59 -163 L33.22 -106.79 L17.79 0.10;M-59 -163 L30.02 -101.85 L15.11 5.11;M-59 -163 L26.80 -97.41 L11.51 9.51;M-59 -163 L23.75 -93.60 L7.11 13.11;M-59 -163 L21.07 -90.53 L2.10 15.79;M-59 -163 L18.94 -88.23 L-3.34 17.44;M-59 -163 L17.45 -86.71 L-9.00 18.00;M-59 -163 L16.65 -85.92 L-14.66 17.44;M-59 -163 L16.53 -85.81 L-20.10 15.79;M-59 -163 L17.05 -86.32 L-25.11 13.11;M-59 -163 L18.14 -87.41 L-29.51 9.51;M-59 -163 L19.73 -89.08 L-33.11 5.11;M-59 -163 L21.76 -91.29 L-35.79 0.10;M-59 -163 L24.14 -94.07 L-37.44 -5.34;M-59 -163 L26.80 -97.40 L-38.00 -11.00" dur="1.2s" repeatCount="indefinite"/></path>
+      <g transform="translate(-29.00 0.00)"><animateTransform attributeName="transform" type="translate" values="-29.00 0.00;-28.44 -5.66;-26.79 -11.10;-24.11 -16.11;-20.51 -20.51;-16.11 -24.11;-11.10 -26.79;-5.66 -28.44;-0.00 -29.00;5.66 -28.44;11.10 -26.79;16.11 -24.11;20.51 -20.51;24.11 -16.11;26.79 -11.10;28.44 -5.66;29.00 -0.00;28.44 5.66;26.79 11.10;24.11 16.11;20.51 20.51;16.11 24.11;11.10 26.79;5.66 28.44;0.00 29.00;-5.66 28.44;-11.10 26.79;-16.11 24.11;-20.51 20.51;-24.11 16.11;-26.79 11.10;-28.44 5.66;-29.00 0.00" dur="1.2s" repeatCount="indefinite"/><g transform="translate(0 -9)"><path d="M-28-24 Q-9-29 4-17 Q28-16 32-4 Q34 7 20 7 H-22 Q-34 5-28-24Z" fill="#DDA04B" stroke="#46372E" stroke-width="5"/><path d="M11-4v7 M20-3v6" stroke="#98682F" stroke-width="3"/></g><path d="M-20 0h40" stroke="#46372E" stroke-width="6"/></g>
+    </g></g>
+<!-- 轻快的速度线 -->
+<g fill="none" stroke="#859C7D" stroke-width="4" stroke-linecap="round" opacity=".8"><path d="M83 525h57 M100 541h25 M740 571h45 M752 587h19"><animate attributeName="opacity" values=".3;.9;.3" dur="1.2s" repeatCount="indefinite"/></path></g>
+<g><animateTransform attributeName="transform" type="translate" from="0 0" to="-1440 0" dur="4.95s" repeatCount="indefinite"/><g id="flowers"><g transform="translate(70 853) scale(1)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#FFF8DD"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(210 910) scale(0.7)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#F8CE65"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(560 885) scale(1)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#FFF8DD"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(771 850) scale(0.7)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#FFF8DD"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(1310 870) scale(1)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#F8CE65"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(1170 928) scale(0.6)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#FFF8DD"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g><g transform="translate(930 900) scale(0.7)"><path d="M0 0v-25 M0-10q-16-15-20-5 M0-5q16-17 22-11" stroke="#6C9670" stroke-width="4" fill="none"/><g fill="#FFF8DD"><circle cx="-8" cy="-31" r="8"/><circle cx="7" cy="-31" r="8"/><circle cx="0" cy="-40" r="8"/><circle cx="0" cy="-24" r="8"/></g><circle cy="-32" r="6" fill="#DD9452"/></g></g><use href="#flowers" x="1440"/></g>
+<g transform="translate(675 397) rotate(-8)"><path d="M-65-35h130q16 0 16 16V8q0 16-16 16H-32l-19 19 4-19H-65q-16 0-16-16v-27q0-16 16-16Z" fill="#FFF8DE" stroke="#7B9576" stroke-width="3"/><text y="3" text-anchor="middle" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="22" font-weight="700" fill="#557456">俺也去！</text><animateTransform attributeName="transform" additive="sum" type="translate" values="0 0;0 -5;0 0" dur="2.4s" repeatCount="indefinite"/></g>
+<g font-family="'PingFang SC','Microsoft YaHei',sans-serif" fill="#657B59" font-size="15" font-weight="600" letter-spacing="2"><text x="72" y="922">今日宜 · 结伴兜风</text><text x="1368" y="922" text-anchor="end">山野有风，快乐同行</text></g>
+</g>
+<rect x="16" y="16" width="1408" height="928" rx="38" fill="none" stroke="#E7DFC3" stroke-width="2"/>
+</svg>

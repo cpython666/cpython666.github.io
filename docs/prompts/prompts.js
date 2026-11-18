@@ -174,6 +174,22 @@ export const prompts = [
     "previewNote": "车轮和曲柄在转，双腿保持固定姿势，只随身体上下浮动。"
   },
   {
+    "id": "cycling-wukong-bramble-svg",
+    "title": "齐天大圣和熊二骑自行车",
+    "category": "模型测试",
+    "text": "生成一个动态 SVG，画出齐天大圣和熊二一起骑自行车。",
+    "preview": "/prompt-examples/cycling-wukong-bramble-svg.svg",
+    "previewStatus": "待标注"
+  },
+  {
+    "id": "cycling-proton-svg",
+    "title": "三体质子骑自行车",
+    "category": "模型测试",
+    "text": "生成一个动态 SVG，画出《三体》中的质子骑自行车。",
+    "preview": "/prompt-examples/cycling-proton-svg.svg",
+    "previewStatus": "待标注"
+  },
+  {
     "id": "training-cutoff",
     "category": "模型测试",
     "title": "训练数据截止时间",
