@@ -3,6 +3,13 @@ export const navigationData = [
         title: 'Agent',
         items: [
             {
+                "link": "https://poki.bot/",
+                "icon": "/logos/poki.png",
+                "title": "Poki",
+                "desc": "开源的 iPhone Agent，在手机上阅读屏幕并操作真实应用，用对话完成跨应用任务。",
+                "categories": ["AI", "Agent", "开源"]
+            },
+            {
                 "link": "https://www.deepseek.com/harness/",
                 "icon": "/logos/deepseek-harness.svg",
                 "title": "DeepSeek Harness",
@@ -109,6 +116,13 @@ export const navigationData = [
         title: 'AI代码编程',
         items: [
             {
+                "link": "https://developer.chrome.com/docs/devtools/agents",
+                "icon": "/logos/chrome.png",
+                "title": "Chrome DevTools MCP",
+                "desc": "谷歌官方的 MCP 服务，让编程 Agent 在真实 Chrome 中查看页面、调试并检查运行状态。",
+                "categories": ["AI", "Agent", "开源"]
+            },
+            {
                 "link": "https://copilot.github.com/",
                 "icon": "/logos/copilot.png",
                 "title": "Copilot",
@@ -149,6 +163,13 @@ export const navigationData = [
     {
         title: 'Skill',
         items: [
+            {
+                "link": "https://github.com/storytold/craft-anything",
+                "icon": "/logos/github.png",
+                "title": "Craft Anything",
+                "desc": "开源的 CLI / MCP 工具，查看网站或应用如何实现，再让 Agent 做出自己的版本。需有权检查并遵守许可。",
+                "categories": ["AI", "Skill", "开源"]
+            },
             {
                 "link": "https://github.com/DietrichGebert/ponytail",
                 "icon": "/logos/github.png",
@@ -679,6 +700,13 @@ export const navigationData = [
         title: '前端',
         items: [
             {
+                link: 'https://x.com/guanmo_ai/status/2124714808779972850',
+                icon: '/logos/x.svg',
+                title: '观默 UI 微交互动效合集（第4期）',
+                desc: 'UI 微交互动效演示视频（第 4 期），含纸飞机、滑动确认、环形下载和清单勾选。只有原帖，没有独立官网或仓库。',
+                categories: ['视频', '动效', '灵感']
+            },
+            {
                 icon: '/logos/react.svg',
                 title: 'React',
                 desc: 'The library for web and native user interfaces',
@@ -1204,6 +1232,13 @@ export const navigationData = [
         title: '文档资料',
         items: [
             {
+                "link": "https://cs329z.stanford.edu/",
+                "icon": "/logos/stanford.png",
+                "title": "斯坦福 CS329Z",
+                "desc": "斯坦福公开课程，不是可安装的软件。讲解构建 Agent、工具调用、记忆、多 Agent 和评测，并提供讲义。",
+                "categories": ["文档资料", "Agent", "课程"]
+            },
+            {
                 "link": "https://docs.python.org/",
                 "icon": "/logos/python.png",
                 "title": "Python 官方文档",
@@ -1690,6 +1725,27 @@ export const navigationData = [
     {
         title: '效率工具',
         items: [
+            {
+                "link": "https://calmbar.bujic.cc/",
+                "icon": "/logos/calmbar.png",
+                "title": "CalmBar",
+                "desc": "开源的 macOS 菜单栏面板，把温控、充电上限、剪贴板和录屏收在一处。仅支持 macOS 14 及以上。",
+                "categories": ["效率工具", "macOS", "开源"]
+            },
+            {
+                "link": "https://dbxio.com/cn",
+                "icon": "/logos/dbx.png",
+                "title": "DBX",
+                "desc": "开源数据库客户端，可查询 MySQL、PostgreSQL、MongoDB、Redis，也能通过 MCP 给 Agent 使用。",
+                "categories": ["效率工具", "数据库", "开源"]
+            },
+            {
+                "link": "https://github.com/MobAI-App/simslim",
+                "icon": "/logos/github.png",
+                "title": "SimSlim",
+                "desc": "开源的 macOS 工具，关闭 iOS 等模拟器里开发用不到的后台服务，让同一台 Mac 同时运行更多模拟器。",
+                "categories": ["效率工具", "iOS", "开源"]
+            },
             {
                 "link": "https://www.tampermonkey.net/",
                 "icon": "/logos/tampermonkey.png",

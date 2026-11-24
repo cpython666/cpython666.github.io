@@ -1,13 +1,13 @@
 # 资源导航
 
-站长整理的 541 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
+站长整理的 549 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
 
 ## 分类目录
 
-- Agent（5）
+- Agent（6）
 - AI聊天对话（10）
-- AI代码编程（6）
-- Skill（2）
+- AI代码编程（7）
+- Skill（3）
 - AI模型检测（2）
 - AI图像绘画（11）
 - AI 3D（2）
@@ -17,7 +17,7 @@
 - 编程（14）
 - 比赛（3）
 - 刷题（4）
-- 前端（20）
+- 前端（21）
 - 前端待整理（9）
 - Github项目（5）
 - Python库（4）
@@ -26,14 +26,14 @@
 - 学习文档（4）
 - Python三方库（3）
 - 资源（4）
-- 文档资料（22）
+- 文档资料（23）
 - 娱乐影音（5）
 - 在线工具（12）
 - 抓包工具（13）
 - 接口调试（5）
 - 监控管理（8）
 - 其他工具（8）
-- 效率工具（23）
+- 效率工具（26）
 - 调试运行（16）
 - 代码混淆（12）
 - 指纹相关（20）
@@ -59,6 +59,7 @@
 
 ## Agent
 
+- [Poki](https://poki.bot/)：开源的 iPhone Agent，在手机上阅读屏幕并操作真实应用，用对话完成跨应用任务。 `AI / Agent / 开源`
 - [DeepSeek Harness](https://www.deepseek.com/harness/)：DeepSeek 开源智能体工作台，支持文档、表格、编程与定时任务，可通过插件扩展能力。 `AI / Agent / 开源`
 - [OpenClaw（小龙虾）](https://openclaw.ai/)：可在本机运行的开源 AI 助手，通过聊天应用处理邮件、日程和自动化任务。 `AI / Agent / 开源`
 - [WorkBuddy](https://www.workbuddy.cn/)：腾讯 AI 办公工作台，用自然语言完成文件处理与内容制作，支持多智能体协作。 `AI / Agent / 办公`
@@ -80,6 +81,7 @@
 
 ## AI代码编程
 
+- [Chrome DevTools MCP](https://developer.chrome.com/docs/devtools/agents)：谷歌官方的 MCP 服务，让编程 Agent 在真实 Chrome 中查看页面、调试并检查运行状态。 `AI / Agent / 开源`
 - [Copilot](https://copilot.github.com/)：GitHub Copilot 是 GitHub 与 OpenAI 共同推出的一款 AI 编程工具，它基于 GitHub 及其他网站的源代码，可根据上文提示为程序员自动编写下文代码。
 - [Cursor](https://www.cursor.so/)：Cursor 是一个可以与用户聊天的代码编辑器，它可以根据用户的输入来生成、修改和优化代码，无论是简单的变量声明，还是复杂的算法实现，Cursor都可以快速地给出合适的代码 。Cursor还可以提供实时的代码分析、错误检测、文档查询等功能，让你在编程过程中更加轻松和愉快 。
 - [CodeGeeX](https://codegeex.cn/)：CodeGeeX 是清华和智谱 AI 联合打造的多语言代码生成模型。
@@ -89,6 +91,7 @@
 
 ## Skill
 
+- [Craft Anything](https://github.com/storytold/craft-anything)：开源的 CLI / MCP 工具，查看网站或应用如何实现，再让 Agent 做出自己的版本。需有权检查并遵守许可。 `AI / Skill / 开源`
 - [Ponytail](https://github.com/DietrichGebert/ponytail)：Ponytail 是一个面向多种 AI 编码助手的跨平台技能库与插件项目，聚焦把可复用的 agent skill、规则和工作流沉淀下来。 `Skill / Agent Skill / GitHub`
 - [Holo Card Studio](https://github.com/EverettFish/holo-card-studio)：用于创建全息卡片效果的开源 Skill 项目。 `Skill / GitHub`
 
@@ -185,6 +188,7 @@
 
 ## 前端
 
+- [观默 UI 微交互动效合集（第4期）](https://x.com/guanmo_ai/status/2124714808779972850)：UI 微交互动效演示视频（第 4 期），含纸飞机、滑动确认、环形下载和清单勾选。只有原帖，没有独立官网或仓库。 `视频 / 动效 / 灵感`
 - [React](https://react.dev/)：The library for web and native user interfaces `前端 / React / Web`
 - [Vue](https://cn.vuejs.org/)：渐进式JavaScript 框架，易学易用，性能出色，适用场景丰富的 Web 前端框架。 `前端 / Vue / Web`
 - [Vercel](https://vercel.com/)：构建和部署最好的Web体验。 `前端 / 免费 / 博客`
@@ -277,6 +281,7 @@
 
 ## 文档资料
 
+- [斯坦福 CS329Z](https://cs329z.stanford.edu/)：斯坦福公开课程，不是可安装的软件。讲解构建 Agent、工具调用、记忆、多 Agent 和评测，并提供讲义。 `文档资料 / Agent / 课程`
 - [Python 官方文档](https://docs.python.org/)：Python 官方文档
 - [Golang 官方文档](https://go.dev/doc/)：Golang 官方文档。
 - [Java 官方文档](https://docs.oracle.com/en/java/)：Java 官方文档。
@@ -371,6 +376,9 @@
 
 ## 效率工具
 
+- [CalmBar](https://calmbar.bujic.cc/)：开源的 macOS 菜单栏面板，把温控、充电上限、剪贴板和录屏收在一处。仅支持 macOS 14 及以上。 `效率工具 / macOS / 开源`
+- [DBX](https://dbxio.com/cn)：开源数据库客户端，可查询 MySQL、PostgreSQL、MongoDB、Redis，也能通过 MCP 给 Agent 使用。 `效率工具 / 数据库 / 开源`
+- [SimSlim](https://github.com/MobAI-App/simslim)：开源的 macOS 工具，关闭 iOS 等模拟器里开发用不到的后台服务，让同一台 Mac 同时运行更多模拟器。 `效率工具 / iOS / 开源`
 - [Tampermonkey](https://www.tampermonkey.net/)：Tampermonkey，又称作油猴，篡改猴，允许用户自定义并增强网页的功能。
 - [v_jstools](https://github.com/cilame/v_jstools)：v 神出品的用于快速调试 JS 代码的插件，内置 dom 对象 hook、pac 代理、AST 解混淆、代码模板等强大功能。
 - [ReRes](https://github.com/annnhan/ReRes)：把远程 css 文件或者 js 映射到本地的文件上，通过修改本地文件进行调试和开发。
