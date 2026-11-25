@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8f4">
+  <title>九宫格切图 · 星梦启航</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="brand"><span class="brand-star">✳</span> 星梦启航 <span class="edition">创作小工具</span></div>
+      <div class="eyebrow">01 / PHOTO PLAYGROUND</div>
+      <h1>一张照片，<br>拼出<span>九分心动。</span></h1>
+      <p>把喜欢的画面切成小小的拼图，<br>让每一格都有故事。</p>
+      <div class="hero-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i>✦</i><i></i><i></i><i></i><i></i></div>
+    </header>
+
+    <section class="panel">
+      <div class="section-head"><h2><span class="step">1</span> 选一张喜欢的照片</h2><span class="small-label">本地处理</span></div>
+      <label class="upload-zone" for="photo-input">
+        <span class="upload-icon" aria-hidden="true">＋</span>
+        <strong>点这里，放入你的照片</strong>
+        <span>JPG、PNG、WebP 等浏览器可读图片 · 20MB 内</span>
+        <input id="photo-input" type="file" accept="image/*">
+      </label>
+      <p id="photo-info" class="hint">照片准备好后，就能预览切割效果。</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><h2><span class="step">2</span> 选一个拼图方式</h2><span class="small-label">行 × 列</span></div>
+      <div id="presets" class="segments" role="group" aria-label="切图预设">
+        <button type="button" data-rows="3" data-cols="3" aria-pressed="true">九宫格 <small>3 × 3</small></button>
+        <button type="button" data-rows="1" data-cols="3" aria-pressed="false">三连图 <small>1 × 3</small></button>
+        <button type="button" data-rows="2" data-cols="2" aria-pressed="false">四宫格 <small>2 × 2</small></button>
+      </div>
+      <div class="custom-grid">
+        <span>自由分格</span>
+        <label>行 <input id="rows" type="number" min="1" max="12" step="1" value="3" inputmode="numeric"></label>
+        <span aria-hidden="true">×</span>
+        <label>列 <input id="cols" type="number" min="1" max="12" step="1" value="3" inputmode="numeric"></label>
+      </div>
+      <p class="hint">每项 1–12，最多 36 格。保留原图比例，从左上角依次编号。</p>
+      <div id="preview-empty" class="empty-preview"><span aria-hidden="true">▦</span><p>你的照片，会在这里变成拼图</p></div>
+      <canvas id="preview" class="image-preview" aria-label="带切割线的图片预览" hidden></canvas>
+      <button id="generate" class="button primary wide" type="button" disabled>生成我的切片 <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section id="result-panel" class="panel" hidden>
+      <div class="section-head"><h2><span class="step">3</span> 把这一刻分享出去</h2><span id="result-count" class="small-label"></span></div>
+      <div id="results" class="slice-results"></div>
+      <p class="hint">按编号顺序保存。相册中的展示顺序由系统决定。</p>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite">先选照片，再把好看的瞬间分成几格。</p>
+    <footer class="page-footer">一点灵感，一点星光。<span>MADE WITH 星梦启航</span></footer>
+  </main>
+  <div class="export-bar">
+    <div id="export-groups" class="export-groups"></div>
+    <div class="export-actions"><button id="save" class="button secondary" type="button" disabled>全部存相册</button><button id="post" class="button primary" type="button" disabled>带图发笔记 ↗</button></div>
+  </div>
+  <script src="./xhs.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

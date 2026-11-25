@@ -1615,6 +1615,25 @@ export const navigationData = [
         ]
     },
     {
+        title: '网站统计',
+        items: [
+            {
+                "link": "https://analytics.google.com/analytics/web/",
+                "icon": "/logos/google-analytics.svg",
+                "title": "Google Analytics",
+                "desc": "谷歌的网站与应用流量分析工具，用于查看访问数据、了解用户行为并评估营销效果。",
+                "categories": ["流量统计", "用户分析", "谷歌"]
+            },
+            {
+                "link": "https://clarity.microsoft.com/projects",
+                "icon": "/logos/microsoft-clarity.ico",
+                "title": "Microsoft Clarity",
+                "desc": "微软的免费网站行为分析工具，提供点击与滚动热图、会话回放，帮助发现用户体验问题。",
+                "categories": ["流量统计", "热图", "会话回放", "微软"]
+            },
+        ]
+    },
+    {
         title: '监控管理',
         items: [
             {

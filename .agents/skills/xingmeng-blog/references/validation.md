@@ -12,6 +12,7 @@
 - 合理验证层级：目标 JS 语法 / Vue SFC 编译 → 独立页面交互 → 与改动有关的桌面及手机布局。只有确有需要时才扩展测试范围。
 - 经用户授权从 SQL 恢复文章时，只提取目标表/记录，不执行整个 SQL、不输出无关数据或整份备份；正确反转义 SQL 字符串，比较多份备份及恢复正文的哈希，再验证页面公开/会员标记与链接。备份留在原位置，不复制进站点公开目录。
 - 构建脚本存在并不意味着本任务已经执行完整构建；报告明确区分静态检查、隔离检查和线上验证。
+- Clarity 分析先核对日期、域名与机器人排除口径；“已访问 URL”筛选的是包含目标页面的会话，不能据此声称排除了本人在线访问或所有非生产页面。性能卡 LCP/INP/CLS 为 P75，保留其有效页面浏览样本数；快速后退不等于跳出率。只查看聚合数据，不通过录制或热图绕过会员正文限制；后台数字、访客标识和会话详情不写入公开仓库。
 
 ## 已有检查
 
@@ -21,11 +22,13 @@
 
 - 2026-11-10 推荐区视觉改版：3 份 Vue SFC 编译通过；实际 8080 开发站的首页、关于页、支持页、中转教程，在 2470/1440/768/390/320px × 明暗主题共 40 种组合无页面或正文控件横溢、无 Vite 错误遮罩；首页 10 卡、7 个静态封面，中转教程 3 卡。推广/开源链接保持原邀请地址、rel 与新窗口，Tab 可移到下一开源卡并显示焦点；装饰示意 `aria-hidden` 且无内嵌可聚焦控件，减弱动态效果下卡片过渡关闭。文章正文缩进未侵入卡片，图标 lazy/async；5 张图标合计 5,694 字节。用户反馈后三张赞助改回原品牌横幅，480×200 无损 WebP 合计 88,954 字节；首页/关于/支持页在 1440/900/768/390/320px × 明暗主题 30 种组合通过图片加载、12:5 完整展示及无横溢检查，赞助 Tab 焦点可见；产品顺序已实测为 XFastAPI → WildAI · Bewild → HeyRoute → FastAI。未运行全站构建或正文索引。Ego 浏览器通过 CDP 设置的视口在下一次脚本调用会恢复，截图和尺寸断言须与视口设置放在同一次调用，不能只根据截图文件名判断手机验收。
 
-- `/tools/` 迁移：`check-tool-seo.mjs` 验证8个新地址 canonical/sitemap、7工具 WebApplication、8旧壳同步head脚本/0秒refresh/新canonical及排除旧sitemap；`check-resource-pages.mjs --tools-only` 验证旧8页直达/SPA/index.html别名、返回历史、旧根全部工具hash、query/指南/未知hash及无JS跳转，并通过原交互和手机明暗回归。真实 ArticleHits 由人工SVG拦截，确认新7工具沿用旧计数键、旧壳无计数节点；GA专项检查确认旧壳直达/SPA均不初始化或增加PV。完整8080开发站已核对旧hash和独立index.html带参数/中文锚点跳到新页，工具导航、唯一h1与页面宽度正常。工具SEO脚本已改为逐字节frontmatter前置检查，LF/CRLF人工受限样本确认不预读正文；未运行本地全站构建。
+- Markdown 转图片（2026-10-28）：`parseMarkdown`/`layoutMarkdown` 在 Node 里用假 measure 跑通标题、段落、列表、引用、代码块与分隔线；实际 8080 开发站用 Playwright 验证首屏自动渲染 1800×N（900 CSS px、2 倍）、浅/深主题背景像素、720/900 宽度切换、`下载 PNG` 真实下载文件名、空输入隐藏预览并禁用下载、计数地址为 `/cpython666.github.io/tools/markdown-image.svg`、1440/390/320px 无横溢且控件不越界，无 pageerror/hydration 报错（被拦截的第三方请求除外）。导出的浅色与深色 PNG 已目视核对标题层级、列表圆点、删除线、行内代码底纹、链接下划线与代码块两行换行；`check-tool-seo.mjs` 与 `check-resource-pages.mjs --tools-only` 均 PASS（8 工具）。回归脚本本轮顺带修了两处：注释掉的 `imgs/bg/1.jpg` 缺失时不能因非 ENOENT 的 code 崩溃，fixture 需复制 `markdownImage.js` 与 `PanelMarkdownImage.vue`。未运行全站构建、未提交发布。
+
+- `/tools/` 迁移：`check-tool-seo.mjs` 验证9个新地址 canonical/sitemap、8工具 WebApplication、8旧壳同步head脚本/0秒refresh/新canonical及排除旧sitemap；`check-resource-pages.mjs --tools-only` 验证旧8页直达/SPA/index.html别名、返回历史、旧根全部工具hash、query/指南/未知hash及无JS跳转，并通过原交互和手机明暗回归。真实 ArticleHits 由人工SVG拦截，确认工具页计数使用 `/tools/<pageId>` 路径（2026-10-28 起不再映射旧键）、旧壳无计数节点；GA专项检查确认旧壳直达/SPA均不初始化或增加PV。完整8080开发站已核对旧hash和独立index.html带参数/中文锚点跳到新页，工具导航、唯一h1与页面宽度正常。工具SEO脚本已改为逐字节frontmatter前置检查，LF/CRLF人工受限样本确认不预读正文；未运行本地全站构建。
 
 - 2026-10-27 项目详情页全量：15 个 GitHub 项目详情页（含 Handwriting）在完整 8080 开发站逐页检查；20 个项目卡片的标题/主按钮均指向站内详情，15 个有 GitHub 仓库的卡片保留 `_blank` GitHub 按钮，5 个教程合集复用系列页且无 GitHub 按钮；IPProxyPool 原错误链接已改到 IPProxyPoolPro。所有详情路由和 32 个内部链接返回 200，页面自身图片实际加载。15 页在 1440/390/320px 无横向溢出、唯一 h1、无浏览器控制台错误；Handwriting 的 Python/Rust 代码组、各页 Quick Start 锚点（点击后约 110px，位于顶栏下方）和明暗主题抽查通过。重启 8080 后 local search 已能检索到代理池、StarDream 和字幕提取器等新详情页。全量隔离 VitePress 生产构建（项目和全部详情页，public 资产以软链接提供）通过 SSR；临时脚本用真实 config hooks 检查 15 页 canonical/description/og:type/SoftwareApplication/sameAs/sitemap 和 frontmatter 图片存在。`--projects-only` 回归用 fixture-only Spider-Project 重复项保留轮播去重覆盖，并断言全部卡片标题/主按钮进入站内详情；`check-tool-seo.mjs` 与 `skill:check` 通过。未运行全站构建、未部署。
 
-- `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。2026-10-27 正式站已验证单脚本、URL 工具→O10 各一次 PV，后台实时报告显示两页浏览及 `page_view`，确认端到端收数；验收流量属于真实生产统计，不当作自然增长。
+- `node scripts/check-google-analytics.mjs`：只用真实 GA 组合函数和人工 VitePress 页面，拦截全部 Google 请求。生产 SSR 构建、首屏/SPA/返回各一次 PV、当前标题与净化 referrer、单脚本/config、query/hash 不额外计数、本地生产预览和正式域名代理下的开发模式不初始化均通过，无浏览器错误；不能用 mock 队列通过代替正式 GA4 收数确认。2026-10-27 正式站已验证单脚本、URL 工具→O10 各一次 PV，后台实时报告显示两页浏览及 `page_view`，确认端到端收数；验收流量属于真实生产统计，不当作自然增长。同日晚复核实测：首页与 `/navigation/` 各一次 `page_view`，页面地址和标题正确，脚本仍为单实例，统计 Cookie 已写入且请求使用配置的数据流；后台实时已有事件而首页仍提示未收数据，判为新属性处理延迟。次日复查首页已出数且提示消失，确认前一天为处理延迟，首日约 12–18 小时；后台聚合数字不写入公开仓库。
 
 - Node 24 升级（2026-10-27）：官方发布页确认最新 LTS 为 `24.22.1`、26 当时仍为 Current；该版本包含 10 月安全修复。工作流仅调整 `setup-node@v7` 与 `node-version: '24.22.1'`，发布步骤不变。下载官方 Darwin arm64 包并核对发布页 SHA-256 后，在临时目录以 Node 24.22.1 / npm 11.19.1 执行 `npm ci --engine-strict --no-audit --no-fund`，成功安装且 manifest/lock 哈希不变；锁定 VitePress 1.6.4、Vite 5.4.21、Playwright 1.61.1、Waline 3.13.0。7 个公开工具和人工提示词页面的隔离生产构建/Playwright、O10、实际 SEO hooks 和 GEO `skill:check` 均通过。未运行全站构建、Linux CI 或部署，不能据此声称线上已升级。
 - `node scripts/check-waline.mjs`：只复制真实 `WalineComment.vue` 与评论显示规则，使用 4 个人工 Markdown 页面和隔离 VitePress 生产构建。Node 24.22.1 下真实 Waline 动态 JS/CSS、编辑框输入、SPA 路径更新及单实例、`comment: false`/首页隐藏通过，无浏览器或 hydration 错误。所有外部请求拦截并返回人工数据，不发送评论，不代表真实 Vercel 后端的登录或提交验收。
@@ -67,7 +70,7 @@
 - 会员介绍页另用仅含公开 `docs/vip/index.md`、VipBtn 和全局 CSS 的隔离 fixture 验证：320/390/760/761/1024/1440/2560px 页面与激活区正常，表格长链接换行后320px内容宽从303px降至248px，与表格可视宽一致。未提供真实激活配置，未打开文章链接。
 - 2026-10-16 宝典恢复检查：两份 SQL 的正式正文反转义后均为326字符/682字节，恢复后的原文哈希一致，吾爱破解条目另行追加；仅用 VitePress Markdown 渲染器处理目标两页，确认说明公开、正文会员可见、原书籍链接与新增软件链接存在、侧边栏及 VIP 列表指向正确，未运行全站构建或真实 loader。
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。完整开发服务曾因 `@waline/client` 尚未安装而失败，按锁文件执行 `npm ci --no-audit --no-fund` 后恢复，`package.json` / `package-lock.json` 不变。Skill 格式检查需要 PyYAML，可用 `uv run --with pyyaml python <quick_validate.py> .agents/skills/xingmeng-blog`，无需为此修改项目依赖。
-- 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
+- 页面隔离 fixture 的首页还需复制 `RecommendationCards.vue`、`RecommendationVisual.vue`、`recommendations.js`，从推荐数据收集 `cover`/`logo` 对应图片；只复制 `SponsorsLinks.vue` 会缺依赖。Markdown 图片空态检查 canvas 实际可见性及下载禁用状态，不依赖旧版父元素的 `display` 结构。fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
 - 验证构建产物（robots/feed/llms/sitemap/JSON-LD）时用“替身文章”整站构建：复制 `docs/` 到临时目录，Markdown 只按 frontmatter 识别会员并全部换成占位正文（会员页只写 `memberOnly: true` 和占位标记），再链接 `node_modules` 运行 `vitepress build`；检查产物中会员占位标记出现 0 次。2026-10-20 用此法验证 307 篇（16 篇会员）通过，约 15 秒。
 - 云端环境 `npm ci` 卡住时，锁文件 resolved 指向被拦截的 `registry.npmmirror.com`；用 `npm ci --registry=https://registry.npmjs.org/ --replace-registry-host=always`，不改锁文件。
@@ -84,7 +87,9 @@
 | 非文章页面结构化数据 | 独立工具页已按 `tool: true` 输出 `WebApplication`；其余非首页页面仍默认 `BlogPosting` | 待办：导航、项目、工具总入口等按类型改为合适的页面 schema |
 | 构建环境维护 | 工作流使用 Node 24.22.1 / setup-node v7，隔离兼容检查通过；2026-10-27 master 的 GitHub Pages 工作流已完成安装、VitePress 构建和部署；只有 master 推送及手动运行入口 | PR 检查方案待定，不自动触发发布 |
 | 既有依赖安全告警 | 2026-10-27 官方 npm registry audit 报 8 个受影响包项（6 high、2 moderate，包含传递依赖及上游传播项），涉及 Vue SSR、Vite/esbuild、PostCSS/nanoid/source-map-js；不等于 8 个独立漏洞或线上已可利用 | 待定：另行核对实际可达性与最小依赖修复；本轮仅升级 Node，禁止为清除告警直接运行 `npm audit fix --force` |
-| 统计请求精简 | 目前同时接入 GA4、Clarity、百度、51.LA 与 hits.sh | 待定：按实际使用的统计报表决定保留项 |
+| 统计请求精简 | 目前同时接入 GA4、Clarity、百度、51.LA 与 hits.sh，计数口径不同 | 待定：按实际使用的统计报表决定保留项，不将 hits.sh 图片计数当作 Clarity 独立访客 |
+| 统计开发流量隔离 | `config.mjs` 全局加载 `/js/clarity.js`，注入脚本没有生产域名或开发环境判断；后台已出现本地地址。`ArticleHits.vue` 计数地址也固定使用生产域名 | 待办：隔离本地预览和自动化验收流量，修复前分析先筛选正式域名；本人在线访问排除方式待定 |
+| 关键业务转化埋点 | 源码未接入 Clarity 自定义事件或标签，无法据此确认工具成功、复制成功、分享或会员转化 | 待定：明确转化目标后补事件与漏斗，不把自动智能事件直接等同业务成功 |
 | X 备份增量与字段完整性 | 2026-10-18 运行 `backup:x --handle wufantouzi`：新增 4 条（均为 10-17 当天，各 3 条可见评论），正文与评论已落盘，但这 4 条的 `createdAt`/`visibleTime`/`metrics` 为空，时间戳被并入正文末尾（如「19:42 · 2026年10月17日」）；归档原覆盖 2026-02-12 至 07-03（6 月单月 92 条），07-04 至 10-16 无任何记录 | 待核对：主页该时段是否确无帖子；若确有，需针对性重采（不得用 `--reset`），并排查时间/互动字段的解析 |
 
 默认 npmmirror 未实现安全审计端点（404）；依赖审计改用 `npm audit --registry=https://registry.npmjs.org`，不修改全局 registry。2026-10-27 已取得上表结果；审计告警与实际可利用性分开判断。

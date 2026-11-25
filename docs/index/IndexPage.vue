@@ -151,7 +151,6 @@ onBeforeUnmount(() => {
 
   color: white;
   filter: blur(5px);
-  font-size: 36px;
   z-index: 1;
 }
 
@@ -167,7 +166,6 @@ onBeforeUnmount(() => {
   background-size: contain;
   background-position: center;
   color: white;
-  font-size: 36px;
   z-index: 2;
   background-repeat: no-repeat;
 }
@@ -186,13 +184,13 @@ onBeforeUnmount(() => {
   background-size: contain;
   background-position: center;
   color: white;
-  font-size: 36px;
   z-index: 2;
   background-repeat: no-repeat;
 }
 
 .content {
   position: relative;
+  width: min(1000px, calc(100% - 32px));
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -202,8 +200,7 @@ onBeforeUnmount(() => {
 
 #box {
   position: relative;
-  width: auto;
-  height: auto;
+  min-width: 0;
   border-radius: 20px;
   background: linear-gradient(to right bottom, rgba(162, 158, 158, 0.6), rgba(236, 228, 228, 0.1));
   backdrop-filter: blur(2px);
@@ -211,11 +208,10 @@ onBeforeUnmount(() => {
   border-top: 1px solid rgba(255, 255, 255, 0.8);
   border-left: 1px solid rgba(255, 255, 255, 0.8);
 
-  height: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 10px;
+  min-height: 2.2em;
+  padding: 0.35em 0.65em;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* 定义闪烁和缩放动画 */
@@ -254,6 +250,15 @@ onBeforeUnmount(() => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  max-width: 100%;
+  gap: 0.15em;
+  font-size: clamp(1.125rem, 0.75rem + 2vw, 2.25rem);
+  line-height: 1.5;
+}
+
+#box-cursor :deep(.typed-cursor) {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 @keyframes rotate {

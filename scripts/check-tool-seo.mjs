@@ -36,12 +36,14 @@ for (const newline of ['\n', '\r\n']) {
   assert.equal(offset, Buffer.byteLength(header))
 }
 
-const ids = ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit']
+const ids = ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit', 'markdown-image']
+// markdown-image 是迁移后才上线的工具，没有 /spider-tools/ 旧地址和跳转壳。
+const legacyIds = ids.filter(id => id !== 'markdown-image')
 const output = await mkdtemp(join(tmpdir(), 'tool-seo-check-'))
 const origin = 'https://cpython666.github.io'
 try {
   for (const folder of ['tools', 'spider-tools']) {
-    for (const id of ['', ...ids]) {
+    for (const id of ['', ...(folder === 'tools' ? ids : legacyIds)]) {
       const suffix = id ? `${id}/` : ''
       const page = `${folder}/${suffix}index.md`
       const path = new URL(`../docs/${page}`, import.meta.url)

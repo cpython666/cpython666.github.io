@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8f4">
+  <title>文字卡片 · 星梦启航</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="brand"><span class="brand-star">✳</span> 星梦启航 <span class="edition">创作小工具</span></div>
+      <div class="eyebrow">02 / WORDS TO KEEP</div>
+      <h1>让你的文字，<br><span>有一张好看的脸。</span></h1>
+      <p>灵感、日常、认真写下的心情，<br>都值得装进一张卡片里。</p>
+      <span class="card-decoration" aria-hidden="true">Aa<span>✧</span></span>
+    </header>
+
+    <section class="panel">
+      <div class="section-head"><h2><span class="step">1</span> 写下这一刻</h2><div class="text-actions"><button id="sample" class="text-button" type="button">试试示例 ↗</button><button id="clear-sample" class="text-button" type="button">清空示例</button></div></div>
+      <div id="formats" class="segments compact" role="group" aria-label="文字格式">
+        <button type="button" data-format="markdown" aria-pressed="true">Markdown</button>
+        <button type="button" data-format="plain" aria-pressed="false">纯文字</button>
+      </div>
+      <label class="field-label editor-label" for="source">正文</label>
+      <textarea id="source" class="text-input" rows="9" maxlength="30000" spellcheck="false" placeholder="# 今天也有小小的美好&#10;&#10;把你的文字粘贴到这里。支持标题、列表、引用和代码块。"></textarea>
+      <div class="option-row input-footer"><span id="char-count" class="hint">0 / 30000 字符</span><button id="ai-polish" class="text-button" type="button" hidden>✦ 润色成小红书文案</button></div>
+      <div id="ai-review" class="ai-review" hidden>
+        <label class="field-label" for="ai-result">AI 建议 · 应用后可继续编辑</label>
+        <textarea id="ai-result" class="text-input" rows="6"></textarea>
+        <div class="ai-actions"><button id="ai-apply" class="button secondary" type="button">应用建议</button><button id="ai-dismiss" class="text-button" type="button">收起</button></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><h2><span class="step">2</span> 给文字挑件衣服</h2><span class="small-label">系统字体 · 高清 2×</span></div>
+      <div id="themes" class="theme-options" role="group" aria-label="卡片主题">
+        <button type="button" data-theme="cream" aria-pressed="true"><span class="swatch cream">Aa</span><strong>奶油手帐</strong><small>温柔，有呼吸感</small></button>
+        <button type="button" data-theme="white" aria-pressed="false"><span class="swatch white">Aa</span><strong>极简白</strong><small>让内容站中间</small></button>
+        <button type="button" data-theme="night" aria-pressed="false"><span class="swatch night">Aa</span><strong>深夜墨色</strong><small>留给安静的想法</small></button>
+      </div>
+      <label class="field-label spacing-top">图片尺寸</label>
+      <div id="sizes" class="segments compact" role="group" aria-label="图片尺寸">
+        <button type="button" data-mode="portrait" aria-pressed="true">3:4 <small>小红书默认</small></button>
+        <button type="button" data-mode="square" aria-pressed="false">1:1 <small>方形卡片</small></button>
+        <button type="button" data-mode="long" aria-pressed="false">长图 <small>顺着文字展开</small></button>
+      </div>
+      <button id="generate" class="button primary wide" type="button">生成全部高清图片 <span aria-hidden="true">↗</span></button>
+      <p class="hint">输入和主题变化会实时更新预览。长文按完整文字行分页；生成全部图片后可导出。</p>
+    </section>
+
+    <section id="result-panel" class="panel preview-panel" hidden>
+      <div class="section-head"><h2><span class="step">3</span> 实时预览</h2><span id="result-size" class="small-label"></span></div>
+      <img id="card-preview" class="card-preview" alt="文字卡片实时预览">
+      <div class="pager"><button id="previous" type="button" aria-label="上一张">←</button><span id="page-number"></span><button id="next" type="button" aria-label="下一张">→</button></div>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite">写一点文字，给灵感一个落脚的地方。</p>
+    <footer class="page-footer">认真写下的，都值得被看见。<span>MADE WITH 星梦启航</span></footer>
+  </main>
+  <div class="export-bar"><div id="export-groups" class="export-groups"></div><div class="export-actions"><button id="save" class="button secondary" type="button" disabled>全部存相册</button><button id="post" class="button primary" type="button" disabled>带图发笔记 ↗</button></div></div>
+  <script src="./xhs.js"></script>
+  <script src="./markdown-renderer.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

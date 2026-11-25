@@ -908,6 +908,12 @@ let backup_items = [
 ];
 const tech_daily_items = [
   { text: "专栏目录", link: "/tech-daily/" },
+  { text: "017 · 苹果智能在华定档，Grok支持支付宝", link: "/tech-daily/2026-11-01" },
+  { text: "016 · Claude插件被植后门，英特尔暴跌28.6%", link: "/tech-daily/2026-10-31" },
+  { text: "015 · 币安疑遭黑客攻击，谷歌创最大单日跌幅", link: "/tech-daily/2026-10-30" },
+  { text: "014 · Gemini4发布，赛博现实：人类上班教机器人", link: "/tech-daily/2026-10-29" },
+  { text: "013 · 两家AI挑战ETH，苹果上新M6iMac", link: "/tech-daily/2026-10-28" },
+  { text: "012 · Terra新模型发布，Anthropic申请上市", link: "/tech-daily/2026-10-27" },
   { text: "011 · Cloudflare开源漏洞审计Skill，南北阁发布33B模型", link: "/tech-daily/2026-10-26" },
   { text: "010 · Java更新证书信任库，LiteLLM恢复发版", link: "/tech-daily/2026-10-25" },
   { text: "009 · Kimi新模型上线，PHP又披露特殊配置漏洞", link: "/tech-daily/2026-10-24" },

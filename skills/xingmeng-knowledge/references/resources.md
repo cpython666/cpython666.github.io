@@ -1,6 +1,6 @@
 # 资源导航
 
-站长整理的 549 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
+站长整理的 551 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
 
 ## 分类目录
 
@@ -31,6 +31,7 @@
 - 在线工具（12）
 - 抓包工具（13）
 - 接口调试（5）
+- 网站统计（2）
 - 监控管理（8）
 - 其他工具（8）
 - 效率工具（26）
@@ -351,6 +352,11 @@
 - [Apipost](https://www.apipost.cn/)：Apipost 是集 API 设计、API 调试、API 文档、自动化测试为一体的 API 研发协同平台,支持 grpc、http、websocket、socketio、socketjs 类型接口调试，支持私有化部署。
 - [Apifox](https://apifox.com/)：Apifox - API 文档、调试、Mock、测试一体化协作平台。拥有接口文档管理、接口调试、Mock、自动化测试等功能，接口开发、测试、联调效率，提升 10 倍。最好用的接口文档管理工具，接口自动化测试工具。
 - [Eolink](https://www.eolink.com/)：Eolink 致力于打造一站式、智能化的 API 全生命周期解决方案，为企业用户提供完善的 API 接口管理、API 规范化治理、API 研发流程优化、API 性能和安全保障、API 数据服务开放及交易等创新服务。
+
+## 网站统计
+
+- [Google Analytics](https://analytics.google.com/analytics/web/)：谷歌的网站与应用流量分析工具，用于查看访问数据、了解用户行为并评估营销效果。 `流量统计 / 用户分析 / 谷歌`
+- [Microsoft Clarity](https://clarity.microsoft.com/projects)：微软的免费网站行为分析工具，提供点击与滚动热图、会话回放，帮助发现用户体验问题。 `流量统计 / 热图 / 会话回放 / 微软`
 
 ## 监控管理
 
