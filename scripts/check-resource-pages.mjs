@@ -43,7 +43,9 @@ for (const newline of ['\n', '\r\n']) {
 
 const root = resolve(import.meta.dirname, '..')
 const toolsOnly = process.argv.includes('--tools-only')
-const toolPageIds = ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit']
+const toolPageIds = ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit', 'markdown-image']
+// markdown-image 没有 /spider-tools/ 旧地址，跳转壳相关检查只覆盖迁移前的 7 个工具。
+const legacyToolIds = toolPageIds.filter(id => id !== 'markdown-image')
 const projectsOnly = process.argv.includes('--projects-only')
 const baselineIndex = process.argv.indexOf('--baseline')
 if (baselineIndex >= 0) assert.ok(process.argv[baselineIndex + 1], '--baseline needs a code snapshot directory')
@@ -58,7 +60,7 @@ try {
     await mkdir(join(fixture, path), { recursive: true })
   }
   const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
-  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleHits.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'tools/SpiderTools.vue', 'tools/LegacyToolRedirect.vue', 'tools/legacyRedirect.mjs', 'tools/utils/curlToRequests.js', 'tools/utils/o10.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit'].map(panel => `tools/components/Panel${panel}.vue`)]
+  const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleHits.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'tools/SpiderTools.vue', 'tools/LegacyToolRedirect.vue', 'tools/legacyRedirect.mjs', 'tools/utils/curlToRequests.js', 'tools/utils/o10.js', 'tools/utils/markdownImage.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit', 'MarkdownImage'].map(panel => `tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
     await copyFile(join(otherComponents.includes(path) ? join(root, 'docs') : source, path), join(fixture, path))
@@ -98,7 +100,8 @@ try {
     const destination = join(fixture, 'public', asset)
     await mkdir(dirname(destination), { recursive: true })
     try { await copyFile(file, destination); copiedAssets += 1 } catch (error) {
-      if (error.code !== 'ENOENT') throw error
+      // 注释掉的 CSS 背景和可选资源可能不存在；某些 Node 运行环境会把 ENOENT 包成别的 code。
+      if (error.code !== 'ENOENT' && !/^ENOENT/.test(error.message)) throw error
     }
   }
   await copyFile(join(publicRoot, 'css/index.css'), join(fixture, 'public/css/index.css'))
@@ -119,7 +122,7 @@ try {
     await copyFile(path, join(fixture, 'tools', id, 'index.md'))
   }
   // Copy only the eight public redirect shells, after the same frontmatter guard.
-  for (const id of ['', ...toolPageIds]) {
+  for (const id of ['', ...legacyToolIds]) {
     const path = join(root, 'docs/spider-tools', id, 'index.md')
     const file = await open(path, 'r')
     let frontmatter
@@ -189,7 +192,7 @@ export default config\n`)
     }
     assert.equal(titles.size, toolPageIds.length, 'tool pages have distinct static titles')
     assert.equal(descriptions.size, toolPageIds.length, 'tool pages have distinct static descriptions')
-    for (const id of ['', ...toolPageIds]) {
+    for (const id of ['', ...legacyToolIds]) {
       const html = await readFile(join(output, 'spider-tools', id, 'index.html'), 'utf8')
       assert.ok(!html.includes('class="article-hits"'), 'old redirect shells never render a hits counter')
     }
@@ -312,7 +315,7 @@ export default config\n`)
     })))
     toolIds.push(...tools.map(tool => tool.id))
     assert.deepEqual(toolIds, toolPageIds, 'each tool has a unique crawlable page link')
-    for (const id of ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit']) {
+    for (const id of ['curl-requests', 'url', 'base64', 'o10', 'aaencode', 'jjencode', 'imagesplit', 'markdown-image']) {
       assert.ok(toolIds.includes(id), `${id} remains available`)
     }
     const expectTool = async (id, standalone = true) => {
@@ -351,8 +354,32 @@ export default config\n`)
         assert.match(await toolPage.locator('.code-output').textContent(), /https:\/\/example\.com\/tool-route-check/)
         assert.match(await toolPage.locator('.code-output').textContent(), /import requests/)
       }
+      if (tool.id === 'markdown-image') {
+        const canvas = toolPage.locator('.md-image canvas')
+        const pixel = () => canvas.evaluate(node => Array.from(node.getContext('2d').getImageData(1, 1, 1, 1).data).join())
+        await toolPage.locator('#md-image-input').fill('# 人工标题\n\n- 一条\n- 两条')
+        await toolPage.getByRole('button', { name: '生成图片', exact: true }).click()
+        await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.width === 1800)
+        assert.match(await toolPage.locator('.md-image .notice').textContent(), /900 × \d+/, 'default image is 900 CSS px wide at 2x')
+        assert.equal(await pixel(), '255,255,255,255', 'light theme paints a white background')
+        await toolPage.getByRole('combobox', { name: '主题', exact: true }).click()
+        await toolPage.getByRole('option', { name: '深色（深底浅字）', exact: true }).click()
+        await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.getContext('2d').getImageData(1, 1, 1, 1).data.join() === '13,17,23,255')
+        await toolPage.getByRole('combobox', { name: '图片宽度', exact: true }).click()
+        await toolPage.getByRole('option', { name: '720 px（窄图）', exact: true }).click()
+        await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.width === 1440)
+        await toolPage.locator('#md-image-input').fill('   ')
+        await toolPage.waitForFunction(() => document.querySelector('.md-image .notice')?.textContent === '请输入 Markdown 内容。')
+        assert.equal(await canvas.evaluate(node => node.parentElement.style.display), 'none', 'empty input hides the preview')
+        await toolPage.locator('#md-image-input').fill('# 恢复\n\n内容回来了')
+        await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.parentElement.style.display !== 'none')
+        await toolPage.getByRole('combobox', { name: '主题', exact: true }).click()
+        await toolPage.getByRole('option', { name: '浅色（白底深字）', exact: true }).click()
+        await toolPage.getByRole('combobox', { name: '图片宽度', exact: true }).click()
+        await toolPage.getByRole('option', { name: '900 px（默认）', exact: true }).click()
+      }
       assert.equal(new URL(await toolPage.locator('.article-hits img').getAttribute('src')).pathname,
-        `/cpython666.github.io/spider-tools/${tool.id}.svg`, 'new URL keeps its historical hits counter')
+        `/cpython666.github.io/tools/${tool.id}.svg`, 'hits counter follows the public tool URL')
       if (tool.id === 'url') await toolPage.locator('.panel-card textarea:visible').first().fill('private-fixture-input')
       const share = `${tool.name}\n${description}\nhttps://cpython666.github.io/tools/${tool.id}/`
       await toolPage.getByRole('button', { name: `分享工具：${tool.name}`, exact: true }).click()
@@ -370,7 +397,7 @@ export default config\n`)
       await expectTool(tool.id)
     }
     // Old physical URLs must work both before hydration and through VitePress navigation.
-    for (const id of ['', ...toolPageIds]) {
+    for (const id of ['', ...legacyToolIds]) {
       const suffix = id ? `${id}/` : ''
       const target = `/tools/${suffix}`
       const expectedId = id || toolPageIds[0]
@@ -388,7 +415,7 @@ export default config\n`)
       await toolPage.waitForURL(`${base}${target}?source=old-alias${hash}`)
       await expectTool(expectedId, !!id)
     }
-    for (const id of toolPageIds) {
+    for (const id of legacyToolIds) {
       await toolPage.goto(`${base}/spider-tools/?source=old-hash#${id}`, { waitUntil: 'networkidle' })
       await toolPage.waitForURL(`${base}/tools/${id}/?source=old-hash`)
       await expectTool(id)

@@ -1,6 +1,6 @@
 # 提示词库
 
-来自 https://cpython666.github.io/prompts/ ，共 26 条。`{{变量}}` 是需要替换的占位符。
+来自 https://cpython666.github.io/prompts/ ，共 29 条。`{{变量}}` 是需要替换的占位符。
 
 ## 视频创作
 
@@ -269,6 +269,30 @@ godot，gdscript
 
 ```text
 生成一个动态的骑自行车的大耳朵图图的svg
+```
+
+### 齐天大圣和熊二骑自行车
+
+分享链接：https://cpython666.github.io/prompts/#cycling-wukong-bramble-svg
+
+```text
+生成一个动态 SVG，画出齐天大圣和熊二一起骑自行车。
+```
+
+### 三体质子骑自行车
+
+分享链接：https://cpython666.github.io/prompts/#cycling-proton-svg
+
+```text
+生成一个动态 SVG，画出《三体》中的质子骑自行车。
+```
+
+### 骑自行车的海绵宝宝
+
+分享链接：https://cpython666.github.io/prompts/#cycling-spongebob-svg
+
+```text
+生成一个动态的骑自行车的海绵宝宝的svg
 ```
 
 ### 训练数据截止时间

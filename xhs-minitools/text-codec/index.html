@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fff8f4">
+  <title>文字编解码 · 星梦启航</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="brand"><span class="brand-star">✳</span> 星梦启航 <span class="edition">创作小工具</span></div>
+      <div class="eyebrow">03 / A LITTLE TRANSLATION</div>
+      <h1>看不懂的字符，<br><span>换一种说法。</span></h1>
+      <p>还原链接里的中文，读懂一段编码，<br>也把结果装成一张清楚的小卡片。</p>
+      <span class="card-decoration" aria-hidden="true">&amp;<span>✧</span></span>
+    </header>
+
+    <section class="panel">
+      <div class="section-head"><h2><span class="step">1</span> 选一种转换</h2><button id="sample" class="text-button" type="button">试试示例 ↗</button></div>
+      <div id="types" class="segments compact" role="group" aria-label="编码类型">
+        <button type="button" data-type="o10" aria-pressed="true">O10<small>标准 / Pro 文字编码</small></button>
+        <button type="button" data-type="base64" aria-pressed="false">Base64<small>文字与编码互转</small></button>
+        <button type="button" data-type="url" aria-pressed="false">URL<small>还原链接中的字</small></button>
+        <button type="button" data-type="html" aria-pressed="false">HTML 实体<small>特殊符号互转</small></button>
+      </div>
+      <div id="o10-mode-panel" class="mode-panel">
+        <label class="field-label spacing-top">O10 编码模式</label>
+        <div id="o10-modes" class="segments compact" role="group" aria-label="O10 编码模式">
+          <button type="button" data-o10-mode="standard" aria-pressed="true">标准 O10<small>0 / 1 / O</small></button>
+          <button type="button" data-o10-mode="pro" aria-pressed="false">Pro<small>I / l / 1</small></button>
+        </div>
+        <p id="o10-mode-hint" class="hint">字符转为二进制，以大写字母 O 分隔。支持中文和 emoji。</p>
+      </div>
+      <label class="field-label spacing-top">转换方向</label>
+      <div id="directions" class="segments compact" role="group" aria-label="转换方向">
+        <button type="button" data-direction="encode" aria-pressed="true">编码<small>文字 → 编码</small></button>
+        <button type="button" data-direction="decode" aria-pressed="false">解码<small>编码 → 文字</small></button>
+      </div>
+      <label class="field-label editor-label" for="source">输入内容</label>
+      <textarea id="source" class="text-input" rows="6" maxlength="3000" spellcheck="false" placeholder="在这里输入或手动粘贴文字。中文、emoji 和换行都可以。"></textarea>
+      <div class="option-row input-footer"><span id="char-count" class="hint">0 / 3000 字符</span><button id="clear-input" class="text-button" type="button">清空示例</button></div>
+      <p id="type-hint" class="hint">O10 使用 Unicode 码点转为二进制，并以大写字母 O 分隔。</p>
+      <button id="convert" class="button primary wide" type="button">转换文字 <span aria-hidden="true">↗</span></button>
+    </section>
+
+    <section id="output-panel" class="panel" hidden>
+      <div class="section-head"><h2><span class="step">2</span> 结果在这里</h2><span id="output-size" class="small-label"></span></div>
+      <label class="field-label" for="output">转换结果 · 可选中文字</label>
+      <textarea id="output" class="text-input codec-output" rows="7" readonly spellcheck="false"></textarea>
+      <button id="generate" class="button primary wide" type="button" disabled>把结果生成图片 <span aria-hidden="true">↗</span></button>
+      <p id="image-hint" class="hint">图片按 2 倍清晰度绘制，长结果自动分页。文字框保留完整结果和换行。</p>
+    </section>
+
+    <section id="result-panel" class="panel preview-panel" hidden>
+      <div class="section-head"><h2><span class="step">3</span> 把结果留成小卡片</h2><span id="result-size" class="small-label"></span></div>
+      <img id="card-preview" class="card-preview" alt="编解码结果图片预览">
+      <div class="pager"><button id="previous" type="button" aria-label="上一张">←</button><span id="page-number"></span><button id="next" type="button" aria-label="下一张">→</button></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><h2>最近 10 条</h2><button id="clear-history" class="text-button" type="button" disabled>清空历史</button></div>
+      <p id="history-notice" class="hint" role="status">正在读取本地历史…</p>
+      <div id="history-list" class="history-list"></div>
+    </section>
+    <p id="status" class="status" role="status" aria-live="polite">输入一段文字，试着换一种表达。</p>
+    <footer class="page-footer">让每一个字符，都有清楚的来处。<span>MADE WITH 星梦启航</span></footer>
+  </main>
+  <div class="export-bar"><div id="export-groups" class="export-groups"></div><div class="export-actions"><button id="save" class="button secondary" type="button" disabled>全部存相册</button><button id="post" class="button primary" type="button" disabled>带图发笔记 ↗</button></div></div>
+  <script src="./xhs.js"></script>
+  <script src="./text-image.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

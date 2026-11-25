@@ -1,6 +1,6 @@
 # 星梦启航公开文章目录
 
-共 283 篇，按栏目分组，每条是“标题（日期）：摘要”。只收公开文章，会员文章和草稿不在其中。需要全文时打开链接阅读。
+共 289 篇，按栏目分组，每条是“标题（日期）：摘要”。只收公开文章，会员文章和草稿不在其中。需要全文时打开链接阅读。
 
 ## Python
 
@@ -286,6 +286,12 @@
 - [科技日报 009｜Kimi新模型上线，PHP又披露特殊配置漏洞](https://cpython666.github.io/tech-daily/2026-10-24)（2026-10-24）：Kimi新模型上线、MiniMax开放权重；PHP特殊配置漏洞与LiteLLM最终攻击链值得跟进。再看NASA星舰登月新方案、OpenAI训练隔离、七牛免费额度和骁龙电脑跑macOS。
 - [科技日报 010｜Java更新证书信任库，LiteLLM恢复发版](https://cpython666.github.io/tech-daily/2026-10-25)（2026-10-25）：Java移除问题证书，LiteLLM换签名公钥；英国宣布设立AI生物安全实验室，乌方通报Starlink连接恢复。再看管理AI编程助手的HumanLayer，以及让Agent操作CAD的Loböle。
 - [科技日报 011｜Cloudflare开源漏洞审计Skill，南北阁发布33B模型](https://cpython666.github.io/tech-daily/2026-10-26)（2026-10-26）：.NET发布紧急安全更新；Open WebUI支持按需加载Skills，南北阁官宣33B模型；马斯克称SpaceX完成400亿美元GPU融资。再看AWS换证提醒、AI安全审计和分层阅读工具。
+- [科技日报 012｜Terra新模型发布，Anthropic申请上市](https://cpython666.github.io/tech-daily/2026-10-27)（2026-10-27）：OpenAI推出GPT-6.1 Terra；Anthropic公开递交上市申请；PHP Windows因Brotli依赖再更新。再看SpaceX融资条款、腾讯中英同传，以及AI流量统计和本地PDF工具。
+- [科技日报 013｜两家AI挑战ETH，苹果上新M6iMac](https://cpython666.github.io/tech-daily/2026-10-28)（2026-10-28）：OpenAI与Anthropic都称推翻指数时间假设ETH，仍待独立检验；谷歌Genie 4生成有声世界；苹果M6 iMac国行12499元起。另看本地小模型、两条安全更新、TPU合作与tstack。
+- [科技日报 014｜Gemini4发布，赛博现实：人类上班教机器人](https://cpython666.github.io/tech-daily/2026-10-29)（2026-10-29）：谷歌发布Gemini4 Carbon，先向部分网络防御者开放；赛博现实：人类上班教机器人。另看Pro200旧额度保护期结束、触屏MacBook、AI转写与安全更新。
+- [科技日报 015｜币安疑遭黑客攻击，谷歌创最大单日跌幅](https://cpython666.github.io/tech-daily/2026-10-30)（2026-10-30）：币安调查安全事件并暂停存提款，已冻结25.4亿美元；谷歌母公司A类股创上市以来最大单日跌幅。另看Pro200取消降额、Copilot选模型、Neuralink原型及安全更新。
+- [科技日报 016｜Claude插件被植后门，英特尔暴跌28.6%](https://cpython666.github.io/tech-daily/2026-10-31)（2026-10-31）：Cursor更新Claude Code扩展安全公告；币安确认约63亿美元损失并公布补足计划。英特尔收跌28.6%，AWS收入增长39.3%；另看静默输入眼镜和AI论文改稿工具。
+- [科技日报 017｜苹果智能在华定档，Grok支持支付宝](https://cpython666.github.io/tech-daily/2026-11-01)（2026-11-01）：苹果智能11月4日开放开发者测试，12月随iOS 27.3在华推出；Grok订阅支持支付宝和银联的消息获媒体查证。另看DeepSeek研究原型、币安资产补足，以及两款开源工具。
 - [科技日报](https://cpython666.github.io/tech-daily/)：SI斗罗的科技日报专栏，分期整理AI工具、科技进展、马斯克公司动态与GitHub/X热门项目，附官方公告、项目仓库和报道来源。
 
 ## 普通人的破局笔记

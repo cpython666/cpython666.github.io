@@ -25,3 +25,5 @@ description: 维护星梦启航博客 cpython666.github.io 的页面、文章导
 - 新增提示词、复制按钮或分享定位：[提示词与分享](references/prompts.md)。
 - 特效、首页加载和动画生命周期：[性能约定](references/performance.md)。
 - 运行检查、处理会员边界或复查审计项：[验证与待办](references/validation.md)。
+- 小红书小工具移植、平台上传规格与工具源码边界：[小工具移植](references/xhs-minitools.md)。
+- 小红书离线 H5 小工具的官方校验、打包与创服更新流程：[小工具构建 Skill](../xhs-minitool-builder/SKILL.md)。
