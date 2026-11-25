@@ -70,7 +70,7 @@
 - 会员介绍页另用仅含公开 `docs/vip/index.md`、VipBtn 和全局 CSS 的隔离 fixture 验证：320/390/760/761/1024/1440/2560px 页面与激活区正常，表格长链接换行后320px内容宽从303px降至248px，与表格可视宽一致。未提供真实激活配置，未打开文章链接。
 - 2026-10-16 宝典恢复检查：两份 SQL 的正式正文反转义后均为326字符/682字节，恢复后的原文哈希一致，吾爱破解条目另行追加；仅用 VitePress Markdown 渲染器处理目标两页，确认说明公开、正文会员可见、原书籍链接与新增软件链接存在、侧边栏及 VIP 列表指向正确，未运行全站构建或真实 loader。
 - 运行前确认可用 Node 和 Playwright 浏览器；环境缺失要说明，不能把未运行写成通过。完整开发服务曾因 `@waline/client` 尚未安装而失败，按锁文件执行 `npm ci --no-audit --no-fund` 后恢复，`package.json` / `package-lock.json` 不变。Skill 格式检查需要 PyYAML，可用 `uv run --with pyyaml python <quick_validate.py> .agents/skills/xingmeng-blog`，无需为此修改项目依赖。
-- 页面隔离 fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
+- 页面隔离 fixture 的首页还需复制 `RecommendationCards.vue`、`RecommendationVisual.vue`、`recommendations.js`，从推荐数据收集 `cover`/`logo` 对应图片；只复制 `SponsorsLinks.vue` 会缺依赖。Markdown 图片空态检查 canvas 实际可见性及下载禁用状态，不依赖旧版父元素的 `display` 结构。fixture 包含全局 CSS 和真实文章阅读工具/目录开关，按主题图片选择器模拟添加 `is-zoomable`，确认项目封面与图片分割预览排除缩放；当前已加载真实 `ArticleHits` 并拦截为人工图片，但未加载其余完整主题服务；样例计数与线上数值无关。不能仅检查文档 `scrollWidth`：祖先的溢出裁切可能掩盖控件/统计栏越界，需同时检查组件内部边界。
 - 已确认的测试注意事项：macOS 的 `mkdtemp` 路径先用 `realpath` 规范化，再传给 VitePress；否则 `/var` 与 `/private/var` 的路径差异可能让 `relativePath` 写入临时绝对路径，导致隔离页面路由错误。
 - 验证构建产物（robots/feed/llms/sitemap/JSON-LD）时用“替身文章”整站构建：复制 `docs/` 到临时目录，Markdown 只按 frontmatter 识别会员并全部换成占位正文（会员页只写 `memberOnly: true` 和占位标记），再链接 `node_modules` 运行 `vitepress build`；检查产物中会员占位标记出现 0 次。2026-10-20 用此法验证 307 篇（16 篇会员）通过，约 15 秒。
 - 云端环境 `npm ci` 卡住时，锁文件 resolved 指向被拦截的 `registry.npmmirror.com`；用 `npm ci --registry=https://registry.npmjs.org/ --replace-registry-host=always`，不改锁文件。

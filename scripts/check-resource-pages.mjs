@@ -59,7 +59,7 @@ try {
   for (const path of ['.vitepress/theme', 'index', 'nav', 'projects', 'navigation', 'prompts', 'tools', 'sample', 'backup', 'public/css', 'screenshots']) {
     await mkdir(join(fixture, path), { recursive: true })
   }
-  const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue']
+  const homeComponents = ['index/IndexPage.vue', 'index/SponsorsLinks.vue', 'components/RecommendationCards.vue', 'components/RecommendationVisual.vue', 'components/recommendations.js']
   const otherComponents = ['navigation/NavIndex.vue', 'prompts/PromptPage.vue', 'prompts/prompts.js', 'utils/copy.js', 'components/SiteSelect.vue', 'components/ConfigArticleList.vue', 'components/XBackupList.vue', '.vitepress/theme/components/ArticleTools.vue', '.vitepress/theme/components/ArticleHits.vue', '.vitepress/theme/components/ArticleOutlineToggle.vue', 'tools/SpiderTools.vue', 'tools/LegacyToolRedirect.vue', 'tools/legacyRedirect.mjs', 'tools/utils/curlToRequests.js', 'tools/utils/o10.js', 'tools/utils/markdownImage.js', ...['CurlRequests', 'Url', 'Base64', 'O10', 'Aaencode', 'Jjencode', 'Imagesplit', 'MarkdownImage'].map(panel => `tools/components/Panel${panel}.vue`)]
   for (const path of [...homeComponents, 'nav/NavPage.vue', 'nav/WebLink.vue', 'nav/data.js', 'projects/ProjectPage.vue', 'projects/data.js', ...otherComponents]) {
     await mkdir(dirname(join(fixture, path)), { recursive: true })
@@ -78,12 +78,18 @@ try {
   const { navigationData } = await loadData('nav/data.js')
   const { projects } = await loadData('projects/data.js')
   const { prompts } = await loadData('prompts/prompts.js')
+  const { recommendationGroups } = await loadData('components/recommendations.js')
   const resources = navigationData.flatMap(group => group.items.map(site => ({ ...site, section: group.title })))
   const assets = new Set(['/icons/github.svg', '/imgs/app/default.svg', '/imgs/ads/qgwl.jpeg'])
   for (const path of homeComponents) {
     const component = await readFile(join(fixture, path), 'utf8')
     for (const [, asset] of component.matchAll(/['"](\/?(?:imgs\/[^'"]+|logo_super\.svg))['"]/g)) {
       assets.add('/' + asset.replace(/^\//, ''))
+    }
+  }
+  for (const item of recommendationGroups.flatMap(group => group.items)) {
+    for (const image of [item.cover, item.logo].filter(Boolean)) {
+      assets.add(image.startsWith('/') ? image : `/imgs/recommendations/${image}`)
     }
   }
   for (const item of [...resources, ...projects, ...prompts]) {
@@ -370,9 +376,10 @@ export default config\n`)
         await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.width === 1440)
         await toolPage.locator('#md-image-input').fill('   ')
         await toolPage.waitForFunction(() => document.querySelector('.md-image .notice')?.textContent === '请输入 Markdown 内容。')
-        assert.equal(await canvas.evaluate(node => node.parentElement.style.display), 'none', 'empty input hides the preview')
+        assert.equal(await canvas.isVisible(), false, 'empty input hides the preview')
+        assert.equal(await toolPage.getByRole('button', { name: '下载 PNG', exact: true }).isDisabled(), true)
         await toolPage.locator('#md-image-input').fill('# 恢复\n\n内容回来了')
-        await toolPage.waitForFunction(() => document.querySelector('.md-image canvas')?.parentElement.style.display !== 'none')
+        await canvas.waitFor({ state: 'visible' })
         await toolPage.getByRole('combobox', { name: '主题', exact: true }).click()
         await toolPage.getByRole('option', { name: '浅色（白底深字）', exact: true }).click()
         await toolPage.getByRole('combobox', { name: '图片宽度', exact: true }).click()
