@@ -1745,6 +1745,13 @@ export const navigationData = [
         title: '效率工具',
         items: [
             {
+                "link": "https://github.com/fuqiuluo/ice3tier",
+                "icon": "/logos/github.png",
+                "title": "ice3tier",
+                "desc": "自建的机器组网：每台机器一个虚拟网卡和虚拟 IP，能直连就直连，不行就走自己的中继。带网页管理界面。",
+                "categories": ["效率工具", "组网", "开源"]
+            },
+            {
                 "link": "https://calmbar.bujic.cc/",
                 "icon": "/logos/calmbar.png",
                 "title": "CalmBar",
@@ -2009,6 +2016,12 @@ export const navigationData = [
     {
         title: '代码混淆',
         items: [
+            {
+                "link": "https://github.com/fuqiuluo/amice",
+                "icon": "/logos/github.png",
+                "title": "Amice",
+                "desc": "Rust 编写的 LLVM Pass 插件，给 C/C++、Rust 和 Android 原生代码做字符串加密、虚假控制流（多分支）和指令级虚拟化。Apache-2.0，用现有 clang 加一个 -fpass-plugin 即可，不必重编 LLVM。"
+            },
             {
                 "link": "https://www.obfuscator.io/",
                 "icon": "/logos/obfuscator.png",
@@ -2454,6 +2467,12 @@ export const navigationData = [
         title: 'APP 反编译',
         items: [
             {
+                "link": "https://github.com/fuqiuluo/rnidbg",
+                "icon": "/logos/github.png",
+                "title": "rnidbg",
+                "desc": "用 Rust 重写的 Android ARM64 内核模拟器，思路来自 unidbg，用来在电脑上跑和观察原生代码。"
+            },
+            {
                 "link": "https://github.com/Jermic/Android-Crack-Tool",
                 "icon": "/logos/github.png",
                 "title": "Android Crack Tool",
@@ -2536,6 +2555,12 @@ export const navigationData = [
     {
         title: 'APP 其他',
         items: [
+            {
+                "link": "https://github.com/fuqiuluo/RanchuWoA",
+                "icon": "/logos/github.png",
+                "title": "RanchuWoA",
+                "desc": "跑在 Windows on ARM 上的原生 Android 模拟器，可启动 Pixel、ColorOS、HyperOS 等系统镜像。"
+            },
             {
                 "link": "https://github.com/topjohnwu/Magisk",
                 "icon": "/logos/Magisk.png",

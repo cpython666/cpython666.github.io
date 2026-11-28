@@ -1,6 +1,6 @@
 # 资源导航
 
-站长整理的 551 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
+站长整理的 555 个网站和工具，来自 https://cpython666.github.io/nav/ 。每条是“名称：简介 `标签`”，同一网站可能出现在多个分类。
 
 ## 分类目录
 
@@ -34,16 +34,16 @@
 - 网站统计（2）
 - 监控管理（8）
 - 其他工具（8）
-- 效率工具（26）
+- 效率工具（27）
 - 调试运行（16）
-- 代码混淆（12）
+- 代码混淆（13）
 - 指纹相关（20）
 - 环境框架（5）
 - 自动化/RPC（20）
 - 脱壳工具（5）
 - Hook工具（6）
-- APP 反编译（13）
-- APP 其他（5）
+- APP 反编译（14）
+- APP 其他（6）
 - 小程序反编译（4）
 - 打码平台（17）
 - 开源识别（12）
@@ -382,6 +382,7 @@
 
 ## 效率工具
 
+- [ice3tier](https://github.com/fuqiuluo/ice3tier)：自建的机器组网：每台机器一个虚拟网卡和虚拟 IP，能直连就直连，不行就走自己的中继。带网页管理界面。 `效率工具 / 组网 / 开源`
 - [CalmBar](https://calmbar.bujic.cc/)：开源的 macOS 菜单栏面板，把温控、充电上限、剪贴板和录屏收在一处。仅支持 macOS 14 及以上。 `效率工具 / macOS / 开源`
 - [DBX](https://dbxio.com/cn)：开源数据库客户端，可查询 MySQL、PostgreSQL、MongoDB、Redis，也能通过 MCP 给 Agent 使用。 `效率工具 / 数据库 / 开源`
 - [SimSlim](https://github.com/MobAI-App/simslim)：开源的 macOS 工具，关闭 iOS 等模拟器里开发用不到的后台服务，让同一台 Mac 同时运行更多模拟器。 `效率工具 / iOS / 开源`
@@ -430,6 +431,7 @@
 
 ## 代码混淆
 
+- [Amice](https://github.com/fuqiuluo/amice)：Rust 编写的 LLVM Pass 插件，给 C/C++、Rust 和 Android 原生代码做字符串加密、虚假控制流（多分支）和指令级虚拟化。Apache-2.0，用现有 clang 加一个 -fpass-plugin 即可，不必重编 LLVM。
 - [OB 在线混淆](https://www.obfuscator.io/)：OB 在线混淆。
 - [JSVMP 在线混淆](https://jsvmp.com/)：OB 在线混淆。
 - [JS 盾](https://jsvmp.net/)：JS 盾制霸 JS 代码加固领域，能有效保护JS代码不被反混淆，JS 盾诞生于我们的 WEB 安全研究，他是市场上唯一的 JS 动态混淆加壳器，在发布之前，经过长达一年的测试，迭代 10 个版本，经历了 10 余位在 JS 逆向技术前 10% 的逆向考验，有的甚至连入口都找不到。
@@ -516,6 +518,7 @@
 
 ## APP 反编译
 
+- [rnidbg](https://github.com/fuqiuluo/rnidbg)：用 Rust 重写的 Android ARM64 内核模拟器，思路来自 unidbg，用来在电脑上跑和观察原生代码。
 - [Android Crack Tool](https://github.com/Jermic/Android-Crack-Tool)：mac 下 Android 逆向神器，实用工具集，集成了Android开发中常见的一些编译/反编译工具，方便用户对 Apk 进行逆向分析，提供 Apk 信息查看功能。
 - [Apktool](https://apktool.org/)：功能强大且操作简单的 apk 反编译工具。
 - [PKiD](https://pan.baidu.com/s/1Ho0gVCH_sS-75nhO2TcXXw?pwd=sbox)：目前仅支持的加固厂商：娜迦、梆梆、爱加密、通付盾、360加固、百度加固、阿里加固、腾讯加固、盛大加固、瑞星加固、网秦加固、国信灵通加固、apkprotect 加固。
@@ -532,6 +535,7 @@
 
 ## APP 其他
 
+- [RanchuWoA](https://github.com/fuqiuluo/RanchuWoA)：跑在 Windows on ARM 上的原生 Android 模拟器，可启动 Pixel、ColorOS、HyperOS 等系统镜像。
 - [Magisk](https://github.com/topjohnwu/Magisk)：Magisk是一套用于定制 Android的开源工具,支持高于 Android4.2的设备。涵盖了 Android定制的基本部分:root、引导脚本、 SELInux修补、移除AVB2.0/dm- verity/强制加密等。
 - [APK Downloader](https://apps.evozi.com/apk-downloader/)：输入 Google Play URL 即可下载该应用的 APK 文件。
 - [MT 管理器](https://mt2.cn/)：Android 平台文件管理 & 逆向修改神器。
